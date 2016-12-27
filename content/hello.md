@@ -26,3 +26,8 @@ This is the content of my super blog post.
 
 This site published by [pelican](http://blog.getpelican.com). Document is [here](http://docs.getpelican.com).
 
+To generate site, run follow command:
+
+```
+> pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
+```
