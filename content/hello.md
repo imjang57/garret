@@ -35,7 +35,7 @@ pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
 To publish site to git gh-pages repository, run follow command:
 
 ```
-ghp-import -m "Generate Pelican site" -b gh-pages /home/youngho/venv/garret/garret/output
+ghp-import -m "Generate Pelican site" -b gh-pages output
 ```
 
 Finally, push loca gh-pages branch to github gh-pages branch:
