@@ -29,5 +29,18 @@ This site published by [pelican](http://blog.getpelican.com). Document is [here]
 To generate site, run follow command:
 
 ```
-> pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
+pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
+```
+
+To publish site to git gh-pages repository, run follow command:
+
+```
+ghp-import -m "Generate Pelican site" -b gh-pages /home/youngho/venv/garret/garret/output
+```
+
+Finally, push loca gh-pages branch to github gh-pages branch:
+
+```
+git checkout gh-pages
+git push -u origin gh-pages
 ```
