@@ -44,3 +44,10 @@ Finally, push loca gh-pages branch to github gh-pages branch:
 git checkout gh-pages
 git push -u origin gh-pages
 ```
+
+# References
+
+- [Pelican Github](https://github.com/getpelican/pelican)
+- [Pelican Home](http://blog.getpelican.com)
+- [Pelican Document](http://docs.getpelican.com)
+
