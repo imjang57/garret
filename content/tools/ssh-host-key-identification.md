@@ -10,7 +10,7 @@ Tags: SSH
 
 가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.
 
-```
+```bash
 imjang57@myserver:~$ ssh administrator@192.168.0.5
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
@@ -46,13 +46,13 @@ SSH 서버에서 호스트 키를 새롭게 생성했거나, 클라이언트 측
 
 보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 <user_home>/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.
 
-```
+```bash
 ssh-keygen -f "/home/imjang57/.ssh/known_hosts" -R 192.168.0.5
 ```
 
 위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.
 
-```
+```bash
 imjang57@myserver:~$ ssh administrator@192.168.0.5
 The authenticity of host '192.168.0.5' can't be established.
 ECDSA key fingerprint is
@@ -70,7 +70,7 @@ yes 를 입력하면 호스트 키를 <user_home>/.ssh/known_hosts 파일에 저
 
 `ssh_config` 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.
 
-```
+```bash
 StrictHostKeyChecking no
 UserKnownHostsFile=/dev/null
 ```
@@ -83,7 +83,7 @@ UserKnownHostsFile=/dev/null
 
 새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.
 
-```
+```bash
 sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
 sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
 sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521
