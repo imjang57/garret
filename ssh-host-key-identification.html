@@ -44,25 +44,25 @@
 <p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">SSH</a> </p>
 </footer><!-- /.post-info -->      <h1>SSH host key</h1>
 <p>가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.</p>
-<div class="highlight"><pre><span></span><span class="n">imjang57</span><span class="p">@</span><span class="nl">myserver</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">ssh</span> <span class="n">administrator</span><span class="mf">@192.168.0.5</span>
-<span class="p">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
-<span class="p">@</span> <span class="nl">WARNING</span><span class="p">:</span> <span class="n">REMOTE</span> <span class="n">HOST</span> <span class="n">IDENTIFICATION</span> <span class="n">HAS</span> <span class="n">CHANGED</span><span class="o">!</span>              <span class="p">@</span>
-<span class="p">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
-<span class="n">IT</span> <span class="n">IS</span> <span class="n">POSSIBLE</span> <span class="n">THAT</span> <span class="n">SOMEONE</span> <span class="n">IS</span> <span class="n">DOING</span> <span class="n">SOMETHING</span> <span class="n">NASTY</span><span class="o">!</span>
-<span class="n">Someone</span> <span class="n">could</span> <span class="n">be</span> <span class="n">eavesdropping</span> <span class="n">on</span> <span class="n">you</span> <span class="n">right</span> <span class="n">now</span> <span class="p">(</span><span class="n">man</span><span class="o">-</span><span class="k">in</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">middle</span>
-<span class="n">attack</span><span class="p">)</span><span class="o">!</span>
-<span class="n">It</span> <span class="n">is</span> <span class="n">also</span> <span class="n">possible</span> <span class="n">that</span> <span class="n">a</span> <span class="n">host</span> <span class="n">key</span> <span class="n">has</span> <span class="n">just</span> <span class="n">been</span> <span class="n">changed</span><span class="p">.</span>
-<span class="n">The</span> <span class="n">fingerprint</span> <span class="k">for</span> <span class="n">the</span> <span class="n">ECDSA</span> <span class="n">key</span> <span class="n">sent</span> <span class="n">by</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">host</span> <span class="n">is</span>
-<span class="nl">bf</span><span class="p">:</span><span class="nl">e3</span><span class="p">:</span><span class="nl">d3</span><span class="p">:</span><span class="mi">21</span><span class="o">:</span><span class="nl">c4</span><span class="p">:</span><span class="mi">3</span><span class="nl">c</span><span class="p">:</span><span class="mi">60</span><span class="o">:</span><span class="nl">cd</span><span class="p">:</span><span class="nl">d9</span><span class="p">:</span><span class="mi">2</span><span class="nl">b</span><span class="p">:</span><span class="nl">bb</span><span class="p">:</span><span class="nl">a4</span><span class="p">:</span><span class="nl">d1</span><span class="p">:</span><span class="mi">6</span><span class="nl">e</span><span class="p">:</span><span class="mf">1f</span><span class="o">:</span><span class="n">df</span><span class="p">.</span>
-<span class="n">Please</span> <span class="n">contact</span> <span class="n">your</span> <span class="n">system</span> <span class="n">administrator</span><span class="p">.</span>
-<span class="n">Add</span> <span class="n">correct</span> <span class="n">host</span> <span class="n">key</span> <span class="k">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">imjang57</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span> <span class="n">to</span> <span class="n">get</span> <span class="n">rid</span> <span class="n">of</span>
-<span class="n">this</span> <span class="n">message</span><span class="p">.</span>
-<span class="n">Offending</span> <span class="n">ECDSA</span> <span class="n">key</span> <span class="k">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">imjang57</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="nl">known_hosts</span><span class="p">:</span><span class="mi">8</span>
-  <span class="n">remove</span> <span class="nl">with</span><span class="p">:</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;/home/imjang57/.ssh/known_hosts&quot;</span> <span class="o">-</span><span class="n">R</span>
-<span class="mf">192.168.0.5</span>
-<span class="n">ECDSA</span> <span class="n">host</span> <span class="n">key</span> <span class="k">for</span> <span class="mf">192.168.0.5</span> <span class="n">has</span> <span class="n">changed</span> <span class="n">and</span> <span class="n">you</span> <span class="n">have</span>
-<span class="n">requested</span> <span class="n">strict</span> <span class="n">checking</span><span class="p">.</span>
-<span class="n">Host</span> <span class="n">key</span> <span class="n">verification</span> <span class="n">failed</span><span class="p">.</span>
+<div class="highlight"><pre><span></span>imjang57@myserver:~$ ssh administrator@192.168.0.5
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now <span class="o">(</span>man-in-the-middle
+attack<span class="o">)</span>!
+It is also possible that a host key has just been changed.
+The fingerprint <span class="k">for</span> the ECDSA key sent by the remote host is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Please contact your system administrator.
+Add correct host key in /home/imjang57/.ssh/known_hosts to get rid of
+this message.
+Offending ECDSA key in /home/imjang57/.ssh/known_hosts:8
+  remove with: ssh-keygen -f <span class="s2">&quot;/home/imjang57/.ssh/known_hosts&quot;</span> -R
+192.168.0.5
+ECDSA host key <span class="k">for</span> 192.168.0.5 has changed and you have
+requested strict checking.
+Host key verification failed.
 </pre></div>
 
 
@@ -73,16 +73,16 @@
 <p>해결하는 방법은 여러개가 있다.</p>
 <h3>known_host 삭제하여 해결</h3>
 <p>보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 <user_home>/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.</p>
-<div class="highlight"><pre><span></span>ssh-keygen -f &quot;/home/imjang57/.ssh/known_hosts&quot; -R 192.168.0.5
+<div class="highlight"><pre><span></span>ssh-keygen -f <span class="s2">&quot;/home/imjang57/.ssh/known_hosts&quot;</span> -R 192.168.0.5
 </pre></div>
 
 
 <p>위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.</p>
-<div class="highlight"><pre><span></span><span class="n">imjang57</span><span class="p">@</span><span class="nl">myserver</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">ssh</span> <span class="n">administrator</span><span class="mf">@192.168.0.5</span>
-<span class="n">The</span> <span class="n">authenticity</span> <span class="n">of</span> <span class="n">host</span> <span class="err">&#39;</span><span class="mf">192.168.0.5</span><span class="err">&#39;</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">established</span><span class="p">.</span>
-<span class="n">ECDSA</span> <span class="n">key</span> <span class="n">fingerprint</span> <span class="n">is</span>
-<span class="nl">bf</span><span class="p">:</span><span class="nl">e3</span><span class="p">:</span><span class="nl">d3</span><span class="p">:</span><span class="mi">21</span><span class="o">:</span><span class="nl">c4</span><span class="p">:</span><span class="mi">3</span><span class="nl">c</span><span class="p">:</span><span class="mi">60</span><span class="o">:</span><span class="nl">cd</span><span class="p">:</span><span class="nl">d9</span><span class="p">:</span><span class="mi">2</span><span class="nl">b</span><span class="p">:</span><span class="nl">bb</span><span class="p">:</span><span class="nl">a4</span><span class="p">:</span><span class="nl">d1</span><span class="p">:</span><span class="mi">6</span><span class="nl">e</span><span class="p">:</span><span class="mf">1f</span><span class="o">:</span><span class="n">df</span><span class="p">.</span>
-<span class="n">Are</span> <span class="n">you</span> <span class="n">sure</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">connecting</span> <span class="p">(</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="p">)</span><span class="o">?</span>
+<div class="highlight"><pre><span></span>imjang57@myserver:~$ ssh administrator@192.168.0.5
+The authenticity of host <span class="s1">&#39;192.168.0.5&#39;</span> can<span class="err">&#39;</span>t be established.
+ECDSA key fingerprint is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Are you sure you want to <span class="k">continue</span> connecting <span class="o">(</span>yes/no<span class="o">)</span>?
 </pre></div>
 
 
@@ -92,7 +92,7 @@
 <p>리눅스에서 ssh 설정은 보통 <code>/etc/ssh</code> 디렉터리에 있다. <code>ssh_config</code> 파일은 클라이언트 설정 파일, <code>sshd_config</code> 는 서버(데몬) 설정 파일이다.</p>
 <p><code>ssh_config</code> 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.</p>
 <div class="highlight"><pre><span></span>StrictHostKeyChecking no
-UserKnownHostsFile=/dev/null
+<span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null
 </pre></div>
 
 
@@ -100,9 +100,9 @@ UserKnownHostsFile=/dev/null
 <p>서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.</p>
 <p>호스트 키는 보통 <code>/etc/ssh</code> 에 저장되어 있다. <em>RSA</em>, <em>DSA</em>, <em>ECDSA</em> 세 가지 종류의 키 파일들이 보통 생성되어 있다.</p>
 <p>새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.</p>
-<div class="highlight"><pre><span></span>sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &#39;&#39; -t rsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &#39;&#39; -t dsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &#39;&#39; -t ecdsa -b 521
+<div class="highlight"><pre><span></span>sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N <span class="s1">&#39;&#39;</span> -t rsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N <span class="s1">&#39;&#39;</span> -t dsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N <span class="s1">&#39;&#39;</span> -t ecdsa -b 521
 </pre></div>
 
 

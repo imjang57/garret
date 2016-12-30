@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>garret</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/all.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2016-12-30T00:00:00+09:00</updated><entry><title>SSH Host-key identification</title><link href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/ssh-host-key-identification.html</id><summary type="html">&lt;p&gt;This is about SSH Host-key identification.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH host key&lt;/h1&gt;
 &lt;p&gt;가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;imjang57&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="nl"&gt;myserver&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;administrator&lt;/span&gt;&lt;span class="mf"&gt;@192.168.0.5&lt;/span&gt;
-&lt;span class="p"&gt;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&lt;/span&gt;
-&lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="nl"&gt;WARNING&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;REMOTE&lt;/span&gt; &lt;span class="n"&gt;HOST&lt;/span&gt; &lt;span class="n"&gt;IDENTIFICATION&lt;/span&gt; &lt;span class="n"&gt;HAS&lt;/span&gt; &lt;span class="n"&gt;CHANGED&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;              &lt;span class="p"&gt;@&lt;/span&gt;
-&lt;span class="p"&gt;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&lt;/span&gt;
-&lt;span class="n"&gt;IT&lt;/span&gt; &lt;span class="n"&gt;IS&lt;/span&gt; &lt;span class="n"&gt;POSSIBLE&lt;/span&gt; &lt;span class="n"&gt;THAT&lt;/span&gt; &lt;span class="n"&gt;SOMEONE&lt;/span&gt; &lt;span class="n"&gt;IS&lt;/span&gt; &lt;span class="n"&gt;DOING&lt;/span&gt; &lt;span class="n"&gt;SOMETHING&lt;/span&gt; &lt;span class="n"&gt;NASTY&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;
-&lt;span class="n"&gt;Someone&lt;/span&gt; &lt;span class="n"&gt;could&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;eavesdropping&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;right&lt;/span&gt; &lt;span class="n"&gt;now&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;man&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;middle&lt;/span&gt;
-&lt;span class="n"&gt;attack&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;
-&lt;span class="n"&gt;It&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;also&lt;/span&gt; &lt;span class="n"&gt;possible&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="n"&gt;has&lt;/span&gt; &lt;span class="n"&gt;just&lt;/span&gt; &lt;span class="n"&gt;been&lt;/span&gt; &lt;span class="n"&gt;changed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;fingerprint&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;ECDSA&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="n"&gt;sent&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;
-&lt;span class="nl"&gt;bf&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;e3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;d3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;c4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="nl"&gt;c&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;cd&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;d9&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="nl"&gt;b&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;bb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;a4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;d1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="nl"&gt;e&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Please&lt;/span&gt; &lt;span class="n"&gt;contact&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt; &lt;span class="n"&gt;system&lt;/span&gt; &lt;span class="n"&gt;administrator&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Add&lt;/span&gt; &lt;span class="n"&gt;correct&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;imjang57&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;known_hosts&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;rid&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt;
-&lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Offending&lt;/span&gt; &lt;span class="n"&gt;ECDSA&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;imjang57&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nl"&gt;known_hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;
-  &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="nl"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;keygen&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;
-&lt;span class="mf"&gt;192.168.0.5&lt;/span&gt;
-&lt;span class="n"&gt;ECDSA&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="mf"&gt;192.168.0.5&lt;/span&gt; &lt;span class="n"&gt;has&lt;/span&gt; &lt;span class="n"&gt;changed&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;have&lt;/span&gt;
-&lt;span class="n"&gt;requested&lt;/span&gt; &lt;span class="n"&gt;strict&lt;/span&gt; &lt;span class="n"&gt;checking&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Host&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="n"&gt;verification&lt;/span&gt; &lt;span class="n"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now &lt;span class="o"&gt;(&lt;/span&gt;man-in-the-middle
+attack&lt;span class="o"&gt;)&lt;/span&gt;!
+It is also possible that a host key has just been changed.
+The fingerprint &lt;span class="k"&gt;for&lt;/span&gt; the ECDSA key sent by the remote host is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Please contact your system administrator.
+Add correct host key in /home/imjang57/.ssh/known_hosts to get rid of
+this message.
+Offending ECDSA key in /home/imjang57/.ssh/known_hosts:8
+  remove with: ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R
+192.168.0.5
+ECDSA host key &lt;span class="k"&gt;for&lt;/span&gt; 192.168.0.5 has changed and you have
+requested strict checking.
+Host key verification failed.
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -30,16 +30,16 @@
 &lt;p&gt;해결하는 방법은 여러개가 있다.&lt;/p&gt;
 &lt;h3&gt;known_host 삭제하여 해결&lt;/h3&gt;
 &lt;p&gt;보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 &lt;user_home&gt;/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-keygen -f &amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot; -R 192.168.0.5
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R 192.168.0.5
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;imjang57&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="nl"&gt;myserver&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;administrator&lt;/span&gt;&lt;span class="mf"&gt;@192.168.0.5&lt;/span&gt;
-&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;authenticity&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mf"&gt;192.168.0.5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;can&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;established&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;ECDSA&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="n"&gt;fingerprint&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;
-&lt;span class="nl"&gt;bf&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;e3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;d3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;c4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="nl"&gt;c&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;cd&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;d9&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="nl"&gt;b&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;bb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;a4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nl"&gt;d1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="nl"&gt;e&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;1f&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Are&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;sure&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;want&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="k"&gt;continue&lt;/span&gt; &lt;span class="n"&gt;connecting&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;yes&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
+The authenticity of host &lt;span class="s1"&gt;&amp;#39;192.168.0.5&amp;#39;&lt;/span&gt; can&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t be established.
+ECDSA key fingerprint is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Are you sure you want to &lt;span class="k"&gt;continue&lt;/span&gt; connecting &lt;span class="o"&gt;(&lt;/span&gt;yes/no&lt;span class="o"&gt;)&lt;/span&gt;?
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -49,7 +49,7 @@
 &lt;p&gt;리눅스에서 ssh 설정은 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 디렉터리에 있다. &lt;code&gt;ssh_config&lt;/code&gt; 파일은 클라이언트 설정 파일, &lt;code&gt;sshd_config&lt;/code&gt; 는 서버(데몬) 설정 파일이다.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;ssh_config&lt;/code&gt; 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;StrictHostKeyChecking no
-UserKnownHostsFile=/dev/null
+&lt;span class="nv"&gt;UserKnownHostsFile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/null
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -57,9 +57,9 @@ UserKnownHostsFile=/dev/null
 &lt;p&gt;서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.&lt;/p&gt;
 &lt;p&gt;호스트 키는 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 에 저장되어 있다. &lt;em&gt;RSA&lt;/em&gt;, &lt;em&gt;DSA&lt;/em&gt;, &lt;em&gt;ECDSA&lt;/em&gt; 세 가지 종류의 키 파일들이 보통 생성되어 있다.&lt;/p&gt;
 &lt;p&gt;새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &amp;#39;&amp;#39; -t rsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &amp;#39;&amp;#39; -t dsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &amp;#39;&amp;#39; -t ecdsa -b 521
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t rsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t dsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t ecdsa -b 521
 &lt;/pre&gt;&lt;/div&gt;
 
 
