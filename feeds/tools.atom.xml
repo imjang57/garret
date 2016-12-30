@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/all.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2016-12-30T00:00:00+09:00</updated><entry><title>SSH Host-key identification</title><link href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/ssh-host-key-identification.html</id><summary type="html">&lt;p&gt;This is about SSH Host-key identification.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH host key&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2016-12-30T00:00:00+09:00</updated><entry><title>SSH Host-key identification</title><link href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/ssh-host-key-identification.html</id><summary type="html">&lt;p&gt;This is about SSH Host-key identification.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH host key&lt;/h1&gt;
 &lt;p&gt;가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;imjang57&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="nl"&gt;myserver&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;administrator&lt;/span&gt;&lt;span class="mf"&gt;@192.168.0.5&lt;/span&gt;
 &lt;span class="p"&gt;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&lt;/span&gt;
@@ -63,42 +63,4 @@ sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &amp;#39;&amp;#39; -t ecdsa -b
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="SSH"></category></entry><entry><title>Hello, site</title><link href="https://imjang57.github.io/garret/hello-site.html" rel="alternate"></link><published>2016-12-26T20:30:00+09:00</published><updated>2016-12-26T20:30:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-26:/garret/hello-site.html</id><summary type="html">&lt;p&gt;First post.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Hello, site&lt;/h1&gt;
-&lt;p&gt;This is first post of this site.&lt;/p&gt;
-&lt;p&gt;Metadata syntax for markdown posts:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;My&lt;/span&gt; &lt;span class="kd"&gt;super&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;
-&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;03&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;
-&lt;span class="n"&gt;Modified&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;05&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;
-&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;
-&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;publishing&lt;/span&gt;
-&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;
-&lt;span class="n"&gt;Authors&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Alexis&lt;/span&gt; &lt;span class="n"&gt;Metaireau&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Conan&lt;/span&gt; &lt;span class="n"&gt;Doyle&lt;/span&gt;
-&lt;span class="n"&gt;Summary&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Short&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;feeds&lt;/span&gt;
-
-&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt; &lt;span class="kd"&gt;super&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt; &lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This site published by &lt;a href="http://blog.getpelican.com"&gt;pelican&lt;/a&gt;. Document is &lt;a href="http://docs.getpelican.com"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To generate site, run follow command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;To publish site to git gh-pages repository, run follow command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ghp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Generate Pelican site&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;gh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Finally, push loca gh-pages branch to github gh-pages branch:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout gh-pages
-git push -u origin gh-pages
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;References&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/getpelican/pelican"&gt;Pelican Github&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://blog.getpelican.com"&gt;Pelican Home&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://docs.getpelican.com"&gt;Pelican Document&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content></entry></feed>
+&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="SSH"></category></entry></feed>

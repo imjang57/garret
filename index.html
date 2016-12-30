@@ -16,19 +16,112 @@
                 <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
                 <nav><ul>
                     <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/hello-site.html">Hello, site</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/ssh-host-key-identification.html">SSH Host-key identification</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-12-30T00:00:00+09:00">
+                Published: Fri 30 December 2016
+        </abbr>
+		<br />
+        <abbr class="modified" title="2016-12-30T00:00:00+09:00">
+                Updated: Fri 30 December 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">SSH</a> </p>
+</footer><!-- /.post-info --><h1>SSH host key</h1>
+<p>가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.</p>
+<div class="highlight"><pre><span></span><span class="n">imjang57</span><span class="p">@</span><span class="nl">myserver</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">ssh</span> <span class="n">administrator</span><span class="mf">@192.168.0.5</span>
+<span class="p">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="p">@</span> <span class="nl">WARNING</span><span class="p">:</span> <span class="n">REMOTE</span> <span class="n">HOST</span> <span class="n">IDENTIFICATION</span> <span class="n">HAS</span> <span class="n">CHANGED</span><span class="o">!</span>              <span class="p">@</span>
+<span class="p">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="n">IT</span> <span class="n">IS</span> <span class="n">POSSIBLE</span> <span class="n">THAT</span> <span class="n">SOMEONE</span> <span class="n">IS</span> <span class="n">DOING</span> <span class="n">SOMETHING</span> <span class="n">NASTY</span><span class="o">!</span>
+<span class="n">Someone</span> <span class="n">could</span> <span class="n">be</span> <span class="n">eavesdropping</span> <span class="n">on</span> <span class="n">you</span> <span class="n">right</span> <span class="n">now</span> <span class="p">(</span><span class="n">man</span><span class="o">-</span><span class="k">in</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">middle</span>
+<span class="n">attack</span><span class="p">)</span><span class="o">!</span>
+<span class="n">It</span> <span class="n">is</span> <span class="n">also</span> <span class="n">possible</span> <span class="n">that</span> <span class="n">a</span> <span class="n">host</span> <span class="n">key</span> <span class="n">has</span> <span class="n">just</span> <span class="n">been</span> <span class="n">changed</span><span class="p">.</span>
+<span class="n">The</span> <span class="n">fingerprint</span> <span class="k">for</span> <span class="n">the</span> <span class="n">ECDSA</span> <span class="n">key</span> <span class="n">sent</span> <span class="n">by</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">host</span> <span class="n">is</span>
+<span class="nl">bf</span><span class="p">:</span><span class="nl">e3</span><span class="p">:</span><span class="nl">d3</span><span class="p">:</span><span class="mi">21</span><span class="o">:</span><span class="nl">c4</span><span class="p">:</span><span class="mi">3</span><span class="nl">c</span><span class="p">:</span><span class="mi">60</span><span class="o">:</span><span class="nl">cd</span><span class="p">:</span><span class="nl">d9</span><span class="p">:</span><span class="mi">2</span><span class="nl">b</span><span class="p">:</span><span class="nl">bb</span><span class="p">:</span><span class="nl">a4</span><span class="p">:</span><span class="nl">d1</span><span class="p">:</span><span class="mi">6</span><span class="nl">e</span><span class="p">:</span><span class="mf">1f</span><span class="o">:</span><span class="n">df</span><span class="p">.</span>
+<span class="n">Please</span> <span class="n">contact</span> <span class="n">your</span> <span class="n">system</span> <span class="n">administrator</span><span class="p">.</span>
+<span class="n">Add</span> <span class="n">correct</span> <span class="n">host</span> <span class="n">key</span> <span class="k">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">imjang57</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span> <span class="n">to</span> <span class="n">get</span> <span class="n">rid</span> <span class="n">of</span>
+<span class="n">this</span> <span class="n">message</span><span class="p">.</span>
+<span class="n">Offending</span> <span class="n">ECDSA</span> <span class="n">key</span> <span class="k">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">imjang57</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="nl">known_hosts</span><span class="p">:</span><span class="mi">8</span>
+  <span class="n">remove</span> <span class="nl">with</span><span class="p">:</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;/home/imjang57/.ssh/known_hosts&quot;</span> <span class="o">-</span><span class="n">R</span>
+<span class="mf">192.168.0.5</span>
+<span class="n">ECDSA</span> <span class="n">host</span> <span class="n">key</span> <span class="k">for</span> <span class="mf">192.168.0.5</span> <span class="n">has</span> <span class="n">changed</span> <span class="n">and</span> <span class="n">you</span> <span class="n">have</span>
+<span class="n">requested</span> <span class="n">strict</span> <span class="n">checking</span><span class="p">.</span>
+<span class="n">Host</span> <span class="n">key</span> <span class="n">verification</span> <span class="n">failed</span><span class="p">.</span>
+</pre></div>
+
+
+<p><em>Host Key</em> 가 달라서 발생하는 문제다. 자세히 말하면, 클라이언트 측에 등록된 SSH 서버의 호스트 키가 현재 접속 시도하면서 새롭게 받은 호스크 키와 달라서 발생한 문제이다.</p>
+<p>SSH 서버에서 호스트 키를 새롭게 생성했거나, 클라이언트 측에서 SSH 서버의 호스트 키를 수동으로 입력했는데 잘못입력했거나, 서버를 재설치했거나, 기타 등등의 이유로 기존에 저장된 호스트 키와 연결시도하면서 새롭게 받은 호스트 키가 다를 수 있다.</p>
+<p>이는 SSH 연결을 시도하는 서버가 정말 내가 연결하려는 서버가 맞는지를 체크할 수 있는 기능이다. HTTPS 를 사용할 때 신뢰할 수 있는 사이트인지 확인하는 것과 비슷한 이유로 제공되는 기능이다.</p>
+<h2>해결 방법</h2>
+<p>해결하는 방법은 여러개가 있다.</p>
+<h3>known_host 삭제하여 해결</h3>
+<p>보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 <user_home>/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.</p>
+<div class="highlight"><pre><span></span>ssh-keygen -f &quot;/home/imjang57/.ssh/known_hosts&quot; -R 192.168.0.5
+</pre></div>
+
+
+<p>위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.</p>
+<div class="highlight"><pre><span></span><span class="n">imjang57</span><span class="p">@</span><span class="nl">myserver</span><span class="p">:</span><span class="o">~</span><span class="err">$</span> <span class="n">ssh</span> <span class="n">administrator</span><span class="mf">@192.168.0.5</span>
+<span class="n">The</span> <span class="n">authenticity</span> <span class="n">of</span> <span class="n">host</span> <span class="err">&#39;</span><span class="mf">192.168.0.5</span><span class="err">&#39;</span> <span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">established</span><span class="p">.</span>
+<span class="n">ECDSA</span> <span class="n">key</span> <span class="n">fingerprint</span> <span class="n">is</span>
+<span class="nl">bf</span><span class="p">:</span><span class="nl">e3</span><span class="p">:</span><span class="nl">d3</span><span class="p">:</span><span class="mi">21</span><span class="o">:</span><span class="nl">c4</span><span class="p">:</span><span class="mi">3</span><span class="nl">c</span><span class="p">:</span><span class="mi">60</span><span class="o">:</span><span class="nl">cd</span><span class="p">:</span><span class="nl">d9</span><span class="p">:</span><span class="mi">2</span><span class="nl">b</span><span class="p">:</span><span class="nl">bb</span><span class="p">:</span><span class="nl">a4</span><span class="p">:</span><span class="nl">d1</span><span class="p">:</span><span class="mi">6</span><span class="nl">e</span><span class="p">:</span><span class="mf">1f</span><span class="o">:</span><span class="n">df</span><span class="p">.</span>
+<span class="n">Are</span> <span class="n">you</span> <span class="n">sure</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">connecting</span> <span class="p">(</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="p">)</span><span class="o">?</span>
+</pre></div>
+
+
+<p>yes 를 입력하면 호스트 키를 <user_home>/.ssh/known_hosts 파일에 저장하고 SSH 접속하게 된다.</p>
+<p>만약 명령어 치는게 귀찮으면 그냥 known_hosts 파일 삭제하면 된다.</p>
+<h3>StrictHostKeyChecking 설정을 off 하여 해결</h3>
+<p>리눅스에서 ssh 설정은 보통 <code>/etc/ssh</code> 디렉터리에 있다. <code>ssh_config</code> 파일은 클라이언트 설정 파일, <code>sshd_config</code> 는 서버(데몬) 설정 파일이다.</p>
+<p><code>ssh_config</code> 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.</p>
+<div class="highlight"><pre><span></span>StrictHostKeyChecking no
+UserKnownHostsFile=/dev/null
+</pre></div>
+
+
+<h2>호스트 키 새로 생성하는 방법</h2>
+<p>서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.</p>
+<p>호스트 키는 보통 <code>/etc/ssh</code> 에 저장되어 있다. <em>RSA</em>, <em>DSA</em>, <em>ECDSA</em> 세 가지 종류의 키 파일들이 보통 생성되어 있다.</p>
+<p>새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.</p>
+<div class="highlight"><pre><span></span>sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &#39;&#39; -t rsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &#39;&#39; -t dsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &#39;&#39; -t ecdsa -b 521
+</pre></div>
+
+
+<p>기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 <code>y</code> 를 입력하자.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/hello-site.html" rel="bookmark"
+                           title="Permalink to Hello, site">Hello, site</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-12-26T20:30:00+09:00">
-                Published: 월 26 12월 2016
+                Published: Mon 26 December 2016
         </abbr>
 		<br />
         <abbr class="modified" title="2016-12-26T20:30:00+09:00">
-                Updated: 월 26 12월 2016
+                Updated: Mon 26 December 2016
         </abbr>
 
         <address class="vcard author">
@@ -36,38 +129,12 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/misc.html">misc</a>.</p>
 
-</footer><!-- /.post-info --><h1>Hello, site</h1>
-<p>This is first post of this site.</p>
-<p>Metadata syntax for markdown posts:</p>
-<div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">My</span> <span class="kd">super</span> <span class="n">title</span>
-<span class="n">Date</span><span class="o">:</span> <span class="mi">2010</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">03</span> <span class="mi">10</span><span class="o">:</span><span class="mi">20</span>
-<span class="n">Modified</span><span class="o">:</span> <span class="mi">2010</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">05</span> <span class="mi">19</span><span class="o">:</span><span class="mi">30</span>
-<span class="n">Category</span><span class="o">:</span> <span class="n">Python</span>
-<span class="n">Tags</span><span class="o">:</span> <span class="n">pelican</span><span class="o">,</span> <span class="n">publishing</span>
-<span class="n">Slug</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="kd">super</span><span class="o">-</span><span class="n">post</span>
-<span class="n">Authors</span><span class="o">:</span> <span class="n">Alexis</span> <span class="n">Metaireau</span><span class="o">,</span> <span class="n">Conan</span> <span class="n">Doyle</span>
-<span class="n">Summary</span><span class="o">:</span> <span class="n">Short</span> <span class="n">version</span> <span class="k">for</span> <span class="n">index</span> <span class="n">and</span> <span class="n">feeds</span>
-
-<span class="n">This</span> <span class="k">is</span> <span class="n">the</span> <span class="n">content</span> <span class="n">of</span> <span class="n">my</span> <span class="kd">super</span> <span class="n">blog</span> <span class="n">post</span><span class="o">.</span>
-</pre></div>
-
-
-<p>This site published by <a href="http://blog.getpelican.com">pelican</a>. Document is <a href="http://docs.getpelican.com">here</a>.</p>
-<p>To generate site, run follow command:</p>
-<div class="highlight"><pre><span></span>pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
-</pre></div>
-
-
-<p>To publish site to git gh-pages repository, run follow command:</p>
-<div class="highlight"><pre><span></span><span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;Generate Pelican site&quot;</span> <span class="o">-</span><span class="n">b</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span> <span class="n">output</span>
-</pre></div>
-
-
-<p>Finally, push loca gh-pages branch to github gh-pages branch:</p>
-<div class="highlight"><pre><span></span>git checkout gh-pages
-git push -u origin gh-pages
-</pre></div>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>First post.</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/hello-site.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

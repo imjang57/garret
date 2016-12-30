@@ -29,4 +29,12 @@
 &lt;p&gt;Finally, push loca gh-pages branch to github gh-pages branch:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout gh-pages
 git push -u origin gh-pages
-&lt;/pre&gt;&lt;/div&gt;</content></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/getpelican/pelican"&gt;Pelican Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blog.getpelican.com"&gt;Pelican Home&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://docs.getpelican.com"&gt;Pelican Document&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content></entry></feed>
