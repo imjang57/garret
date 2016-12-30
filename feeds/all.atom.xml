@@ -137,4 +137,57 @@ git push -u origin gh-pages
 &lt;li&gt;&lt;a href="https://github.com/getpelican/pelican"&gt;Pelican Github&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://blog.getpelican.com"&gt;Pelican Home&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://docs.getpelican.com"&gt;Pelican Document&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content></entry></feed>
+&lt;/ul&gt;</content></entry><entry><title>Java version 을 체크하는 bash script</title><link href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="alternate"></link><published>2010-12-30T00:00:00+09:00</published><updated>2010-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2010-12-30:/garret/bash-script-checking-java-version.html</id><summary type="html">&lt;p&gt;Java version 을 체크하기 위한 bash script&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Check Java version from bash script&lt;/h1&gt;
+&lt;p&gt;리눅스에서 자바 버전을 체크하기 위한 꼼수 스크립트를 간단하게 작성해서 저장하기 위한 글입니다.&lt;/p&gt;
+&lt;p&gt;java -version 명령의 결과:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ java -version
+java version &lt;span class="s2"&gt;&amp;quot;1.8.0_73&amp;quot;&lt;/span&gt;
+Java&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/span&gt; SE Runtime Environment &lt;span class="o"&gt;(&lt;/span&gt;build 1.8.0_73-b02&lt;span class="o"&gt;)&lt;/span&gt;
+Java HotSpot&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/span&gt; 64-Bit Server VM &lt;span class="o"&gt;(&lt;/span&gt;build 25.73-b02, mixed mode&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;환경변수 $JAVA_HOME을 찾아서 하는 bash script:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_HOME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+  &lt;span class="nv"&gt;JAVA_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_HOME&lt;/span&gt;&lt;span class="s2"&gt;/bin/java&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;JAVA_VERSION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_CMD&lt;/span&gt; -version 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/version/ {print $2}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Run using java version &lt;/span&gt;&lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt;&lt;span class="s2"&gt; (JAVA_HOME is &lt;/span&gt;&lt;span class="nv"&gt;$JAVA_HOME&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
+  &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt; &amp;gt; 1.8 &lt;span class="o"&gt;]]&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is greater than 1.8.
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is not supported.
+  &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Java doesn&amp;#39;t exists.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;자바 실행 파일 위치를 찾아서 하는 bash script:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;which java&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+  &lt;span class="nv"&gt;JAVA_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;whereis java&lt;span class="k"&gt;)&lt;/span&gt;
+  &lt;span class="nv"&gt;JAVA_VERSION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;java -version 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/version/ {print $2}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Run using java version &lt;/span&gt;&lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt;&lt;span class="s2"&gt; (&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_PATH&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
+  &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt; &amp;gt; 1.8 &lt;span class="o"&gt;]]&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is greater than 1.8.
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is not supported.
+  &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Java doesn&amp;#39;t exists.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;두 방법이 사실 거의 똑같다. 그냥 whereis 명령을 이용하느냐, JAVA_HOME 이라는 환경변수를 이용하느냐만 다르다.&lt;/p&gt;
+&lt;p&gt;다른 방법으로는 sort 명령을 이용해서 가장 앞에 위치하는 녀석을 비교하는 방법도 있다.&lt;/p&gt;
+&lt;p&gt;처음에는 bc 명령을 사용하려 했는데 버전은 보통 여러 개의 comma(.)로 되어있어서 bc 로 사용은 불가능했다. 사실 comma(.) 단위로 나눠서 각각 비교하는 로직 구현하면 되는데 귀찮음이 커서..&lt;/p&gt;
+&lt;p&gt;이 방법은 사실 완벽한 방법은 아니다. awk 로 추출한 문자열이 x.y.z 형태라는 걸 알고 있기 때문에 가능한 방법이다. 만약 1.8 로 버전이 추출되면 제대로 동작 안할 것이다. 제대로 하려면 comma(.) 단위로 나눠서 제대로 비교하는 함수를 만들어야 겠지..&lt;/p&gt;</content><category term="bash"></category></entry></feed>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>garret - bash</title>
+        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
+        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
+                <nav><ul>
+                    <li><a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/bash-script-checking-java-version.html">Java version 을 체크하는 bash script</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2010-12-30T00:00:00+09:00">
+                Published: Thu 30 December 2010
+        </abbr>
+		<br />
+        <abbr class="modified" title="2010-12-30T00:00:00+09:00">
+                Updated: Thu 30 December 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> </p>
+</footer><!-- /.post-info --><h1>Check Java version from bash script</h1>
+<p>리눅스에서 자바 버전을 체크하기 위한 꼼수 스크립트를 간단하게 작성해서 저장하기 위한 글입니다.</p>
+<p>java -version 명령의 결과:</p>
+<div class="highlight"><pre><span></span>$ java -version
+java version <span class="s2">&quot;1.8.0_73&quot;</span>
+Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.8.0_73-b02<span class="o">)</span>
+Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 25.73-b02, mixed mode<span class="o">)</span>
+</pre></div>
+
+
+<p>환경변수 $JAVA_HOME을 찾아서 하는 bash script:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+  <span class="nv">JAVA_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin/java&quot;</span>
+  <span class="nv">JAVA_VERSION</span><span class="o">=</span><span class="k">$(</span><span class="nv">$JAVA_CMD</span> -version 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> awk -F<span class="s1">&#39;&quot;&#39;</span> <span class="s1">&#39;/version/ {print $2}&#39;</span> <span class="p">|</span> awk -F<span class="s1">&#39;_&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Run using java version </span><span class="nv">$JAVA_VERSION</span><span class="s2"> (JAVA_HOME is </span><span class="nv">$JAVA_HOME</span><span class="s2">)&quot;</span>
+  <span class="o">[[</span> <span class="nv">$JAVA_VERSION</span> &gt; 1.8 <span class="o">]]</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span>
+  <span class="k">then</span>
+    <span class="nb">echo</span> This java version is greater than 1.8.
+  <span class="k">else</span>
+    <span class="nb">echo</span> This java version is not supported.
+  <span class="k">fi</span>
+<span class="k">else</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Java doesn&#39;t exists.&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>자바 실행 파일 위치를 찾아서 하는 bash script:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="k">if</span> <span class="o">[</span> <span class="k">$(</span>which java<span class="k">)</span> <span class="o">]</span>
+<span class="k">then</span>
+  <span class="nv">JAVA_PATH</span><span class="o">=</span><span class="k">$(</span>whereis java<span class="k">)</span>
+  <span class="nv">JAVA_VERSION</span><span class="o">=</span><span class="k">$(</span>java -version 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> awk -F<span class="s1">&#39;&quot;&#39;</span> <span class="s1">&#39;/version/ {print $2}&#39;</span> <span class="p">|</span> awk -F<span class="s1">&#39;_&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Run using java version </span><span class="nv">$JAVA_VERSION</span><span class="s2"> (</span><span class="nv">$JAVA_PATH</span><span class="s2">)&quot;</span>
+  <span class="o">[[</span> <span class="nv">$JAVA_VERSION</span> &gt; 1.8 <span class="o">]]</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span>
+  <span class="k">then</span>
+    <span class="nb">echo</span> This java version is greater than 1.8.
+  <span class="k">else</span>
+    <span class="nb">echo</span> This java version is not supported.
+  <span class="k">fi</span>
+<span class="k">else</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Java doesn&#39;t exists.&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>두 방법이 사실 거의 똑같다. 그냥 whereis 명령을 이용하느냐, JAVA_HOME 이라는 환경변수를 이용하느냐만 다르다.</p>
+<p>다른 방법으로는 sort 명령을 이용해서 가장 앞에 위치하는 녀석을 비교하는 방법도 있다.</p>
+<p>처음에는 bc 명령을 사용하려 했는데 버전은 보통 여러 개의 comma(.)로 되어있어서 bc 로 사용은 불가능했다. 사실 comma(.) 단위로 나눠서 각각 비교하는 로직 구현하면 되는데 귀찮음이 커서..</p>
+<p>이 방법은 사실 완벽한 방법은 아니다. awk 로 추출한 문자열이 x.y.z 형태라는 걸 알고 있기 때문에 가능한 방법이다. 만약 1.8 로 버전이 추출되면 제대로 동작 안할 것이다. 제대로 하려면 comma(.) 단위로 나눠서 제대로 비교하는 함수를 만들어야 겠지..</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
