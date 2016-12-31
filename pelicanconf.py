@@ -28,6 +28,7 @@ DISPLAY_CATEGORIES_ON_MENU = True
 # title => slugify from Title: metadata
 # basename => slugify from file name
 SLUGIFY_SOURCE = 'title'
+ARTICLE_EXCLUDES = ['templates']
 
 ################################################################################
 TIMEZONE = 'Asia/Seoul'

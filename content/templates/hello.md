@@ -1,9 +1,11 @@
 Title: Hello, site
 Date: 2016-12-26
 Modified: 2016-12-26
+Category: hello
+Tags: hello, site 
 Slug: hello-site
 Authors: imjang57
-Summary: First post.
+Summary: My first post.
 
 # Hello, site
 
