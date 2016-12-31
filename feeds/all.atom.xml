@@ -117,7 +117,159 @@ System Integrity Protection status: enabled.
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.howtogeek.com/230424/how-to-disable-system-integrity-protection-on-a-mac-and-why-you-shouldnt/"&gt;How to Disable System Integrity Protection on a Mac (and Why You Shouldn’t)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="mac"></category><category term="os x"></category><category term="rootless"></category></entry><entry><title>자바에서 % 출력하기</title><link href="https://imjang57.github.io/garret/print-percent-sign-in-java.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/print-percent-sign-in-java.html</id><summary type="html">&lt;p&gt;자바에서 % 문자 출력하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Java String 에서 % 문자 출력하기&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="mac"></category><category term="os x"></category><category term="rootless"></category></entry><entry><title>TMUX Introduction</title><link href="https://imjang57.github.io/garret/tmux-introduction.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/tmux-introduction.html</id><summary type="html">&lt;p&gt;TMUX 설치 및 사용법에 대한 간단한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;TMUX (Terminal Multiplexer)&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;tmux&lt;/em&gt; 는 terminal session 을 관리하기 위한 tool 이다. 여러 session 을 생성하여 서로 다른 workspace 를 만들 수 있고, session 을 유지시켜서 server 가 완전히 power off 되지않는다면 workspace 를 유지할 수도 있다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;tmux&lt;/em&gt; + &lt;em&gt;vim&lt;/em&gt; + &lt;em&gt;bash&lt;/em&gt; 는 매우 강력한 linux environment 를 제공한다.&lt;/p&gt;
+&lt;h2&gt;설치&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;OS X: &lt;code&gt;brew install tmux&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Ubuntu: &lt;code&gt;apt-get install libevent-dev tmux&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;CentOS: &lt;code&gt;yum install libevent-dev tmux&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Linux 에서는 환경에 따라서 libncurses 모듈이 필요할 수 있다&lt;/p&gt;
+&lt;h1&gt;tmux basic concepts&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;tmux&lt;/em&gt; 를 이용하기 전에 아래와 같은 개념에 대해 알고 가자.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;session&lt;/em&gt; : &lt;em&gt;tmux&lt;/em&gt; 실행 단위이다. 하나의 workspace 라고 생각할 수 있다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;window&lt;/em&gt; : &lt;em&gt;session&lt;/em&gt; 내에 생성되는 하나의 terminal&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;pane&lt;/em&gt; : terminal 화면을 분할한 단위&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;status bar&lt;/em&gt; : 화면 아래부분에 표시되는 &lt;em&gt;session&lt;/em&gt; 의 status bar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;99% 정도되는 대부분의 command 는 &lt;code&gt;ctrl + b&lt;/code&gt; 를 누른다음 이어서 command key 를 입력하여 실행된다. 예를 들어 command mode 로 직접 명령어를 입력하고 싶을 때는 &lt;code&gt;ctrl + b, :&lt;/code&gt; 와 같이 키를 입력한다. 정확하게는 &lt;code&gt;ctrl + b&lt;/code&gt; 를 누른 후 5초 내에 &lt;code&gt;:&lt;/code&gt; 를 입력한다. 5초 내에 command key 를 입력하면 된다.&lt;/p&gt;
+&lt;h2&gt;Session&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;tmux&lt;/em&gt; 를 실행하면 &lt;em&gt;session&lt;/em&gt; 이라는 것이 생성된다. &lt;em&gt;session&lt;/em&gt; 은 실제 작업이 이루어지는 workspace 이며, &lt;em&gt;tmux&lt;/em&gt; 는 이 &lt;em&gt;session&lt;/em&gt; 을 관리하는 tool 이다.&lt;/p&gt;
+&lt;h3&gt;create, rename, exit session&lt;/h3&gt;
+&lt;p&gt;새로운 session 을 생성:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tmux
+$ tmux new-session -s &amp;lt;session name&amp;gt;
+$ tmux new -s &amp;lt;session name&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;session name 을 직접 정하지 않았을 경우 숫자가 기본 session name 이 된다. 변경하고 싶으면 아래와 같은 command 를 입력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tmux rename-session -t &amp;lt;target session&amp;gt; &amp;lt;new session name&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위의 명령에서 &lt;code&gt;tmux&lt;/code&gt; 를 제외한 부분(&lt;code&gt;rename-session&lt;/code&gt; 부터)을 &lt;em&gt;session&lt;/em&gt; 내에서 command mode(&lt;code&gt;ctrl + b, :&lt;/code&gt;) 에서 사용해도 된다.
+또는 session 내에서 &lt;code&gt;ctrl + b, $&lt;/code&gt; 를 입력한다. 그러면 status bar 가 아래처럼 나타난다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(rename-session) 0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;기존의 session name 인 0 을 삭제하고 새로운 session name 을 입력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(rename-session) testsession
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;생성된 session 을 종료하고 싶으면 session 내에서 &lt;code&gt;exit&lt;/code&gt; 를 실행한다. 또는 &lt;code&gt;ctrl + d&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;h3&gt;attach and detach session&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;session&lt;/em&gt; 을 실행한 후 이를 유지하고 &lt;em&gt;session&lt;/em&gt; 밖으로 나갈 수도 있다. 서버만 내려가지 않는다면 이 &lt;em&gt;session&lt;/em&gt; 을 계속 유지시킬 수 있다. 이렇게 동작하는 것을 &lt;em&gt;session&lt;/em&gt; 을 detach 한다고 하는데 command mode 에서 &lt;code&gt;detach&lt;/code&gt; 를 입력하여 실행할 수 있다. 또는 &lt;code&gt;ctrl + b, d&lt;/code&gt; 를 입력해도 된다.&lt;/p&gt;
+&lt;p&gt;이미 생성된 session 의 목록을 확인하려면 아래 명령을 실행한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tmux list-sessions
+testsession: &lt;span class="m"&gt;1&lt;/span&gt; windows &lt;span class="o"&gt;(&lt;/span&gt;created Thu Dec &lt;span class="m"&gt;22&lt;/span&gt; 09:31:45 2016&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;224x41&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 session 에 다시 접속하려면 아래 명령을 실행한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tmux attach-session -t testsession
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위 명령을 아래 처럼 짧게 사용할 수도 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tmux attach -t testsession
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Window&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;window&lt;/em&gt; 는 &lt;em&gt;session&lt;/em&gt; 내에서 나누어지는 공간이다. 일반적으로 인터넷 브라우저나 다른 어플리케이션에서 볼 수 있는 탭과 같은 것이다. &lt;em&gt;session&lt;/em&gt; 이라는 workspace 에 여러 &lt;em&gt;window&lt;/em&gt; 를 생성하여 한번에 여러가지 일들을 동시에 할 수 있게 된다.&lt;/p&gt;
+&lt;h3&gt;create, rename, close window&lt;/h3&gt;
+&lt;p&gt;최초에 &lt;em&gt;session&lt;/em&gt; 이 생성되면 무조건 1 개의 &lt;em&gt;window&lt;/em&gt; 가 생성된다. 최대 10개까지 생성할 수 있다. 화면 아래에 있는 status bar 에서 현재 &lt;em&gt;window&lt;/em&gt; 는 &lt;code&gt;*&lt;/code&gt; 가 window name 옆에 표시된다.&lt;/p&gt;
+&lt;p&gt;현재 &lt;em&gt;session&lt;/em&gt; 에서 새로운 &lt;em&gt;window&lt;/em&gt; 를 생성하려면 &lt;code&gt;ctrl + b, c&lt;/code&gt; 를 입력한다. &lt;em&gt;tmux&lt;/em&gt; 로 새로운 &lt;em&gt;session&lt;/em&gt; 을 생성하면서 동시에 &lt;em&gt;session&lt;/em&gt; 과 &lt;em&gt;window&lt;/em&gt; 의 이름을 지정하려면 &lt;code&gt;tmux new-session -s testsession -n testwindow&lt;/code&gt; 명령으로 &lt;em&gt;tmux&lt;/em&gt; 를 실행하면 된다:&lt;/p&gt;
+&lt;p&gt;현재 활성화된(&lt;code&gt;*&lt;/code&gt; 로 표시된) &lt;em&gt;window&lt;/em&gt; 의 name 을 변경하려면 &lt;code&gt;ctrl + b, ,&lt;/code&gt; 을 입력한다.&lt;/p&gt;
+&lt;p&gt;현재 활성화된 &lt;em&gt;window&lt;/em&gt; 를 삭제하려면 &lt;code&gt;ctrl + b, &amp;amp;&lt;/code&gt; 를 입력하거나 &lt;code&gt;ctrl + d&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;h3&gt;Move to window&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;window&lt;/em&gt; 사이를 이동하려면 &lt;code&gt;ctrl + b, &amp;lt;window number: 0–9&amp;gt;&lt;/code&gt; 를 입력한다. 또는 &lt;code&gt;ctrl + b, n&lt;/code&gt; 으로 다음 &lt;em&gt;window&lt;/em&gt; 로, &lt;code&gt;ctrl + b, p&lt;/code&gt; 로 이전 &lt;em&gt;window&lt;/em&gt; 로 이동할 수 있다. 바로 직전에 작업하고 있던 &lt;em&gt;window&lt;/em&gt; 로 가려면 &lt;code&gt;ctrl + b, l&lt;/code&gt; 을 사용한다. l 의 의미는 last-window 이다.&lt;/p&gt;
+&lt;p&gt;또 다른 &lt;em&gt;window&lt;/em&gt; 를 이동하는 방법은 &lt;code&gt;ctrl + b, w&lt;/code&gt; 를 사용하는 방법이다. 이 키를 입력하면 화면에 현재 &lt;em&gt;session&lt;/em&gt; 내에 열려 있는 &lt;em&gt;window&lt;/em&gt; 들이 list-up 된다. 원하는 &lt;em&gt;window&lt;/em&gt; 를 선택하여 바로 이동할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, f&lt;/code&gt; 를 이용하면 검색을 이용하여 &lt;em&gt;window&lt;/em&gt; 를 이동할 수 있다. 검색 결과가 복수이면 해당 &lt;em&gt;window&lt;/em&gt; 들이 list-up 된다. 원하는 &lt;em&gt;window&lt;/em&gt; 를 선택해서 이동할 수 있다.&lt;/p&gt;
+&lt;h3&gt;Exit window&lt;/h3&gt;
+&lt;p&gt;현재 &lt;em&gt;window&lt;/em&gt; 를 종료하려면 terminal 에서 &lt;code&gt;exit&lt;/code&gt; command 를 실행한다. 또는 &lt;code&gt;ctrl + d&lt;/code&gt; 를 입력한다. 모든 &lt;em&gt;window&lt;/em&gt; 가 종료되면 &lt;em&gt;session&lt;/em&gt; 도 종료된다.&lt;/p&gt;
+&lt;h2&gt;Pane&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;pane&lt;/em&gt; 은 &lt;em&gt;windows&lt;/em&gt; 를 구성하는 화면들이다. &lt;em&gt;windows&lt;/em&gt; 는 1개 또는 여러 개의 pane 들로 구성될 수 있다. 때문에 2개의 &lt;em&gt;pane&lt;/em&gt; 을 만들어서 &lt;em&gt;window&lt;/em&gt; 를 좌우로 나누어 사용할 수도 있다.&lt;/p&gt;
+&lt;h3&gt;Split&lt;/h3&gt;
+&lt;p&gt;좌우로 window 분할(Split vertical)하려면 &lt;code&gt;ctrl + b, %&lt;/code&gt; 를 입력한다. 또는 command mode 로 &lt;code&gt;split-window -h&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;p&gt;상하로 window 분할(Split horizontal)하려면 &lt;code&gt;ctrl + b, “&lt;/code&gt; 를 입력한다. 또는 command mode 로 &lt;code&gt;split-window -v&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;h3&gt;Move to pane&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, q&lt;/code&gt; 를 입력하면 각 &lt;em&gt;pane&lt;/em&gt; 에 숫자가 잠시 표시된다. 이 때 원하는 pane 의 숫자를 입력하면 해당 &lt;em&gt;pane&lt;/em&gt; 으로 이동한다. 2초 간의 timeout 내에 입력해야 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, o&lt;/code&gt; 를 입력하면 정해진 순서에 따라 현재 &lt;em&gt;window&lt;/em&gt; 에 생성된 &lt;em&gt;pane&lt;/em&gt; 들을 차례대로 이동한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, 방향키(Arrow key)&lt;/code&gt; 를 입력하면 인접한 방향의 &lt;em&gt;pane&lt;/em&gt; 으로 이동한다.&lt;/p&gt;
+&lt;h3&gt;Exit pane&lt;/h3&gt;
+&lt;p&gt;현재 &lt;em&gt;pane&lt;/em&gt; 을 종료시키려면 terminal 에서 &lt;code&gt;exit&lt;/code&gt; command 를 실행한다. 또는 &lt;code&gt;ctrl + d&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, x&lt;/code&gt; 를 입력하면 status bar 에 y/n 을 묻는 prompt 가 표시된다. y 를 선택하면 종료된다.&lt;/p&gt;
+&lt;p&gt;모든 &lt;em&gt;pane&lt;/em&gt; 들이 종료되면 &lt;em&gt;window&lt;/em&gt; 도 종료된다.&lt;/p&gt;
+&lt;h3&gt;Resizing pane&lt;/h3&gt;
+&lt;p&gt;command mode 에서 명령을 입력하며 &lt;em&gt;pane&lt;/em&gt; 의 size 를 조절할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;왼쪽으로 10 줄이기 : &lt;code&gt;resize-pane -L 10&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;오른쪽으로 10 늘리기 : &lt;code&gt;resize-pane -R 10&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;아래쪽으로 10 늘리기 : &lt;code&gt;resize-pane -D 10&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;위쪽으로 10 늘리기 : &lt;code&gt;resize-pane -U 10&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Configuration file&lt;/h1&gt;
+&lt;p&gt;tmux configuration file 은 &lt;code&gt;~/.tmux.conf&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;h1&gt;Key binding&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b + ?&lt;/code&gt; 을 입력하면 현재의 key binding 리스트를 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;사용자가 원하면 &lt;code&gt;~/.tmux.conf&lt;/code&gt; 파일에 key binding 를 설정할 수 있다. 자세한 내용은 tmux manpage 를 참고하자.&lt;/p&gt;
+&lt;h1&gt;Copy mode&lt;/h1&gt;
+&lt;p&gt;tmux 를 실행하고 있는 환경에서는 scroll bar 가 없다. 이때 &lt;em&gt;Copy mode&lt;/em&gt; 를 사용하면 이전 출력들을 볼 수 있다. 또한 &lt;em&gt;session&lt;/em&gt; 안에서 원하는 text 를 copy / paste 할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, [&lt;/code&gt; 를 입력하면 &lt;em&gt;Copy mode&lt;/em&gt; 로 진입한다. &lt;em&gt;pane&lt;/em&gt; 의 오른쪽 상단에 buffer 에 저장된 총 line 수가 출력된다. &lt;em&gt;Copy mode&lt;/em&gt; 를 종료하고 싶으면 &lt;code&gt;Enter&lt;/code&gt; 를 입력하거나 &lt;code&gt;q&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Copy mode&lt;/em&gt; 에서 이동은 &lt;code&gt;방향키(Arrow key)&lt;/code&gt;, &lt;code&gt;PageUp&lt;/code&gt;, &lt;code&gt;PageDown&lt;/code&gt; 키들을 사용한다. 만약 vi editor 의 방식으로 이동하고 싶으면 &lt;code&gt;~/.tmux.conf&lt;/code&gt; 파일에 &lt;code&gt;setw -g mode-keys vi&lt;/code&gt; 를 추가한다. 이 설정을 하면 &lt;code&gt;h&lt;/code&gt;, &lt;code&gt;j&lt;/code&gt;, &lt;code&gt;k&lt;/code&gt;, &lt;code&gt;l&lt;/code&gt;, &lt;code&gt;G&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;ctrl + f&lt;/code&gt;, &lt;code&gt;ctrl + b&lt;/code&gt; 등 vi editor 에서 cursor 이동에 사용되는 key 들을 사용할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Copy mode&lt;/em&gt; 에서 검색은 &lt;code&gt;?&lt;/code&gt; 와 &lt;code&gt;/&lt;/code&gt; 를 사용한다. &lt;code&gt;?&lt;/code&gt; 또는 &lt;code&gt;/&lt;/code&gt; 를 입력하면 &lt;em&gt;pane&lt;/em&gt; 왼쪽 아래부분에 &lt;code&gt;Search Up:&lt;/code&gt; 이라고 표시된다. 여기에 검색어를 입력한다. &lt;code&gt;?&lt;/code&gt; 를 입력하면 위로 검색, &lt;code&gt;/&lt;/code&gt; 를 입력하면 아래로 검색한다. 다음, 이전 검색은 &lt;code&gt;N&lt;/code&gt;, &lt;code&gt;n&lt;/code&gt; 을 입력한다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Copy mode&lt;/em&gt; 에서 &lt;code&gt;SPACEBAR&lt;/code&gt; 키를 입력하면 &lt;em&gt;Visual mode&lt;/em&gt; 가 되며, Text 를 선택할 수 있게 된다. 선택한 Text 를 복사하고 싶으면 &lt;code&gt;Enter&lt;/code&gt; 키를 입력한다. &lt;em&gt;Copy mode&lt;/em&gt; 에서는 quit 의 의미이지만 &lt;em&gt;Visual mode&lt;/em&gt; 에서는 복사와 함꼐 quit 를 수행한다. 복사한 Text 를 붙여넣고 싶다면 &lt;code&gt;ctrl + b, ]&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl + b, :&lt;/code&gt; 를 입력하여 command mode 를 실행한 후 &lt;code&gt;list-buffers&lt;/code&gt; 를 실행하면 현재 저장된 모든 buffer 들을 볼 수 있다. &lt;code&gt;choose-buffer&lt;/code&gt; 를 입력하면 모든 buffer 들의 리스트가 출력되고 원하는 buffer 를 선택할 수 있다. &lt;code&gt;show-buffer&lt;/code&gt; 를 입력하면 0번째 buffer 의 내용을 보여준다. 참고로 &lt;code&gt;ctrl + b, ]&lt;/code&gt; 는 무조건 0번째 buffer 를 붙여넣기 한다.&lt;/p&gt;
+&lt;h1&gt;Start with script&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;session&lt;/em&gt; 을 만들고, 화면을 분할하고, 특정 directory 를 생성하고, 패키지를 설치하고, 기타 필요한 작업들을 script 로 작성하여 &lt;em&gt;session&lt;/em&gt; 을 생성할 때 한꺼번에 수행되도록 할 수 있다.&lt;/p&gt;
+&lt;p&gt;tmux initilizing automation script example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat start_with_tmux.sh
+&lt;span class="c1"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nv"&gt;SESSION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;tmuxtest
+&lt;span class="nv"&gt;PROJECT_HOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Projects&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;PROJECT_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;node&lt;/span&gt;&lt;span class="p"&gt;-project&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;span class="nv"&gt;TMUX&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;tmux&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# Create new session&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; new-session -d -s &lt;span class="nv"&gt;$SESSION&lt;/span&gt;
+&lt;span class="c1"&gt;# Create new windows&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; new-window -t &lt;span class="nv"&gt;$SESSION&lt;/span&gt;:1 -n withindex
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; new-window -t &lt;span class="nv"&gt;$SESSION&lt;/span&gt; -n withoutindex
+&lt;span class="c1"&gt;# Select window&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; &lt;span class="k"&gt;select&lt;/span&gt;-window -t withindex
+&lt;span class="c1"&gt;# Split window&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; split-window -h
+&lt;span class="c1"&gt;# Select pane and run commands&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; &lt;span class="k"&gt;select&lt;/span&gt;-pane -t 0
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; send-keys &lt;span class="s2"&gt;&amp;quot;mkdir -p &lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_HOME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; Enter
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; send-keys &lt;span class="s2"&gt;&amp;quot;cd &lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_HOME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; Enter
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; send-keys &lt;span class="s2"&gt;&amp;quot;echo &amp;#39;date&amp;#39; &amp;gt; test.txt&amp;quot;&lt;/span&gt; Enter
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; split-window -v
+&lt;span class="c1"&gt;# C-m means Carriage Return (one of control characters)&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; send-keys &lt;span class="s2"&gt;&amp;quot;cd &lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_HOME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; Enter
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; send-keys &lt;span class="s2"&gt;&amp;quot;tail -f test.txt&amp;quot;&lt;/span&gt; C-m
+&lt;span class="c1"&gt;# Select pane and run commands&lt;/span&gt;
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; &lt;span class="k"&gt;select&lt;/span&gt;-pane -t 2
+&lt;span class="nv"&gt;$TMUX&lt;/span&gt; send-keys &lt;span class="s2"&gt;&amp;quot;ls -ail&amp;quot;&lt;/span&gt; Enter
+References
+http://tmux.github.io/
+https://github.com/tmux/tmux
+http://haruair.com/blog/2124
+http://nodeqa.com/nodejs_ref/99
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://tmux.github.io"&gt;tmux web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/tmux/tmux"&gt;tmux github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="tmux"></category></entry><entry><title>자바에서 % 출력하기</title><link href="https://imjang57.github.io/garret/print-percent-sign-in-java.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/print-percent-sign-in-java.html</id><summary type="html">&lt;p&gt;자바에서 % 문자 출력하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Java String 에서 % 문자 출력하기&lt;/h1&gt;
 &lt;p&gt;오늘 개발하다가 &lt;code&gt;%&lt;/code&gt; 문자가 들어가는 문자열을 처리할 일이 있었다. 처음에 아무 생각없이 아래처럼 작성했다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;test&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;string is \&amp;quot;%%s%\&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;str1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
