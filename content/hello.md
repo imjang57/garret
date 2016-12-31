@@ -1,6 +1,6 @@
 Title: Hello, site
-Date: 2016-12-26 20:30
-Modified: 2016-12-26 20:30
+Date: 2016-12-26
+Modified: 2016-12-26
 Slug: hello-site
 Authors: imjang57
 Summary: First post.
@@ -13,8 +13,8 @@ Metadata syntax for markdown posts:
 
 ```
 Title: My super title
-Date: 2010-12-03 10:20
-Modified: 2010-12-05 19:30
+Date: 2010-12-03
+Modified: 2010-12-05
 Category: Python
 Tags: pelican, publishing
 Slug: my-super-post
