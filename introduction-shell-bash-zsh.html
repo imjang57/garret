@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>garret - bash</title>
+        <title>Shell, Bash, Zsh</title>
         <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
         <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
@@ -17,16 +17,21 @@
                 <nav><ul>
                     <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
+                    <li class="active"><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html" rel="bookmark"
+           title="Permalink to Shell, Bash, Zsh">Shell, Bash, Zsh</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html">Shell, Bash, Zsh</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-12-31T00:00:00+09:00">
                 Published: 토 31 12월 2016
@@ -41,7 +46,7 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/shell.html">shell</a> <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> <a href="https://imjang57.github.io/garret/tag/zsh.html">zsh</a> </p>
-</footer><!-- /.post-info --><h1>Shell</h1>
+</footer><!-- /.post-info -->      <h1>Shell</h1>
 <p><em>Shell</em> 은 <em>OS</em> (<em>Operating System</em>) 가 제공하는 여러 서비스들을 사용하기 위한 User interface 를 말한다. <em>CLI</em> (<em>Command-line interface</em>) 도 <em>Shell</em> 이고 <em>GUI</em> (<em>Graphical User Interface</em>) 도 <em>Shell</em> 이다.</p>
 <p><em>Linux</em> 와 <em>OS X</em> 에서는 보통 <em>Bash</em> 가 Default shell 로 제공된다. 이 외에 <em>csh</em>, <em>ksh</em>, <em>zsh</em> 등 많은 <em>Shell</em> 들이 있다.</p>
 <p>요즘 가장 많이 사용되는 Linux 와 OS X  에서 Default shell 이고 수 많은 shell script 들이 <em>Bash</em> 를 기반으로 작성되기 때문에 <em>Bash</em> 는 필수이다. 여기에 나는 개인적으로 사용되는 환경에서는 <em>Zsh</em> 을 추가로 설치해서 사용한다.</p>
@@ -100,40 +105,11 @@ ssh=&#39;ssh -o StrictHostKeyChecking=no&#39;
 
 <p>변경 후 <code>~/.zshrc</code> 파일을 다시 적용하면 theme 가 적용된다. 만약 <code>ZSH_THEME="random"</code> 으로 하면 여러 테마들이 로그인할 때마다 랜덤으로 적용된다.</p>
 <p>agnoster 테마는 Powerline font 를 필요로 한다. 이 폰트는 <a href="https://github.com/powerline/fonts">Powerline github</a> 에서 받을 수 있다. 이 저장소를 clone 한 후 <code>install.sh</code> 파일을 실행하면 알아서 폰트를 설치해준다.</p>
-<p>OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 <em>Meslo LG M for Powerline</em> 으로 바꿔주자.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 <em>Meslo LG M for Powerline</em> 으로 바꿔주자.</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="bookmark"
-                           title="Permalink to Java version 을 체크하는 bash script">Java version 을 체크하는 bash script</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-12-30T00:00:00+09:00">
-                Published: 목 30 12월 2010
-        </abbr>
-		<br />
-        <abbr class="modified" title="2010-12-30T00:00:00+09:00">
-                Updated: 목 30 12월 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> </p>
-</footer><!-- /.post-info -->                <p>Java version 을 체크하기 위한 bash script</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/bash-script-checking-java-version.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
