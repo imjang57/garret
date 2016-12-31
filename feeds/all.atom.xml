@@ -144,7 +144,40 @@ ssh=&amp;#39;ssh -o StrictHostKeyChecking=no&amp;#39;
 
 &lt;p&gt;변경 후 &lt;code&gt;~/.zshrc&lt;/code&gt; 파일을 다시 적용하면 theme 가 적용된다. 만약 &lt;code&gt;ZSH_THEME="random"&lt;/code&gt; 으로 하면 여러 테마들이 로그인할 때마다 랜덤으로 적용된다.&lt;/p&gt;
 &lt;p&gt;agnoster 테마는 Powerline font 를 필요로 한다. 이 폰트는 &lt;a href="https://github.com/powerline/fonts"&gt;Powerline github&lt;/a&gt; 에서 받을 수 있다. 이 저장소를 clone 한 후 &lt;code&gt;install.sh&lt;/code&gt; 파일을 실행하면 알아서 폰트를 설치해준다.&lt;/p&gt;
-&lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
+&lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>특수 문자들의 영어 이름</title><link href="https://imjang57.github.io/garret/name-of-special-characters.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/name-of-special-characters.html</id><summary type="html">&lt;p&gt;특수 문자들의 영어 이름&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Special characters name&lt;/h1&gt;
+&lt;p&gt;개발자로 살면 다양한 특수문자들을 사용하게 되는데 구글링하거나 다른 사람과 대화할 때 이들의 이름이 기억안나 당황하는 경우가 많다. 그래서 이들의 영어 이름을 메모한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;#39; : single quotation mark, single quote
+&amp;quot; : double quotation mark, double quotes
+* : asterisk, bullet
+$ : dollar
+- : dash, hyphen
+_ : underscore
+% : percent sign
+# : pound, number of, hashtag
+&amp;amp; : ampersand
+: : colon
+; : semi-colon
+| : vertical bar, pipe
+\ : backslash
+/ : slash, divide
+&amp;lt; : less than sign
+&amp;gt; : greater than sign
+? : question mark
+! : exclamation mark
+() : parentheses, bracket
+( : open parenthesss
+) : close parenthesss
+[] : square bracket
+{} : curly bracket
++ : plus sign
+- : minus sign
+. : dot, period
+, : comma
+^ : caret, modifier letter, circumflex accent
+` : grave accent, back tick
+~ : tilde
+@ : at symbol
+&lt;/pre&gt;&lt;/div&gt;</content><category term="special characters"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
 &lt;p&gt;예전에 (2015년 인가..??) OS X 가 &lt;em&gt;El Capitan&lt;/em&gt; 으로 업데이트되면서 새롭게 생겨난 시스템 보안 관련 기능이다. &lt;em&gt;Rootless&lt;/em&gt; 라고도 하는 기능이다.&lt;/p&gt;
 &lt;p&gt;보통 Linux/Unix 시스템은 root 사용자가 모든 파일을 읽고 쓸 수 있는데, 이 기능은 &lt;em&gt;Kernel&lt;/em&gt; 자체가 System file 들에 대한 쓰기 작업을 아예 막아 버리는 기능이다. 따라서, 이전에는 sudo 등으로 시스템 파일들을 수정할 수 있었지만 이제는 불가능하다.&lt;/p&gt;
 &lt;p&gt;Rootless 에 의해 보호되는 파일 목록:&lt;/p&gt;
@@ -428,45 +461,7 @@ sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &lt;span class="s1"&gt;&amp;#3
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="SSH"></category></entry><entry><title>Hello, site</title><link href="https://imjang57.github.io/garret/hello-site.html" rel="alternate"></link><published>2016-12-26T00:00:00+09:00</published><updated>2016-12-26T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-26:/garret/hello-site.html</id><summary type="html">&lt;p&gt;First post.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Hello, site&lt;/h1&gt;
-&lt;p&gt;This is first post of this site.&lt;/p&gt;
-&lt;p&gt;Metadata syntax for markdown posts:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Title&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;My&lt;/span&gt; &lt;span class="kd"&gt;super&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;
-&lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;03&lt;/span&gt;
-&lt;span class="n"&gt;Modified&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2010&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;05&lt;/span&gt;
-&lt;span class="n"&gt;Category&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;
-&lt;span class="n"&gt;Tags&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;publishing&lt;/span&gt;
-&lt;span class="n"&gt;Slug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;
-&lt;span class="n"&gt;Authors&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Alexis&lt;/span&gt; &lt;span class="n"&gt;Metaireau&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Conan&lt;/span&gt; &lt;span class="n"&gt;Doyle&lt;/span&gt;
-&lt;span class="n"&gt;Summary&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Short&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;feeds&lt;/span&gt;
-
-&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;my&lt;/span&gt; &lt;span class="kd"&gt;super&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt; &lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This site published by &lt;a href="http://blog.getpelican.com"&gt;pelican&lt;/a&gt;. Document is &lt;a href="http://docs.getpelican.com"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To generate site, run follow command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pelican /path/to/content [-o /path/to/output] [-s publishconf.py]
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;To publish site to git gh-pages repository, run follow command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ghp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Generate Pelican site&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;gh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Finally, push loca gh-pages branch to github gh-pages branch:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout gh-pages
-git push -u origin gh-pages
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;References&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/getpelican/pelican"&gt;Pelican Github&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://blog.getpelican.com"&gt;Pelican Home&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://docs.getpelican.com"&gt;Pelican Document&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content></entry><entry><title>Java version 을 체크하는 bash script</title><link href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="alternate"></link><published>2010-12-30T00:00:00+09:00</published><updated>2010-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2010-12-30:/garret/bash-script-checking-java-version.html</id><summary type="html">&lt;p&gt;Java version 을 체크하기 위한 bash script&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Check Java version from bash script&lt;/h1&gt;
+&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="SSH"></category></entry><entry><title>Java version 을 체크하는 bash script</title><link href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="alternate"></link><published>2010-12-30T00:00:00+09:00</published><updated>2010-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2010-12-30:/garret/bash-script-checking-java-version.html</id><summary type="html">&lt;p&gt;Java version 을 체크하기 위한 bash script&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Check Java version from bash script&lt;/h1&gt;
 &lt;p&gt;리눅스에서 자바 버전을 체크하기 위한 꼼수 스크립트를 간단하게 작성해서 저장하기 위한 글입니다.&lt;/p&gt;
 &lt;p&gt;java -version 명령의 결과:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ java -version
