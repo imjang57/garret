@@ -26,7 +26,71 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/iptables.html">iptables</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html">SSH Brute force 막기</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-01T00:00:00+09:00">
+                Published: 일 01 1월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-01T00:00:00+09:00">
+                Updated: 일 01 1월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> <a href="https://imjang57.github.io/garret/tag/brute-force.html">brute force</a> </p>
+</footer><!-- /.post-info --><h1>ssh brute force 막기</h1>
+<p>AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..</p>
+<p>어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)</p>
+<p>brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.</p>
+<p>ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.</p>
+<p>blacklist 와 ssh chain 생성:</p>
+<div class="highlight"><pre><span></span># iptables -N blacklist
+# iptables -N ssh
+</pre></div>
+
+
+<p>INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.</p>
+<div class="highlight"><pre><span></span># iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
+</pre></div>
+
+
+<p>blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.</p>
+<div class="highlight"><pre><span></span># iptables -A blacklist -m recent --set --name blacklist
+# iptables -A blacklist -j REJECT
+</pre></div>
+
+
+<p>ssh chain 은 다음과 같다.</p>
+<div class="highlight"><pre><span></span># iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
+# iptables -A ssh -m recent --set --name ssh
+# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
+# iptables -A ssh -j ACCEPT
+</pre></div>
+
+
+<p>이 ssh chain 은 다음과 같이 동작한다.</p>
+<ol>
+<li>접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.</li>
+<li>접속 주소를 "ssh" 목록이 기록한다.</li>
+<li>접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.</li>
+<li>위의 3개가 다 통과하면 ssh 접속을 허락한다.</li>
+</ol>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/iptables.html" rel="bookmark"
+                           title="Permalink to iptables">iptables</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-01T00:00:00+09:00">
                 Published: 일 01 1월 2017
@@ -41,196 +105,12 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> </p>
-</footer><!-- /.post-info --><h1>iptables</h1>
-<p><em>iptables</em> 는 리눅스에서 네트웍 방화벽으로 사용되는 도구이다. Source, Destination, Protocol, State 등으로 다양한 조건을 설정할 수 있다. 리눅스 호스트에서 제공되는 가장 기초적인 방화벽 도구이며, C언어로 작성된 packet filtering framework 인 <a href="https://www.netfilter.org">netfilter</a> 를 기반으로 동작한다. 사실은 iptables 가 netfilter 의 하위 프로젝트라고 볼 수도 있다. 보통 <em>netfilter/iptables</em> 와 같이 함께 언급되기도 한다.</p>
-<ul>
-<li><a href="http://www.netfilter.org">netfilter</a></li>
-<li><a href="https://www.netfilter.org/projects/iptables/index.html">iptables</a></li>
-<li><a href="https://git.netfilter.org/">netfilter git repository</a></li>
-<li><a href="https://git.netfilter.org/iptables/">iptables git repository</a></li>
-</ul>
-<p>대부분의 리눅스 배포판에서 <em>iptables</em> 는 기본적으로 제공된다. <code>iptables</code> 명령으로 방화벽 정책 관련 작업을 수행할 수 있고 <em>iptables-service</em> 패키지를 설치하면 Daemon 형태로 관리가 가능하다.</p>
-<p><em>iptables</em> 에서 사용되는 정책(Rule)을 저장하기 위한 파일의 위치는 <code>/etc/sysconfig/iptables</code> 이다.</p>
-<p>참고로, CentOS 7 부터는 <em>iptables</em> 대신 <a href="http://www.firewalld.org">firewalld</a> 가 사용된다. 클라우드 환경에서의 조금 더 유연한 방화벽 관리를 위해 python 으로 만든 도구인데, 내부적으로는 <em>netfilter/iptables</em> 를 사용한 front-end for the iptables 이다. 사용자 입장에서는 그저 명령어를 <code>iptables</code> 대신에 <code>firewall-cmd</code> 나 <code>firewall-config</code> 를 사용하게 된 것이다. CentOS 7 에는 <em>iptables</em> 자체는 있지만 <em>iptables-service</em> 가 없어서 <em>firewalld</em> 로 방화벽을 관리하도록 하는데, 사실 <em>filrewalld</em> 를 끄고, <em>iptables-service</em> 를 설치한 후 사용할 수도 있다(인터넷에 찾으면 많이 나온다). 하지만 이왕 바뀐거 나중에 다시 롤백되지 않을 가능성이 크니 익숙해지는게 좋을 테고 익숙해지면 <em>Redhat</em> 이 <em>firewalld</em> 를 선택한 이유도 알게 될 지도.. 어쨌든 이 글에선 <em>firewalld</em> 에 대해선 다루지 않는다.</p>
-<p>만약 iptables 가 설치되어 있지 않다면 아래와 같이 설치하자.</p>
-<div class="highlight"><pre><span></span>$ yum install iptables iptables-service
-</pre></div>
-
-
-<h2>tables</h2>
-<p><em>iptables</em> 는 4개의 <em>table</em> 을 관리한다.</p>
-<ul>
-<li><em>filter</em></li>
-<li><em>nat</em></li>
-<li><em>mangle</em></li>
-<li><em>raw</em></li>
-</ul>
-<p>보통 사용하는 <em>table</em> 은 <em>filter</em> 이다.</p>
-<h2>chain</h2>
-<p><em>filter table</em> 에는 <em>INPUT</em>, <em>OUTPUT</em>, <em>FORWARD</em> 3개의 <em>chain</em> 이 있다. 각 <em>chain</em> 들은 Network Traffic (IP Packet) 에 대하여 정해진 규칙들을 수행한다.</p>
-<ul>
-<li><em>INPUT</em> : Host 를 향해 들어오는 Packet</li>
-<li><em>OUTPUT</em> : Host 에서 나가는 Packet</li>
-<li><em>FORWARD</em> : Host 가 Destination 이 아닌 Packet</li>
-</ul>
-<p><em>INPUT chain</em> 에 해당하는 Packet 을 허용(<em>ACCEPT</em>), 거부(<em>REJECT</em>), 또는 드랍(<em>DROP</em>) 할 지 결정할 수 있다.</p>
-<h2>match</h2>
-<p>어떤 Packet 에 규칙을 적용할지 판단하기 위한 조건이다.</p>
-<ul>
-<li><code>--source</code> (<code>-s</code>) : Source IP address 또는 Network</li>
-<li><code>--destination</code> (<code>-d</code>) : Destination address 또는 Network</li>
-<li><code>--protocol</code> (<code>-p</code>) : Protocol</li>
-<li><code>--in-interface</code> (<code>-i</code>) : 입력 interface</li>
-<li><code>--out-interface</code> (<code>-o</code>) : 출력 interface</li>
-<li><code>--state</code> : 연결 상태</li>
-<li><code>--string</code> : Application Layer Data 의 Byte 순서</li>
-<li><code>--comment</code> : Kernel memory 내의 규칙과 연계되는 최대 256 bytes 주석</li>
-<li><code>--syn</code> (<code>-y</code>) : SYN Packet 을 허용하지 않음</li>
-<li><code>--fragment</code> (<code>-f</code>) : 두 번째 이후의 조각에 대해서 규칙을 명시</li>
-<li><code>--table</code> (<code>-t</code>) : 처리될 table</li>
-<li><code>--jump</code> (<code>-j</code>) : 규칙에 맞는 Packet 을 어떻게 처리할 것인가를 명시</li>
-<li><code>--match</code> (<code>-m</code>) : 특정 module 과의 매치</li>
-</ul>
-<h2>target</h2>
-<p>Packet 에 적용하려는 동작이다.</p>
-<ul>
-<li><em>ACCEPT</em> : Packet 을 받아들인다.</li>
-<li><em>DROP</em> : Packet 을 버린다. Packet 을 송신한 쪽은 아무런 응답도 받지 못한다.</li>
-<li><em>REJECT</em> : Packet 을 버리고 이와 동시에 적절한 응답 패킷(connection refused)을 전송한다.</li>
-<li><em>LOG</em> : Packet 을 syslog에 기록한다.</li>
-<li><em>RETURN</em> : 호출 체인 내에서 Packet 처리를 계속한다.</li>
-</ul>
-<h2>연결 추적(Connection Tracking)</h2>
-<p><em>iptables</em> 는 연결 추적(connection tracking)이라는 방법을 사용하여 내부 Network 상 서비스 연결 상태에 따라서 그 연결을 감시하고 제한할 수 있게 해준다. 연결 추적 방식은 연결 상태를 표에 저장하기 때문에, 다음과 같은 연결 상태에 따라서 시스템 관리자가 연결을 허용하거나 거부할 수 있다.</p>
-<ul>
-<li><em>NEW</em> : 새로운 Connection 을 요청하는 Packet, (예: <em>HTTP</em> 요청)</li>
-<li><em>ESTABLISHED</em> : 기존 Connection 의 일부인 Packet</li>
-<li><em>RELATED</em> : 기존 Connection 에 속하지만 새로운 Connection 을 요청하는 Packet, 예를 들면 접속 port 가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 port 라도 사용 가능하다.</li>
-<li><em>INVALID</em> : 연결 추적표에서 어디 Connection 에도 속하지 않은 Packet</li>
-</ul>
-<p>상태에 기반(stateful)한 <em>iptables</em> 연결 추적 기능은 어느 Network Protocol 에서나 사용 가능하다. <em>UDP</em> 와 같이 상태를 저장하지 않는 (stateless) Protocol 에서도 사용할 수 있다.</p>
-<h2>명령어(commond)</h2>
-<p><em>iptables</em> 에서 사용 가능한 명령들의 목록:</p>
-<ul>
-<li><code>-A</code> (<code>--append</code>) : 새로운 규칙을 추가한다.</li>
-<li><code>-D</code> (<code>--delete</code>) : 규칙을 삭제한다.</li>
-<li><code>-C</code> (<code>--check</code>) : 패킷을 테스트한다.</li>
-<li><code>-R</code> (<code>--replace</code>) : 새로운 규칙으로 교체한다.</li>
-<li><code>-I</code> (<code>--insert</code>) : 새로운 규칙을 삽입한다.</li>
-<li><code>-L</code> (<code>--list</code>) : 규칙을 출력한다.</li>
-<li><code>-F</code> (<code>--flush</code>) : <em>chain</em> 으로부터 규칙을 모두 삭제한다.</li>
-<li><code>-Z</code> (<code>--zero</code>) : 모든 <em>chain</em> 의 패킷과 바이트 카운터 값을 0으로 만든다.</li>
-<li><code>-N</code> (<code>--new</code>) : 새로운 <em>chain</em> 을 만든다.</li>
-<li><code>-X</code> (<code>--delete-chain</code>) : <em>chain</em> 을 삭제한다.</li>
-<li><code>-P</code> (<code>--policy</code>) : 기본정책을 변경한다.</li>
-</ul>
-<p>추가로 <code>-L</code> 옵션 이용시 <code>-n</code> (<code>--numeric</code>) 옵션을 추가하면 address 와 port 를 더 편하게 볼 수 있다. (<code>iptables -nL</code>)</p>
-<p>내용을 확인할 때 <code>--line-numbers</code> 를 추가하면 각 Ruleset 들의 순서도 같이 확인할 수 있다.</p>
-<p><code>-v</code> (<code>--verbose</code>) 옵션을 사용하면 더 다양한 정보를 볼 수 있다.</p>
-<p>추가 사용법은 <code>-h</code> (<code>--help</code>) 를 확인하자.</p>
-<h2>기본 동작</h2>
-<p>다음은 <em>iptables</em> 의 기본 동작 과정이다.</p>
-<p>패킷에 대한 동작은 위에서 부터 차례로 각 규칙에 대해 검사하고, 그 규칙과 일치하는 패킷에 대하여 타겟에 지정한 <em>ACCEPT</em>, <em>DROP</em> 등을 수행한다.</p>
-<p>규칙이 일치하고 작업이 수행되면, 그 패킷은 해당 규칙의 결과에 따리 처리하고 체인에서 추가 규칙을 무시한다.</p>
-<p>패킷이 체인의 모든 규칙과 매치하지 않아 규칙의 바닥에 도달하면 정해진 기본정책(policy)이 수행된다.</p>
-<p>기본 정책은 policy <em>ACCEPT</em>, policy <em>DROP</em> 으로 설정할 수 있다.</p>
-<p>일반적으로 기본정책은 모든 패킷에 대해 <em>DROP</em> 을 설정하고 특별히 지정된 포트와 IP주소등에 대해 <em>ACCEPT</em> 를 수행하게 만든다.</p>
-<h1>iptables 사용하기</h1>
-<p>iptables 적용 예:</p>
-<ul>
-<li><code>iptables -P INPUT ACCEPT</code> : <em>INPUT Chain</em> 의 기본 정책을 <em>ACCEPT</em> 로 설정</li>
-<li><code>iptables -P INPUT DROP</code> : <em>INPUT Chain</em> 의 기본정책을 <em>DROP</em> 으로 설정</li>
-<li><code>iptables -F</code> : <em>Chain</em> 에 정의된 모든 규칙을 삭제</li>
-<li><code>iptables -nL</code> : 현재 ruleset 설정 확인(address 와 port 는 숫자로 출력)</li>
-<li><code>iptables -A INPUT -i lo -j ACCEPT</code> : <em>INPUT Chain</em> 에 localhost interface 인 Packet 은 모두 <em>ACCEPT</em></li>
-<li><code>iptables -A INPUT -m state — state ESTABLISHED,RELATED -j ACCEPT</code> : <em>INPUT Chain</em> 에 state module 의 state 가 <em>ESTABLISHED</em>, <em>RELATED</em> 인 Packet 에 대해 <em>ACCEPT</em></li>
-<li><code>iptables -A INPUT -p tcp -m tcp — dport 22 -j ACCEPT</code> : <em>INPUT Chain</em> 에 Protocol 의 <em>TCP</em> 이며 destination port 가 22번인 Packet 에 대해 <em>ACCEPT</em></li>
-</ul>
-<p><code>service iptables save</code> 명령을 실행하면 <code>/etc/sysconfig/iptables</code> 에 <em>iptables</em> 현재 설정이 저장된다.</p>
-<p><em>iptables</em> 규칙을 만들 때는 순서가 매우 중요하다. 예를 들어 만일 <em>chain</em> 에서 local network 인 192.168.100.0/24 subnetwork 에서 들어오는 모든 packet 을 <em>DROP</em> 하도록 지정한 후 (<em>DROP</em> 하도록 지정된 subnetwork 에 포함되는) 192.168.100.13 에서 들어오는 packet 을 모두 허용하는 <em>chain</em> (<code>-A</code>)을 그 후에 추가하면 뒤에 추가된 추가 규칙이 무시된다. 먼저 192.168.100.13 을 허용하는 규칙을 설정한 후 subnet 을 <em>DROP</em> 하는 규칙을 설정해야한다.</p>
-<p>HTTP Web Server 를 용할 경우:</p>
-<div class="highlight"><pre><span></span>iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-</pre></div>
-
-
-<p>HTTPS:</p>
-<div class="highlight"><pre><span></span>iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p tcp -m multiport --dports 80,443 -j ACCEPT
-</pre></div>
-
-
-<p>MySQL (port 3306):</p>
-<div class="highlight"><pre><span></span>iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
-</pre></div>
-
-
-<p>FTP(passive mode):</p>
-<div class="highlight"><pre><span></span>iptables -A INPUT -p tcp --dport 21 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT
-iptables -A INPUT -p tcp --dport 1024:65535 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 1024:65535 -j ACCEPT
-</pre></div>
-
-
-<p>NTP 시간동기화:</p>
-<div class="highlight"><pre><span></span>iptables -A INPUT -p udp --dport 123 -j ACCEPT
-</pre></div>
-
-
-<h1>서버의 취약점을 차단하기 위한 iptables 설정 예</h1>
-<p>NULL 패킷 차단: <code>iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP</code></p>
-<p>NULL 패킷은 정찰 패킷으로 서버설정의 약한 곳을 찾기위한 방법으로 사용된다.</p>
-<h1>기타 사용법</h1>
-<p>기타 <em>iptables</em> 사용법에 대해 알아보자.</p>
-<h2>iptables 수정</h2>
-<p>등록된 <em>iptables</em> 를 수정하는 방법은 <code>/etc/sysconfig/iptables</code> 에서 직접 vi로 수정하거나 <code>iptables</code> 명령어를 사용한다.</p>
-<p>실행 순번을 확인하기: <code>iptables -nL --line-number</code></p>
-<p>순번 3의 행을 수정(replace, <code>-R</code>): <code>iptables -R INPUT 3 -p tcp --dport 2222 -j ACCEPT</code></p>
-<h2>인터페이스 지정</h2>
-<p>Network interface 를 지정하여 <em>iptables</em> 를 적용할 수도 있다.</p>
-<p>루프백 인터페이스에 대해 모든 패킷을 허용: <code>iptables -A INPUT -i lo -j ACCEPT</code></p>
-<p>랜카드 지정에 대해 모든 패킷을 허용: <code>iptables -A INPUT -i eth0 -j ACCEPT</code></p>
-<h2>IP 주소 지정</h2>
-<p>IP address 를 지정하여 iptables 를 적용할 수도 있다.</p>
-<p>신뢰할 만한 ip에 대해 모든 패킷을 허용: <code>iptables -A INPUT -s 192.168.0.3 -j ACCEPT</code></p>
-<p>신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: <code>iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT</code></p>
-<p>신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: <code>iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT</code></p>
-<p>신뢰할 만한 ip와 MAC주소에 대해 모든 패킷을 허용: <code>iptables -A INPUT -s 192.168.0.3 -m mac — mac-source 00:50:80:FD:E6:32 -j ACCEPT</code></p>
-<p>포트 범위지정: <code>iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT</code></p>
-<h1>자동화 스크립트</h1>
-<p>자주 방화벽 설정을 초기화하고 재설정해야 한다면 자동화 스크립트를 짜놓는게 좋다. 아래는 그에 대한 예이다.</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="c1"># iptables 설정 자동화 스크립트</span>
-<span class="c1"># 입맛에 따라 수정해서 사용합시다.</span>
-iptables -F
-<span class="c1"># TCP 포트 22번을 SSH 접속을 위해 허용</span>
-<span class="c1"># 원격 접속을 위해 먼저 설정합니다</span>
-iptables -A INPUT -p tcp -m tcp --dport <span class="m">22</span> -j ACCEPT
-<span class="c1"># 기본 정책을 설정합니다</span>
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
- iptables -P OUTPUT ACCEPT
-<span class="c1"># localhost 접속 허용</span>
-iptables -A INPUT -i lo -j ACCEPT
-<span class="c1"># established and related 접속을 허용</span>
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-<span class="c1"># Apache 포트 80 허용</span>
-iptables -A INPUT -p tcp --dport <span class="m">80</span> -j ACCEPT
-<span class="c1"># 설정을 저장</span>
-/sbin/service iptables save
-<span class="c1"># 설정한 내용을 출력</span>
-iptables -L -v
-위 내용을 입맛에 맞게 수정한 후에 저장<span class="o">(</span>myfirewall<span class="o">)</span>
-권한부여: chmod +x myfirewall
-실행: ./myfirewall
-</pre></div>
-
-
-<h1>References</h1>
-<ul>
-<li>http://webdir.tistory.com/170</li>
-</ul>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>iptables 사용법</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/iptables.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>garret - SSH</title>
+        <title>garret - ssh</title>
         <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
         <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
@@ -26,7 +26,71 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/ssh-host-key-identification.html">SSH Host-key identification</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html">SSH Brute force 막기</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-01T00:00:00+09:00">
+                Published: 일 01 1월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-01T00:00:00+09:00">
+                Updated: 일 01 1월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> <a href="https://imjang57.github.io/garret/tag/brute-force.html">brute force</a> </p>
+</footer><!-- /.post-info --><h1>ssh brute force 막기</h1>
+<p>AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..</p>
+<p>어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)</p>
+<p>brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.</p>
+<p>ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.</p>
+<p>blacklist 와 ssh chain 생성:</p>
+<div class="highlight"><pre><span></span># iptables -N blacklist
+# iptables -N ssh
+</pre></div>
+
+
+<p>INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.</p>
+<div class="highlight"><pre><span></span># iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
+</pre></div>
+
+
+<p>blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.</p>
+<div class="highlight"><pre><span></span># iptables -A blacklist -m recent --set --name blacklist
+# iptables -A blacklist -j REJECT
+</pre></div>
+
+
+<p>ssh chain 은 다음과 같다.</p>
+<div class="highlight"><pre><span></span># iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
+# iptables -A ssh -m recent --set --name ssh
+# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
+# iptables -A ssh -j ACCEPT
+</pre></div>
+
+
+<p>이 ssh chain 은 다음과 같이 동작한다.</p>
+<ol>
+<li>접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.</li>
+<li>접속 주소를 "ssh" 목록이 기록한다.</li>
+<li>접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.</li>
+<li>위의 3개가 다 통과하면 ssh 접속을 허락한다.</li>
+</ol>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="bookmark"
+                           title="Permalink to SSH Host-key identification">SSH Host-key identification</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-12-30T00:00:00+09:00">
                 Published: 금 30 12월 2016
@@ -41,72 +105,12 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">SSH</a> </p>
-</footer><!-- /.post-info --><h1>SSH host key</h1>
-<p>가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.</p>
-<div class="highlight"><pre><span></span>imjang57@myserver:~$ ssh administrator@192.168.0.5
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now <span class="o">(</span>man-in-the-middle
-attack<span class="o">)</span>!
-It is also possible that a host key has just been changed.
-The fingerprint <span class="k">for</span> the ECDSA key sent by the remote host is
-bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
-Please contact your system administrator.
-Add correct host key in /home/imjang57/.ssh/known_hosts to get rid of
-this message.
-Offending ECDSA key in /home/imjang57/.ssh/known_hosts:8
-  remove with: ssh-keygen -f <span class="s2">&quot;/home/imjang57/.ssh/known_hosts&quot;</span> -R
-192.168.0.5
-ECDSA host key <span class="k">for</span> 192.168.0.5 has changed and you have
-requested strict checking.
-Host key verification failed.
-</pre></div>
-
-
-<p><em>Host Key</em> 가 달라서 발생하는 문제다. 자세히 말하면, 클라이언트 측에 등록된 SSH 서버의 호스트 키가 현재 접속 시도하면서 새롭게 받은 호스크 키와 달라서 발생한 문제이다.</p>
-<p>SSH 서버에서 호스트 키를 새롭게 생성했거나, 클라이언트 측에서 SSH 서버의 호스트 키를 수동으로 입력했는데 잘못입력했거나, 서버를 재설치했거나, 기타 등등의 이유로 기존에 저장된 호스트 키와 연결시도하면서 새롭게 받은 호스트 키가 다를 수 있다.</p>
-<p>이는 SSH 연결을 시도하는 서버가 정말 내가 연결하려는 서버가 맞는지를 체크할 수 있는 기능이다. HTTPS 를 사용할 때 신뢰할 수 있는 사이트인지 확인하는 것과 비슷한 이유로 제공되는 기능이다.</p>
-<h2>해결 방법</h2>
-<p>해결하는 방법은 여러개가 있다.</p>
-<h3>known_host 삭제하여 해결</h3>
-<p>보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 <user_home>/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.</p>
-<div class="highlight"><pre><span></span>ssh-keygen -f <span class="s2">&quot;/home/imjang57/.ssh/known_hosts&quot;</span> -R 192.168.0.5
-</pre></div>
-
-
-<p>위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.</p>
-<div class="highlight"><pre><span></span>imjang57@myserver:~$ ssh administrator@192.168.0.5
-The authenticity of host <span class="s1">&#39;192.168.0.5&#39;</span> can<span class="err">&#39;</span>t be established.
-ECDSA key fingerprint is
-bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
-Are you sure you want to <span class="k">continue</span> connecting <span class="o">(</span>yes/no<span class="o">)</span>?
-</pre></div>
-
-
-<p>yes 를 입력하면 호스트 키를 <user_home>/.ssh/known_hosts 파일에 저장하고 SSH 접속하게 된다.</p>
-<p>만약 명령어 치는게 귀찮으면 그냥 known_hosts 파일 삭제하면 된다.</p>
-<h3>StrictHostKeyChecking 설정을 off 하여 해결</h3>
-<p>리눅스에서 ssh 설정은 보통 <code>/etc/ssh</code> 디렉터리에 있다. <code>ssh_config</code> 파일은 클라이언트 설정 파일, <code>sshd_config</code> 는 서버(데몬) 설정 파일이다.</p>
-<p><code>ssh_config</code> 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.</p>
-<div class="highlight"><pre><span></span>StrictHostKeyChecking no
-<span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null
-</pre></div>
-
-
-<h2>호스트 키 새로 생성하는 방법</h2>
-<p>서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.</p>
-<p>호스트 키는 보통 <code>/etc/ssh</code> 에 저장되어 있다. <em>RSA</em>, <em>DSA</em>, <em>ECDSA</em> 세 가지 종류의 키 파일들이 보통 생성되어 있다.</p>
-<p>새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.</p>
-<div class="highlight"><pre><span></span>sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N <span class="s1">&#39;&#39;</span> -t rsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N <span class="s1">&#39;&#39;</span> -t dsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N <span class="s1">&#39;&#39;</span> -t ecdsa -b 521
-</pre></div>
-
-
-<p>기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 <code>y</code> 를 입력하자.</p>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>This is about SSH Host-key identification.</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/ssh-host-key-identification.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

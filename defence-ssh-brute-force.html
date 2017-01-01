@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>garret - linux</title>
+        <title>SSH Brute force 막기</title>
         <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
         <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
@@ -23,10 +23,15 @@
                     <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="bookmark"
+           title="Permalink to SSH Brute force 막기">SSH Brute force 막기</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html">SSH Brute force 막기</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-01T00:00:00+09:00">
                 Published: 일 01 1월 2017
@@ -41,7 +46,7 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> <a href="https://imjang57.github.io/garret/tag/brute-force.html">brute force</a> </p>
-</footer><!-- /.post-info --><h1>ssh brute force 막기</h1>
+</footer><!-- /.post-info -->      <h1>ssh brute force 막기</h1>
 <p>AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..</p>
 <p>어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)</p>
 <p>brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.</p>
@@ -77,66 +82,11 @@
 <li>접속 주소를 "ssh" 목록이 기록한다.</li>
 <li>접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.</li>
 <li>위의 3개가 다 통과하면 ssh 접속을 허락한다.</li>
-</ol>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</ol>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/iptables.html" rel="bookmark"
-                           title="Permalink to iptables">iptables</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-01T00:00:00+09:00">
-                Updated: 일 01 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> </p>
-</footer><!-- /.post-info -->                <p>iptables 사용법</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/iptables.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html" rel="bookmark"
-                           title="Permalink to Shell, Bash, Zsh">Shell, Bash, Zsh</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-12-31T00:00:00+09:00">
-                Published: 토 31 12월 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-12-31T00:00:00+09:00">
-                Updated: 토 31 12월 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/shell.html">shell</a> <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> <a href="https://imjang57.github.io/garret/tag/zsh.html">zsh</a> </p>
-</footer><!-- /.post-info -->                <p>내가 사용하는 Shell 에 대한 소개와 설치 과정</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
