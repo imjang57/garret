@@ -1,7 +1,7 @@
 Title: SSH with key
 Date: 2017-01-02
 Modified: 2017-01-02
-Tags: hello, site 
+Tags: linux, ssh, key-gen
 Slug: ssh-with-key
 Authors: imjang57
 Summary: Key 로 SSH 로그인 하기 위한 과정
