@@ -17,6 +17,12 @@ Authors: imjang57
 - 마우스는 매우 직관적인 인터페이스라 프로그램 사용자에게는 편하다. 하지만 추상적인 것을 찾아 구체화하는 일을하는 개발자에게는 맞지 않는다.
 - 마우스는 몰입(flow)에 방해된다. 단축키나 매크로를 사용한 키보드보다 속도가 느리다. 손이 마우스와 키보드를 왔다 갔다 하는 것은 번거롭고 일을 느리게 만든다.
 
+### Why Terminal? Why keyboard rather than mouse?
+
+[A Byte of Vim](http://files.swaroopch.com/vim/byte_of_vim_v051.pdf) 이라는 책에 보면 다음과 같이 언급한다.
+
+Because once a person becomes efficient at typing, using only the keyboard makes the person much faster and less error-prone, as opposed to using the mouse. This is because the hand movement required to switch between the keyboard and the mouse is slow and there is a context switch required in the mind of the person when shifting the hand between the keyboard and the mouse. If we make it a habit to use the keyboard as much as possible, you're saving valuable hand movement.
+
 ## 콘솔 환경에 익숙해져야 하는 이유 Command Line Interface
 
 - 내가 원하는 작업을 자동화하여 반복 작업의 수행을 편하게 하고 문제 해결에 시간을 더 사용할 수 있게 해준다.
