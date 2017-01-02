@@ -27,7 +27,92 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html">SSH Brute force 막기</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/ssh-with-key.html">SSH with key</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-02T00:00:00+09:00">
+                Published: Mon 02 January 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-02T00:00:00+09:00">
+                Updated: Mon 02 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/hello.html">hello</a> <a href="https://imjang57.github.io/garret/tag/site.html">site</a> </p>
+</footer><!-- /.post-info --><h1>SSH with key file</h1>
+<p>SSH 를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때.. 이 때 key 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다.</p>
+<p>SSH 에서 key 를 이용한 로그인을 위해 RSA asymmetric encryption (RSA 비대칭키 암호화) 방식을 이용할 수 있다. 이 방법은 아래와 같은 절차를 따라 동작한다. (물론 당연히 다른 암호화 방식의 Key 를 사용해도 된다.)</p>
+<ol>
+<li>Public Key (공개키) 와 Private Key (비공개키) 를 생성</li>
+<li>Local Host (SSH Client) 에 Private Key 저장</li>
+<li>Remote Host (SSH Server) 에 Public Key 등록</li>
+<li>Local Host 가 Remote  Host 에 접속 요청을 하면서 Public Key 전달</li>
+<li>Remote Host 는 Public Key 를 받아서 등록된 Public Key 인지 검사한 후 승인 또는 비승인</li>
+</ol>
+<h2>Key 생성</h2>
+<p>먼저 Public Key 와 Private Key 를 생성한다. 리눅스에서는 아래와 같은 명령을 실행하면 된다.</p>
+<div class="highlight"><pre><span></span>$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key <span class="o">(</span>/home/axl/.ssh/id_rsa<span class="o">)</span>: &lt;<span class="k">return</span>&gt;
+Enter passphrase <span class="o">(</span>empty <span class="k">for</span> no passphrase<span class="o">)</span>: &lt;Type the passphrase&gt;
+Enter same passphrase again: &lt;Type the passphrase&gt;
+</pre></div>
+
+
+<p><code>ssh-keygen</code> 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 <code>$HOME/.ssh</code> 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. passphrase 는 비공개키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.</p>
+<p>키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.</p>
+<div class="highlight"><pre><span></span>drwx------  <span class="m">2</span> ubuntu ubuntu <span class="m">4096</span> Feb <span class="m">18</span> 18:54 .
+drwxr-xr-x <span class="m">16</span> ubuntu ubuntu <span class="m">4096</span> Mar  <span class="m">1</span> 06:02 ..
+-rw-rw-r--  <span class="m">1</span> ubuntu ubuntu  <span class="m">790</span> Feb <span class="m">19</span> 06:04 authorized_keys
+-rw-------  <span class="m">1</span> ubuntu ubuntu <span class="m">1675</span> Feb <span class="m">18</span> 18:51 id_rsa
+-rw-r--r--  <span class="m">1</span> ubuntu ubuntu  <span class="m">395</span> Feb <span class="m">18</span> 18:51 id_rsa.pub
+-rw-r--r--  <span class="m">1</span> ubuntu ubuntu <span class="m">2216</span> Feb <span class="m">19</span> 18:34 known_hosts
+</pre></div>
+
+
+<p><code>authorized_keys</code> 파일은 없을수도 있다. <code>id_rsa</code> 파일은 private key 이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. <code>id_rsa.pub</code> 파일은 public key 이다. 접속하려는 Remote Host 의 <code>authorized_keys</code> 에 입력한다. <code>authorized_keys</code> 파일은 Remote Host 의 <code>.ssh</code> 디렉토리 아래에 위치하면서 <code>id_rsa.pub</code> 키의 값을 저장한다.</p>
+<h2>Remote Host 에 Public Key 등록</h2>
+<p>이제 <code>id_rsa.pub</code> 파일을 리모트 서버의 <code>$HOME/.ssh/authorized_keys</code> 파일에 추가해줘야 한다. SSH Server의 <code>authorized_keys</code> 의 내용이 SSH Client의 <code>id_rsa.pub</code> 파일과 같아야 한다.</p>
+<p>아래와 같이 SCP (Secure Copy) 를 이용하여 Public Key 를 Remote Host 에 복사한다.</p>
+<div class="highlight"><pre><span></span>scp <span class="nv">$HOME</span>/.ssh/id_rsa.pub root@server.net:id_rsa.pub
+</pre></div>
+
+
+<p>그리고 Public Key 를 Remote Host 의 authorized_keys 에 추가한다.</p>
+<div class="highlight"><pre><span></span>cat <span class="nv">$HOME</span>/id_rsa.pub &gt;&gt; <span class="nv">$HOME</span>/.ssh/authorized_keys
+</pre></div>
+
+
+<h2>SSH 접속</h2>
+<p>이후에는 비밀번호 없이 바로 SSH 접속이 가능하다.</p>
+<p>만약 Private Key 를 다른 곳에 저장했다면 아래와 같이 <code>-i</code> 옵션을 사용하여 키를 지정할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ ssh root@server.net -i keyfile
+</pre></div>
+
+
+<h2>Remote Host 의 SSHD 설정</h2>
+<p>Key 를 이용한 SSH 로그인을 사용하기 위해서는 Remote Host 의 SSHD 설정에서 RSA 키 인증을 사용하도록 설정해야 한다. 아래와 같은 내용이 있는지 SSHD 설정 파일 (<code>/etc/ssh/sshd_config</code>) 을 확인한다.</p>
+<div class="highlight"><pre><span></span>RSAAuthentication yes
+#DSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="bookmark"
+                           title="Permalink to SSH Brute force 막기">SSH Brute force 막기</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-01T00:00:00+09:00">
                 Published: Sun 01 January 2017
@@ -42,48 +127,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> <a href="https://imjang57.github.io/garret/tag/brute-force.html">brute force</a> </p>
-</footer><!-- /.post-info --><h1>ssh brute force 막기</h1>
-<p>AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..</p>
-<p>어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)</p>
-<p>brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.</p>
-<p>ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.</p>
-<p>blacklist 와 ssh chain 생성:</p>
-<div class="highlight"><pre><span></span># iptables -N blacklist
-# iptables -N ssh
-</pre></div>
-
-
-<p>INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.</p>
-<div class="highlight"><pre><span></span># iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
-</pre></div>
-
-
-<p>blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.</p>
-<div class="highlight"><pre><span></span># iptables -A blacklist -m recent --set --name blacklist
-# iptables -A blacklist -j REJECT
-</pre></div>
-
-
-<p>ssh chain 은 다음과 같다.</p>
-<div class="highlight"><pre><span></span># iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
-# iptables -A ssh -m recent --set --name ssh
-# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
-# iptables -A ssh -j ACCEPT
-</pre></div>
-
-
-<p>이 ssh chain 은 다음과 같이 동작한다.</p>
-<ol>
-<li>접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.</li>
-<li>접속 주소를 "ssh" 목록이 기록한다.</li>
-<li>접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.</li>
-<li>위의 3개가 다 통과하면 ssh 접속을 허락한다.</li>
-</ol>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>SSH Brute force 공격 시도를 막는 설정</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/defence-ssh-brute-force.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -290,32 +337,6 @@
 <p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">SSH</a> </p>
 </footer><!-- /.post-info -->                <p>This is about SSH Host-key identification.</p>
                 <a class="readmore" href="https://imjang57.github.io/garret/ssh-host-key-identification.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/integer-types-header-file-stdint.html" rel="bookmark"
-                           title="Permalink to Integer types header file (stdint.h)">Integer types header file (stdint.h)</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-01-02T00:00:00+09:00">
-                Published: Sat 02 January 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-01-02T00:00:00+09:00">
-                Updated: Sat 02 January 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/c.html">c</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/c-programming-language.html">c programming language</a> <a href="https://imjang57.github.io/garret/tag/stdinth.html">stdint.h</a> </p>
-</footer><!-- /.post-info -->                <p>C 언어의 Integer data type 의 크기를 정의한 stdint.h 헤더파일</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/integer-types-header-file-stdint.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - linux</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/linux.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-01T00:00:00+09:00</updated><entry><title>SSH Brute force 막기</title><link href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/defence-ssh-brute-force.html</id><summary type="html">&lt;p&gt;SSH Brute force 공격 시도를 막는 설정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ssh brute force 막기&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - linux</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/linux.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-02T00:00:00+09:00</updated><entry><title>SSH with key</title><link href="https://imjang57.github.io/garret/ssh-with-key.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-with-key.html</id><summary type="html">&lt;p&gt;Key 로 SSH 로그인 하기 위한 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH with key file&lt;/h1&gt;
+&lt;p&gt;SSH 를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때.. 이 때 key 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다.&lt;/p&gt;
+&lt;p&gt;SSH 에서 key 를 이용한 로그인을 위해 RSA asymmetric encryption (RSA 비대칭키 암호화) 방식을 이용할 수 있다. 이 방법은 아래와 같은 절차를 따라 동작한다. (물론 당연히 다른 암호화 방식의 Key 를 사용해도 된다.)&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Public Key (공개키) 와 Private Key (비공개키) 를 생성&lt;/li&gt;
+&lt;li&gt;Local Host (SSH Client) 에 Private Key 저장&lt;/li&gt;
+&lt;li&gt;Remote Host (SSH Server) 에 Public Key 등록&lt;/li&gt;
+&lt;li&gt;Local Host 가 Remote  Host 에 접속 요청을 하면서 Public Key 전달&lt;/li&gt;
+&lt;li&gt;Remote Host 는 Public Key 를 받아서 등록된 Public Key 인지 검사한 후 승인 또는 비승인&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Key 생성&lt;/h2&gt;
+&lt;p&gt;먼저 Public Key 와 Private Key 를 생성한다. 리눅스에서는 아래와 같은 명령을 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key &lt;span class="o"&gt;(&lt;/span&gt;/home/axl/.ssh/id_rsa&lt;span class="o"&gt;)&lt;/span&gt;: &amp;lt;&lt;span class="k"&gt;return&lt;/span&gt;&amp;gt;
+Enter passphrase &lt;span class="o"&gt;(&lt;/span&gt;empty &lt;span class="k"&gt;for&lt;/span&gt; no passphrase&lt;span class="o"&gt;)&lt;/span&gt;: &amp;lt;Type the passphrase&amp;gt;
+Enter same passphrase again: &amp;lt;Type the passphrase&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt; 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 &lt;code&gt;$HOME/.ssh&lt;/code&gt; 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. passphrase 는 비공개키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.&lt;/p&gt;
+&lt;p&gt;키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;drwx------  &lt;span class="m"&gt;2&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:54 .
+drwxr-xr-x &lt;span class="m"&gt;16&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Mar  &lt;span class="m"&gt;1&lt;/span&gt; 06:02 ..
+-rw-rw-r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;790&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 06:04 authorized_keys
+-rw-------  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;1675&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:51 id_rsa
+-rw-r--r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;395&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:51 id_rsa.pub
+-rw-r--r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;2216&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 18:34 known_hosts
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;authorized_keys&lt;/code&gt; 파일은 없을수도 있다. &lt;code&gt;id_rsa&lt;/code&gt; 파일은 private key 이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일은 public key 이다. 접속하려는 Remote Host 의 &lt;code&gt;authorized_keys&lt;/code&gt; 에 입력한다. &lt;code&gt;authorized_keys&lt;/code&gt; 파일은 Remote Host 의 &lt;code&gt;.ssh&lt;/code&gt; 디렉토리 아래에 위치하면서 &lt;code&gt;id_rsa.pub&lt;/code&gt; 키의 값을 저장한다.&lt;/p&gt;
+&lt;h2&gt;Remote Host 에 Public Key 등록&lt;/h2&gt;
+&lt;p&gt;이제 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일을 리모트 서버의 &lt;code&gt;$HOME/.ssh/authorized_keys&lt;/code&gt; 파일에 추가해줘야 한다. SSH Server의 &lt;code&gt;authorized_keys&lt;/code&gt; 의 내용이 SSH Client의 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일과 같아야 한다.&lt;/p&gt;
+&lt;p&gt;아래와 같이 SCP (Secure Copy) 를 이용하여 Public Key 를 Remote Host 에 복사한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;scp &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.ssh/id_rsa.pub root@server.net:id_rsa.pub
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 Public Key 를 Remote Host 의 authorized_keys 에 추가한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat &lt;span class="nv"&gt;$HOME&lt;/span&gt;/id_rsa.pub &amp;gt;&amp;gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;SSH 접속&lt;/h2&gt;
+&lt;p&gt;이후에는 비밀번호 없이 바로 SSH 접속이 가능하다.&lt;/p&gt;
+&lt;p&gt;만약 Private Key 를 다른 곳에 저장했다면 아래와 같이 &lt;code&gt;-i&lt;/code&gt; 옵션을 사용하여 키를 지정할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh root@server.net -i keyfile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Remote Host 의 SSHD 설정&lt;/h2&gt;
+&lt;p&gt;Key 를 이용한 SSH 로그인을 사용하기 위해서는 Remote Host 의 SSHD 설정에서 RSA 키 인증을 사용하도록 설정해야 한다. 아래와 같은 내용이 있는지 SSHD 설정 파일 (&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;) 을 확인한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;RSAAuthentication yes
+#DSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;</content><category term="hello"></category><category term="site"></category></entry><entry><title>SSH Brute force 막기</title><link href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/defence-ssh-brute-force.html</id><summary type="html">&lt;p&gt;SSH Brute force 공격 시도를 막는 설정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ssh brute force 막기&lt;/h1&gt;
 &lt;p&gt;AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..&lt;/p&gt;
 &lt;p&gt;어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)&lt;/p&gt;
 &lt;p&gt;brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.&lt;/p&gt;
