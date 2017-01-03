@@ -27,7 +27,65 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/print-percent-sign-in-java.html">자바에서 % 출력하기</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/parameter-and-argument.html">Parameter and Argument</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-03T00:00:00+09:00">
+                Published: Tue 03 January 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-03T00:00:00+09:00">
+                Updated: Tue 03 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/parameter.html">parameter</a> <a href="https://imjang57.github.io/garret/tag/argument.html">argument</a> </p>
+</footer><!-- /.post-info --><h1>Parameter and Argument</h1>
+<p>많은 개발자들이 Parameter 와 Argument 를 딱히 구분하지 않고 사용한다. 그런데 이 둘은 엄연히 다르며, 그러다 보니 논쟁하다보면 맥락이 어긋나는 경우가 발생한다.</p>
+<p>K&amp;R 의 C Programming Language Second Edition 에 다음과 같이 언급한다.</p>
+<p>We well generally use parameter for a variable named in the parenthesized list in a function definition, and argument for the value used in a call of the function.</p>
+<p>즉, Parameter(파라미터, 매개변수)는 함수 선언에서 사용되는 변수의 이름을 뜻하며, Argument(인자, 전달인자)는 함수를 호출할 때 전달되는 값을 의미한다.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="bookmark"
+                           title="Permalink to Java version 을 체크하는 bash script">Java version 을 체크하는 bash script</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-12-30T00:00:00+09:00">
+                Published: Fri 30 December 2016
+        </abbr>
+		<br />
+        <abbr class="modified" title="2016-12-30T00:00:00+09:00">
+                Updated: Fri 30 December 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> </p>
+</footer><!-- /.post-info -->                <p>Java version 을 체크하기 위한 bash script</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/bash-script-checking-java-version.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/print-percent-sign-in-java.html" rel="bookmark"
+                           title="Permalink to 자바에서 % 출력하기">자바에서 % 출력하기</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-12-30T00:00:00+09:00">
                 Published: Fri 30 December 2016
@@ -42,48 +100,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
 
-</footer><!-- /.post-info --><h1>Java String 에서 % 문자 출력하기</h1>
-<p>오늘 개발하다가 <code>%</code> 문자가 들어가는 문자열을 처리할 일이 있었다. 처음에 아무 생각없이 아래처럼 작성했다.</p>
-<div class="highlight"><pre><span></span><span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;test&quot;</span><span class="o">;</span>
-<span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;string is \&quot;%%s%\&quot;.&quot;</span><span class="o">,</span> <span class="n">str1</span><span class="o">);</span>
-</pre></div>
-
-
-<p>원하는 결과는 아래와 같이 나오는 것이었다.</p>
-<div class="highlight"><pre><span></span>string is &quot;%test%&quot;.
-</pre></div>
-
-
-<p>당연히 String.format 에서 에러가 발생했다.</p>
-<div class="highlight"><pre><span></span>Exception in thread &quot;main&quot; java.util.UnknownFormatConversionException: Conversion = &#39;&quot;&#39;
- at java.util.Formatter.checkText(Formatter.java:2579)
- at java.util.Formatter.parse(Formatter.java:2565)
- at java.util.Formatter.format(Formatter.java:2501)
- at java.util.Formatter.format(Formatter.java:2455)
- at java.lang.String.format(String.java:2940)
- at StringTest.main(StringTest.java:7)
- at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
- at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
- at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
- at java.lang.reflect.Method.invoke(Method.java:497)
- at com.intellij.rt.execution.application.AppMain.main(AppMain.java:144)
-</pre></div>
-
-
-<p><code>\</code> 는 특정 <em>espace character</em> 로 이미 약속된 문자들과 사용돼야 한다. 그런데 그 문자들 중에 <code>%</code> 는 없다.</p>
-<p><code>%</code> 는 <em>Formatting</em> 을 위한 문자로, <code>String.format("%d", 123);</code> 과 같이 사용된다. 이 때 <code>%</code> 자체를 출력하기 위해서도 <code>%</code> 를 prefix 로 사용하여 <code>%%</code> 와 같이 처리해야 한다.</p>
-<div class="highlight"><pre><span></span><span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;test&quot;</span><span class="o">;</span>
-<span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;string is %%%s%%.&quot;</span><span class="o">,</span> <span class="n">str1</span><span class="o">);</span>
-</pre></div>
-
-
-<p><code>%</code> 는 그냥 문자가 아니라 포맷을 지정하기 위한 포맷 지시자 (format specifier 또는 format string) 역할을 하는 특수한 문자이기 때문이다.</p>
-<p>알고 있던 거였는데.. 역시 오래동안 안쓰면 머리에서 삭제되어 버린다. ㅠㅠ</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>자바에서 % 문자 출력하기</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/print-percent-sign-in-java.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -108,32 +128,6 @@
 <p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">SSH</a> </p>
 </footer><!-- /.post-info -->                <p>This is about SSH Host-key identification.</p>
                 <a class="readmore" href="https://imjang57.github.io/garret/ssh-host-key-identification.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="bookmark"
-                           title="Permalink to Java version 을 체크하는 bash script">Java version 을 체크하는 bash script</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-12-30T00:00:00+09:00">
-                Published: Thu 30 December 2010
-        </abbr>
-		<br />
-        <abbr class="modified" title="2010-12-30T00:00:00+09:00">
-                Updated: Thu 30 December 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> </p>
-</footer><!-- /.post-info -->                <p>Java version 을 체크하기 위한 bash script</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/bash-script-checking-java-version.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
