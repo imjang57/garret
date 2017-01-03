@@ -6,7 +6,7 @@ Slug: function-and-method
 Authors: imjang57
 Summary: Function, Method, Procedure 의 차이점
 
-# Function and Method
+# Function, Method, Procedure
 
 보통 function 과 method 를 구분 없이 사용한다. 하지만 이들은 엄연히 다른 개념이다. 서브루틴, 함수, 메서드, 프로시저 모두 비슷하지만 각자 의미가 있다.
 
