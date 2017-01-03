@@ -1,6 +1,6 @@
 Title: Java version 을 체크하는 bash script
-Date: 2010-12-30
-Modified: 2010-12-30
+Date: 2016-12-30
+Modified: 2016-12-30
 Tags: bash
 Slug: bash-script-checking-java-version
 Authors: imjang57
