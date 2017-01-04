@@ -27,7 +27,47 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/function-and-method.html">Function, Method, Procedure</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/granularity-coarse-grained-and-fine-grained.html">Granularity (Coarse-grained V.S. Fine-grained)</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-04T00:00:00+09:00">
+                Published: Wed 04 January 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-04T00:00:00+09:00">
+                Updated: Wed 04 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/programming.html">programming</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/granularity.html">granularity</a> <a href="https://imjang57.github.io/garret/tag/coarse-grained.html">coarse-grained</a> <a href="https://imjang57.github.io/garret/tag/fine-grained.html">fine-grained</a> <a href="https://imjang57.github.io/garret/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info --><h1>Coarse-grained V.S. Fine-grained in Spark</h1>
+<p>Coarse-grained 와 Fine-grained 는 한국말로 번역하기가 참 애매한 단어이다. 그래서 의미도 잘 와닿지 않는다.</p>
+<p>Quora 에 누군가가 <a href="https://www.quora.com/What-does-coarse-grained-mean-in-Spark-RDD">Spark RDD 에서 사용되는 Coarse-grained 의 개념에 대해 질문</a>하였는데, 누군가가 coarse-grained 에 대해 아래와 같이 설명한다.:</p>
+<blockquote>
+<p>Basically, it means that you can write you transformations to be applied to the while dataset, but not individual elements on the dataset. Operations like map, filter, group reduce, but not get(index) or set(index).</p>
+<p>By restricting RDD operations to coarse-grained immutable transformations, Spark is able to provide powerful distributed data processing, while keeping the system fairly simple to understand and operate.</p>
+</blockquote>
+<p>Coarse-grained 와 Fine-grained 는 원래 곡식을 낟알로 만들 때 대충 작업하여 낟알을 거칠하는 것과 세심하게 하여 낟알을 부드럽게 하는 것을 의미한다. 소프트웨어 공학에서 Coarse-grained 와 Fine-grained 는 어떤 작업(Process, Wordload)의 분할 단위가 큰가 작은가를 구분하는 상대적인 의미로 사용된다.</p>
+<p>얼마나 세분화 되었는가? 모듈화 되었는가? 한국말로 표현하기가 좀 애매한데, 여튼 어느 정도 grain 되었는지를 나타내는 것을 granularity 라고 한다. 이 <a href="https://en.wikipedia.org/wiki/Granularity">Granularity</a>에 대한 위키피디아 페이지에 다음과 같은 언급이 있다.:</p>
+<blockquote>
+<p>Coarse-grained materials or systems have fewer, larger discrete components than fine-grained materials or systems.</p>
+<p>The concepts granularity, coarseness, and fineness are relative, used when comparing systems or descriptions of systems.</p>
+</blockquote>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/function-and-method.html" rel="bookmark"
+                           title="Permalink to Function, Method, Procedure">Function, Method, Procedure</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-03T00:00:00+09:00">
                 Published: Tue 03 January 2017
@@ -42,22 +82,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/programming.html">programming</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/function.html">function</a> <a href="https://imjang57.github.io/garret/tag/method.html">method</a> <a href="https://imjang57.github.io/garret/tag/procedure.html">procedure</a> <a href="https://imjang57.github.io/garret/tag/sub-routine.html">sub-routine</a> <a href="https://imjang57.github.io/garret/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info --><h1>Function, Method, Procedure</h1>
-<p>보통 function 과 method 를 구분 없이 사용한다. 하지만 이들은 엄연히 다른 개념이다. 서브루틴, 함수, 메서드, 프로시저 모두 비슷하지만 각자 의미가 있다.</p>
-<ul>
-<li>Sub-routine : A sub-routne is A repeatable piece of procedural code you can call by name.</li>
-<li>Function : A function is a sub-routine that returns one or more values. A function should calculate its return value based on its input.</li>
-<li>Procedure : A procedure is a sub-routine that doesn not return a value, but does have side-effects. (such as writing to a file, printing to the screen, or modifying the value of its input)</li>
-<li>Method : A method is a function or procedure that is executed in the context of an object. A Method calculates a new value or trigger side-effect based on the values of its inputs and/or the scope of the object instance</li>
-</ul>
-<p>보통 개발자들은 이들 단어에 대해 별 다른 구분없이 비슷한 의미로 사용한다. 하지만 Programming Language Theory 에서는 확실히 다르다.</p>
-<p>이런 단어들의 의미를 무시해도 상관없을까? 사실 대부분의 경우 무시해도 큰 상관은 없다고 생각된다. 하지만 어떤 로직을 모듈화하여 서브루틴으로 만들 때 이것들을 고려하면 더 좋다고 생각한다. 이 서브루틴은 어떤 타입의 서브루틴으로 구현해야 하는지 고민하면 그 서브루틴의 역할이나 목적을 더 명확해질 것이다. 서브루틴의 역할이나 목적이 명확해지면, 하나의 서브루틴이 과도하게 많은 역할을 하게 되는 현상을 방지할 수 있을 것이다. 프로그래밍에서 중요한 중복 제거, 모듈화에 대한 자연스러운 의식의 흐름이 생기게 되고 결과적으로 코드가 단순하지고 관리하기 좋아질 것이다. 어쨌든 좋은 함수를 만들기 위한 고민은 항상 필요하다고 생각한다.</p>
-<p>물론, 실제 개발할 때 시간에 쫓겨 항상 이런 고민을 하지 못한다..ㅠㅠ.. 그래도 항상 고민하려고 노력하자. 개발은 사람이 하는 일이라 의식의 흐름에 영향을 받으니, 의식의 흐름을 항상 올바로 하려고 노력하자.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Function, Method, Procedure 의 차이점</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/function-and-method.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
