@@ -12,13 +12,13 @@ Summary: 특수 문자들의 영어 이름
 
 ```
 ' : single quotation mark, single quote
-" : double quotation mark, double quotes
+" : double quotation mark, double quote
 * : asterisk, bullet
 $ : dollar
-- : dash, hyphen
+- : dash, hyphen, minus sign
 _ : underscore
 % : percent sign
-# : pound, number of, hashtag
+# : pound sign, number of, hashtag
 & : ampersand
 : : colon
 ; : semi-colon
@@ -35,7 +35,7 @@ _ : underscore
 [] : square bracket
 {} : curly bracket
 + : plus sign
-- : minus sign
+= : equal sign
 . : dot, period
 , : comma
 ^ : caret, modifier letter, circumflex accent
