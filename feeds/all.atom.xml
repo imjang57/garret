@@ -454,13 +454,13 @@ ssh=&amp;#39;ssh -o StrictHostKeyChecking=no&amp;#39;
 &lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>특수 문자들의 영어 이름</title><link href="https://imjang57.github.io/garret/name-of-special-characters.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/name-of-special-characters.html</id><summary type="html">&lt;p&gt;특수 문자들의 영어 이름&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Special characters name&lt;/h1&gt;
 &lt;p&gt;개발자로 살면 다양한 특수문자들을 사용하게 되는데 구글링하거나 다른 사람과 대화할 때 이들의 이름이 기억안나 당황하는 경우가 많다. 그래서 이들의 영어 이름을 메모한다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;#39; : single quotation mark, single quote
-&amp;quot; : double quotation mark, double quotes
+&amp;quot; : double quotation mark, double quote
 * : asterisk, bullet
 $ : dollar
-- : dash, hyphen
+- : dash, hyphen, minus sign
 _ : underscore
 % : percent sign
-# : pound, number of, hashtag
+# : pound sign, number of, hashtag
 &amp;amp; : ampersand
 : : colon
 ; : semi-colon
@@ -477,7 +477,7 @@ _ : underscore
 [] : square bracket
 {} : curly bracket
 + : plus sign
-- : minus sign
+= : equal sign
 . : dot, period
 , : comma
 ^ : caret, modifier letter, circumflex accent
