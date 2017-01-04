@@ -1,7 +1,7 @@
 Title: Function, Method, Procedure
 Date: 2017-01-03
 Modified: 2017-01-03
-Tags: function, method, procedure, sub-routine
+Tags: function, method, procedure, sub-routine, programming
 Slug: function-and-method
 Authors: imjang57
 Summary: Function, Method, Procedure 의 차이점

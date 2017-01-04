@@ -1,7 +1,7 @@
 Title: Parameter and Argument
 Date: 2017-01-03
 Modified: 2017-01-03
-Tags: parameter, argument
+Tags: parameter, argument, programming
 Slug: parameter-and-argument
 Authors: imjang57
 Summary: Parameter 와 Argument 의 정확한 의미
