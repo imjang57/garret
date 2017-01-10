@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - dev-issues</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/dev-issues.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2016-12-30T00:00:00+09:00</updated><entry><title>Java version 을 체크하는 bash script</title><link href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/bash-script-checking-java-version.html</id><summary type="html">&lt;p&gt;Java version 을 체크하기 위한 bash script&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Check Java version from bash script&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - dev-issues</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/dev-issues.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-10T00:00:00+09:00</updated><entry><title>Windows 에서 spark-shell 을 실행하는 방법</title><link href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2016-01-10T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/run-spark-shell-on-windows.html</id><summary type="html">&lt;p&gt;Windows 에서 spark-shell 을 실행하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 spark-shell 실행&lt;/h1&gt;
+&lt;p&gt;윈도우에서 spark-shell 실행 시 NullPointerException 발생할 경우 문제 해결하는 방법에 대한 글이다.&lt;/p&gt;
+&lt;h1&gt;윈도우에서 Spark 실행 시 RuntimeException(NullPointerException) 발생&lt;/h1&gt;
+&lt;p&gt;Spark 은 보통 리눅스에서 사용되지만 Local mode 로 실행하면 윈도우에서도 실행할 수 있다. 그런데 리눅스에서는 단순히 spark-shell 스크립트를 실행하면 되는데 윈도우에서는 아래와 같은 에러가 발생하는 경우가 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;java.lang.RuntimeException: java.lang.NullPointerException&lt;/span&gt;
+&lt;span class="x"&gt;        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:522)&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.hive.client.ClientWrapper.&amp;lt;init&amp;gt;(ClientWrapper.scala:194)&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.hive.client.IsolatedClientLoader.createClient(IsolatedClientLoader.scala:238)&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.executionHive&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;218&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.executionHive(HiveContext.scala:208)&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.functionRegistry&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;462&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.functionRegistry(HiveContext.scala:461)&lt;/span&gt;
+&lt;span class="x"&gt;at org.apache.spark.sql.UDFRegistration.&amp;lt;init&amp;gt;(UDFRegistration.scala:40)&lt;/span&gt;
+&lt;span class="x"&gt;................&lt;/span&gt;
+&lt;span class="x"&gt;................&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그냥 NullPointerException 이고 아무런 메시지가 없다…-_-…&lt;/p&gt;
+&lt;p&gt;내 기억에 작년에 분명 spark-shell 을 윈도우에서 잘 썼었는데 갑자기 에러가 나서 당황했는데, HiveContext 가 원인이었다.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://blogs.msdn.microsoft.com/arsen/2016/02/09/resolving-spark-1-6-0-java-lang-nullpointerexception-not-found-value-sqlcontext-error-when-running-spark-shell-on-windows-10-64-bit/"&gt;MSDN 블로그의 한 글&lt;/a&gt;에 따르면 윈도우에서 Spark 이 HiveContext 를 초기화하기 위해서는 &lt;code&gt;winutils.exe&lt;/code&gt; 이라는 파일이 필요하다. 블로그에 따르면 HiveContext 를 초기화하는데 Hadoop 의 Native libraries 를 필요로 하기 때문이라는 듯 하다.&lt;/p&gt;
+&lt;p&gt;이번에 사용하려고 했던 spark 빌드는 hive 를 포함한 빌드이기 때문에 spark-shell 이 실행될 때 무조건 HiveContext 를 초기화하게 되어 있었다. 생각해보니 작년에 사용했던 건 hive 를 제외하고 소스를 빌드해서 사용했던 것 같다.ㅠㅠ&lt;/p&gt;
+&lt;p&gt;어쨌든 이 문제를 해결하기 위해서는 아래와 같은 것들이 필요하다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;winutils.exe 다운로드 및 %HADOOP_HOME%\bin 에 복사&lt;/li&gt;
+&lt;li&gt;HADOOP_HOME 환경 변수 설정&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;자세한 내용은 블로그에 쉽게 나와있으니 읽어보면 되고, 아래 명령들만 기억하자.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%HADOOP_HOME%&lt;span class="se"&gt;\b&lt;/span&gt;in&lt;span class="se"&gt;\w&lt;/span&gt;inutils.exe ls &lt;span class="se"&gt;\t&lt;/span&gt;mp&lt;span class="se"&gt;\h&lt;/span&gt;ive
+%HADOOP_HOME%&lt;span class="se"&gt;\b&lt;/span&gt;in&lt;span class="se"&gt;\w&lt;/span&gt;inutils.exe chmod &lt;span class="m"&gt;777&lt;/span&gt; &lt;span class="se"&gt;\t&lt;/span&gt;mp&lt;span class="se"&gt;\h&lt;/span&gt;ive
+%HADOOP_HOME%&lt;span class="se"&gt;\b&lt;/span&gt;in&lt;span class="se"&gt;\w&lt;/span&gt;inutils.exe ls &lt;span class="se"&gt;\t&lt;/span&gt;mp&lt;span class="se"&gt;\h&lt;/span&gt;ive
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;hadoop 은 설치하고 파일 옮기고 귀찮으니까 그냥 &lt;a href="https://github.com/steveloughran/winutils"&gt;winutils github&lt;/a&gt; 에서 다운로드 하자. 윈도우에서 hadoop 을 잘 쓸 수 있게 &lt;code&gt;winutils.exe&lt;/code&gt; 파일까지 포함시켜서 구성되어 있다. 다운로드 해서 &lt;code&gt;%HADOOP_HOME%&lt;/code&gt; 만 잘 잡아주면 된다.&lt;/p&gt;
+&lt;h1&gt;추가로 발생한 문제&lt;/h1&gt;
+&lt;p&gt;나의 경우에 위 내용을 다 했는데도 에러가 발생했다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;java.lang.RuntimeException: java.lang.RuntimeException: The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:522)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.client.ClientWrapper.&amp;lt;init&amp;gt;(ClientWrapper.scala:204)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.client.IsolatedClientLoader.createClient(IsolatedClientLoader.scala:238)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.executionHive&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;218&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.executionHive(HiveContext.scala:208)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.functionRegistry&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;462&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.functionRegistry(HiveContext.scala:461)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.UDFRegistration.&amp;lt;init&amp;gt;(UDFRegistration.scala:40)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.SQLContext.&amp;lt;init&amp;gt;(SQLContext.scala:330)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.&amp;lt;init&amp;gt;(HiveContext.scala:97)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.&amp;lt;init&amp;gt;(HiveContext.scala:101)&lt;/span&gt;
+&lt;span class="x"&gt;  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)&lt;/span&gt;
+&lt;span class="x"&gt;  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)&lt;/span&gt;
+&lt;span class="x"&gt;  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)&lt;/span&gt;
+&lt;span class="x"&gt;  at java.lang.reflect.Constructor.newInstance(Constructor.java:422)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.spark.repl.Main&lt;/span&gt;&lt;span class="p"&gt;$.&lt;/span&gt;&lt;span class="nv"&gt;createSQLContext&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;Main.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;89&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;  ... 47 elided&lt;/span&gt;
+&lt;span class="x"&gt;Caused by: java.lang.RuntimeException: The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.createRootHDFSDir(SessionState.java:612)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.createSessionDirs(SessionState.java:554)&lt;/span&gt;
+&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:508)&lt;/span&gt;
+&lt;span class="x"&gt;  ... 62 more&lt;/span&gt;
+&lt;span class="x"&gt;&amp;lt;console&amp;gt;:13: error: not found: value sqlContext&lt;/span&gt;
+&lt;span class="x"&gt;       import sqlContext.implicits._&lt;/span&gt;
+&lt;span class="x"&gt;              ^&lt;/span&gt;
+&lt;span class="x"&gt;&amp;lt;console&amp;gt;:13: error: not found: value sqlContext&lt;/span&gt;
+&lt;span class="x"&gt;       import sqlContext.sql&lt;/span&gt;
+&lt;span class="x"&gt;              ^&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이번에는 그래도 쉽게 이유를 알 수 있었다. 에러 메시지를 보면 다음과 같다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;즉, 권한 문제다. 그런데 원래 위의 내용대로 하면 위 문제가 해결되어야 한다. 뭐가 문제인가.&lt;/p&gt;
+&lt;p&gt;문제는 내가 C 드라이브가 아니라 E 드라이브에서 spark-shell 을 실행해서 였다. 위의 내용대로 해서 &lt;code&gt;C:\tmp\hive&lt;/code&gt; 를 생성하고 권한 설정했는데, spark-shell 은 E 드라이브에서 실행해서 실제로는 &lt;code&gt;E:\tmp\hive&lt;/code&gt; 에 접근했던 거였다. 그래서 &lt;code&gt;E:\tmp\hive&lt;/code&gt; 로 다시 권한을 설정하고 실행하니 잘 되었다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;HADOOP_HOME&lt;/code&gt; 을 환경변수로 해주기 귀찮아서 더 해보니까 conf/spark-env.cmd 파일에 아래처럼 추가해줘도 동작한다.&lt;/p&gt;
+&lt;p&gt;set HADOOP_HOME=C:\hadoop\hadoop-2.6.4&lt;/p&gt;
+&lt;h1&gt;참고&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://blogs.msdn.microsoft.com/arsen/2016/02/09/resolving-spark-1-6-0-java-lang-nullpointerexception-not-found-value-sqlcontext-error-when-running-spark-shell-on-windows-10-64-bit/"&gt;Resolving Spark 1.6.0 "java.lang.NullPointerException, not found: value sqlContext" error when running spark-shell on Windows 10 (64-bit)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin"&gt;hadoop 2.6.4 winutils github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="spark"></category></entry><entry><title>Java version 을 체크하는 bash script</title><link href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/bash-script-checking-java-version.html</id><summary type="html">&lt;p&gt;Java version 을 체크하기 위한 bash script&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Check Java version from bash script&lt;/h1&gt;
 &lt;p&gt;리눅스에서 자바 버전을 체크하기 위한 꼼수 스크립트를 간단하게 작성해서 저장하기 위한 글입니다.&lt;/p&gt;
 &lt;p&gt;java -version 명령의 결과:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ java -version
