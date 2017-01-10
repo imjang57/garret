@@ -27,7 +27,90 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html">Windows 에서 spark-shell 을 실행하는 방법</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/hive-context-error-of-zeppelin-on-windows.html">Windows 에서 apache zeppelin 사용 시 HiveContext 에러</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-10T00:00:00+09:00">
+                Published: Tue 10 January 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2016-01-10T00:00:00+09:00">
+                Updated: Sun 10 January 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/spark.html">spark</a> <a href="https://imjang57.github.io/garret/tag/zeppelin.html">zeppelin</a> </p>
+</footer><!-- /.post-info --><h1>Windows 에서 zeppelin 실행</h1>
+<p><a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html">윈도우에서 spark-shell을 실행하는 방법</a> 에서 윈도우에서 spark-shell 을 실행하는 방법에 대해 알아봤다. spark-shell 이 실행가능하니까 당연히 zeppelin 도 실행가능할거라고 생각된다. 그래서 실행해보니 에러가 발생했다..-_-..; 메시지가 매우 긴데.. 다음과 같은 메시지가 나오는 경우였다.</p>
+<div class="highlight"><pre><span></span>Caused by: java.lang.IllegalArgumentException: java.net.URISyntaxException: Relative path in absolute URI: file:C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse
+</pre></div>
+
+
+<p><code>%ZEPPELIN_HOME%\spark-warehouse</code> 를 hive 테이블들을 저장하기 위해 사용하는 것 같다. 그래서 <code>%ZEPPELIN_HOME%\spark-warehouse</code> 폴더를 생성하고 <a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html">윈도우에서 spark-shell을 실행하는 방법</a> 포스트에서 했떤 것 처럼 winutils 를 사용해서 권한을 설정해줬다</p>
+<p>그런데 같은 에러가 또 발생한다..!!!!..ㅆ....</p>
+<p>그래서 찾다보니 <a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/">이 블로그 포스트</a> 에서 해결책을 찾았다.</p>
+<p>결론은 <code>spark.sql.warehouse.dir</code> 이라는 설정값을 정확하게 설정해줘야 한다는 것이다. <code>%ZEPPELIN_HOME%\conf\interpreter.json</code> 을 열어서 spark interprefter 설정을 찾아서 아래와 같이 <code>spark.sql.warehouse.dir</code> 을 추가하자.</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="err">...</span>
+  <span class="nt">&quot;2C5DV85NF&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;2C5DV85NF&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;spark&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;spark&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;spark.sql.warehouse.dir&quot;</span><span class="p">:</span> <span class="s2">&quot;file:///C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;spark.executor.memory&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.spark.printREPLOutput&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;spark.cores.max&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.dep.additionalRemoteRepository&quot;</span><span class="p">:</span> <span class="s2">&quot;spark-packages,http://dl.bintray.com/spark-packages/maven,false;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.spark.sql.stacktrace&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.spark.importImplicit&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.spark.concurrentSQL&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.spark.useHiveContext&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.pyspark.python&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.dep.localrepo&quot;</span><span class="p">:</span> <span class="s2">&quot;local-repo&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.R.knitr&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.spark.maxResult&quot;</span><span class="p">:</span> <span class="s2">&quot;1000&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;master&quot;</span><span class="p">:</span> <span class="s2">&quot;local[*]&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;spark.app.name&quot;</span><span class="p">:</span> <span class="s2">&quot;Zeppelin&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.R.image.width&quot;</span><span class="p">:</span> <span class="s2">&quot;100%&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.R.render.options&quot;</span><span class="p">:</span> <span class="s2">&quot;out.format \u003d \u0027html\u0027, comment \u003d NA, echo \u003d FALSE, results \u003d \u0027asis\u0027, message \u003d F, warning \u003d F&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;zeppelin.R.cmd&quot;</span><span class="p">:</span> <span class="s2">&quot;R&quot;</span>
+      <span class="p">},</span>
+      <span class="err">...</span>
+    <span class="p">}</span>
+  <span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>그리고 아래 코드를 실행해서 테스트해보니 잘된다. <code>%ZEPPELIN_HOME</code>\spark-warehouse<code>에</code>tmptable` 이라는 폴더가 생성된 걸 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">hiveCtx</span> <span class="k">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">hive</span><span class="o">.</span><span class="nc">HiveContext</span><span class="o">(</span><span class="n">sc</span><span class="o">)</span>
+<span class="n">hiveCtx</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;select 1, 2&quot;</span><span class="o">).</span><span class="n">write</span><span class="o">.</span><span class="n">saveAsTable</span><span class="o">(</span><span class="s">&quot;tmpTable&quot;</span><span class="o">)</span>
+</pre></div>
+
+
+<hr>
+<p>위의 내용은 zeppelin 내장 spark interpreter 를 사용한 경우라서 사용 형태라 다른 경우 맞지 않을 수도 있다.</p>
+<h1>참고</h1>
+<ul>
+<li><a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/">Apache Zeppelin installation on Windows 10</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html" rel="bookmark"
+                           title="Permalink to Windows 에서 spark-shell 을 실행하는 방법">Windows 에서 spark-shell 을 실행하는 방법</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-10T00:00:00+09:00">
                 Published: Tue 10 January 2017
@@ -42,95 +125,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/spark.html">spark</a> </p>
-</footer><!-- /.post-info --><h1>Windows 에서 spark-shell 실행</h1>
-<p>윈도우에서 spark-shell 실행 시 NullPointerException 발생할 경우 문제 해결하는 방법에 대한 글이다.</p>
-<h1>윈도우에서 Spark 실행 시 RuntimeException(NullPointerException) 발생</h1>
-<p>Spark 은 보통 리눅스에서 사용되지만 Local mode 로 실행하면 윈도우에서도 실행할 수 있다. 그런데 리눅스에서는 단순히 spark-shell 스크립트를 실행하면 되는데 윈도우에서는 아래와 같은 에러가 발생하는 경우가 있다.</p>
-<div class="highlight"><pre><span></span><span class="x">java.lang.RuntimeException: java.lang.NullPointerException</span>
-<span class="x">        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:522)</span>
-<span class="x">at org.apache.spark.sql.hive.client.ClientWrapper.&lt;init&gt;(ClientWrapper.scala:194)</span>
-<span class="x">at org.apache.spark.sql.hive.client.IsolatedClientLoader.createClient(IsolatedClientLoader.scala:238)</span>
-<span class="x">at org.apache.spark.sql.hive.HiveContext.executionHive</span><span class="p">$</span><span class="nv">lzycompute</span><span class="p">(</span><span class="err">HiveContext.scala</span><span class="p">:</span><span class="m">218</span><span class="p">)</span><span class="x"></span>
-<span class="x">at org.apache.spark.sql.hive.HiveContext.executionHive(HiveContext.scala:208)</span>
-<span class="x">at org.apache.spark.sql.hive.HiveContext.functionRegistry</span><span class="p">$</span><span class="nv">lzycompute</span><span class="p">(</span><span class="err">HiveContext.scala</span><span class="p">:</span><span class="m">462</span><span class="p">)</span><span class="x"></span>
-<span class="x">at org.apache.spark.sql.hive.HiveContext.functionRegistry(HiveContext.scala:461)</span>
-<span class="x">at org.apache.spark.sql.UDFRegistration.&lt;init&gt;(UDFRegistration.scala:40)</span>
-<span class="x">................</span>
-<span class="x">................</span>
-</pre></div>
-
-
-<p>그냥 NullPointerException 이고 아무런 메시지가 없다…-_-…</p>
-<p>내 기억에 작년에 분명 spark-shell 을 윈도우에서 잘 썼었는데 갑자기 에러가 나서 당황했는데, HiveContext 가 원인이었다.</p>
-<p><a href="https://blogs.msdn.microsoft.com/arsen/2016/02/09/resolving-spark-1-6-0-java-lang-nullpointerexception-not-found-value-sqlcontext-error-when-running-spark-shell-on-windows-10-64-bit/">MSDN 블로그의 한 글</a>에 따르면 윈도우에서 Spark 이 HiveContext 를 초기화하기 위해서는 <code>winutils.exe</code> 이라는 파일이 필요하다. 블로그에 따르면 HiveContext 를 초기화하는데 Hadoop 의 Native libraries 를 필요로 하기 때문이라는 듯 하다.</p>
-<p>이번에 사용하려고 했던 spark 빌드는 hive 를 포함한 빌드이기 때문에 spark-shell 이 실행될 때 무조건 HiveContext 를 초기화하게 되어 있었다. 생각해보니 작년에 사용했던 건 hive 를 제외하고 소스를 빌드해서 사용했던 것 같다.ㅠㅠ</p>
-<p>어쨌든 이 문제를 해결하기 위해서는 아래와 같은 것들이 필요하다.</p>
-<ol>
-<li>winutils.exe 다운로드 및 %HADOOP_HOME%\bin 에 복사</li>
-<li>HADOOP_HOME 환경 변수 설정</li>
-</ol>
-<p>자세한 내용은 블로그에 쉽게 나와있으니 읽어보면 되고, 아래 명령들만 기억하자.</p>
-<div class="highlight"><pre><span></span>%HADOOP_HOME%<span class="se">\b</span>in<span class="se">\w</span>inutils.exe ls <span class="se">\t</span>mp<span class="se">\h</span>ive
-%HADOOP_HOME%<span class="se">\b</span>in<span class="se">\w</span>inutils.exe chmod <span class="m">777</span> <span class="se">\t</span>mp<span class="se">\h</span>ive
-%HADOOP_HOME%<span class="se">\b</span>in<span class="se">\w</span>inutils.exe ls <span class="se">\t</span>mp<span class="se">\h</span>ive
-</pre></div>
-
-
-<p>hadoop 은 설치하고 파일 옮기고 귀찮으니까 그냥 <a href="https://github.com/steveloughran/winutils">winutils github</a> 에서 다운로드 하자. 윈도우에서 hadoop 을 잘 쓸 수 있게 <code>winutils.exe</code> 파일까지 포함시켜서 구성되어 있다. 다운로드 해서 <code>%HADOOP_HOME%</code> 만 잘 잡아주면 된다.</p>
-<h1>추가로 발생한 문제</h1>
-<p>나의 경우에 위 내용을 다 했는데도 에러가 발생했다.</p>
-<div class="highlight"><pre><span></span><span class="x">java.lang.RuntimeException: java.lang.RuntimeException: The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------</span>
-<span class="x">  at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:522)</span>
-<span class="x">  at org.apache.spark.sql.hive.client.ClientWrapper.&lt;init&gt;(ClientWrapper.scala:204)</span>
-<span class="x">  at org.apache.spark.sql.hive.client.IsolatedClientLoader.createClient(IsolatedClientLoader.scala:238)</span>
-<span class="x">  at org.apache.spark.sql.hive.HiveContext.executionHive</span><span class="p">$</span><span class="nv">lzycompute</span><span class="p">(</span><span class="err">HiveContext.scala</span><span class="p">:</span><span class="m">218</span><span class="p">)</span><span class="x"></span>
-<span class="x">  at org.apache.spark.sql.hive.HiveContext.executionHive(HiveContext.scala:208)</span>
-<span class="x">  at org.apache.spark.sql.hive.HiveContext.functionRegistry</span><span class="p">$</span><span class="nv">lzycompute</span><span class="p">(</span><span class="err">HiveContext.scala</span><span class="p">:</span><span class="m">462</span><span class="p">)</span><span class="x"></span>
-<span class="x">  at org.apache.spark.sql.hive.HiveContext.functionRegistry(HiveContext.scala:461)</span>
-<span class="x">  at org.apache.spark.sql.UDFRegistration.&lt;init&gt;(UDFRegistration.scala:40)</span>
-<span class="x">  at org.apache.spark.sql.SQLContext.&lt;init&gt;(SQLContext.scala:330)</span>
-<span class="x">  at org.apache.spark.sql.hive.HiveContext.&lt;init&gt;(HiveContext.scala:97)</span>
-<span class="x">  at org.apache.spark.sql.hive.HiveContext.&lt;init&gt;(HiveContext.scala:101)</span>
-<span class="x">  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)</span>
-<span class="x">  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)</span>
-<span class="x">  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)</span>
-<span class="x">  at java.lang.reflect.Constructor.newInstance(Constructor.java:422)</span>
-<span class="x">  at org.apache.spark.repl.Main</span><span class="p">$.</span><span class="nv">createSQLContext</span><span class="p">(</span><span class="err">Main.scala</span><span class="p">:</span><span class="m">89</span><span class="p">)</span><span class="x"></span>
-<span class="x">  ... 47 elided</span>
-<span class="x">Caused by: java.lang.RuntimeException: The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------</span>
-<span class="x">  at org.apache.hadoop.hive.ql.session.SessionState.createRootHDFSDir(SessionState.java:612)</span>
-<span class="x">  at org.apache.hadoop.hive.ql.session.SessionState.createSessionDirs(SessionState.java:554)</span>
-<span class="x">  at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:508)</span>
-<span class="x">  ... 62 more</span>
-<span class="x">&lt;console&gt;:13: error: not found: value sqlContext</span>
-<span class="x">       import sqlContext.implicits._</span>
-<span class="x">              ^</span>
-<span class="x">&lt;console&gt;:13: error: not found: value sqlContext</span>
-<span class="x">       import sqlContext.sql</span>
-<span class="x">              ^</span>
-</pre></div>
-
-
-<p>이번에는 그래도 쉽게 이유를 알 수 있었다. 에러 메시지를 보면 다음과 같다.</p>
-<div class="highlight"><pre><span></span>The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------
-</pre></div>
-
-
-<p>즉, 권한 문제다. 그런데 원래 위의 내용대로 하면 위 문제가 해결되어야 한다. 뭐가 문제인가.</p>
-<p>문제는 내가 C 드라이브가 아니라 E 드라이브에서 spark-shell 을 실행해서 였다. 위의 내용대로 해서 <code>C:\tmp\hive</code> 를 생성하고 권한 설정했는데, spark-shell 은 E 드라이브에서 실행해서 실제로는 <code>E:\tmp\hive</code> 에 접근했던 거였다. 그래서 <code>E:\tmp\hive</code> 로 다시 권한을 설정하고 실행하니 잘 되었다.</p>
-<hr>
-<p><code>HADOOP_HOME</code> 을 환경변수로 해주기 귀찮아서 더 해보니까 conf/spark-env.cmd 파일에 아래처럼 추가해줘도 동작한다.</p>
-<p>set HADOOP_HOME=C:\hadoop\hadoop-2.6.4</p>
-<h1>참고</h1>
-<ul>
-<li><a href="https://blogs.msdn.microsoft.com/arsen/2016/02/09/resolving-spark-1-6-0-java-lang-nullpointerexception-not-found-value-sqlcontext-error-when-running-spark-shell-on-windows-10-64-bit/">Resolving Spark 1.6.0 "java.lang.NullPointerException, not found: value sqlContext" error when running spark-shell on Windows 10 (64-bit)</a></li>
-<li><a href="https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin">hadoop 2.6.4 winutils github</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Windows 에서 spark-shell 을 실행하는 방법</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

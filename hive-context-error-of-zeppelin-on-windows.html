@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>garret - spark</title>
+        <title>Windows 에서 apache zeppelin 사용 시 HiveContext 에러</title>
         <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
         <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
@@ -16,7 +16,7 @@
                 <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
                 <nav><ul>
                     <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a></li>
+                    <li class="active"><a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
@@ -24,10 +24,15 @@
                     <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://imjang57.github.io/garret/hive-context-error-of-zeppelin-on-windows.html" rel="bookmark"
+           title="Permalink to Windows 에서 apache zeppelin 사용 시 HiveContext 에러">Windows 에서 apache zeppelin 사용 시 HiveContext 에러</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/hive-context-error-of-zeppelin-on-windows.html">Windows 에서 apache zeppelin 사용 시 HiveContext 에러</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-10T00:00:00+09:00">
                 Published: Tue 10 January 2017
@@ -42,7 +47,7 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/spark.html">spark</a> <a href="https://imjang57.github.io/garret/tag/zeppelin.html">zeppelin</a> </p>
-</footer><!-- /.post-info --><h1>Windows 에서 zeppelin 실행</h1>
+</footer><!-- /.post-info -->      <h1>Windows 에서 zeppelin 실행</h1>
 <p><a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html">윈도우에서 spark-shell을 실행하는 방법</a> 에서 윈도우에서 spark-shell 을 실행하는 방법에 대해 알아봤다. spark-shell 이 실행가능하니까 당연히 zeppelin 도 실행가능할거라고 생각된다. 그래서 실행해보니 에러가 발생했다..-_-..; 메시지가 매우 긴데.. 다음과 같은 메시지가 나오는 경우였다.</p>
 <div class="highlight"><pre><span></span>Caused by: java.lang.IllegalArgumentException: java.net.URISyntaxException: Relative path in absolute URI: file:C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse
 </pre></div>
@@ -97,40 +102,11 @@
 <h1>참고</h1>
 <ul>
 <li><a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/">Apache Zeppelin installation on Windows 10</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</ul>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html" rel="bookmark"
-                           title="Permalink to Windows 에서 spark-shell 을 실행하는 방법">Windows 에서 spark-shell 을 실행하는 방법</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-10T00:00:00+09:00">
-                Published: Tue 10 January 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-01-10T00:00:00+09:00">
-                Updated: Sun 10 January 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/spark.html">spark</a> </p>
-</footer><!-- /.post-info -->                <p>Windows 에서 spark-shell 을 실행하는 방법</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

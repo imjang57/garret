@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - dev-issues</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/dev-issues.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-10T00:00:00+09:00</updated><entry><title>Windows 에서 spark-shell 을 실행하는 방법</title><link href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2016-01-10T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/run-spark-shell-on-windows.html</id><summary type="html">&lt;p&gt;Windows 에서 spark-shell 을 실행하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 spark-shell 실행&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - dev-issues</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/dev-issues.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-10T00:00:00+09:00</updated><entry><title>Windows 에서 apache zeppelin 사용 시 HiveContext 에러</title><link href="https://imjang57.github.io/garret/hive-context-error-of-zeppelin-on-windows.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2016-01-10T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/hive-context-error-of-zeppelin-on-windows.html</id><summary type="html">&lt;p&gt;Windows 에서 apache zeppelin 사용 시 HiveContext 에러가 발생하는 경우&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 zeppelin 실행&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html"&gt;윈도우에서 spark-shell을 실행하는 방법&lt;/a&gt; 에서 윈도우에서 spark-shell 을 실행하는 방법에 대해 알아봤다. spark-shell 이 실행가능하니까 당연히 zeppelin 도 실행가능할거라고 생각된다. 그래서 실행해보니 에러가 발생했다..-_-..; 메시지가 매우 긴데.. 다음과 같은 메시지가 나오는 경우였다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Caused by: java.lang.IllegalArgumentException: java.net.URISyntaxException: Relative path in absolute URI: file:C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;%ZEPPELIN_HOME%\spark-warehouse&lt;/code&gt; 를 hive 테이블들을 저장하기 위해 사용하는 것 같다. 그래서 &lt;code&gt;%ZEPPELIN_HOME%\spark-warehouse&lt;/code&gt; 폴더를 생성하고 &lt;a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html"&gt;윈도우에서 spark-shell을 실행하는 방법&lt;/a&gt; 포스트에서 했떤 것 처럼 winutils 를 사용해서 권한을 설정해줬다&lt;/p&gt;
+&lt;p&gt;그런데 같은 에러가 또 발생한다..!!!!..ㅆ....&lt;/p&gt;
+&lt;p&gt;그래서 찾다보니 &lt;a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/"&gt;이 블로그 포스트&lt;/a&gt; 에서 해결책을 찾았다.&lt;/p&gt;
+&lt;p&gt;결론은 &lt;code&gt;spark.sql.warehouse.dir&lt;/code&gt; 이라는 설정값을 정확하게 설정해줘야 한다는 것이다. &lt;code&gt;%ZEPPELIN_HOME%\conf\interpreter.json&lt;/code&gt; 을 열어서 spark interprefter 설정을 찾아서 아래와 같이 &lt;code&gt;spark.sql.warehouse.dir&lt;/code&gt; 을 추가하자.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="err"&gt;...&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;2C5DV85NF&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2C5DV85NF&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spark&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spark&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;properties&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;spark.sql.warehouse.dir&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file:///C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;spark.executor.memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;args&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.printREPLOutput&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;spark.cores.max&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.dep.additionalRemoteRepository&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spark-packages,http://dl.bintray.com/spark-packages/maven,false;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.sql.stacktrace&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.importImplicit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.concurrentSQL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.useHiveContext&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.pyspark.python&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;python&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.dep.localrepo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;local-repo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.knitr&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.maxResult&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1000&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;local[*]&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;spark.app.name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Zeppelin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.image.width&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;100%&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.render.options&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;out.format \u003d \u0027html\u0027, comment \u003d NA, echo \u003d FALSE, results \u003d \u0027asis\u0027, message \u003d F, warning \u003d F&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.cmd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;R&amp;quot;&lt;/span&gt;
+      &lt;span class="p"&gt;},&lt;/span&gt;
+      &lt;span class="err"&gt;...&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="err"&gt;...&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 아래 코드를 실행해서 테스트해보니 잘된다. &lt;code&gt;%ZEPPELIN_HOME&lt;/code&gt;\spark-warehouse&lt;code&gt;에&lt;/code&gt;tmptable` 이라는 폴더가 생성된 걸 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;hiveCtx&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hive&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;HiveContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;hiveCtx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;select 1, 2&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;saveAsTable&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tmpTable&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;p&gt;위의 내용은 zeppelin 내장 spark interpreter 를 사용한 경우라서 사용 형태라 다른 경우 맞지 않을 수도 있다.&lt;/p&gt;
+&lt;h1&gt;참고&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/"&gt;Apache Zeppelin installation on Windows 10&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="spark"></category><category term="zeppelin"></category></entry><entry><title>Windows 에서 spark-shell 을 실행하는 방법</title><link href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2016-01-10T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/run-spark-shell-on-windows.html</id><summary type="html">&lt;p&gt;Windows 에서 spark-shell 을 실행하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 spark-shell 실행&lt;/h1&gt;
 &lt;p&gt;윈도우에서 spark-shell 실행 시 NullPointerException 발생할 경우 문제 해결하는 방법에 대한 글이다.&lt;/p&gt;
 &lt;h1&gt;윈도우에서 Spark 실행 시 RuntimeException(NullPointerException) 발생&lt;/h1&gt;
 &lt;p&gt;Spark 은 보통 리눅스에서 사용되지만 Local mode 로 실행하면 윈도우에서도 실행할 수 있다. 그런데 리눅스에서는 단순히 spark-shell 스크립트를 실행하면 되는데 윈도우에서는 아래와 같은 에러가 발생하는 경우가 있다.&lt;/p&gt;
