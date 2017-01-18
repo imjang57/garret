@@ -6,7 +6,7 @@
 
 - To generate site : `pelican /path/to/content [-o /path/to/output] [-s publishconf.py]`
 - To publish site to git gh-pages branch of local repository : `ghp-import -m "Generate Pelican site" -b gh-pages output`
-- To deploy site to gh-pages of github : `git push -u origin gh-pages`
+- To deploy site to gh-pages of github : `git push origin gh-pages`
 
 # References
 
