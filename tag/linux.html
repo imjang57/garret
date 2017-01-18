@@ -28,7 +28,44 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/ssh-with-key.html">SSH with key</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html">Bash script 로 각 디렉터리들의 실제 사용량 조회하기</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-18T00:00:00+09:00">
+                Published: 수 18 1월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
+                Updated: 수 18 1월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/du.html">du</a> <a href="https://imjang57.github.io/garret/tag/disk.html">disk</a> </p>
+</footer><!-- /.post-info --><h1>Linux 에서 각 디렉터리 별 디스크 사용량 확인하기</h1>
+<p>리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.</p>
+<p>스크립트:</p>
+<div class="highlight"><pre><span></span><span class="c1"># make newlines the only seperator (IFS : Internal Field Separator)</span>
+<span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span><span class="p">;</span> <span class="k">for</span> d in <span class="k">$(</span>ls -l <span class="p">|</span> grep <span class="s1">&#39;^d&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print substr($0, index($0, $9)) }&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> du -hs <span class="nv">$d</span><span class="p">;</span> <span class="k">done</span>
+</pre></div>
+
+
+<p>처음에 <code>IFS</code> 를 지정해주지 않으면 디렉터리 이름에 공백이 들어간 경우 디렉터리 이름이 공백을 기준으로 split 되어 별도의 디렉터리처럼 동작하게 된다.</p>
+<p>나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, <code>grep</code> 으로 디렉터리만 뽑아내고, <code>awk</code> 로 파일 이름만 뽑아내고, <code>for</code> statement 를 사용해서 각 디렉터리마다 <code>du</code> 명령을 사용한다.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/ssh-with-key.html" rel="bookmark"
+                           title="Permalink to SSH with key">SSH with key</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-02T00:00:00+09:00">
                 Published: 월 02 1월 2017
@@ -43,65 +80,12 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/key-gen.html">key-gen</a> </p>
-</footer><!-- /.post-info --><h1>SSH with key file</h1>
-<p>SSH 를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때.. 이 때 key 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다.</p>
-<p>SSH 에서 key 를 이용한 로그인을 위해 RSA asymmetric encryption (RSA 비대칭키 암호화) 방식을 이용할 수 있다. 이 방법은 아래와 같은 절차를 따라 동작한다. (물론 당연히 다른 암호화 방식의 Key 를 사용해도 된다.)</p>
-<ol>
-<li>Public Key (공개키) 와 Private Key (비공개키) 를 생성</li>
-<li>Local Host (SSH Client) 에 Private Key 저장</li>
-<li>Remote Host (SSH Server) 에 Public Key 등록</li>
-<li>Local Host 가 Remote  Host 에 접속 요청을 하면서 Public Key 전달</li>
-<li>Remote Host 는 Public Key 를 받아서 등록된 Public Key 인지 검사한 후 승인 또는 비승인</li>
-</ol>
-<h2>Key 생성</h2>
-<p>먼저 Public Key 와 Private Key 를 생성한다. 리눅스에서는 아래와 같은 명령을 실행하면 된다.</p>
-<div class="highlight"><pre><span></span>$ ssh-keygen -t rsa
-Generating public/private rsa key pair.
-Enter file in which to save the key <span class="o">(</span>/home/axl/.ssh/id_rsa<span class="o">)</span>: &lt;<span class="k">return</span>&gt;
-Enter passphrase <span class="o">(</span>empty <span class="k">for</span> no passphrase<span class="o">)</span>: &lt;Type the passphrase&gt;
-Enter same passphrase again: &lt;Type the passphrase&gt;
-</pre></div>
-
-
-<p><code>ssh-keygen</code> 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 <code>$HOME/.ssh</code> 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. passphrase 는 비공개키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.</p>
-<p>키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.</p>
-<div class="highlight"><pre><span></span>drwx------  <span class="m">2</span> ubuntu ubuntu <span class="m">4096</span> Feb <span class="m">18</span> 18:54 .
-drwxr-xr-x <span class="m">16</span> ubuntu ubuntu <span class="m">4096</span> Mar  <span class="m">1</span> 06:02 ..
--rw-rw-r--  <span class="m">1</span> ubuntu ubuntu  <span class="m">790</span> Feb <span class="m">19</span> 06:04 authorized_keys
--rw-------  <span class="m">1</span> ubuntu ubuntu <span class="m">1675</span> Feb <span class="m">18</span> 18:51 id_rsa
--rw-r--r--  <span class="m">1</span> ubuntu ubuntu  <span class="m">395</span> Feb <span class="m">18</span> 18:51 id_rsa.pub
--rw-r--r--  <span class="m">1</span> ubuntu ubuntu <span class="m">2216</span> Feb <span class="m">19</span> 18:34 known_hosts
-</pre></div>
-
-
-<p><code>authorized_keys</code> 파일은 없을수도 있다. <code>id_rsa</code> 파일은 private key 이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. <code>id_rsa.pub</code> 파일은 public key 이다. 접속하려는 Remote Host 의 <code>authorized_keys</code> 에 입력한다. <code>authorized_keys</code> 파일은 Remote Host 의 <code>.ssh</code> 디렉토리 아래에 위치하면서 <code>id_rsa.pub</code> 키의 값을 저장한다.</p>
-<h2>Remote Host 에 Public Key 등록</h2>
-<p>이제 <code>id_rsa.pub</code> 파일을 리모트 서버의 <code>$HOME/.ssh/authorized_keys</code> 파일에 추가해줘야 한다. SSH Server의 <code>authorized_keys</code> 의 내용이 SSH Client의 <code>id_rsa.pub</code> 파일과 같아야 한다.</p>
-<p>아래와 같이 SCP (Secure Copy) 를 이용하여 Public Key 를 Remote Host 에 복사한다.</p>
-<div class="highlight"><pre><span></span>scp <span class="nv">$HOME</span>/.ssh/id_rsa.pub root@server.net:id_rsa.pub
-</pre></div>
-
-
-<p>그리고 Public Key 를 Remote Host 의 authorized_keys 에 추가한다.</p>
-<div class="highlight"><pre><span></span>cat <span class="nv">$HOME</span>/id_rsa.pub &gt;&gt; <span class="nv">$HOME</span>/.ssh/authorized_keys
-</pre></div>
-
-
-<h2>SSH 접속</h2>
-<p>이후에는 비밀번호 없이 바로 SSH 접속이 가능하다.</p>
-<p>만약 Private Key 를 다른 곳에 저장했다면 아래와 같이 <code>-i</code> 옵션을 사용하여 키를 지정할 수 있다.</p>
-<div class="highlight"><pre><span></span>$ ssh root@server.net -i keyfile
-</pre></div>
-
-
-<h2>Remote Host 의 SSHD 설정</h2>
-<p>Key 를 이용한 SSH 로그인을 사용하기 위해서는 Remote Host 의 SSHD 설정에서 RSA 키 인증을 사용하도록 설정해야 한다. 아래와 같은 내용이 있는지 SSHD 설정 파일 (<code>/etc/ssh/sshd_config</code>) 을 확인한다.</p>
-<div class="highlight"><pre><span></span>RSAAuthentication yes
-#DSAAuthentication yes
-PubkeyAuthentication yes
-AuthorizedKeysFile .ssh/authorized_keys
-</pre></div>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>Key 로 SSH 로그인 하기 위한 과정</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/ssh-with-key.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

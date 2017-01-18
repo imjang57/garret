@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>garret</title>
+        <title>garret - disk</title>
         <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
         <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
@@ -26,65 +26,34 @@
                 </ul></nav>
         </header><!-- /#banner -->
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="9">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="bookmark"
-                           title="Permalink to SSH Host-key identification">SSH Host-key identification</a></h1>
-                </header>
-
-                <div class="entry-content">
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html">Bash script 로 각 디렉터리들의 실제 사용량 조회하기</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2016-12-30T00:00:00+09:00">
-                Published: 금 30 12월 2016
+        <abbr class="published" title="2017-01-18T00:00:00+09:00">
+                Published: 수 18 1월 2017
         </abbr>
 		<br />
-        <abbr class="modified" title="2016-12-30T00:00:00+09:00">
-                Updated: 금 30 12월 2016
+        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
+                Updated: 수 18 1월 2017
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
         </address>
-<p>In <a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">SSH</a> </p>
-</footer><!-- /.post-info -->                <p>This is about SSH Host-key identification.</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/ssh-host-key-identification.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/du.html">du</a> <a href="https://imjang57.github.io/garret/tag/disk.html">disk</a> </p>
+</footer><!-- /.post-info --><h1>Linux 에서 각 디렉터리 별 디스크 사용량 확인하기</h1>
+<p>리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.</p>
+<p>스크립트:</p>
+<div class="highlight"><pre><span></span><span class="c1"># make newlines the only seperator (IFS : Internal Field Separator)</span>
+<span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span><span class="p">;</span> <span class="k">for</span> d in <span class="k">$(</span>ls -l <span class="p">|</span> grep <span class="s1">&#39;^d&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print substr($0, index($0, $9)) }&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> du -hs <span class="nv">$d</span><span class="p">;</span> <span class="k">done</span>
+</pre></div>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/integer-types-header-file-stdint.html" rel="bookmark"
-                           title="Permalink to Integer types header file (stdint.h)">Integer types header file (stdint.h)</a></h1>
-                </header>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-01-02T00:00:00+09:00">
-                Published: 토 02 1월 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-01-02T00:00:00+09:00">
-                Updated: 토 02 1월 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/programming.html">programming</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/c-programming-language.html">c programming language</a> <a href="https://imjang57.github.io/garret/tag/stdinth.html">stdint.h</a> </p>
-</footer><!-- /.post-info -->                <p>C 언어의 Integer data type 의 크기를 정의한 stdint.h 헤더파일</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/integer-types-header-file-stdint.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-<p class="paginator">
-        <a href="https://imjang57.github.io/garret/index2.html">&laquo;</a>
-    Page 3 / 3
-</p>
-                </section><!-- /#content -->
+<p>처음에 <code>IFS</code> 를 지정해주지 않으면 디렉터리 이름에 공백이 들어간 경우 디렉터리 이름이 공백을 기준으로 split 되어 별도의 디렉터리처럼 동작하게 된다.</p>
+<p>나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, <code>grep</code> 으로 디렉터리만 뽑아내고, <code>awk</code> 로 파일 이름만 뽑아내고, <code>for</code> statement 를 사용해서 각 디렉터리마다 <code>du</code> 명령을 사용한다.</p>                </article>
+            </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
