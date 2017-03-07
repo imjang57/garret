@@ -1,5 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-05T00:00:00+09:00</updated><entry><title>Git Basics</title><link href="https://imjang57.github.io/garret/git-basics.html" rel="alternate"></link><published>2017-01-05T00:00:00+09:00</published><updated>2017-01-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-05:/garret/git-basics.html</id><summary type="html">&lt;p&gt;Git 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git Basic&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-18T00:00:00+09:00</updated><entry><title>JVM Process monitoring with JDK tools</title><link href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/jvm-process-monitoring-with-jdk-tools.html</id><summary type="html">&lt;p&gt;JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;JVM Process monitoring&lt;/h1&gt;
+&lt;p&gt;요즘 일 때문에 오랜만에 자바를 사용하고 있고, 스칼라에 관심이 생겨 공부해보고 있다. 그런데 둘다 &lt;em&gt;JVM&lt;/em&gt; 기반 언어다 보니 JVM 에 대해 알아야 겠다는 생각이 들었다. (사실 일하다가 JVM 모니터링 할 일이 생긴 김에 간단하게 정리한다.) 어쨌든 둘 다 JVM 에서 동작하는 녀석들이라 JVM 모니터링에 대해 간단하게 남겨보고자 한다.&lt;/p&gt;
+&lt;p&gt;자바든 스칼라든 실행되면 JVM 프로세스이다. 자바나 스칼라로 쓰여진 코드는 Java Bytecode 로 컴파일되고, JVM 은 이 Bytecode 를 실행한다. 그러므로 컴파일 된 이후에는 자바로 작성했든 스칼라로 작성했든 JVM 입장에서는 그냥 똑같은 Bytecode 이다. 그러니 같은 방법(JVM Process monitoring)으로 모니터링할 수 있다.&lt;/p&gt;
+&lt;h1&gt;JVM Monitoring tools&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;JDK (Java Development Kit)&lt;/em&gt; 를 설치하면 기본적으로 자바 코드를 컴파일하기 위한 &lt;code&gt;javac&lt;/code&gt;, 컴파일된 bytecode 를 실행하는 &lt;code&gt;java&lt;/code&gt; 를 제공한다. 그리고 개발자들을 위한 다양한 도구들을 기본적으로 제공한다. 모니터링을 위해서 아래 도구들을 사용가능하다.(물론 아래 도구들 외에 더 많다.)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;jps&lt;/code&gt; : JVM Process Status&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jstat&lt;/code&gt; : JVM Statistics&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jhat&lt;/code&gt; : Java Heap Analysis Tool&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jstack&lt;/code&gt; : Java thread Stack traces&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;VisualVM&lt;/em&gt; 과 같은 GUI 도구도 있지만 어쨌든 기본은 CLI 도구들이고, GUI 도구들도 CLI 도구들을 이용하는 형태이다.&lt;/p&gt;
+&lt;h1&gt;JVM Monitoring&lt;/h1&gt;
+&lt;p&gt;JVM 프로세스를 모니터링하려면 당연히 JVM 프로세스가 있어야 한다. 테스트 프로그램은 임시로 tomcat 을 사용하였다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;yum install -y tomcat&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;passwd tomcat&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/passwd&lt;/code&gt; 파일에서 tomcat 계정의 login shell 을 bash 로 지정&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo service tomcat start&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;tomcat 계정으로 전환(&lt;code&gt;su - tomcat&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;jps : JVM Process Status&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;jps&lt;/code&gt; 를 실행하면 JVM Process 목록과 PID 를 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jps
+&lt;span class="m"&gt;17285&lt;/span&gt; Bootstrap
+&lt;span class="m"&gt;17322&lt;/span&gt; Jps
+$ jps -m
+&lt;span class="m"&gt;17285&lt;/span&gt; Bootstrap start
+&lt;span class="m"&gt;17398&lt;/span&gt; Jps -m
+$ jps -ml
+&lt;span class="m"&gt;17285&lt;/span&gt; org.apache.catalina.startup.Bootstrap start
+&lt;span class="m"&gt;17413&lt;/span&gt; sun.tools.jps.Jps -ml
+$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;jstat: JVM Statistics&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;jps&lt;/code&gt; 에서 확인한 PID 로 &lt;code&gt;jstat&lt;/code&gt; 를 실행할 수 있다. 위에서 tomcat 을 실행하는 Bootstrap 의 PID 가 17285 이므로 이를 이용하여 &lt;code&gt;jstat&lt;/code&gt; 을 실행하였다. 그리고 1000 밀리초 단위로 통계치를 수집하도록 하였다. 결과는 퍼센트(%)로 출력된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jstat -gcutil &lt;span class="m"&gt;17285&lt;/span&gt; 1000
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   
+  0.00  98.44  60.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005
+$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위에서처럼 &lt;code&gt;-gcutil&lt;/code&gt; 옵션을 사용하면 Java Heap 현황을 확인할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;GCT&lt;/em&gt; : Garbage Collection Time (seconds, 누적)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;FGCT&lt;/em&gt; : Full GCT (seconds, 누적)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;FGC&lt;/em&gt; : Full Garbage Collection 발생 회수&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;M&lt;/em&gt; : Metaspace 영역의 사용률&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;S0&lt;/em&gt; : Survivor 0 영역의 사용률&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;S1&lt;/em&gt; : Survivor 1 영역의 사용률&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;E&lt;/em&gt; : Eden 영역의 사용률&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;O&lt;/em&gt; : Old 영역의 사용률&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;CCS&lt;/em&gt; : Compressed Class Space (part of metaspace)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;YGC&lt;/em&gt; : Young GC 발생 회수&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;YGCT&lt;/em&gt; : Young GC Time (seconds, 누적)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;FGCT 열의 값이 계속 증가하면 문제가 있는 것이다.&lt;/p&gt;
+&lt;p&gt;M 열은 Metadata 를 위한 힙 영역이다. 이 영역은 자바8부터 M(Metaspace)로 표시되기 시작했고 이전 버전까지는 P(Permgen, Permanent Generation) 영역이라고 불리었다. 클래스의 Metadata, JVM 내부 객체 등이 저장되는 중요한 곳이다. 매우 무조건 자바 프로그램의 경우 이 영역에서 &lt;code&gt;java.lang.OutOfMemoryError&lt;/code&gt; 를 만날 수도 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;-gcutil&lt;/code&gt; 대신 &lt;code&gt;-gccause&lt;/code&gt; 옵션을 사용하면 &lt;code&gt;-gcutil&lt;/code&gt; 의 결과에 GC 의 원인까지 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jstat -gccause &lt;span class="m"&gt;17285&lt;/span&gt; 1000
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC                 
+  0.00  98.44  61.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005 Allocation Failure   No GC               
+  0.00  98.44  61.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005 Allocation Failure   No GC               
+  0.00  98.44  61.41   5.27  96.61  89.46      &lt;span class="m"&gt;1&lt;/span&gt;    0.005     &lt;span class="m"&gt;0&lt;/span&gt;    0.000    0.005 Allocation Failure   No GC               
+$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;LGCC&lt;/em&gt; : 지난 GC의 발생 이유&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;GCC&lt;/em&gt; : 현재 GC의 발생 이유&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;jstack: Java thread Stack traces&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;jstack&lt;/code&gt; 을 이용하면 현재 Java 프로세스의 stack dump 를 얻을 수 있다. &lt;code&gt;jstack&lt;/code&gt; 을 이용하면 현재 실행 중인 여러 thread 들의 stack 을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ jstack 17285
+2016-12-26 10:32:20
+Full thread dump OpenJDK 64-Bit Server VM &lt;span class="o"&gt;(&lt;/span&gt;25.111-b15 mixed mode&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;span class="s2"&gt;&amp;quot;Attach Listener&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#17 daemon prio=9 os_prio=0 tid=0x00007f48d0001000 nid=0x458b waiting on condition [0x0000000000000000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+&lt;span class="s2"&gt;&amp;quot;ajp-bio-8009-AsyncTimeout&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#15 daemon prio=5 os_prio=0 tid=0x00007f491049c800 nid=0x43a9 waiting on condition [0x00007f48f8ba4000]&lt;/span&gt;
+   java.lang.Thread.State: TIMED_WAITING &lt;span class="o"&gt;(&lt;/span&gt;sleeping&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Thread.sleep&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.tomcat.util.net.JIoEndpoint&lt;span class="nv"&gt;$AsyncTimeout&lt;/span&gt;.run&lt;span class="o"&gt;(&lt;/span&gt;JIoEndpoint.java:152&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Thread.run&lt;span class="o"&gt;(&lt;/span&gt;Thread.java:745&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;ajp-bio-8009-Acceptor-0&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#14 daemon prio=5 os_prio=0 tid=0x00007f491049a000 nid=0x43a8 runnable [0x00007f48f8ca5000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+ at java.net.PlainSocketImpl.socketAccept&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.net.AbstractPlainSocketImpl.accept&lt;span class="o"&gt;(&lt;/span&gt;AbstractPlainSocketImpl.java:409&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.net.ServerSocket.implAccept&lt;span class="o"&gt;(&lt;/span&gt;ServerSocket.java:545&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.net.ServerSocket.accept&lt;span class="o"&gt;(&lt;/span&gt;ServerSocket.java:513&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.tomcat.util.net.DefaultServerSocketFactory.acceptSocket&lt;span class="o"&gt;(&lt;/span&gt;DefaultServerSocketFactory.java:60&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.tomcat.util.net.JIoEndpoint&lt;span class="nv"&gt;$Acceptor&lt;/span&gt;.run&lt;span class="o"&gt;(&lt;/span&gt;JIoEndpoint.java:222&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Thread.run&lt;span class="o"&gt;(&lt;/span&gt;Thread.java:745&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;ContainerBackgroundProcessor[StandardEngine[Catalina]]&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#13 daemon prio=5 os_prio=0 tid=0x00007f4910497000 nid=0x43a7 waiting on condition [0x00007f48f8da6000]&lt;/span&gt;
+   java.lang.Thread.State: TIMED_WAITING &lt;span class="o"&gt;(&lt;/span&gt;sleeping&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Thread.sleep&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.catalina.core.ContainerBase&lt;span class="nv"&gt;$ContainerBackgroundProcessor&lt;/span&gt;.run&lt;span class="o"&gt;(&lt;/span&gt;ContainerBase.java:1510&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Thread.run&lt;span class="o"&gt;(&lt;/span&gt;Thread.java:745&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;GC Daemon&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#11 daemon prio=2 os_prio=0 tid=0x00007f491040c800 nid=0x43a5 in Object.wait() [0x00007f48fa637000]&lt;/span&gt;
+   java.lang.Thread.State: TIMED_WAITING &lt;span class="o"&gt;(&lt;/span&gt;on object monitor&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Object.wait&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ - waiting on &amp;lt;0x00000000ecfdd7d0&amp;gt; &lt;span class="o"&gt;(&lt;/span&gt;a sun.misc.GC&lt;span class="nv"&gt;$LatencyLock&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ at sun.misc.GC&lt;span class="nv"&gt;$Daemon&lt;/span&gt;.run&lt;span class="o"&gt;(&lt;/span&gt;GC.java:117&lt;span class="o"&gt;)&lt;/span&gt;
+ - locked &amp;lt;0x00000000ecfdd7d0&amp;gt; &lt;span class="o"&gt;(&lt;/span&gt;a sun.misc.GC&lt;span class="nv"&gt;$LatencyLock&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;Service Thread&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#8 daemon prio=9 os_prio=0 tid=0x00007f49100e1000 nid=0x43a3 runnable [0x0000000000000000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+&lt;span class="s2"&gt;&amp;quot;C1 CompilerThread2&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#7 daemon prio=9 os_prio=0 tid=0x00007f49100ce000 nid=0x43a2 waiting on condition [0x0000000000000000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+&lt;span class="s2"&gt;&amp;quot;C2 CompilerThread1&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#6 daemon prio=9 os_prio=0 tid=0x00007f49100cc800 nid=0x43a1 waiting on condition [0x0000000000000000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+&lt;span class="s2"&gt;&amp;quot;C2 CompilerThread0&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#5 daemon prio=9 os_prio=0 tid=0x00007f49100bf000 nid=0x43a0 waiting on condition [0x0000000000000000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+&lt;span class="s2"&gt;&amp;quot;Signal Dispatcher&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#4 daemon prio=9 os_prio=0 tid=0x00007f49100bc800 nid=0x439f runnable [0x0000000000000000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+&lt;span class="s2"&gt;&amp;quot;Finalizer&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#3 daemon prio=8 os_prio=0 tid=0x00007f4910093000 nid=0x439e in Object.wait() [0x00007f48fb5f4000]&lt;/span&gt;
+   java.lang.Thread.State: WAITING &lt;span class="o"&gt;(&lt;/span&gt;on object monitor&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Object.wait&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ - waiting on &amp;lt;0x00000000edd08988&amp;gt; &lt;span class="o"&gt;(&lt;/span&gt;a java.lang.ref.ReferenceQueue&lt;span class="nv"&gt;$Lock&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.ref.ReferenceQueue.remove&lt;span class="o"&gt;(&lt;/span&gt;ReferenceQueue.java:143&lt;span class="o"&gt;)&lt;/span&gt;
+ - locked &amp;lt;0x00000000edd08988&amp;gt; &lt;span class="o"&gt;(&lt;/span&gt;a java.lang.ref.ReferenceQueue&lt;span class="nv"&gt;$Lock&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.ref.ReferenceQueue.remove&lt;span class="o"&gt;(&lt;/span&gt;ReferenceQueue.java:164&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.ref.Finalizer&lt;span class="nv"&gt;$FinalizerThread&lt;/span&gt;.run&lt;span class="o"&gt;(&lt;/span&gt;Finalizer.java:209&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;Reference Handler&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#2 daemon prio=10 os_prio=0 tid=0x00007f491008e800 nid=0x439d in Object.wait() [0x00007f48fb6f5000]&lt;/span&gt;
+   java.lang.Thread.State: WAITING &lt;span class="o"&gt;(&lt;/span&gt;on object monitor&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Object.wait&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ - waiting on &amp;lt;0x00000000edd00970&amp;gt; &lt;span class="o"&gt;(&lt;/span&gt;a java.lang.ref.Reference&lt;span class="nv"&gt;$Lock&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.Object.wait&lt;span class="o"&gt;(&lt;/span&gt;Object.java:502&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.ref.Reference.tryHandlePending&lt;span class="o"&gt;(&lt;/span&gt;Reference.java:191&lt;span class="o"&gt;)&lt;/span&gt;
+ - locked &amp;lt;0x00000000edd00970&amp;gt; &lt;span class="o"&gt;(&lt;/span&gt;a java.lang.ref.Reference&lt;span class="nv"&gt;$Lock&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.ref.Reference&lt;span class="nv"&gt;$ReferenceHandler&lt;/span&gt;.run&lt;span class="o"&gt;(&lt;/span&gt;Reference.java:153&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;#1 prio=5 os_prio=0 tid=0x00007f4910009000 nid=0x4397 runnable [0x00007f4919dbd000]&lt;/span&gt;
+   java.lang.Thread.State: RUNNABLE
+ at java.net.PlainSocketImpl.socketAccept&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.net.AbstractPlainSocketImpl.accept&lt;span class="o"&gt;(&lt;/span&gt;AbstractPlainSocketImpl.java:409&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.net.ServerSocket.implAccept&lt;span class="o"&gt;(&lt;/span&gt;ServerSocket.java:545&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.net.ServerSocket.accept&lt;span class="o"&gt;(&lt;/span&gt;ServerSocket.java:513&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.catalina.core.StandardServer.await&lt;span class="o"&gt;(&lt;/span&gt;StandardServer.java:470&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.catalina.startup.Catalina.await&lt;span class="o"&gt;(&lt;/span&gt;Catalina.java:781&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.catalina.startup.Catalina.start&lt;span class="o"&gt;(&lt;/span&gt;Catalina.java:727&lt;span class="o"&gt;)&lt;/span&gt;
+ at sun.reflect.NativeMethodAccessorImpl.invoke0&lt;span class="o"&gt;(&lt;/span&gt;Native Method&lt;span class="o"&gt;)&lt;/span&gt;
+ at sun.reflect.NativeMethodAccessorImpl.invoke&lt;span class="o"&gt;(&lt;/span&gt;NativeMethodAccessorImpl.java:62&lt;span class="o"&gt;)&lt;/span&gt;
+ at sun.reflect.DelegatingMethodAccessorImpl.invoke&lt;span class="o"&gt;(&lt;/span&gt;DelegatingMethodAccessorImpl.java:43&lt;span class="o"&gt;)&lt;/span&gt;
+ at java.lang.reflect.Method.invoke&lt;span class="o"&gt;(&lt;/span&gt;Method.java:498&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.catalina.startup.Bootstrap.start&lt;span class="o"&gt;(&lt;/span&gt;Bootstrap.java:294&lt;span class="o"&gt;)&lt;/span&gt;
+ at org.apache.catalina.startup.Bootstrap.main&lt;span class="o"&gt;(&lt;/span&gt;Bootstrap.java:428&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;VM Thread&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;os_prio&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;tid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00007f4910084800 &lt;span class="nv"&gt;nid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x439c runnable
+&lt;span class="s2"&gt;&amp;quot;GC task thread#0 (ParallelGC)&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;os_prio&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;tid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00007f491001e000 &lt;span class="nv"&gt;nid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x4398 runnable
+&lt;span class="s2"&gt;&amp;quot;GC task thread#1 (ParallelGC)&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;os_prio&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;tid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00007f491001f800 &lt;span class="nv"&gt;nid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x4399 runnable
+&lt;span class="s2"&gt;&amp;quot;GC task thread#2 (ParallelGC)&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;os_prio&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;tid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00007f4910021800 &lt;span class="nv"&gt;nid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x439a runnable
+&lt;span class="s2"&gt;&amp;quot;GC task thread#3 (ParallelGC)&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;os_prio&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;tid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00007f4910023800 &lt;span class="nv"&gt;nid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x439b runnable
+&lt;span class="s2"&gt;&amp;quot;VM Periodic Task Thread&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;os_prio&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;tid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00007f49100ef800 &lt;span class="nv"&gt;nid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x43a4 waiting on condition
+JNI global references: 44
+$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.wolfe.id.au/2011/10/16/monitoring-the-openjdk-from-the-cli/"&gt;Monitoring the OpenJDK from the CLI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://d2.naver.com/helloworld/6043"&gt;Garbage Collection 모니터링 방법&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="java"></category><category term="jvm"></category><category term="monitoring"></category><category term="jps"></category><category term="stat"></category><category term="stack"></category></entry><entry><title>Git Basics</title><link href="https://imjang57.github.io/garret/git-basics.html" rel="alternate"></link><published>2017-01-05T00:00:00+09:00</published><updated>2017-01-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-05:/garret/git-basics.html</id><summary type="html">&lt;p&gt;Git 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git Basic&lt;/h1&gt;
 &lt;p&gt;이 글은 Git 에 대해 기본적인 내용은 알고 있다고 생각하고 정리 목적으로 작성된 글이니 Git 을 아예 모르면 &lt;a href="http://git-scm.com/book/"&gt;Git Book&lt;/a&gt; 을 먼저 숙지하자.&lt;/p&gt;
 &lt;p&gt;아래 내용들에 알면 Git 을 잘 사용하기 위한 개념들은 다 알고 있다고 봐도 된다.&lt;/p&gt;
 &lt;ul&gt;

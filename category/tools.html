@@ -16,19 +16,213 @@
                 <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
                 <nav><ul>
                     <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/dev-issues.html">dev-issues</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
                     <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
                     <li class="active"><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/windows.html">windows</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/git-basics.html">Git Basics</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html">JVM Process monitoring with JDK tools</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-18T00:00:00+09:00">
+                Published: Wed 18 January 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
+                Updated: Wed 18 January 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/java.html">java</a> <a href="https://imjang57.github.io/garret/tag/jvm.html">jvm</a> <a href="https://imjang57.github.io/garret/tag/monitoring.html">monitoring</a> <a href="https://imjang57.github.io/garret/tag/jps.html">jps</a> <a href="https://imjang57.github.io/garret/tag/stat.html">stat</a> <a href="https://imjang57.github.io/garret/tag/stack.html">stack</a> </p>
+</footer><!-- /.post-info --><h1>JVM Process monitoring</h1>
+<p>요즘 일 때문에 오랜만에 자바를 사용하고 있고, 스칼라에 관심이 생겨 공부해보고 있다. 그런데 둘다 <em>JVM</em> 기반 언어다 보니 JVM 에 대해 알아야 겠다는 생각이 들었다. (사실 일하다가 JVM 모니터링 할 일이 생긴 김에 간단하게 정리한다.) 어쨌든 둘 다 JVM 에서 동작하는 녀석들이라 JVM 모니터링에 대해 간단하게 남겨보고자 한다.</p>
+<p>자바든 스칼라든 실행되면 JVM 프로세스이다. 자바나 스칼라로 쓰여진 코드는 Java Bytecode 로 컴파일되고, JVM 은 이 Bytecode 를 실행한다. 그러므로 컴파일 된 이후에는 자바로 작성했든 스칼라로 작성했든 JVM 입장에서는 그냥 똑같은 Bytecode 이다. 그러니 같은 방법(JVM Process monitoring)으로 모니터링할 수 있다.</p>
+<h1>JVM Monitoring tools</h1>
+<p><em>JDK (Java Development Kit)</em> 를 설치하면 기본적으로 자바 코드를 컴파일하기 위한 <code>javac</code>, 컴파일된 bytecode 를 실행하는 <code>java</code> 를 제공한다. 그리고 개발자들을 위한 다양한 도구들을 기본적으로 제공한다. 모니터링을 위해서 아래 도구들을 사용가능하다.(물론 아래 도구들 외에 더 많다.)</p>
+<ul>
+<li><code>jps</code> : JVM Process Status</li>
+<li><code>jstat</code> : JVM Statistics</li>
+<li><code>jhat</code> : Java Heap Analysis Tool</li>
+<li><code>jstack</code> : Java thread Stack traces</li>
+</ul>
+<p><em>VisualVM</em> 과 같은 GUI 도구도 있지만 어쨌든 기본은 CLI 도구들이고, GUI 도구들도 CLI 도구들을 이용하는 형태이다.</p>
+<h1>JVM Monitoring</h1>
+<p>JVM 프로세스를 모니터링하려면 당연히 JVM 프로세스가 있어야 한다. 테스트 프로그램은 임시로 tomcat 을 사용하였다.</p>
+<ul>
+<li><code>yum install -y tomcat</code></li>
+<li><code>passwd tomcat</code></li>
+<li><code>/etc/passwd</code> 파일에서 tomcat 계정의 login shell 을 bash 로 지정</li>
+<li><code>sudo service tomcat start</code></li>
+<li>tomcat 계정으로 전환(<code>su - tomcat</code>)</li>
+</ul>
+<h2>jps : JVM Process Status</h2>
+<p><code>jps</code> 를 실행하면 JVM Process 목록과 PID 를 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ jps
+<span class="m">17285</span> Bootstrap
+<span class="m">17322</span> Jps
+$ jps -m
+<span class="m">17285</span> Bootstrap start
+<span class="m">17398</span> Jps -m
+$ jps -ml
+<span class="m">17285</span> org.apache.catalina.startup.Bootstrap start
+<span class="m">17413</span> sun.tools.jps.Jps -ml
+$
+</pre></div>
+
+
+<h2>jstat: JVM Statistics</h2>
+<p><code>jps</code> 에서 확인한 PID 로 <code>jstat</code> 를 실행할 수 있다. 위에서 tomcat 을 실행하는 Bootstrap 의 PID 가 17285 이므로 이를 이용하여 <code>jstat</code> 을 실행하였다. 그리고 1000 밀리초 단위로 통계치를 수집하도록 하였다. 결과는 퍼센트(%)로 출력된다.</p>
+<div class="highlight"><pre><span></span>$ jstat -gcutil <span class="m">17285</span> 1000
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   
+  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
+  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
+$
+</pre></div>
+
+
+<p>위에서처럼 <code>-gcutil</code> 옵션을 사용하면 Java Heap 현황을 확인할 수 있다.</p>
+<ul>
+<li><em>GCT</em> : Garbage Collection Time (seconds, 누적)</li>
+<li><em>FGCT</em> : Full GCT (seconds, 누적)</li>
+<li><em>FGC</em> : Full Garbage Collection 발생 회수</li>
+<li><em>M</em> : Metaspace 영역의 사용률</li>
+<li><em>S0</em> : Survivor 0 영역의 사용률</li>
+<li><em>S1</em> : Survivor 1 영역의 사용률</li>
+<li><em>E</em> : Eden 영역의 사용률</li>
+<li><em>O</em> : Old 영역의 사용률</li>
+<li><em>CCS</em> : Compressed Class Space (part of metaspace)</li>
+<li><em>YGC</em> : Young GC 발생 회수</li>
+<li><em>YGCT</em> : Young GC Time (seconds, 누적)</li>
+</ul>
+<p>FGCT 열의 값이 계속 증가하면 문제가 있는 것이다.</p>
+<p>M 열은 Metadata 를 위한 힙 영역이다. 이 영역은 자바8부터 M(Metaspace)로 표시되기 시작했고 이전 버전까지는 P(Permgen, Permanent Generation) 영역이라고 불리었다. 클래스의 Metadata, JVM 내부 객체 등이 저장되는 중요한 곳이다. 매우 무조건 자바 프로그램의 경우 이 영역에서 <code>java.lang.OutOfMemoryError</code> 를 만날 수도 있다.</p>
+<p><code>-gcutil</code> 대신 <code>-gccause</code> 옵션을 사용하면 <code>-gcutil</code> 의 결과에 GC 의 원인까지 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ jstat -gccause <span class="m">17285</span> 1000
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC                 
+  0.00  98.44  61.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005 Allocation Failure   No GC               
+  0.00  98.44  61.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005 Allocation Failure   No GC               
+  0.00  98.44  61.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005 Allocation Failure   No GC               
+$
+</pre></div>
+
+
+<ul>
+<li><em>LGCC</em> : 지난 GC의 발생 이유</li>
+<li><em>GCC</em> : 현재 GC의 발생 이유</li>
+</ul>
+<h2>jstack: Java thread Stack traces</h2>
+<p><code>jstack</code> 을 이용하면 현재 Java 프로세스의 stack dump 를 얻을 수 있다. <code>jstack</code> 을 이용하면 현재 실행 중인 여러 thread 들의 stack 을 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ jstack 17285
+2016-12-26 10:32:20
+Full thread dump OpenJDK 64-Bit Server VM <span class="o">(</span>25.111-b15 mixed mode<span class="o">)</span>:
+<span class="s2">&quot;Attach Listener&quot;</span> <span class="c1">#17 daemon prio=9 os_prio=0 tid=0x00007f48d0001000 nid=0x458b waiting on condition [0x0000000000000000]</span>
+   java.lang.Thread.State: RUNNABLE
+<span class="s2">&quot;ajp-bio-8009-AsyncTimeout&quot;</span> <span class="c1">#15 daemon prio=5 os_prio=0 tid=0x00007f491049c800 nid=0x43a9 waiting on condition [0x00007f48f8ba4000]</span>
+   java.lang.Thread.State: TIMED_WAITING <span class="o">(</span>sleeping<span class="o">)</span>
+ at java.lang.Thread.sleep<span class="o">(</span>Native Method<span class="o">)</span>
+ at org.apache.tomcat.util.net.JIoEndpoint<span class="nv">$AsyncTimeout</span>.run<span class="o">(</span>JIoEndpoint.java:152<span class="o">)</span>
+ at java.lang.Thread.run<span class="o">(</span>Thread.java:745<span class="o">)</span>
+<span class="s2">&quot;ajp-bio-8009-Acceptor-0&quot;</span> <span class="c1">#14 daemon prio=5 os_prio=0 tid=0x00007f491049a000 nid=0x43a8 runnable [0x00007f48f8ca5000]</span>
+   java.lang.Thread.State: RUNNABLE
+ at java.net.PlainSocketImpl.socketAccept<span class="o">(</span>Native Method<span class="o">)</span>
+ at java.net.AbstractPlainSocketImpl.accept<span class="o">(</span>AbstractPlainSocketImpl.java:409<span class="o">)</span>
+ at java.net.ServerSocket.implAccept<span class="o">(</span>ServerSocket.java:545<span class="o">)</span>
+ at java.net.ServerSocket.accept<span class="o">(</span>ServerSocket.java:513<span class="o">)</span>
+ at org.apache.tomcat.util.net.DefaultServerSocketFactory.acceptSocket<span class="o">(</span>DefaultServerSocketFactory.java:60<span class="o">)</span>
+ at org.apache.tomcat.util.net.JIoEndpoint<span class="nv">$Acceptor</span>.run<span class="o">(</span>JIoEndpoint.java:222<span class="o">)</span>
+ at java.lang.Thread.run<span class="o">(</span>Thread.java:745<span class="o">)</span>
+<span class="s2">&quot;ContainerBackgroundProcessor[StandardEngine[Catalina]]&quot;</span> <span class="c1">#13 daemon prio=5 os_prio=0 tid=0x00007f4910497000 nid=0x43a7 waiting on condition [0x00007f48f8da6000]</span>
+   java.lang.Thread.State: TIMED_WAITING <span class="o">(</span>sleeping<span class="o">)</span>
+ at java.lang.Thread.sleep<span class="o">(</span>Native Method<span class="o">)</span>
+ at org.apache.catalina.core.ContainerBase<span class="nv">$ContainerBackgroundProcessor</span>.run<span class="o">(</span>ContainerBase.java:1510<span class="o">)</span>
+ at java.lang.Thread.run<span class="o">(</span>Thread.java:745<span class="o">)</span>
+<span class="s2">&quot;GC Daemon&quot;</span> <span class="c1">#11 daemon prio=2 os_prio=0 tid=0x00007f491040c800 nid=0x43a5 in Object.wait() [0x00007f48fa637000]</span>
+   java.lang.Thread.State: TIMED_WAITING <span class="o">(</span>on object monitor<span class="o">)</span>
+ at java.lang.Object.wait<span class="o">(</span>Native Method<span class="o">)</span>
+ - waiting on &lt;0x00000000ecfdd7d0&gt; <span class="o">(</span>a sun.misc.GC<span class="nv">$LatencyLock</span><span class="o">)</span>
+ at sun.misc.GC<span class="nv">$Daemon</span>.run<span class="o">(</span>GC.java:117<span class="o">)</span>
+ - locked &lt;0x00000000ecfdd7d0&gt; <span class="o">(</span>a sun.misc.GC<span class="nv">$LatencyLock</span><span class="o">)</span>
+<span class="s2">&quot;Service Thread&quot;</span> <span class="c1">#8 daemon prio=9 os_prio=0 tid=0x00007f49100e1000 nid=0x43a3 runnable [0x0000000000000000]</span>
+   java.lang.Thread.State: RUNNABLE
+<span class="s2">&quot;C1 CompilerThread2&quot;</span> <span class="c1">#7 daemon prio=9 os_prio=0 tid=0x00007f49100ce000 nid=0x43a2 waiting on condition [0x0000000000000000]</span>
+   java.lang.Thread.State: RUNNABLE
+<span class="s2">&quot;C2 CompilerThread1&quot;</span> <span class="c1">#6 daemon prio=9 os_prio=0 tid=0x00007f49100cc800 nid=0x43a1 waiting on condition [0x0000000000000000]</span>
+   java.lang.Thread.State: RUNNABLE
+<span class="s2">&quot;C2 CompilerThread0&quot;</span> <span class="c1">#5 daemon prio=9 os_prio=0 tid=0x00007f49100bf000 nid=0x43a0 waiting on condition [0x0000000000000000]</span>
+   java.lang.Thread.State: RUNNABLE
+<span class="s2">&quot;Signal Dispatcher&quot;</span> <span class="c1">#4 daemon prio=9 os_prio=0 tid=0x00007f49100bc800 nid=0x439f runnable [0x0000000000000000]</span>
+   java.lang.Thread.State: RUNNABLE
+<span class="s2">&quot;Finalizer&quot;</span> <span class="c1">#3 daemon prio=8 os_prio=0 tid=0x00007f4910093000 nid=0x439e in Object.wait() [0x00007f48fb5f4000]</span>
+   java.lang.Thread.State: WAITING <span class="o">(</span>on object monitor<span class="o">)</span>
+ at java.lang.Object.wait<span class="o">(</span>Native Method<span class="o">)</span>
+ - waiting on &lt;0x00000000edd08988&gt; <span class="o">(</span>a java.lang.ref.ReferenceQueue<span class="nv">$Lock</span><span class="o">)</span>
+ at java.lang.ref.ReferenceQueue.remove<span class="o">(</span>ReferenceQueue.java:143<span class="o">)</span>
+ - locked &lt;0x00000000edd08988&gt; <span class="o">(</span>a java.lang.ref.ReferenceQueue<span class="nv">$Lock</span><span class="o">)</span>
+ at java.lang.ref.ReferenceQueue.remove<span class="o">(</span>ReferenceQueue.java:164<span class="o">)</span>
+ at java.lang.ref.Finalizer<span class="nv">$FinalizerThread</span>.run<span class="o">(</span>Finalizer.java:209<span class="o">)</span>
+<span class="s2">&quot;Reference Handler&quot;</span> <span class="c1">#2 daemon prio=10 os_prio=0 tid=0x00007f491008e800 nid=0x439d in Object.wait() [0x00007f48fb6f5000]</span>
+   java.lang.Thread.State: WAITING <span class="o">(</span>on object monitor<span class="o">)</span>
+ at java.lang.Object.wait<span class="o">(</span>Native Method<span class="o">)</span>
+ - waiting on &lt;0x00000000edd00970&gt; <span class="o">(</span>a java.lang.ref.Reference<span class="nv">$Lock</span><span class="o">)</span>
+ at java.lang.Object.wait<span class="o">(</span>Object.java:502<span class="o">)</span>
+ at java.lang.ref.Reference.tryHandlePending<span class="o">(</span>Reference.java:191<span class="o">)</span>
+ - locked &lt;0x00000000edd00970&gt; <span class="o">(</span>a java.lang.ref.Reference<span class="nv">$Lock</span><span class="o">)</span>
+ at java.lang.ref.Reference<span class="nv">$ReferenceHandler</span>.run<span class="o">(</span>Reference.java:153<span class="o">)</span>
+<span class="s2">&quot;main&quot;</span> <span class="c1">#1 prio=5 os_prio=0 tid=0x00007f4910009000 nid=0x4397 runnable [0x00007f4919dbd000]</span>
+   java.lang.Thread.State: RUNNABLE
+ at java.net.PlainSocketImpl.socketAccept<span class="o">(</span>Native Method<span class="o">)</span>
+ at java.net.AbstractPlainSocketImpl.accept<span class="o">(</span>AbstractPlainSocketImpl.java:409<span class="o">)</span>
+ at java.net.ServerSocket.implAccept<span class="o">(</span>ServerSocket.java:545<span class="o">)</span>
+ at java.net.ServerSocket.accept<span class="o">(</span>ServerSocket.java:513<span class="o">)</span>
+ at org.apache.catalina.core.StandardServer.await<span class="o">(</span>StandardServer.java:470<span class="o">)</span>
+ at org.apache.catalina.startup.Catalina.await<span class="o">(</span>Catalina.java:781<span class="o">)</span>
+ at org.apache.catalina.startup.Catalina.start<span class="o">(</span>Catalina.java:727<span class="o">)</span>
+ at sun.reflect.NativeMethodAccessorImpl.invoke0<span class="o">(</span>Native Method<span class="o">)</span>
+ at sun.reflect.NativeMethodAccessorImpl.invoke<span class="o">(</span>NativeMethodAccessorImpl.java:62<span class="o">)</span>
+ at sun.reflect.DelegatingMethodAccessorImpl.invoke<span class="o">(</span>DelegatingMethodAccessorImpl.java:43<span class="o">)</span>
+ at java.lang.reflect.Method.invoke<span class="o">(</span>Method.java:498<span class="o">)</span>
+ at org.apache.catalina.startup.Bootstrap.start<span class="o">(</span>Bootstrap.java:294<span class="o">)</span>
+ at org.apache.catalina.startup.Bootstrap.main<span class="o">(</span>Bootstrap.java:428<span class="o">)</span>
+<span class="s2">&quot;VM Thread&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f4910084800 <span class="nv">nid</span><span class="o">=</span>0x439c runnable
+<span class="s2">&quot;GC task thread#0 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f491001e000 <span class="nv">nid</span><span class="o">=</span>0x4398 runnable
+<span class="s2">&quot;GC task thread#1 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f491001f800 <span class="nv">nid</span><span class="o">=</span>0x4399 runnable
+<span class="s2">&quot;GC task thread#2 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f4910021800 <span class="nv">nid</span><span class="o">=</span>0x439a runnable
+<span class="s2">&quot;GC task thread#3 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f4910023800 <span class="nv">nid</span><span class="o">=</span>0x439b runnable
+<span class="s2">&quot;VM Periodic Task Thread&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f49100ef800 <span class="nv">nid</span><span class="o">=</span>0x43a4 waiting on condition
+JNI global references: 44
+$
+</pre></div>
+
+
+<h1>References</h1>
+<ul>
+<li><a href="https://www.wolfe.id.au/2011/10/16/monitoring-the-openjdk-from-the-cli/">Monitoring the OpenJDK from the CLI</a></li>
+<li><a href="http://d2.naver.com/helloworld/6043">Garbage Collection 모니터링 방법</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/git-basics.html" rel="bookmark"
+                           title="Permalink to Git Basics">Git Basics</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-05T00:00:00+09:00">
                 Published: Thu 05 January 2017
@@ -43,257 +237,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/git.html">git</a> </p>
-</footer><!-- /.post-info --><h1>Git Basic</h1>
-<p>이 글은 Git 에 대해 기본적인 내용은 알고 있다고 생각하고 정리 목적으로 작성된 글이니 Git 을 아예 모르면 <a href="http://git-scm.com/book/">Git Book</a> 을 먼저 숙지하자.</p>
-<p>아래 내용들에 알면 Git 을 잘 사용하기 위한 개념들은 다 알고 있다고 봐도 된다.</p>
-<ul>
-<li>VCS (Version Control System), DVCS (Distributed Version Control System)</li>
-<li>Working tree, Staging Area (Index), Local Repository, Remote Repository, Bare Repository</li>
-</ul>
-<p>주로 아래 명령들이 사용된다.</p>
-<ul>
-<li>add, rm, mv, commit, push, pull, merge, diff, stash, rebase, fast-forward, history</li>
-</ul>
-<h1>Git configuration</h1>
-<p><em>Git</em> 설정을 적용하는 방법은 2가지가 있다.</p>
-<ul>
-<li><code>git config</code> command 를 사용하는 방법</li>
-<li><code>.gitconfig</code> 파일에 추가하는 방법</li>
-</ul>
-<p><code>git config</code> 명령을 사용하면 git 프로그램이 자동으로 <code>.gitconfig</code> 파일에 해당 설정을 추가하는 것이기 때문에 결과는 같다.</p>
-<p><code>git config</code> command:</p>
-<div class="highlight"><pre><span></span>git config --global user.name <span class="s2">&quot;imjang57&quot;</span>
-git config --global user.email <span class="s2">&quot;imjang57@gmail.com&quot;</span>
-git config --global color.ui auto
-</pre></div>
-
-
-<p>git config file (<code>~/.gitconfig</code>):</p>
-<div class="highlight"><pre><span></span><span class="k">[user]</span>
-    <span class="na">name</span> <span class="o">=</span> <span class="s">imjang57</span>
-<span class="s">    email = imjang57@gmail.com</span>
-<span class="k">[color]</span>
-    <span class="na">ui</span> <span class="o">=</span> <span class="s">auto</span>
-</pre></div>
-
-
-<p>위에서 <code>git config --global</code> 과 같이 global option 을 전달했기 때문에 <code>~/.gitconfig</code> 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 로 가서 <code>git config --local</code> 과 같이 local option 을 사용하면 된다. 그러면 <code>&lt;PROJECT_HOME&gt;/.git/config</code> 에 설정이 저장된다.</p>
-<hr>
-<p>아래 설정은 git 이 실행할 텍스트 에디터 명령을 지정한다. commit message 작성 등을 위해 사용된다.</p>
-<div class="highlight"><pre><span></span>git config --global core.editor &quot;\&quot;C:\Windows\notepad.exe\&quot;&quot;
-git config --global core.editor &quot;nano&quot;
-</pre></div>
-
-
-<hr>
-<p>아래 설정은 proxy 를 설정한다.</p>
-<div class="highlight"><pre><span></span>git config --global http.proxy http://&lt;username&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;
-git config --global https.proxy http://&lt;username&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;
-</pre></div>
-
-
-<hr>
-<p>아래 설정은 git 에서 사용하는 scheme 을 강제로 변환하기 위해 사용된다. 아래와 같이 설정하면 git scheme 을 https 로 바꿔서 사용하게 된다.</p>
-<div class="highlight"><pre><span></span>git config --global url.<span class="s2">&quot;https://&quot;</span>.insteadOf git://
-</pre></div>
-
-
-<h1>Git basic usage</h1>
-<h2>Git Local Repository 생성</h2>
-<ul>
-<li>새로운 git repository 생성 : <code>git init</code></li>
-</ul>
-<p>명령어를 실행한 경로에 <code>.git</code> 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. <code>git init</code> 명령을 실행한 디렉터리의 내용을 <em>Working Tree</em> 라고 한다. working tree 의 변경 내용이 있을 때 <code>git add</code>, <code>git rm</code> 등을 실행하면 <em>Index</em> 가 생성된다. <code>git commit</code> 을 실행하면 local branch 에 변경 내용이 적용된다. <code>git push</code> 를 실행하면 remote branch 에 변경된 내용을 추가한다.</p>
-<ul>
-<li>Remote Repository 추가 : <code>git remote add &lt;remote repository name&gt; &lt;Remote Repository URL&gt;</code></li>
-</ul>
-<p><code>git init</code> 후에 <code>git remote add</code> 를 통해 remote repoistory 를 추가할 수 있다. 이후 <code>git fetch</code> 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 <code>git fetch</code>는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository 에만 정보를 저장한다. <code>git remote add origin ssh://user@host:22/repos/project</code> 로 remote repository 를 등록했으면 <code>git merge origin/master</code> 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 <code>git pull</code> 을 실행하면 된다. <code>git pull</code> 은 <code>git fetch</code> 와 <code>git merge</code> 를 한꺼번에 실행해준다.</p>
-<hr>
-<p>Git Local Repository 를 만드는 다른 방법은 Remote Repository 를 복사하는 것이다. <code>git clone &lt;url&gt; [target directory]</code> 을 실행하면 remote repository 를 복사한다. target directory 를 지정해주지 않으면 remote repository 의 이름으로 target directory 가 생성된다.</p>
-<hr>
-<ul>
-<li>remote repository 목록 확인 : <code>git remote</code></li>
-<li>URL 포함하여 remote repository 목록 확인 : <code>git remote -v</code></li>
-<li>remote repository 상세 정보 확인 : <code>git remote show [remote repository name]</code></li>
-</ul>
-<hr>
-<ul>
-<li>remote repository 를 삭제 : <code>git remote rm &lt;remote repository name&gt;</code></li>
-<li>remote repository 의 이름 변경 : <code>git remote rename &lt;from_name&gt; &lt;to_name&gt;</code></li>
-</ul>
-<h2>Managing Modifications in local repository</h2>
-<p>Git 으로 변경사항들을 관리하기 위한 기본적인 명령들을에는 status, add, rm, mv, commit, stash, diff 등이 있다.</p>
-<hr>
-<ul>
-<li>repository 상태 (현재 branch, 변경 내역 등) 확인 : <code>git status</code></li>
-</ul>
-<hr>
-<ul>
-<li>staging area (index) 에 파일 추가 : <code>git add &lt;file&gt;</code></li>
-</ul>
-<p>새롭게 생성된 Untracked files 나 modificated files 는 <code>git commit</code> 전에 <code>git add</code> 로 staging area 에 등록해야 한다. staging area 는 commit 전에 존재하는 임시 영역이다.</p>
-<hr>
-<ul>
-<li>git repository 에 변경 내용을 기록 : <code>git commit [-m "messages"]</code></li>
-</ul>
-<p>Staging area 에 기록된 파일들을 실제 repository 에 반영하는 작업이다. -m 옵션이 없다면 git 환경설정에서 지정된 editor 가 실행되고 자세한 로그를 작성할 수 있다. 관례적으로 첫 번째 줄에는 로그에 대한 한 줄 요약을 작성하고 두 번째 줄은 공백, 세 번째 줄부터 상세 내용을 작성한다. 아무것도 입력하지 않고 editor 를 종료하면 commit 이 취소된다.</p>
-<hr>
-<ul>
-<li>working tree 와 staging area 의 차이를 확인 : <code>git diff</code></li>
-<li>staging area 와 laest commit 의 차이를 확인 : <code>git diff --staged</code></li>
-<li>working tree 와 최신 commit 의 차이를 확인 : <code>git diff HEAD</code></li>
-<li>특정 branch 와 master branch 간의 diff 확인 : <code>git diff master..&lt;branch name&gt; [path]</code></li>
-</ul>
-<hr>
-<ul>
-<li>staging area 의 파일 삭제 : <code>git rm &lt;path/to&gt;</code></li>
-<li>특정 파일을 staging area 에서 삭제하지만 working tree 에는 보존 : <code>git rm --cached &lt;path/to&gt;</code></li>
-</ul>
-<hr>
-<ul>
-<li>파일 이동 : <code>git mv &lt;from_file&gt; &lt;to_file&gt;</code></li>
-</ul>
-<hr>
-<ul>
-<li>현재의 모든 변경 내용을 임시 저장하기 : <code>git stash</code></li>
-<li>가장 최근의 임시 저장된 내용을 다시 적용하기 : <code>git stash pop</code></li>
-<li>현재 임시 저장된 목록을 출력 : <code>git stash list</code></li>
-<li>가장 최근의 임시 저장된 내용을 삭제 : <code>git stash drop</code></li>
-</ul>
-<h2>Igrnoring files</h2>
-<p><code>.gitigrnore</code> 파일에 무시할 파일들의 리스트를 추가하면 이후 추가된 파일들은 git add 등으로 변경 내용을 index 에 적용할 때 무시된다. 디렉터리마다 <code>.gitignore</code> 파일을 생성할 수 있으며 해당 디렉터리부터 하위 디렉터리 들에 대해 파일의 내용이 적용된다.</p>
-<div class="highlight"><pre><span></span>*.[oa]       # ignore files ending in &quot;.o&quot; or &quot;.a&quot;
-!lib.a       # do track lib.a, even though you&#39;re ignoring .a files above
-*~           # ignore files ending in tilde(&quot;~&quot;)
-/TODO        # only ignore the root TODO file, not subdir/TODO
-build/       # ignore all files in the build/ directory
-doc/*.txt    # ignore doc/notes.txt, but not doc/server/arch.txt
-doc/**/*.txt # ignore all &quot;*.txt&quot; files in the doc/ directory
-</pre></div>
-
-
-<p><code>.gitignore</code> 파일의 다른 용도는 empty directory 를 repository 에 저장하기 위해 사용된다. git 은 빈 디렉터리는 저장소에 저장하지 않는다. 이때 빈 디렉터리 안에 임의의 빈 <code>.gitignore</code> 파일을 생성하여 commit 하면 해당 디렉터리도 저장소에 추가할 수 있다.</p>
-<h2>Viewing the Commit History</h2>
-<ul>
-<li>commit history 확인 : <code>git log [/path/to]</code></li>
-<li>commit 에서 변경된 내용도 같이 확인 : - <code>git log -p [/path/to]</code></li>
-<li>마지막 2개의 내용만 확인 : <code>git log -2</code></li>
-<li>한줄 요약으로 보기 : <code>git log --pretty=oneline</code></li>
-</ul>
-<p>특정 파일의 version history list 를 확인하려면 <code>git log --follow [file]</code> 를 실행한다. git 나름대로 rename 한 작업까지 계산해준다.</p>
-<h2>Working with Remote Repository</h2>
-<p><code>git pull</code>, <code>git fetch</code>, <code>git merge</code>, <code>git push</code> 를 통해 remote repository 와 동기화할 수 있다.</p>
-<hr>
-<ul>
-<li>Remote Repository 의 변경 내용들을 Local Repository 로 갱신 : <code>git pull</code></li>
-</ul>
-<p>원격 저장소의 변경 내용이 로컬 작업 디렉토리에 받아지고(fetch), 병합(merge)된다. <code>git pull</code> 은 내부적으로 아래의 두 명령이 연속적으로 실행된 것과 같다.</p>
-<ul>
-<li><code>git fetch &lt;remote repository name&gt;</code></li>
-<li><code>git merge &lt;remote repository name&gt;/master</code></li>
-</ul>
-<hr>
-<ul>
-<li>Local Repository 의 commit 들을 Remote Repository 에 전달 : <code>git push [remote repository] [remote branch]</code></li>
-</ul>
-<p>Remote Repository 이름이 origin 이고, origin 의 master branch 로 Local Repository 의 변경 내용을 올리려고 하면 <code>git push origin master</code> 를 실행한다.</p>
-<h2>Branch and Merge</h2>
-<ul>
-<li>branch 목록 출력 및 현재 작업 중인 branch 확인 : <code>git branch</code></li>
-<li>Remote Repository 의 branch 들을 모두 포함하여 출력 : <code>git branch -a</code></li>
-<li>branch 생성 : <code>git branch &lt;branch name&gt;</code></li>
-<li>branch 변경 : <code>git checkout &lt;branch name&gt;</code></li>
-<li>branch 생성 및 변경 : <code>git checkout -b &lt;branch name&gt;</code></li>
-</ul>
-<p>만약 feature-A 라는 이름의 branch를 생성하고 해당 branch 로 변경하고 싶으면 <code>git checkout -b feature-A</code> 을 실행한다. 이는 다음 명령어 들을 연속으로 실행한 것과 같다.</p>
-<ul>
-<li><code>git branch feature-A</code></li>
-<li><code>git checkout feature-A</code></li>
-</ul>
-<p>이후 master branch 로 돌아오려면 <code>git checkout master</code> 를 실행한다. 만약 현재 branch 를 사용하기 전의 branch 로 되돌아가려면 <code>git checkout -</code> 를 실행하면 된다.</p>
-<ul>
-<li>branch 삭제 : <code>git branch -d &lt;branch name&gt;</code></li>
-</ul>
-<hr>
-<ul>
-<li>branch 를 merge 하기 : <code>git merge [options] &lt;branch name&gt;</code></li>
-</ul>
-<p>만약 구현이 완료된 feature-A branch 를 merge 하려면 <code>git merge feature-A</code> 를 실행한다.</p>
-<h2>Resolve conflicts</h2>
-<p><code>git pull</code>, <code>git merge</code> 등을 하다보면 내가 변경하고 commit 한 내용과 다른 사람이 변경하고 commit 한 내용이 서로 충돌하는 경우가 발생한다. 대부분의 경우 git 이 자동으로 바뀐 부분을 알아서 적용해준다. 하지만 만약 서로 다른 사람들이 파일의 같은 부분을 동시에 고쳤을 경우, git 이 해결하지 못하고 충돌이 발생했음을 알려준다.</p>
-<p>이렇게 충돌이 발생하면, git이 알려주는 파일의 충돌 부분을 직접 수정해서 병합이 가능하도록 수정해야 한다. 충돌을 해결했다면, <code>git add [file path]</code> 를 실행하여 수정된 부분을 다시 index 에 저장하고 commit 한다.</p>
-<p>변경 내용을 병합하기 전에, <code>git diff</code> 를 사용하여 어떻게 바뀌었는지 비교해보는 것이 좋다.</p>
-<h2>Tag</h2>
-<ul>
-<li>Tag 목록 확인 : <code>git tag</code></li>
-<li>Tag 생성 : <code>git tag &lt;tag name&gt;</code></li>
-<li>Tag 삭제 : <code>git tag -d &lt;tag name&gt;</code></li>
-<li>pattern 으로 tag 목록 확인 : <code>git tag -l 'v1.8.5*'</code></li>
-<li>특정 tag의 정보 보기 : <code>git show &lt;tag name&gt;</code></li>
-<li>이미 지나간 commit 에 대한 tag 를 생성 : git tag -a <tag name> <commit ID></li>
-<li>remote server 에 tag 정보 push : <code>git push origin [tagname]</code></li>
-<li>remote server 에 모든 tag 정보를 한꺼번에 전송 : <code>git push origin --tags</code></li>
-</ul>
-<p>git tag 에는 2가지 type 이 있다:</p>
-<ul>
-<li>lightweight : pointer to a specific commit. 즉, lightweight tag 정보는 오직 commit checksum 만 저장된다.</li>
-<li>annotated tag: stored as full objects in the Git database. They are checksummed; contain the tagger name, e-mail, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG).</li>
-</ul>
-<p><code>git tag &lt;tag name&gt;</code> 으로 Tag 를 생성할 경우 기본적으로 libweight tag 이다. annotated tag 는 <code>-a</code> 옵션을 사용(<code>git tag -a &lt;tag name&gt; -m '&lt;message&gt;'</code>)해야 한다. <code>-m</code> 옵션이 없으면 git 에 editor 를 실행하여 message를 입력할 수 있도록 한다.</p>
-<p>annotated tag 는 추가적인 tag 정보들(tag name, tagger, date, message 등)과 commit 내용을 보여 준다. lightweight tag 는 tag 관련된 추가적인 정보들이 없이 commit 내용만 보여준다.</p>
-<ul>
-<li>tag 로 checkout : <code>git checkout -b version2 v2.0.0</code></li>
-</ul>
-<p>git 에는 사실 tag 로 checkout 하는 기능은 없다. 단지 특정 tag 로 branch 를 만드는 것이다. 때문에 이렇게 만들어진 branch 에서 작업하고 commit 하면 master 에 반영이 안되니 주의해야 한다.</p>
-<h1>Advanced</h1>
-<h2>Undo modifications</h2>
-<ul>
-<li>Local 의 변경 내용을 HEAD 로 되돌리기: <code>git checkout -- &lt;file path&gt;</code></li>
-</ul>
-<p>위의 명령은 이미 인덱스에 추가된 변경 내용과 새로 생성한 파일은 그대로 남는다.</p>
-<ul>
-<li>Staging Area (index) 의 파일을 Unstaged 로 바꾸기: <code>git reset HEAD &lt;file path&gt;</code></li>
-</ul>
-<p>만약 어떤 파일을 수정한 후 git add 를 실행하여 Staged 상태일 때, 변경 내용들을 취소하고 싶을 경우 아래 명령들을 차례로 실행한다.</p>
-<p>HEAD 는 Git 에서 사용되는 special pointer 이다. HEAD 는 현재 작업 중인 local branch 를 가리킨다. <code>git checkout</code> 으로 branch 를 변경하면 HEAD 가 변경된다.</p>
-<ul>
-<li>Repository 의 history 중 하나로 복원하기: <code>git reset [options] &lt;commit hash ID&gt;</code></li>
-<li>history 와 모든 변경 내용들을 삭제하면서 특정 commit 으로 되돌아가기 : <code>git reset --hard [commit]</code></li>
-</ul>
-<p><code>git reset --hard</code> 의 경우 history 를 포함한 모든 변경 내용들을 삭제하여 깔끔하게 이전 내용으로 되돌아갈 수 있다. 하지만 Local Git Repository 가 다른 Remote Repository 와 공유될 경우 문제가 발생할 수도 있다. 이때 사용가능 한 것이 <code>git revert &lt;commit hash ID&gt;</code> 이다. <code>git revert</code> 는 history 와 commit 들을 삭제하지 않는다. 내용을 특정 commit 으로 되돌리지만 삭제하지 않고 또하나의 새로운 commit 으로 처리한다.</p>
-<h2>Modify commits</h2>
-<ul>
-<li>commit 수정하기: <code>git commit --amend</code></li>
-</ul>
-<p>아래와 같은 경우 commit 내용을 수정해야 한다.</p>
-<ul>
-<li>어떤 파일을 빼먹었을 때</li>
-<li>commit message 를 잘못 적었을 때</li>
-</ul>
-<p>커밋을 했는데 Stage하는 것을 깜빡하고 빠트린 파일이 있으면 아래와 같이 고칠 수 있다:</p>
-<div class="highlight"><pre><span></span>git commit -m &#39;initial commit&#39;
-git add &lt;forgotten_file_path&gt;
-git commit --amend
-</pre></div>
-
-
-<p>여기서 실행한 명령어 3개는 모두 하나의 commit 으로 기록된다. 두 번째 commit 은 첫 번째 commit 을 덮어쓴다.</p>
-<h1>Github</h1>
-<ul>
-<li>branch 들 (example: ruby on rails repository 의 4-0-stable branch 와 3-2-stable branch) 사이의 변경 내역 확인하는 방법 : <code>https://github.com/rails/rails/compare/4-0-stable...3-2-stable</code></li>
-<li>master branch 의 2015년 1월 1일부터의 변경 내역을 확인하는 방법(변경 내역이 너무 많거나, 기간이 너무 긴 경우에는 최근 변경 내용만 나온다) : <code>https://www.github.com/rails/rails/compare/master@{2015-01-01}...master</code></li>
-</ul>
-<h1>References</h1>
-<ul>
-<li><a href="http://git-scm.com/book/en/v2">Git Book English</a></li>
-<li><a href="http://git-scm.com/book/ko/v2">Git Book Korean</a></li>
-<li><a href="https://rogerdudler.github.io/git-guide/index.ko.html">git - 간편 안내서</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Git 기본 사용법</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/git-basics.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
