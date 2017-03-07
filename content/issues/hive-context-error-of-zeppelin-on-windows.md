@@ -8,13 +8,13 @@ Summary: Windows 에서 apache zeppelin 사용 시 HiveContext 에러가 발생�
 
 # Windows 에서 zeppelin 실행
 
-[윈도우에서 spark-shell을 실행하는 방법]({filename}/dev-issues/run-spark-shell-on-windows.md) 에서 윈도우에서 spark-shell 을 실행하는 방법에 대해 알아봤다. spark-shell 이 실행가능하니까 당연히 zeppelin 도 실행가능할거라고 생각된다. 그래서 실행해보니 에러가 발생했다..-_-..; 메시지가 매우 긴데.. 다음과 같은 메시지가 나오는 경우였다.
+[윈도우에서 spark-shell을 실행하는 방법]({filename}/issues/run-spark-shell-on-windows.md) 에서 윈도우에서 spark-shell 을 실행하는 방법에 대해 알아봤다. spark-shell 이 실행가능하니까 당연히 zeppelin 도 실행가능할거라고 생각된다. 그래서 실행해보니 에러가 발생했다..-_-..; 메시지가 매우 긴데.. 다음과 같은 메시지가 나오는 경우였다.
 
 ```
 Caused by: java.lang.IllegalArgumentException: java.net.URISyntaxException: Relative path in absolute URI: file:C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse
 ```
 
-`%ZEPPELIN_HOME%\spark-warehouse` 를 hive 테이블들을 저장하기 위해 사용하는 것 같다. 그래서 `%ZEPPELIN_HOME%\spark-warehouse` 폴더를 생성하고 [윈도우에서 spark-shell을 실행하는 방법]({filename}/dev-issues/run-spark-shell-on-windows.md) 포스트에서 했떤 것 처럼 winutils 를 사용해서 권한을 설정해줬다
+`%ZEPPELIN_HOME%\spark-warehouse` 를 hive 테이블들을 저장하기 위해 사용하는 것 같다. 그래서 `%ZEPPELIN_HOME%\spark-warehouse` 폴더를 생성하고 [윈도우에서 spark-shell을 실행하는 방법]({filename}/issues/run-spark-shell-on-windows.md) 포스트에서 했떤 것 처럼 winutils 를 사용해서 권한을 설정해줬다
 
 그런데 같은 에러가 또 발생한다..!!!!..ㅆ....
 
