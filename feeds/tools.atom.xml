@@ -551,7 +551,7 @@ testsession: &lt;span class="m"&gt;1&lt;/span&gt; windows &lt;span class="o"&gt;
 &lt;p&gt;&lt;em&gt;pane&lt;/em&gt; 은 &lt;em&gt;windows&lt;/em&gt; 를 구성하는 화면들이다. &lt;em&gt;windows&lt;/em&gt; 는 1개 또는 여러 개의 pane 들로 구성될 수 있다. 때문에 2개의 &lt;em&gt;pane&lt;/em&gt; 을 만들어서 &lt;em&gt;window&lt;/em&gt; 를 좌우로 나누어 사용할 수도 있다.&lt;/p&gt;
 &lt;h3&gt;Split&lt;/h3&gt;
 &lt;p&gt;좌우로 window 분할(Split vertical)하려면 &lt;code&gt;ctrl + b, %&lt;/code&gt; 를 입력한다. 또는 command mode 로 &lt;code&gt;split-window -h&lt;/code&gt; 를 입력한다.&lt;/p&gt;
-&lt;p&gt;상하로 window 분할(Split horizontal)하려면 &lt;code&gt;ctrl + b, “&lt;/code&gt; 를 입력한다. 또는 command mode 로 &lt;code&gt;split-window -v&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;p&gt;상하로 window 분할(Split horizontal)하려면 &lt;code&gt;ctrl + b, "&lt;/code&gt; 를 입력한다. 또는 command mode 로 &lt;code&gt;split-window -v&lt;/code&gt; 를 입력한다.&lt;/p&gt;
 &lt;h3&gt;Move to pane&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;ctrl + b, q&lt;/code&gt; 를 입력하면 각 &lt;em&gt;pane&lt;/em&gt; 에 숫자가 잠시 표시된다. 이 때 원하는 pane 의 숫자를 입력하면 해당 &lt;em&gt;pane&lt;/em&gt; 으로 이동한다. 2초 간의 timeout 내에 입력해야 한다.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;ctrl + b, o&lt;/code&gt; 를 입력하면 정해진 순서에 따라 현재 &lt;em&gt;window&lt;/em&gt; 에 생성된 &lt;em&gt;pane&lt;/em&gt; 들을 차례대로 이동한다.&lt;/p&gt;
