@@ -34,7 +34,7 @@ NPE 는 대부분 개발자의 부주의로 발생하므로, 개발할 때 조�
 `equals()`, `equalsIgnoreCase()` 등을 사용할 때 null 이 아닌 것이 확실한 객체가 있다면 해당 객체의 method 를 호출하자.
 
 ```java
-if( “Compare String”.equals(testStr) ) {
+if( "Compare String".equals(testStr) ) {
  // logic
 }
 ```
@@ -84,7 +84,7 @@ Optional object 생성:
 
 ```java
 String nStr = null;
-String str = “Test String”;
+String str = "Test String";
 Optional<String> eOp = Optional.empty(); // empty Optional 객체 생성
 Optional<String> nullableOp = Optional.ofNullable(nStr); // null 을 허용하는 Optional 객체 생성
 Optional<String> notNullableOp = Optional.of(str); // str 에 접근하는 시점이 아니라 Optional 객체를 생성하는 이 순간 parameter 의 null 여부를 체크하여 NPE 가 발생
@@ -95,19 +95,19 @@ if( notNullableOp.isPresent() ) {
 notNullableOp.ifPresent(System.out::println); // Optional 객체에 값이 있는지 확인 후 전달받은 function 을 실행
 notNullableOp.ifPresent(s -> { System.out.println(s) });
 nullableOp.ifPresent(System.out::println); // null 이므로 실행되지 않는다.
-String emtpyStr = eOp.orElse(“Empty String”); // Optional 객체가 empty 일 경우 (null 일 경우) “Empty String” 의 reference 를 return.
+String emtpyStr = eOp.orElse("Empty String"); // Optional 객체가 empty 일 경우 (null 일 경우) "Empty String" 의 reference 를 return.
 String exStr = eOp.orElseThrow(Exception::new); // Optional 객체가 empty 일 경우 (null 일 경우) 지정된 Exception 을 throw.
-System.out.println(notNullableOp.filter(s->s.length() < 5).orElse(“Too long string”));
+System.out.println(notNullableOp.filter(s->s.length() < 5).orElse("Too long string"));
 ```
 
 Optional 과 map 을 이용하여 null check 없이 jsonNode 접근하기:
 
 ```java
 Optional.of(rootNode)
- .map(node -> node.get(“secondNode”))
- .map(node -> node.get(“thirdNode”))
+ .map(node -> node.get("secondNode"))
+ .map(node -> node.get("thirdNode"))
  .ifPresent(node -> {
- System.out.println(node.get(“value”));
+ System.out.println(node.get("value"));
  })
 ```
 

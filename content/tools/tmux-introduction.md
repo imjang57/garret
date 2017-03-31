@@ -123,7 +123,7 @@ _pane_ 은 _windows_ 를 구성하는 화면들이다. _windows_ 는 1개 또는
 
 좌우로 window 분할(Split vertical)하려면 `ctrl + b, %` 를 입력한다. 또는 command mode 로 `split-window -h` 를 입력한다.
 
-상하로 window 분할(Split horizontal)하려면 `ctrl + b, “` 를 입력한다. 또는 command mode 로 `split-window -v` 를 입력한다.
+상하로 window 분할(Split horizontal)하려면 `ctrl + b, "` 를 입력한다. 또는 command mode 로 `split-window -v` 를 입력한다.
 
 ### Move to pane
 
