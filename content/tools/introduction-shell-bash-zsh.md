@@ -79,7 +79,7 @@ zsh 설치는 `yum install zsh`, `apt-get install zsh`, `brew install zsh` 중 �
 이제 oh-my-zsh 을 설치하자. [oh-my-zsh github](https://github.com/robbyrussell/oh-my-zsh) 에 설명이 잘 나와있으니 자세한 내용은 가서 읽어보자. 나는 curl 을 이용해서 설치했다.
 
 ```bash
-$ $ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+$ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ```
 
 위 명령을 실행하면 git repository 가 ~/.oh-my-zsh 디렉터리에 clone 되고 설치 작업이 수행된다. 그리고 ~/.zshrc 파일이 자동으로 생성된다.

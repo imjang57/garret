@@ -39,7 +39,7 @@ _ : underscore
 . : dot, period
 , : comma
 ^ : caret, modifier letter, circumflex accent
-` : grave accent, back tick
+` : grave accent, back tick, back quote
 ~ : tilde
 @ : at symbol
 ```
