@@ -1093,7 +1093,7 @@ ssh=&amp;#39;ssh -o StrictHostKeyChecking=no&amp;#39;
 &lt;h2&gt;Zsh + oh-my-zsh 설치 및 설정&lt;/h2&gt;
 &lt;p&gt;zsh 설치는 &lt;code&gt;yum install zsh&lt;/code&gt;, &lt;code&gt;apt-get install zsh&lt;/code&gt;, &lt;code&gt;brew install zsh&lt;/code&gt; 중 자기 OS 에 맞는 걸로 사용해서 설치하자. zsh 소스를 받아서 컴파일 하여 설치하는 것은 &lt;a href="http://www.zsh.org"&gt;Zsh Homepage&lt;/a&gt; 가서 알아보자.&lt;/p&gt;
 &lt;p&gt;이제 oh-my-zsh 을 설치하자. &lt;a href="https://github.com/robbyrussell/oh-my-zsh"&gt;oh-my-zsh github&lt;/a&gt; 에 설명이 잘 나와있으니 자세한 내용은 가서 읽어보자. 나는 curl 을 이용해서 설치했다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ $ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1135,7 +1135,7 @@ _ : underscore
 . : dot, period
 , : comma
 ^ : caret, modifier letter, circumflex accent
-` : grave accent, back tick
+` : grave accent, back tick, back quote
 ~ : tilde
 @ : at symbol
 &lt;/pre&gt;&lt;/div&gt;</content><category term="special characters"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
