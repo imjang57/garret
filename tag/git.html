@@ -30,11 +30,11 @@
                     <h1 class="entry-title"><a href="https://imjang57.github.io/garret/git-basics.html">Git Basics</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2017-01-05T00:00:00+09:00">
-                Published: Thu 05 January 2017
+                Published: 목 05 1월 2017
         </abbr>
 		<br />
         <abbr class="modified" title="2017-01-05T00:00:00+09:00">
-                Updated: Thu 05 January 2017
+                Updated: 목 05 1월 2017
         </abbr>
 
         <address class="vcard author">
@@ -49,10 +49,54 @@
 <li>VCS (Version Control System), DVCS (Distributed Version Control System)</li>
 <li>Working tree, Staging Area (Index), Local Repository, Remote Repository, Bare Repository</li>
 </ul>
-<p>주로 아래 명령들이 사용된다.</p>
-<ul>
-<li>add, rm, mv, commit, push, pull, merge, diff, stash, rebase, fast-forward, history</li>
-</ul>
+<p><code>git help</code> 명령을 실행하면 사용 가능한 subcommand 들을 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ git <span class="nb">help</span>
+usage: git <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> <span class="o">[</span>-C &lt;path&gt;<span class="o">]</span> <span class="o">[</span>-c <span class="nv">name</span><span class="o">=</span>value<span class="o">]</span>
+           <span class="o">[</span>--exec-path<span class="o">[=</span>&lt;path&gt;<span class="o">]]</span> <span class="o">[</span>--html-path<span class="o">]</span> <span class="o">[</span>--man-path<span class="o">]</span> <span class="o">[</span>--info-path<span class="o">]</span>
+           <span class="o">[</span>-p <span class="p">|</span> --paginate <span class="p">|</span> --no-pager<span class="o">]</span> <span class="o">[</span>--no-replace-objects<span class="o">]</span> <span class="o">[</span>--bare<span class="o">]</span>
+           <span class="o">[</span>--git-dir<span class="o">=</span>&lt;path&gt;<span class="o">]</span> <span class="o">[</span>--work-tree<span class="o">=</span>&lt;path&gt;<span class="o">]</span> <span class="o">[</span>--namespace<span class="o">=</span>&lt;name&gt;<span class="o">]</span>
+           &lt;command&gt; <span class="o">[</span>&lt;args&gt;<span class="o">]</span>
+
+These are common Git commands used in various situations:
+
+start a working area <span class="o">(</span>see also: git <span class="nb">help</span> tutorial<span class="o">)</span>
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change <span class="o">(</span>see also: git <span class="nb">help</span> everyday<span class="o">)</span>
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+
+examine the <span class="nb">history</span> and state <span class="o">(</span>see also: git <span class="nb">help</span> revisions<span class="o">)</span>
+   bisect     Use binary search to find the commit that introduced a bug
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common <span class="nb">history</span>
+   branch     List, create, or delete branches
+   checkout   Switch branches or restore working tree files
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate <span class="o">(</span>see also: git <span class="nb">help</span> workflows<span class="o">)</span>
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a <span class="nb">local</span> branch
+   push       Update remote refs along with associated objects
+
+<span class="s1">&#39;git help -a&#39;</span> and <span class="s1">&#39;git help -g&#39;</span> list available subcommands and some
+concept guides. See <span class="s1">&#39;git help &lt;command&gt;&#39;</span> or <span class="s1">&#39;git help &lt;concept&gt;&#39;</span>
+to <span class="nb">read</span> about a specific subcommand or concept.
+</pre></div>
+
+
+<p><code>git help commit</code> 이나 <code>git commit --help</code> 와 같이 subcommand 자체에 대한 help 도 확인할 수 있으니 필요할 때마다 help 를 활용하자.</p>
 <h1>Git configuration</h1>
 <p><em>Git</em> 설정을 적용하는 방법은 2가지가 있다.</p>
 <ul>
@@ -76,7 +120,8 @@ git config --global color.ui auto
 </pre></div>
 
 
-<p>위에서 <code>git config --global</code> 과 같이 global option 을 전달했기 때문에 <code>~/.gitconfig</code> 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 로 가서 <code>git config --local</code> 과 같이 local option 을 사용하면 된다. 그러면 <code>&lt;PROJECT_HOME&gt;/.git/config</code> 에 설정이 저장된다.</p>
+<p>위에서 <code>git config --global</code> 과 같이 global option 을 전달했기 때문에 <code>~/.gitconfig</code> 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 의 working directory 로 가서 <code>git config --local</code> 과 같이 local option 을 사용하면 된다. 그러면 <code>&lt;PROJECT_HOME&gt;/.git/config</code> 에 설정이 저장된다.</p>
+<p>현재의 git 설정들을 확인하고 싶다면 <code>git config --list</code> 와 같이 실행한다. 만약 범위를 좁히고 싶다면 <code>git config --list --system</code>, <code>git config --list --global</code>, <code>git config --list --local</code> 와 같이 실행할 수도 있다.</p>
 <hr>
 <p>아래 설정은 git 이 실행할 텍스트 에디터 명령을 지정한다. commit message 작성 등을 위해 사용된다.</p>
 <div class="highlight"><pre><span></span>git config --global core.editor &quot;\&quot;C:\Windows\notepad.exe\&quot;&quot;
@@ -91,6 +136,16 @@ git config --global https.proxy http://&lt;username&gt;:&lt;password&gt;@&lt;hos
 </pre></div>
 
 
+<p>만약 프록시 서버가 별도의 인증서가 필요하면 다음과 같은 설정으로 인증서 파일을 추가한다.</p>
+<div class="highlight"><pre><span></span>git config --global http.sslCAInfo /path/to/mycertification.crt
+</pre></div>
+
+
+<p>아니면 다음과 같이 ssl 인증서에 대한 validation 을 하지 않도록 설정할 수도 있다.</p>
+<div class="highlight"><pre><span></span>git config http.sslVerify <span class="nb">false</span>
+</pre></div>
+
+
 <hr>
 <p>아래 설정은 git 에서 사용하는 scheme 을 강제로 변환하기 위해 사용된다. 아래와 같이 설정하면 git scheme 을 https 로 바꿔서 사용하게 된다.</p>
 <div class="highlight"><pre><span></span>git config --global url.<span class="s2">&quot;https://&quot;</span>.insteadOf git://
@@ -102,11 +157,11 @@ git config --global https.proxy http://&lt;username&gt;:&lt;password&gt;@&lt;hos
 <ul>
 <li>새로운 git repository 생성 : <code>git init</code></li>
 </ul>
-<p>명령어를 실행한 경로에 <code>.git</code> 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. <code>git init</code> 명령을 실행한 디렉터리의 내용을 <em>Working Tree</em> 라고 한다. working tree 의 변경 내용이 있을 때 <code>git add</code>, <code>git rm</code> 등을 실행하면 <em>Index</em> 가 생성된다. <code>git commit</code> 을 실행하면 local branch 에 변경 내용이 적용된다. <code>git push</code> 를 실행하면 remote branch 에 변경된 내용을 추가한다.</p>
+<p>명령어를 실행한 경로에 <code>.git</code> 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. <code>git init</code> 명령을 실행한 디렉터리의 내용을 <em>Working Tree</em> 라고 한다. working tree 의 변경 내용이 있을 때 <code>git add</code>, <code>git rm</code> 등을 실행하면 <em>Index</em> 가 생성된다. <code>git commit</code> 을 실행하면 local branch 에 변경 내용이 적용된다. <code>git push</code> 를 실행하면 remote repository 에 변경된 내용을 추가한다.</p>
 <ul>
 <li>Remote Repository 추가 : <code>git remote add &lt;remote repository name&gt; &lt;Remote Repository URL&gt;</code></li>
 </ul>
-<p><code>git init</code> 후에 <code>git remote add</code> 를 통해 remote repoistory 를 추가할 수 있다. 이후 <code>git fetch</code> 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 <code>git fetch</code>는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository 에만 정보를 저장한다. <code>git remote add origin ssh://user@host:22/repos/project</code> 로 remote repository 를 등록했으면 <code>git merge origin/master</code> 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 <code>git pull</code> 을 실행하면 된다. <code>git pull</code> 은 <code>git fetch</code> 와 <code>git merge</code> 를 한꺼번에 실행해준다.</p>
+<p><code>git init</code> 후에 <code>git remote add</code> 를 통해 remote repoistory 를 추가할 수 있다. 이후 <code>git fetch</code> 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 <code>git fetch</code>는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository (<code>.git</code> directory) 에만 정보를 저장한다. <code>git remote add origin ssh://user@host:22/repos/project</code> 로 remote repository 를 등록했으면 <code>git merge origin/master</code> 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 <code>git pull</code> 을 실행하면 된다. <code>git pull</code> 은 <code>git fetch</code> 와 <code>git merge</code> 를 한꺼번에 실행해준다.</p>
 <hr>
 <p>Git Local Repository 를 만드는 다른 방법은 Remote Repository 를 복사하는 것이다. <code>git clone &lt;url&gt; [target directory]</code> 을 실행하면 remote repository 를 복사한다. target directory 를 지정해주지 않으면 remote repository 의 이름으로 target directory 가 생성된다.</p>
 <hr>
@@ -120,6 +175,10 @@ git config --global https.proxy http://&lt;username&gt;:&lt;password&gt;@&lt;hos
 <li>remote repository 를 삭제 : <code>git remote rm &lt;remote repository name&gt;</code></li>
 <li>remote repository 의 이름 변경 : <code>git remote rename &lt;from_name&gt; &lt;to_name&gt;</code></li>
 </ul>
+<hr>
+<h2>Bare repository</h2>
+<p><code>git init</code> 을 실행할 때 <code>--bare</code> 옵션을 추가하면 <em>Bare repository</em> 를 생성한다. <em>Bare repository</em> 는 저장소 역할만 한다. 즉, <em>Working directory</em> 가 생성되지 않으며, 읽기 작업만 가능하다. <code>git init --bare &lt;repository name&gt;</code> 으로 생성된 repository 에는 보통 <code>.git</code> 디렉터리에 생성되는 파일들이 그대로 생성된다.</p>
+<p><em>Bare repository</em> 는 코드 공유 및 협업을 위한 서버에 생성되는 저장소로 사용되며 각 개발자들은 이 <em>Bare repository</em> 를 clone 하여 각자의 작업을 진행한다.</p>
 <h2>Managing Modifications in local repository</h2>
 <p>Git 으로 변경사항들을 관리하기 위한 기본적인 명령들을에는 status, add, rm, mv, commit, stash, diff 등이 있다.</p>
 <hr>
@@ -177,8 +236,13 @@ doc/**/*.txt # ignore all &quot;*.txt&quot; files in the doc/ directory
 <li>commit history 확인 : <code>git log [/path/to]</code></li>
 <li>commit 에서 변경된 내용도 같이 확인 : - <code>git log -p [/path/to]</code></li>
 <li>마지막 2개의 내용만 확인 : <code>git log -2</code></li>
-<li>한줄 요약으로 보기 : <code>git log --pretty=oneline</code></li>
+<li>한줄 요약으로 보기 : <code>git log --pretty=oneline</code>, <code>git log --oneline</code></li>
+<li>Commit graph 를 같이 확인 : <code>git log --graph</code></li>
+<li>Commit 에 대한 Reference 정보 추가 : <code>git log --decorate</code></li>
+<li>전체 또는 특정 branch 에 대한 Commit 정보 확인 : <code>git log --branch[=&lt;pattern&gt;]</code></li>
+<li>master branch 에 없고 feature-A branch 에 존재하는 commit 들을 확인 : <code>git log master..feature-A</code></li>
 </ul>
+<p>전체 branch 의 commit 들을 commit graph 와 Reference 정보를 추가하여 한줄만 확인하려면 <code>git log --branches --graph --decoraete --oneline</code> 을 실행하면 된다.</p>
 <p>특정 파일의 version history list 를 확인하려면 <code>git log --follow [file]</code> 를 실행한다. git 나름대로 rename 한 작업까지 계산해준다.</p>
 <h2>Working with Remote Repository</h2>
 <p><code>git pull</code>, <code>git fetch</code>, <code>git merge</code>, <code>git push</code> 를 통해 remote repository 와 동기화할 수 있다.</p>
@@ -217,11 +281,18 @@ doc/**/*.txt # ignore all &quot;*.txt&quot; files in the doc/ directory
 <ul>
 <li>branch 를 merge 하기 : <code>git merge [options] &lt;branch name&gt;</code></li>
 </ul>
-<p>만약 구현이 완료된 feature-A branch 를 merge 하려면 <code>git merge feature-A</code> 를 실행한다.</p>
+<p>만약 구현이 완료된 feature-A branch 를 merge 하려면 base branch(보통 master 또는 development)에서 <code>git merge feature-A</code> 를 실행한다.</p>
 <h2>Resolve conflicts</h2>
 <p><code>git pull</code>, <code>git merge</code> 등을 하다보면 내가 변경하고 commit 한 내용과 다른 사람이 변경하고 commit 한 내용이 서로 충돌하는 경우가 발생한다. 대부분의 경우 git 이 자동으로 바뀐 부분을 알아서 적용해준다. 하지만 만약 서로 다른 사람들이 파일의 같은 부분을 동시에 고쳤을 경우, git 이 해결하지 못하고 충돌이 발생했음을 알려준다.</p>
 <p>이렇게 충돌이 발생하면, git이 알려주는 파일의 충돌 부분을 직접 수정해서 병합이 가능하도록 수정해야 한다. 충돌을 해결했다면, <code>git add [file path]</code> 를 실행하여 수정된 부분을 다시 index 에 저장하고 commit 한다.</p>
 <p>변경 내용을 병합하기 전에, <code>git diff</code> 를 사용하여 어떻게 바뀌었는지 비교해보는 것이 좋다.</p>
+<h2>Rebase</h2>
+<p>보통 <code>git merge</code> 를 실행하면 작업 내용이 특정 parent commit 에서 분기되지 않았으면 <em>fast forward</em> 방식이라고 해서 그대로 commit 내용을 가져 온 후 HEAD Reference 를 가장 최신의 commit 으로 변경한다.</p>
+<p>하지만 특정 parent commit 에서 작업 내용이 분기된 경우 <code>git merge</code> 는 Base commit 으로부터 분기된 두 작업 내용을 합쳐서 새로운 commit 을 생성한다. 즉, parent commit 이 2개인 새로운 commit 이 생성되는 것이다. 이 경우 merge 한 내용을 commit history 나 graph 로 확인할 때 복잡해질 수 있다. 때문에 merge 전에 rebase 를 하도록 권장하기도 한다. 단, 이는 각 팀에 따라 다를 수 있다. 어떤 팀은 그냥 merge 를 할 수 있고 어떤 팀은 rebase 를 장려할 수도 있다. 필수는 아니다.</p>
+<p>만약 feature-A branch 에서 기능 개발 완료 후 master 로 merge 전에 rebase 를 하여 commit history 를 정리하고 싶다면 feature-A branch 에서 <code>git rebase master</code> 를 실행한다. 그 후 master branch 로 전환한 후 <code>git merge feature-A</code> 를 실행하면 <em>fast forward</em> 방식으로 merge 된 것과 같이 commit history 가 정리된다.</p>
+<p><code>git merge</code> 와 마찬가지로 <code>git rebase</code> 도 conflict 가 발생할 수 있다. rebase 중에 conflic file 이 발견되면 rebase 작업은 잠시 멈추게 된다. 그리고 merge 와 마찬가지로 conflict file 을 수정한 후 <code>git add &lt;conflict file&gt;</code> 을 실행한 뒤 <code>git rebase --continue</code> 를 실행하면 작업이 이어서 진행된다. 만약 rebase 작업을 취소하고 싶다면 <code>git rebase --abort</code> 를 실행한다.</p>
+<p>rebase 와 commit cherry-picking 으로 commit 을 관리하면 <em>fast forward</em> 방식으로 정리된  commit history 를 관리할 수 있다.</p>
+<p>자세한 내용은 <code>git help rebase</code> 나 공식 문서를 확인하자.</p>
 <h2>Tag</h2>
 <ul>
 <li>Tag 목록 확인 : <code>git tag</code></li>
@@ -277,6 +348,14 @@ git commit --amend
 
 
 <p>여기서 실행한 명령어 3개는 모두 하나의 commit 으로 기록된다. 두 번째 commit 은 첫 번째 commit 을 덮어쓴다.</p>
+<h2><code>.git</code> directory</h2>
+<p><code>.git</code> 디렉터리는 local git repository 정보가 저장되는 곳이다. 안에 여러 파일들이 있는데 간단하게 중요한 몇몇 파일만 설명하면 다음과 같다.</p>
+<ul>
+<li><code>.git/objects</code> : 각 Commit Object 들이 Hash 값에 따라 저장됨</li>
+<li><code>.git/refs</code> : Commit Hash 를 참조하는 Reference 정보</li>
+<li><code>.git/refs/heads</code> : local git repository 의 각 branch 들의 HEAD 가 저장(master branch 의 head 는 <code>.git/refs/heads/master</code> 에 저장)</li>
+<li><code>.git/HEAD</code> : 현재 작업 중인 branch 의 HEAD 정보를 나타냄(예 : ref: refs/heads/master)</li>
+</ul>
 <h1>Github</h1>
 <ul>
 <li>branch 들 (example: ruby on rails repository 의 4-0-stable branch 와 3-2-stable branch) 사이의 변경 내역 확인하는 방법 : <code>https://github.com/rails/rails/compare/4-0-stable...3-2-stable</code></li>

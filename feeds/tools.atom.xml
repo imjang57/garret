@@ -173,10 +173,54 @@ $
 &lt;li&gt;VCS (Version Control System), DVCS (Distributed Version Control System)&lt;/li&gt;
 &lt;li&gt;Working tree, Staging Area (Index), Local Repository, Remote Repository, Bare Repository&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;주로 아래 명령들이 사용된다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;add, rm, mv, commit, push, pull, merge, diff, stash, rebase, fast-forward, history&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;git help&lt;/code&gt; 명령을 실행하면 사용 가능한 subcommand 들을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git &lt;span class="nb"&gt;help&lt;/span&gt;
+usage: git &lt;span class="o"&gt;[&lt;/span&gt;--version&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--help&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;-C &amp;lt;path&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;-c &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;value&lt;span class="o"&gt;]&lt;/span&gt;
+           &lt;span class="o"&gt;[&lt;/span&gt;--exec-path&lt;span class="o"&gt;[=&lt;/span&gt;&amp;lt;path&amp;gt;&lt;span class="o"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--html-path&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--man-path&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--info-path&lt;span class="o"&gt;]&lt;/span&gt;
+           &lt;span class="o"&gt;[&lt;/span&gt;-p &lt;span class="p"&gt;|&lt;/span&gt; --paginate &lt;span class="p"&gt;|&lt;/span&gt; --no-pager&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--no-replace-objects&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--bare&lt;span class="o"&gt;]&lt;/span&gt;
+           &lt;span class="o"&gt;[&lt;/span&gt;--git-dir&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;path&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--work-tree&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;path&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;--namespace&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;name&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt;
+           &amp;lt;command&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&amp;lt;args&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt;
+
+These are common Git commands used in various situations:
+
+start a working area &lt;span class="o"&gt;(&lt;/span&gt;see also: git &lt;span class="nb"&gt;help&lt;/span&gt; tutorial&lt;span class="o"&gt;)&lt;/span&gt;
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change &lt;span class="o"&gt;(&lt;/span&gt;see also: git &lt;span class="nb"&gt;help&lt;/span&gt; everyday&lt;span class="o"&gt;)&lt;/span&gt;
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+
+examine the &lt;span class="nb"&gt;history&lt;/span&gt; and state &lt;span class="o"&gt;(&lt;/span&gt;see also: git &lt;span class="nb"&gt;help&lt;/span&gt; revisions&lt;span class="o"&gt;)&lt;/span&gt;
+   bisect     Use binary search to find the commit that introduced a bug
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common &lt;span class="nb"&gt;history&lt;/span&gt;
+   branch     List, create, or delete branches
+   checkout   Switch branches or restore working tree files
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate &lt;span class="o"&gt;(&lt;/span&gt;see also: git &lt;span class="nb"&gt;help&lt;/span&gt; workflows&lt;span class="o"&gt;)&lt;/span&gt;
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a &lt;span class="nb"&gt;local&lt;/span&gt; branch
+   push       Update remote refs along with associated objects
+
+&lt;span class="s1"&gt;&amp;#39;git help -a&amp;#39;&lt;/span&gt; and &lt;span class="s1"&gt;&amp;#39;git help -g&amp;#39;&lt;/span&gt; list available subcommands and some
+concept guides. See &lt;span class="s1"&gt;&amp;#39;git help &amp;lt;command&amp;gt;&amp;#39;&lt;/span&gt; or &lt;span class="s1"&gt;&amp;#39;git help &amp;lt;concept&amp;gt;&amp;#39;&lt;/span&gt;
+to &lt;span class="nb"&gt;read&lt;/span&gt; about a specific subcommand or concept.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;git help commit&lt;/code&gt; 이나 &lt;code&gt;git commit --help&lt;/code&gt; 와 같이 subcommand 자체에 대한 help 도 확인할 수 있으니 필요할 때마다 help 를 활용하자.&lt;/p&gt;
 &lt;h1&gt;Git configuration&lt;/h1&gt;
 &lt;p&gt;&lt;em&gt;Git&lt;/em&gt; 설정을 적용하는 방법은 2가지가 있다.&lt;/p&gt;
 &lt;ul&gt;
@@ -200,7 +244,8 @@ git config --global color.ui auto
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;위에서 &lt;code&gt;git config --global&lt;/code&gt; 과 같이 global option 을 전달했기 때문에 &lt;code&gt;~/.gitconfig&lt;/code&gt; 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 로 가서 &lt;code&gt;git config --local&lt;/code&gt; 과 같이 local option 을 사용하면 된다. 그러면 &lt;code&gt;&amp;lt;PROJECT_HOME&amp;gt;/.git/config&lt;/code&gt; 에 설정이 저장된다.&lt;/p&gt;
+&lt;p&gt;위에서 &lt;code&gt;git config --global&lt;/code&gt; 과 같이 global option 을 전달했기 때문에 &lt;code&gt;~/.gitconfig&lt;/code&gt; 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 의 working directory 로 가서 &lt;code&gt;git config --local&lt;/code&gt; 과 같이 local option 을 사용하면 된다. 그러면 &lt;code&gt;&amp;lt;PROJECT_HOME&amp;gt;/.git/config&lt;/code&gt; 에 설정이 저장된다.&lt;/p&gt;
+&lt;p&gt;현재의 git 설정들을 확인하고 싶다면 &lt;code&gt;git config --list&lt;/code&gt; 와 같이 실행한다. 만약 범위를 좁히고 싶다면 &lt;code&gt;git config --list --system&lt;/code&gt;, &lt;code&gt;git config --list --global&lt;/code&gt;, &lt;code&gt;git config --list --local&lt;/code&gt; 와 같이 실행할 수도 있다.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;아래 설정은 git 이 실행할 텍스트 에디터 명령을 지정한다. commit message 작성 등을 위해 사용된다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config --global core.editor &amp;quot;\&amp;quot;C:\Windows\notepad.exe\&amp;quot;&amp;quot;
@@ -215,6 +260,16 @@ git config --global https.proxy http://&amp;lt;username&amp;gt;:&amp;lt;password
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;만약 프록시 서버가 별도의 인증서가 필요하면 다음과 같은 설정으로 인증서 파일을 추가한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config --global http.sslCAInfo /path/to/mycertification.crt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;아니면 다음과 같이 ssl 인증서에 대한 validation 을 하지 않도록 설정할 수도 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config http.sslVerify &lt;span class="nb"&gt;false&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;hr&gt;
 &lt;p&gt;아래 설정은 git 에서 사용하는 scheme 을 강제로 변환하기 위해 사용된다. 아래와 같이 설정하면 git scheme 을 https 로 바꿔서 사용하게 된다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config --global url.&lt;span class="s2"&gt;&amp;quot;https://&amp;quot;&lt;/span&gt;.insteadOf git://
@@ -226,11 +281,11 @@ git config --global https.proxy http://&amp;lt;username&amp;gt;:&amp;lt;password
 &lt;ul&gt;
 &lt;li&gt;새로운 git repository 생성 : &lt;code&gt;git init&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;명령어를 실행한 경로에 &lt;code&gt;.git&lt;/code&gt; 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. &lt;code&gt;git init&lt;/code&gt; 명령을 실행한 디렉터리의 내용을 &lt;em&gt;Working Tree&lt;/em&gt; 라고 한다. working tree 의 변경 내용이 있을 때 &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git rm&lt;/code&gt; 등을 실행하면 &lt;em&gt;Index&lt;/em&gt; 가 생성된다. &lt;code&gt;git commit&lt;/code&gt; 을 실행하면 local branch 에 변경 내용이 적용된다. &lt;code&gt;git push&lt;/code&gt; 를 실행하면 remote branch 에 변경된 내용을 추가한다.&lt;/p&gt;
+&lt;p&gt;명령어를 실행한 경로에 &lt;code&gt;.git&lt;/code&gt; 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. &lt;code&gt;git init&lt;/code&gt; 명령을 실행한 디렉터리의 내용을 &lt;em&gt;Working Tree&lt;/em&gt; 라고 한다. working tree 의 변경 내용이 있을 때 &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git rm&lt;/code&gt; 등을 실행하면 &lt;em&gt;Index&lt;/em&gt; 가 생성된다. &lt;code&gt;git commit&lt;/code&gt; 을 실행하면 local branch 에 변경 내용이 적용된다. &lt;code&gt;git push&lt;/code&gt; 를 실행하면 remote repository 에 변경된 내용을 추가한다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Remote Repository 추가 : &lt;code&gt;git remote add &amp;lt;remote repository name&amp;gt; &amp;lt;Remote Repository URL&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;git init&lt;/code&gt; 후에 &lt;code&gt;git remote add&lt;/code&gt; 를 통해 remote repoistory 를 추가할 수 있다. 이후 &lt;code&gt;git fetch&lt;/code&gt; 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 &lt;code&gt;git fetch&lt;/code&gt;는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository 에만 정보를 저장한다. &lt;code&gt;git remote add origin ssh://user@host:22/repos/project&lt;/code&gt; 로 remote repository 를 등록했으면 &lt;code&gt;git merge origin/master&lt;/code&gt; 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 &lt;code&gt;git pull&lt;/code&gt; 을 실행하면 된다. &lt;code&gt;git pull&lt;/code&gt; 은 &lt;code&gt;git fetch&lt;/code&gt; 와 &lt;code&gt;git merge&lt;/code&gt; 를 한꺼번에 실행해준다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git init&lt;/code&gt; 후에 &lt;code&gt;git remote add&lt;/code&gt; 를 통해 remote repoistory 를 추가할 수 있다. 이후 &lt;code&gt;git fetch&lt;/code&gt; 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 &lt;code&gt;git fetch&lt;/code&gt;는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository (&lt;code&gt;.git&lt;/code&gt; directory) 에만 정보를 저장한다. &lt;code&gt;git remote add origin ssh://user@host:22/repos/project&lt;/code&gt; 로 remote repository 를 등록했으면 &lt;code&gt;git merge origin/master&lt;/code&gt; 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 &lt;code&gt;git pull&lt;/code&gt; 을 실행하면 된다. &lt;code&gt;git pull&lt;/code&gt; 은 &lt;code&gt;git fetch&lt;/code&gt; 와 &lt;code&gt;git merge&lt;/code&gt; 를 한꺼번에 실행해준다.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Git Local Repository 를 만드는 다른 방법은 Remote Repository 를 복사하는 것이다. &lt;code&gt;git clone &amp;lt;url&amp;gt; [target directory]&lt;/code&gt; 을 실행하면 remote repository 를 복사한다. target directory 를 지정해주지 않으면 remote repository 의 이름으로 target directory 가 생성된다.&lt;/p&gt;
 &lt;hr&gt;
@@ -244,6 +299,10 @@ git config --global https.proxy http://&amp;lt;username&amp;gt;:&amp;lt;password
 &lt;li&gt;remote repository 를 삭제 : &lt;code&gt;git remote rm &amp;lt;remote repository name&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;remote repository 의 이름 변경 : &lt;code&gt;git remote rename &amp;lt;from_name&amp;gt; &amp;lt;to_name&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Bare repository&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;git init&lt;/code&gt; 을 실행할 때 &lt;code&gt;--bare&lt;/code&gt; 옵션을 추가하면 &lt;em&gt;Bare repository&lt;/em&gt; 를 생성한다. &lt;em&gt;Bare repository&lt;/em&gt; 는 저장소 역할만 한다. 즉, &lt;em&gt;Working directory&lt;/em&gt; 가 생성되지 않으며, 읽기 작업만 가능하다. &lt;code&gt;git init --bare &amp;lt;repository name&amp;gt;&lt;/code&gt; 으로 생성된 repository 에는 보통 &lt;code&gt;.git&lt;/code&gt; 디렉터리에 생성되는 파일들이 그대로 생성된다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Bare repository&lt;/em&gt; 는 코드 공유 및 협업을 위한 서버에 생성되는 저장소로 사용되며 각 개발자들은 이 &lt;em&gt;Bare repository&lt;/em&gt; 를 clone 하여 각자의 작업을 진행한다.&lt;/p&gt;
 &lt;h2&gt;Managing Modifications in local repository&lt;/h2&gt;
 &lt;p&gt;Git 으로 변경사항들을 관리하기 위한 기본적인 명령들을에는 status, add, rm, mv, commit, stash, diff 등이 있다.&lt;/p&gt;
 &lt;hr&gt;
@@ -301,8 +360,13 @@ doc/**/*.txt # ignore all &amp;quot;*.txt&amp;quot; files in the doc/ directory
 &lt;li&gt;commit history 확인 : &lt;code&gt;git log [/path/to]&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;commit 에서 변경된 내용도 같이 확인 : - &lt;code&gt;git log -p [/path/to]&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;마지막 2개의 내용만 확인 : &lt;code&gt;git log -2&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;한줄 요약으로 보기 : &lt;code&gt;git log --pretty=oneline&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;한줄 요약으로 보기 : &lt;code&gt;git log --pretty=oneline&lt;/code&gt;, &lt;code&gt;git log --oneline&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Commit graph 를 같이 확인 : &lt;code&gt;git log --graph&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Commit 에 대한 Reference 정보 추가 : &lt;code&gt;git log --decorate&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;전체 또는 특정 branch 에 대한 Commit 정보 확인 : &lt;code&gt;git log --branch[=&amp;lt;pattern&amp;gt;]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;master branch 에 없고 feature-A branch 에 존재하는 commit 들을 확인 : &lt;code&gt;git log master..feature-A&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;전체 branch 의 commit 들을 commit graph 와 Reference 정보를 추가하여 한줄만 확인하려면 &lt;code&gt;git log --branches --graph --decoraete --oneline&lt;/code&gt; 을 실행하면 된다.&lt;/p&gt;
 &lt;p&gt;특정 파일의 version history list 를 확인하려면 &lt;code&gt;git log --follow [file]&lt;/code&gt; 를 실행한다. git 나름대로 rename 한 작업까지 계산해준다.&lt;/p&gt;
 &lt;h2&gt;Working with Remote Repository&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;git pull&lt;/code&gt;, &lt;code&gt;git fetch&lt;/code&gt;, &lt;code&gt;git merge&lt;/code&gt;, &lt;code&gt;git push&lt;/code&gt; 를 통해 remote repository 와 동기화할 수 있다.&lt;/p&gt;
@@ -341,11 +405,18 @@ doc/**/*.txt # ignore all &amp;quot;*.txt&amp;quot; files in the doc/ directory
 &lt;ul&gt;
 &lt;li&gt;branch 를 merge 하기 : &lt;code&gt;git merge [options] &amp;lt;branch name&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;만약 구현이 완료된 feature-A branch 를 merge 하려면 &lt;code&gt;git merge feature-A&lt;/code&gt; 를 실행한다.&lt;/p&gt;
+&lt;p&gt;만약 구현이 완료된 feature-A branch 를 merge 하려면 base branch(보통 master 또는 development)에서 &lt;code&gt;git merge feature-A&lt;/code&gt; 를 실행한다.&lt;/p&gt;
 &lt;h2&gt;Resolve conflicts&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;git pull&lt;/code&gt;, &lt;code&gt;git merge&lt;/code&gt; 등을 하다보면 내가 변경하고 commit 한 내용과 다른 사람이 변경하고 commit 한 내용이 서로 충돌하는 경우가 발생한다. 대부분의 경우 git 이 자동으로 바뀐 부분을 알아서 적용해준다. 하지만 만약 서로 다른 사람들이 파일의 같은 부분을 동시에 고쳤을 경우, git 이 해결하지 못하고 충돌이 발생했음을 알려준다.&lt;/p&gt;
 &lt;p&gt;이렇게 충돌이 발생하면, git이 알려주는 파일의 충돌 부분을 직접 수정해서 병합이 가능하도록 수정해야 한다. 충돌을 해결했다면, &lt;code&gt;git add [file path]&lt;/code&gt; 를 실행하여 수정된 부분을 다시 index 에 저장하고 commit 한다.&lt;/p&gt;
 &lt;p&gt;변경 내용을 병합하기 전에, &lt;code&gt;git diff&lt;/code&gt; 를 사용하여 어떻게 바뀌었는지 비교해보는 것이 좋다.&lt;/p&gt;
+&lt;h2&gt;Rebase&lt;/h2&gt;
+&lt;p&gt;보통 &lt;code&gt;git merge&lt;/code&gt; 를 실행하면 작업 내용이 특정 parent commit 에서 분기되지 않았으면 &lt;em&gt;fast forward&lt;/em&gt; 방식이라고 해서 그대로 commit 내용을 가져 온 후 HEAD Reference 를 가장 최신의 commit 으로 변경한다.&lt;/p&gt;
+&lt;p&gt;하지만 특정 parent commit 에서 작업 내용이 분기된 경우 &lt;code&gt;git merge&lt;/code&gt; 는 Base commit 으로부터 분기된 두 작업 내용을 합쳐서 새로운 commit 을 생성한다. 즉, parent commit 이 2개인 새로운 commit 이 생성되는 것이다. 이 경우 merge 한 내용을 commit history 나 graph 로 확인할 때 복잡해질 수 있다. 때문에 merge 전에 rebase 를 하도록 권장하기도 한다. 단, 이는 각 팀에 따라 다를 수 있다. 어떤 팀은 그냥 merge 를 할 수 있고 어떤 팀은 rebase 를 장려할 수도 있다. 필수는 아니다.&lt;/p&gt;
+&lt;p&gt;만약 feature-A branch 에서 기능 개발 완료 후 master 로 merge 전에 rebase 를 하여 commit history 를 정리하고 싶다면 feature-A branch 에서 &lt;code&gt;git rebase master&lt;/code&gt; 를 실행한다. 그 후 master branch 로 전환한 후 &lt;code&gt;git merge feature-A&lt;/code&gt; 를 실행하면 &lt;em&gt;fast forward&lt;/em&gt; 방식으로 merge 된 것과 같이 commit history 가 정리된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git merge&lt;/code&gt; 와 마찬가지로 &lt;code&gt;git rebase&lt;/code&gt; 도 conflict 가 발생할 수 있다. rebase 중에 conflic file 이 발견되면 rebase 작업은 잠시 멈추게 된다. 그리고 merge 와 마찬가지로 conflict file 을 수정한 후 &lt;code&gt;git add &amp;lt;conflict file&amp;gt;&lt;/code&gt; 을 실행한 뒤 &lt;code&gt;git rebase --continue&lt;/code&gt; 를 실행하면 작업이 이어서 진행된다. 만약 rebase 작업을 취소하고 싶다면 &lt;code&gt;git rebase --abort&lt;/code&gt; 를 실행한다.&lt;/p&gt;
+&lt;p&gt;rebase 와 commit cherry-picking 으로 commit 을 관리하면 &lt;em&gt;fast forward&lt;/em&gt; 방식으로 정리된  commit history 를 관리할 수 있다.&lt;/p&gt;
+&lt;p&gt;자세한 내용은 &lt;code&gt;git help rebase&lt;/code&gt; 나 공식 문서를 확인하자.&lt;/p&gt;
 &lt;h2&gt;Tag&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Tag 목록 확인 : &lt;code&gt;git tag&lt;/code&gt;&lt;/li&gt;
@@ -401,6 +472,14 @@ git commit --amend
 
 
 &lt;p&gt;여기서 실행한 명령어 3개는 모두 하나의 commit 으로 기록된다. 두 번째 commit 은 첫 번째 commit 을 덮어쓴다.&lt;/p&gt;
+&lt;h2&gt;&lt;code&gt;.git&lt;/code&gt; directory&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;.git&lt;/code&gt; 디렉터리는 local git repository 정보가 저장되는 곳이다. 안에 여러 파일들이 있는데 간단하게 중요한 몇몇 파일만 설명하면 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.git/objects&lt;/code&gt; : 각 Commit Object 들이 Hash 값에 따라 저장됨&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.git/refs&lt;/code&gt; : Commit Hash 를 참조하는 Reference 정보&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.git/refs/heads&lt;/code&gt; : local git repository 의 각 branch 들의 HEAD 가 저장(master branch 의 head 는 &lt;code&gt;.git/refs/heads/master&lt;/code&gt; 에 저장)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.git/HEAD&lt;/code&gt; : 현재 작업 중인 branch 의 HEAD 정보를 나타냄(예 : ref: refs/heads/master)&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1&gt;Github&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;branch 들 (example: ruby on rails repository 의 4-0-stable branch 와 3-2-stable branch) 사이의 변경 내역 확인하는 방법 : &lt;code&gt;https://github.com/rails/rails/compare/4-0-stable...3-2-stable&lt;/code&gt;&lt;/li&gt;
