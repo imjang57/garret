@@ -15,9 +15,55 @@ Summary: Git 기본 사용법
 - VCS (Version Control System), DVCS (Distributed Version Control System)
 - Working tree, Staging Area (Index), Local Repository, Remote Repository, Bare Repository
 
-주로 아래 명령들이 사용된다.
+`git help` 명령을 실행하면 사용 가능한 subcommand 들을 확인할 수 있다.
 
-- add, rm, mv, commit, push, pull, merge, diff, stash, rebase, fast-forward, history
+```
+$ git help
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect     Use binary search to find the commit that introduced a bug
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common history
+   branch     List, create, or delete branches
+   checkout   Switch branches or restore working tree files
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+```
+
+`git help commit` 이나 `git commit --help` 와 같이 subcommand 자체에 대한 help 도 확인할 수 있으니 필요할 때마다 help 를 활용하자.
 
 # Git configuration
 
@@ -46,7 +92,9 @@ git config file (`~/.gitconfig`):
     ui = auto
 ```
 
-위에서 `git config --global` 과 같이 global option 을 전달했기 때문에 `~/.gitconfig` 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 로 가서 `git config --local` 과 같이 local option 을 사용하면 된다. 그러면 `<PROJECT_HOME>/.git/config` 에 설정이 저장된다.
+위에서 `git config --global` 과 같이 global option 을 전달했기 때문에 `~/.gitconfig` 파일에 설정이 저장되었다. 만약 특정 Git repository 에만 설정을 적용하고 싶으면 해당 Local git repository 의 working directory 로 가서 `git config --local` 과 같이 local option 을 사용하면 된다. 그러면 `<PROJECT_HOME>/.git/config` 에 설정이 저장된다.
+
+현재의 git 설정들을 확인하고 싶다면 `git config --list` 와 같이 실행한다. 만약 범위를 좁히고 싶다면 `git config --list --system`, `git config --list --global`, `git config --list --local` 와 같이 실행할 수도 있다.
 
 --------------------------------------------------------------------------------
 
@@ -66,6 +114,18 @@ git config --global http.proxy http://<username>:<password>@<host>:<port>
 git config --global https.proxy http://<username>:<password>@<host>:<port>
 ```
 
+만약 프록시 서버가 별도의 인증서가 필요하면 다음과 같은 설정으로 인증서 파일을 추가한다.
+
+```bash
+git config --global http.sslCAInfo /path/to/mycertification.crt
+```
+
+아니면 다음과 같이 ssl 인증서에 대한 validation 을 하지 않도록 설정할 수도 있다.
+
+```bash
+git config http.sslVerify false
+```
+
 --------------------------------------------------------------------------------
 
 아래 설정은 git 에서 사용하는 scheme 을 강제로 변환하기 위해 사용된다. 아래와 같이 설정하면 git scheme 을 https 로 바꿔서 사용하게 된다.
@@ -80,11 +140,11 @@ git config --global url."https://".insteadOf git://
 
 - 새로운 git repository 생성 : `git init`
 
-명령어를 실행한 경로에 `.git` 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. `git init` 명령을 실행한 디렉터리의 내용을 _Working Tree_ 라고 한다. working tree 의 변경 내용이 있을 때 `git add`, `git rm` 등을 실행하면 _Index_ 가 생성된다. `git commit` 을 실행하면 local branch 에 변경 내용이 적용된다. `git push` 를 실행하면 remote branch 에 변경된 내용을 추가한다.
+명령어를 실행한 경로에 `.git` 이라는 디렉터리가 생성되어 repository 관리 정보가 저장된다. `git init` 명령을 실행한 디렉터리의 내용을 _Working Tree_ 라고 한다. working tree 의 변경 내용이 있을 때 `git add`, `git rm` 등을 실행하면 _Index_ 가 생성된다. `git commit` 을 실행하면 local branch 에 변경 내용이 적용된다. `git push` 를 실행하면 remote repository 에 변경된 내용을 추가한다.
 
 - Remote Repository 추가 : `git remote add <remote repository name> <Remote Repository URL>`
 
-`git init` 후에 `git remote add` 를 통해 remote repoistory 를 추가할 수 있다. 이후 `git fetch` 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 `git fetch`는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository 에만 정보를 저장한다. `git remote add origin ssh://user@host:22/repos/project` 로 remote repository 를 등록했으면 `git merge origin/master` 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 `git pull` 을 실행하면 된다. `git pull` 은 `git fetch` 와 `git merge` 를 한꺼번에 실행해준다.
+`git init` 후에 `git remote add` 를 통해 remote repoistory 를 추가할 수 있다. 이후 `git fetch` 을 실행하면 remote repository 의 정보를 읽어서 local repository 에 동기화한다. 그런데 `git fetch`는 working tree 에 이 정보들을 적용하지는 않는다. 단지 local repository (`.git` directory) 에만 정보를 저장한다. `git remote add origin ssh://user@host:22/repos/project` 로 remote repository 를 등록했으면 `git merge origin/master` 를 실행해서 merge 해야만 working tree 에 최신 정보가 적용된다. 만약 이 과정이 귀찮으면 그냥 `git pull` 을 실행하면 된다. `git pull` 은 `git fetch` 와 `git merge` 를 한꺼번에 실행해준다.
 
 --------------------------------------------------------------------------------
 
@@ -100,6 +160,14 @@ Git Local Repository 를 만드는 다른 방법은 Remote Repository 를 복사
 
 - remote repository 를 삭제 : `git remote rm <remote repository name>`
 - remote repository 의 이름 변경 : `git remote rename <from_name> <to_name>`
+
+--------------------------------------------------------------------------------
+
+## Bare repository
+
+`git init` 을 실행할 때 `--bare` 옵션을 추가하면 _Bare repository_ 를 생성한다. _Bare repository_ 는 저장소 역할만 한다. 즉, _Working directory_ 가 생성되지 않으며, 읽기 작업만 가능하다. `git init --bare <repository name>` 으로 생성된 repository 에는 보통 `.git` 디렉터리에 생성되는 파일들이 그대로 생성된다.
+
+_Bare repository_ 는 코드 공유 및 협업을 위한 서버에 생성되는 저장소로 사용되며 각 개발자들은 이 _Bare repository_ 를 clone 하여 각자의 작업을 진행한다.
 
 ## Managing Modifications in local repository
 
@@ -165,7 +233,13 @@ doc/**/*.txt # ignore all "*.txt" files in the doc/ directory
 - commit history 확인 : `git log [/path/to]`
 - commit 에서 변경된 내용도 같이 확인 : - `git log -p [/path/to]`
 - 마지막 2개의 내용만 확인 : `git log -2`
-- 한줄 요약으로 보기 : `git log --pretty=oneline`
+- 한줄 요약으로 보기 : `git log --pretty=oneline`, `git log --oneline`
+- Commit graph 를 같이 확인 : `git log --graph`
+- Commit 에 대한 Reference 정보 추가 : `git log --decorate`
+- 전체 또는 특정 branch 에 대한 Commit 정보 확인 : `git log --branch[=<pattern>]`
+- master branch 에 없고 feature-A branch 에 존재하는 commit 들을 확인 : `git log master..feature-A`
+
+전체 branch 의 commit 들을 commit graph 와 Reference 정보를 추가하여 한줄만 확인하려면 `git log --branches --graph --decoraete --oneline` 을 실행하면 된다.
 
 특정 파일의 version history list 를 확인하려면 `git log --follow [file]` 를 실행한다. git 나름대로 rename 한 작업까지 계산해준다.
 
@@ -209,7 +283,7 @@ Remote Repository 이름이 origin 이고, origin 의 master branch 로 Local Re
 
 - branch 를 merge 하기 : `git merge [options] <branch name>`
 
-만약 구현이 완료된 feature-A branch 를 merge 하려면 `git merge feature-A` 를 실행한다.
+만약 구현이 완료된 feature-A branch 를 merge 하려면 base branch(보통 master 또는 development)에서 `git merge feature-A` 를 실행한다.
 
 ## Resolve conflicts
 
@@ -218,6 +292,20 @@ Remote Repository 이름이 origin 이고, origin 의 master branch 로 Local Re
 이렇게 충돌이 발생하면, git이 알려주는 파일의 충돌 부분을 직접 수정해서 병합이 가능하도록 수정해야 한다. 충돌을 해결했다면, `git add [file path]` 를 실행하여 수정된 부분을 다시 index 에 저장하고 commit 한다.
 
 변경 내용을 병합하기 전에, `git diff` 를 사용하여 어떻게 바뀌었는지 비교해보는 것이 좋다.
+
+## Rebase
+
+보통 `git merge` 를 실행하면 작업 내용이 특정 parent commit 에서 분기되지 않았으면 _fast forward_ 방식이라고 해서 그대로 commit 내용을 가져 온 후 HEAD Reference 를 가장 최신의 commit 으로 변경한다.
+
+하지만 특정 parent commit 에서 작업 내용이 분기된 경우 `git merge` 는 Base commit 으로부터 분기된 두 작업 내용을 합쳐서 새로운 commit 을 생성한다. 즉, parent commit 이 2개인 새로운 commit 이 생성되는 것이다. 이 경우 merge 한 내용을 commit history 나 graph 로 확인할 때 복잡해질 수 있다. 때문에 merge 전에 rebase 를 하도록 권장하기도 한다. 단, 이는 각 팀에 따라 다를 수 있다. 어떤 팀은 그냥 merge 를 할 수 있고 어떤 팀은 rebase 를 장려할 수도 있다. 필수는 아니다.
+
+만약 feature-A branch 에서 기능 개발 완료 후 master 로 merge 전에 rebase 를 하여 commit history 를 정리하고 싶다면 feature-A branch 에서 `git rebase master` 를 실행한다. 그 후 master branch 로 전환한 후 `git merge feature-A` 를 실행하면 _fast forward_ 방식으로 merge 된 것과 같이 commit history 가 정리된다.
+
+`git merge` 와 마찬가지로 `git rebase` 도 conflict 가 발생할 수 있다. rebase 중에 conflic file 이 발견되면 rebase 작업은 잠시 멈추게 된다. 그리고 merge 와 마찬가지로 conflict file 을 수정한 후 `git add <conflict file>` 을 실행한 뒤 `git rebase --continue` 를 실행하면 작업이 이어서 진행된다. 만약 rebase 작업을 취소하고 싶다면 `git rebase --abort` 를 실행한다.
+
+rebase 와 commit cherry-picking 으로 commit 을 관리하면 _fast forward_ 방식으로 정리된  commit history 를 관리할 수 있다.
+
+자세한 내용은 `git help rebase` 나 공식 문서를 확인하자.
 
 ## Tag
 
@@ -280,6 +368,15 @@ git commit --amend
 ```
 
 여기서 실행한 명령어 3개는 모두 하나의 commit 으로 기록된다. 두 번째 commit 은 첫 번째 commit 을 덮어쓴다.
+
+## `.git` directory
+
+`.git` 디렉터리는 local git repository 정보가 저장되는 곳이다. 안에 여러 파일들이 있는데 간단하게 중요한 몇몇 파일만 설명하면 다음과 같다.
+
+- `.git/objects` : 각 Commit Object 들이 Hash 값에 따라 저장됨
+- `.git/refs` : Commit Hash 를 참조하는 Reference 정보
+- `.git/refs/heads` : local git repository 의 각 branch 들의 HEAD 가 저장(master branch 의 head 는 `.git/refs/heads/master` 에 저장)
+- `.git/HEAD` : 현재 작업 중인 branch 의 HEAD 정보를 나타냄(예 : ref: refs/heads/master)
 
 # Github
 
