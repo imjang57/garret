@@ -66,7 +66,7 @@ key mapping 에 대한 자세한 내용은 `:help key-mapping` 또는 [Mapping k
 
 Vim 에는 leader key 가 있다. Default 로 `\` 가 leader key 로 되어 있는데, 설정에서 이 leader key 를 이용하여 많은 작업들에 대한 단축키를 생성할 수 있다.
 
-예를 들어, `:map <leader>A g` 를 실행하면  `\A` 를 입력했을 때 `g` 를 실행한 것과 같은 결과를 얻을 수 있게 된다.
+예를 들어, `:map <leader>A g` 를 실행하면  `\A` 를 입력했을 때 `g` 를 실행한 것과 같은 결과를 얻을 수 있게 된다. 이때 leader key 를 누른 후 1초 내에 다음 key 를 입력해야 한다.
 
 leader key 를 `,` 로 변경하려면 `:let mapleader=","` 를 실행한다.
 
