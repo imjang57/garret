@@ -39,7 +39,7 @@ _Zsh_ 은 `/etc/profile` 대신 `/etc/zprofile`, `~/.bash_profile` 대신 `~/.zp
 
 ## Prompt
 
-_Interactive Shell_ 이 실행된 경우 사용자의 입력을 기다리고 있음을 나타내기 위해 <username@hostname> 과 같은 내용을 표시하는데 이를 Prompt 라고 한다. 이 프롬프트는 $PS1 환경 변수에 의해 설정된다. 만약 `export PS1="\$? > "` 를 실행하면 프롬프트는 `0 > ` 와 같이 출력된다. 숫자 0은 이전 명령에 대한 리턴값이다.
+_Interactive Shell_ 이 실행된 경우 사용자의 입력을 기다리고 있음을 나타내기 위해 `<username@hostname>` 과 같은 내용을 표시하는데 이를 Prompt 라고 한다. 이 프롬프트는 $PS1 환경 변수에 의해 설정된다. 만약 `export PS1="\$? > "` 를 실행하면 프롬프트는 `0 > ` 와 같이 출력된다. 숫자 0은 이전 명령에 대한 리턴값이다.
 
 나는 bash prompt 를 다음과 같이 설정해서 사용한다.
 
