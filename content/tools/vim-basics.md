@@ -70,8 +70,10 @@ Normal mode 에서 `:help` command 를 실행하면 확인할 수 있다. 자주
 
 Vim 에서 파일을 열면 _buffer_ 라는 것을 생성하여 파일의 내용을 메모리에 올린 후 작업을 수행하게 된다.
 
-- Open file : `:e <path>`, `:edit <path>`
-- Save file : `:w`, `:write`
+- Open file (buffer) : `:e <path>`, `:edit <path>`
+- Save file (buffer) : `:w`, `:write`
+- Close file (buffer) : `:bd`, `:bw`
+- Quit Vim : `:q`
 - Print Working Directory : `:pwd`
 - Print path of current file : `:echo @%`
 - Print absolute path of current file : `echo expand('%:p')`
