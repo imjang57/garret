@@ -60,11 +60,25 @@ Normal mode 에서 `:help` command 를 실행하면 확인할 수 있다. 자주
 - go to head of line : `^`, `0`
 - go to tail of line : `$`
 - page up / down : `ctrl + b` / `ctrl + f`
+- page up / down half : `ctrl + d` / `ctrl + u`
 - jump to start of file : `gg`
 - jump to end of file : `G`
 - jump to top / bottom / middle of window : `H` / `L` / `M`
 - move to previous / next sentence : `(` / `)`
 - move to previous / next paragraph : `{` / `}`
+
+# Editing
+
+- insert before the curosr : `i`
+- insert at the beginning of the line : `I`
+- insert (append) after the cursor : `a`
+- insert (append) at the End of the line : `A`
+- append (open) a new line below the current line : `o`
+- append (open) a new line above the current line : `O`
+- replace a single character : `r`
+- replace from current cursor : `R`
+- join line below to the current one : `J`
+- exit _Insert mode_ (swith to _Normal mode_) : `ESC`
 
 # Open and Close file
 
@@ -72,6 +86,7 @@ Vim 에서 파일을 열면 _buffer_ 라는 것을 생성하여 파일의 내용
 
 - Open file (buffer) : `:e <path>`, `:edit <path>`
 - Save file (buffer) : `:w`, `:write`
+- Save file (buffer) as : `:saveas <path>`
 - Close file (buffer) : `:bd`, `:bw`
 - Quit Vim : `:q`
 - Print Working Directory : `:pwd`
@@ -84,6 +99,7 @@ Vim 에서 _buffer_ 의 특정 위치를 alphabet(a-zA-Z) 으로 마킹할 수 �
 
 - mark current location as a : `ma`
 - goto mark a : `'a` (cursor located on first non-blank character), `a (cursor located on marked character)
+- list of marks : `:marks`
 
 # Abbreviation
 
@@ -92,25 +108,26 @@ Vim 에서 _buffer_ 의 특정 위치를 alphabet(a-zA-Z) 으로 마킹할 수 �
 
 위의 예의 경우, _Insert mode_  에서 foo 와 <SPACEBAR|ENTER> 를 입력하면 foooo 가 입력된다.
 
-# Cut, Copy and Paste
+# Cut (Delete), Copy (Yank) and Paste (Put)
 
-- cut word : `dw` (start from cursor), `daw` (whole word)
-- cut current line : `dd`, `:d`
-- cut 4 lines : `4dd`
-- cut from cursor to end of current line : `D`
-- cut one character of cursor : `x`
-- cut one character before cursor : `X`
-- cut 3 character of cursor : `3x`
-- cut 3 character before cursor : `3X`
-- cut lines from 4 to 10 inclusive : `:4,10d`
+- cut (delete) word : `dw` (start from cursor), `daw` (whole word)
+- cut (delete) current line : `dd`, `:d`
+- cut (delete) 4 lines : `4dd`
+- cut (delete) to the end of the line : `d$`
+- cut (delete) from cursor to end of current line : `D`
+- cut (delete) one character of cursor : `x`
+- cut (delete) one character before cursor : `X`
+- cut (delete) 3 character of cursor : `3x`
+- cut (delete) 3 character before cursor : `3X`
+- cut (delete) lines from 4 to 10 inclusive : `:4,10d`
 - copy (yank) word : `yw` (start from cursor), `yaw` (whole word)
 - copy (yank) current line : `yy`, `Y`, `:y`
 - copy (yank) 4 lines : `4yy`
 - copy (yank) lines from 4 to 10 inclusive : `:4,10y`
-- paste at after current : `p`
-- paste at before current : `P`
-- cut from current line to end of text : `dG`
-- cut from current line to start of text : `dgg`
+- paste (put) at after current : `p`
+- paste (put) at before current : `P`
+- cut (delete) from current line to end of text : `dG`
+- cut (delete) from current line to start of text : `dgg`
 
 # Undo and Redo
 
@@ -140,3 +157,15 @@ The `searchtext` can be regular expression. For example:
 - delete lines which are matched to pattern : `:g/pattern/d`
 - delete empty lines : `:g/^$/d`
 - delete lines which are include hello : `:g/hello/d`
+
+# Macro
+
+- record macro as a : `qa`
+- stop recording macro : `q`
+- run macro a : `@a`
+- rerun last run macro : `@@`
+
+# References
+
+- [Vim Cheat Sheet](https://vim.rtorr.com/)
+- [Vim Cheat Sheet Github](https://github.com/rtorr/vim-cheat-sheet)
