@@ -28,7 +28,7 @@ Vim 을 실행하면 가장 먼저 _Normal mode_ 상태로 실행된다. 다른 
 
 _Normal mode_ 에서 `:` 를 입력하면 Command 를 입력할 수 있다. 보통 Command 를 실행할 때 2가지 방법으로 하게 되는데 하나는 `:` 를 입력한 후 Command 를 직접 입력하는 것이고, 다른 하나는 단축키를 사용하는 것이다. 2가지 모두 많이 사용되는 방법이다.
 
-커서 이동, cut, paste, copy, delete, find, replace, 기타 등등 대부분의 작업은 _Normal mode_ 에서 실행된다.
+커서 이동, put, yank, delete, search, replace, 기타 등등 대부분의 작업은 _Normal mode_ 에서 실행된다.
 
 # Help page
 
