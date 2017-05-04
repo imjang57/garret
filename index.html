@@ -27,7 +27,145 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/avoid-null-pointer-exception-in-java.html">NPE (NullPointerException) 을 피하자</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/vim-basics.html">Vim Basics</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-05-04T00:00:00+09:00">
+                Published: 목 04 5월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-05-04T00:00:00+09:00">
+                Updated: 목 04 5월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
+</footer><!-- /.post-info --><h1>VIM (VI Improved)</h1>
+<p>이 문서는 Vim 의 가장 기본적인 사용법을 정리한 문서이다.</p>
+<ul>
+<li>Web page : http://www.vim.org</li>
+</ul>
+<p>CLI(Command Line Interface) 기반의 Text editor 이다. Linux, Mac, Windows 모두 지원한다. 처음 사용법이 익숙해지기가 어렵지만 한번 익히면 마우스 없이 대부분의 작업들을 빠르게 수행할 수 있다. 리눅스 서버는 대부분 CLI 환경만 제공되기 때문에 리눅스 서버 관리자라면 거의 필수로 익혀야 하는 Text editor 이다.</p>
+<p>Vimscript 라는 것을 작성하여 플러그인을 만들 수 있다. 사용법을 손에 익히고 여러 플러그인을 설치하면 왠만한 IDE 뺨치는 기능을 사용할 수 있다.</p>
+<h1>Vim modes</h1>
+<p>Vim 은 여러가지 모드를 제공한다. 대표적으로 사용되는 모드는 다음과 같다.</p>
+<ul>
+<li><em>Normal mode</em> : where you can execute commands. This is default mode in which Vim starts up.</li>
+<li><em>Insert mode</em> : where you are simply writing text.</li>
+<li><em>Visual mode</em> : where you visually select a bunch of text so that you can run a command or operation only on that part of the text.</li>
+</ul>
+<p>Vim 을 실행하면 가장 먼저 <em>Normal mode</em> 상태로 실행된다. 다른 모드에서 <code>ESC</code> 를 입력하면 <em>Normal mode</em> 로 돌아온다.</p>
+<p><em>Normal mode</em> 에서 <code>:</code> 를 입력하면 Command 를 입력할 수 있다. 보통 Command 를 실행할 때 2가지 방법으로 하게 되는데 하나는 <code>:</code> 를 입력한 후 Command 를 직접 입력하는 것이고, 다른 하나는 단축키를 사용하는 것이다. 2가지 모두 많이 사용되는 방법이다.</p>
+<p>커서 이동, cut, paste, copy, delete, find, replace, 기타 등등 대부분의 작업은 <em>Normal mode</em> 에서 실행된다.</p>
+<h1>Help page</h1>
+<p>Vim 은 기본적으로 built-in help documentation 을 내장하고 있어서 작업 도중에 수시로 help documentation 을 참고할 수 있다.</p>
+<p>Normal mode 에서 <code>:help</code> command 를 실행하면 확인할 수 있다. 자주 보게 되는 help 내용은 다음과 같다.</p>
+<ul>
+<li><code>:help [keyword]</code> : shows documentation [for keyword]</li>
+<li><code>:help abbreviation</code> : help for abbreviations</li>
+<li><code>:help quickref</code> : Quick Reference</li>
+<li><code>:help user-manual</code> : User Manuals</li>
+</ul>
+<p>만약 플러그인을 설치할 때 플러그인이 help 를 제공하면 해당 플러그인의 help 문서도 확인가능하다.</p>
+<h1>Switching between modes</h1>
+<ul>
+<li><em>Normal mode</em> --(<code>i</code>, <code>I</code>, <code>a</code>, <code>A</code>, <code>o</code>, <code>O</code>, <code>r</code>, <code>R</code>, <code>s</code>, <code>S</code>)--&gt; Insert mode</li>
+<li><em>Normal mode</em> --(<code>v</code>, <code>V</code>)--&gt; Visual mode</li>
+<li><em>Insert mode</em> --(<code>ESC</code>)--&gt; Normal mode</li>
+<li><em>Visual mode</em> --(<code>ESC</code>)--&gt; Normal mode</li>
+</ul>
+<h1>Move cursor</h1>
+<ul>
+<li>move left / up / right / down : <code>h</code> / <code>j</code> / <code>k</code> / <code>l</code></li>
+<li>move left / up / right / down 3 times repeatedly : <code>3h</code> / <code>3j</code> / <code>3k</code> / <code>3l</code></li>
+<li>move the cursor to the next word : <code>w</code></li>
+<li>move the cursor to the previous word : <code>b</code></li>
+<li>go to specific line number : <code>&lt;line-number&gt;G</code></li>
+<li>go to head of line : <code>^</code>, <code>0</code></li>
+<li>go to tail of line : <code>$</code></li>
+<li>page up / down : <code>ctrl + b</code> / <code>ctrl + f</code></li>
+<li>jump to start of file : <code>gg</code></li>
+<li>jump to end of file : <code>G</code></li>
+<li>jump to top / bottom / middle of window : <code>H</code> / <code>L</code> / <code>M</code></li>
+<li>move to previous / next sentence : <code>(</code> / <code>)</code></li>
+<li>move to previous / next paragraph : <code>{</code> / <code>}</code></li>
+</ul>
+<h1>Open and Close file</h1>
+<p>Vim 에서 파일을 열면 <em>buffer</em> 라는 것을 생성하여 파일의 내용을 메모리에 올린 후 작업을 수행하게 된다.</p>
+<ul>
+<li>Open file : <code>:e &lt;path&gt;</code>, <code>:edit &lt;path&gt;</code></li>
+<li>Save file : <code>:w</code>, <code>:write</code></li>
+<li>Print Working Directory : <code>:pwd</code></li>
+<li>Print path of current file : <code>:echo @%</code></li>
+<li>Print absolute path of current file : <code>echo expand('%:p')</code></li>
+</ul>
+<h1>Use Mark</h1>
+<p>Vim 에서 <em>buffer</em> 의 특정 위치를 alphabet(a-zA-Z) 으로 마킹할 수 있다. 자세한 내용은 <code>:help mark</code> 와 <code>:help mark-motions</code> help page 를 참고하자.</p>
+<ul>
+<li>mark current location as a : <code>ma</code></li>
+<li>goto mark a : <code>'a</code> (cursor located on first non-blank character), `a (cursor located on marked character)</li>
+</ul>
+<h1>Abbreviation</h1>
+<ul>
+<li>set abbreviation foo with foooo : <code>:ab foo foooo</code></li>
+<li>unset abbreviation foo : <code>:unab foo</code></li>
+</ul>
+<p>위의 예의 경우, <em>Insert mode</em>  에서 foo 와 <SPACEBAR|ENTER> 를 입력하면 foooo 가 입력된다.</p>
+<h1>Cut, Copy and Paste</h1>
+<ul>
+<li>cut word : <code>dw</code> (start from cursor), <code>daw</code> (whole word)</li>
+<li>cut current line : <code>dd</code>, <code>:d</code></li>
+<li>cut 4 lines : <code>4dd</code></li>
+<li>cut from cursor to end of current line : <code>D</code></li>
+<li>cut one character of cursor : <code>x</code></li>
+<li>cut one character before cursor : <code>X</code></li>
+<li>cut 3 character of cursor : <code>3x</code></li>
+<li>cut 3 character before cursor : <code>3X</code></li>
+<li>cut lines from 4 to 10 inclusive : <code>:4,10d</code></li>
+<li>copy (yank) word : <code>yw</code> (start from cursor), <code>yaw</code> (whole word)</li>
+<li>copy (yank) current line : <code>yy</code>, <code>Y</code>, <code>:y</code></li>
+<li>copy (yank) 4 lines : <code>4yy</code></li>
+<li>copy (yank) lines from 4 to 10 inclusive : <code>:4,10y</code></li>
+<li>paste at after current : <code>p</code></li>
+<li>paste at before current : <code>P</code></li>
+<li>cut from current line to end of text : <code>dG</code></li>
+<li>cut from current line to start of text : <code>dgg</code></li>
+</ul>
+<h1>Undo and Redo</h1>
+<ul>
+<li>undo : <code>u</code></li>
+<li>redo : <code>ctrl + r</code></li>
+</ul>
+<h1>Select</h1>
+<ul>
+<li>swith to visual mode to select texts : <code>v</code></li>
+<li>swith to visual mode to select line by line : <code>V</code></li>
+<li>swith to visual mode to select vertical : <code>Ctrl + v</code></li>
+</ul>
+<p>You can select texts in visual mode using vi move keys such as <code>h</code>, <code>j</code>, <code>k</code>, <code>l</code>, <code>G</code>, <code>gg</code>, <code>w</code>, <code>b</code>, <code>H</code>, <code>L</code>, <code>M</code>, etc. After selection, you can use <code>d</code> for cut, <code>y</code> for copy, etc.</p>
+<h1>Search</h1>
+<ul>
+<li>search text : <code>/searchtext</code> in <em>Normal mode</em></li>
+</ul>
+<p>If you want to search text <em>Hotkeys</em>, input <code>/Hotkeys</code>. Searching text is case-sensitive. If you want to ignore case, input <code>:set ignorecase</code>.</p>
+<p>After run <code>/searchtext</code> command, you can move to next and previous occurrence by <code>n</code> and <code>N</code>.</p>
+<p>Vim provide incremental search. This is helpful when you know only a part of the phrase. After <code>:set incsearch</code>, vim will start searching by everytime you type.</p>
+<p>The <code>searchtext</code> can be regular expression.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/avoid-null-pointer-exception-in-java.html" rel="bookmark"
+                           title="Permalink to NPE (NullPointerException) 을 피하자">NPE (NullPointerException) 을 피하자</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-18T00:00:00+09:00">
                 Published: 수 18 1월 2017
@@ -42,88 +180,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/programming.html">programming</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/java.html">java</a> <a href="https://imjang57.github.io/garret/tag/npe.html">NPE</a> <a href="https://imjang57.github.io/garret/tag/nullpointerexception.html">NullPointerException</a> <a href="https://imjang57.github.io/garret/tag/null.html">null</a> </p>
-</footer><!-- /.post-info --><h1>NPE(NullPointerException) 을 피하자.</h1>
-<p>자바 개발을 하다보면 가장 많이 만나고 영향이 큰 예외 중 하나가 <em>NPE</em> 이다. NPE 는 개발자의 습관이나 부주의 등이 대부분 원인이다. 이를 예방하는 가장 좋은 방법은 NPE 를 피하는 코딩 습관을 갖는 것이다.</p>
-<h2>null 의 의미</h2>
-<p>자바에서 <code>null</code> 이란 아래와 같은 상태를 의미한다.</p>
-<blockquote>
-<p>아직 object 가 생성되지 않은 상태, 즉 아직 memory 할당이 되지 않은 object 상태</p>
-</blockquote>
-<p>NPE 는 null 상태인 object 를 참조하여 어떠한 행위(method 실행)를 하려할 때 발생하는 예외이다.</p>
-<h2>NPE가 발생하는 상황</h2>
-<p>NPE 는 아래와 같은 상황에서 발생할 수 있다.</p>
-<ul>
-<li>null object 의 method 를 호출</li>
-<li>null object 의 instance member 에 접근</li>
-</ul>
-<h1>Avoid NPE in source code</h1>
-<p>NPE 는 대부분 개발자의 부주의로 발생하므로, 개발할 때 조금만 신경쓰면 대부분의 NPE 를 예방할 수 있다.</p>
-<h2>String 객체를 비교할 경우</h2>
-<p><code>equals()</code>, <code>equalsIgnoreCase()</code> 등을 사용할 때 null 이 아닌 것이 확실한 객체가 있다면 해당 객체의 method 를 호출하자.</p>
-<div class="highlight"><pre><span></span><span class="k">if</span><span class="o">(</span> <span class="s">&quot;Compare String&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">testStr</span><span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
- <span class="c1">// logic</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<h2>String.valueOf() 사용</h2>
-<p>로그 등을 남길 때 객체의 상태를 확인하기 위해 객체의 <code>toString()</code> 을 호출하는 경우가 있는데, 객체가 null 일 경우 NPE 가 발생한다. 로그를 위해 null 을 체크하는 로직을 추가하는 것은 불필요한 코드가 될 수 있다.</p>
-<p><code>toString()</code> method 보다는 <code>String.valueOf()</code> 를 사용하자.</p>
-<h2>Primitive type 사용</h2>
-<p>꼭 필요한 경우가 아니라면 Primitive type data 를 사용하자. NPE 를 줄이고 memory 도 더 효율적으로 사용할 수 있다.</p>
-<h2>return empty collection</h2>
-<p>List, Set, Map 등과 같은 Collection 을 return 하는 method 를 구현할 때, null 을 return 하지 말자. 대신 empty collection 을 return 하자. 그러면 함수를 사용하는 개발자는 불필요한 null 체크를 하지 않아도 된다.</p>
-<h2>Use null-safe stuffs</h2>
-<p>null 에 안전한 자바 내장 함수나 commons-lang 과 같은 helper class 를 사용하자. Apache Commons 도 좋고, 요즘은 Googld guava 가 매우 유용한 라이브러리들을 많이 제공한다.</p>
-<h2>Unit Test</h2>
-<p>Java assert, Unit test (JUnit) 등을 활용하여 사전 확인 및 다양한 상황에서의 테스트를 수행하자.</p>
-<h2>협업할 때는 기능 및 제약사항 등을 확실히 명시하자.</h2>
-<p>NPE 는 개발자의 부주의에 의해 대부분 발생하고, 개발자의 부주의는 정보가 없어서 발생하는 경우가 많다. 아래의 내용들은 명확하게 공유하자.</p>
-<ul>
-<li>Method parameter 와 return value 에 대한 명세</li>
-<li>Method 에서 수행하는 validation 으로 인해 발생가능한 Exception 들</li>
-</ul>
-<p><a href="https://github.com/google/guava">Google guava</a> 의 <em>Preconditions</em> 등을 사용하면 parameter 에 대한 validation 을 쉽게 처리할 수 있다.</p>
-<p>또한 <em>Java Doc</em> 등의 문서를 적절히 사용하자. 자동으로 Java doc 을 생성해주는 프로그램도 많다. 또는 <a href="http://swagger.io">swagger</a> 등을 이용하여 RestAPI 서비스의 API 에 대한 명세를 공유할 수도 있다.</p>
-<p>문서의 내용을 자세하게 채우지 않아도 된다. 위의 내용들에 대해서만이라도 명확하게 작성하자.</p>
-<h2>Optional class</h2>
-<p><em>Optional</em> 을 사용하면 null check 를 위한 코드를 상당히 줄일 수 있으며 코드의 Readability 를 높일 수 있다.</p>
-<p>Optional 은 원래 google guava 라이브러리에서 제공되었었는데 java 8 로 버전 업하면서 자바에서도 지원(<code>java.util.Optional&lt;T&gt;</code>)하게 되었다.</p>
-<p>Optional object 생성:</p>
-<div class="highlight"><pre><span></span><span class="n">String</span> <span class="n">nStr</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;Test String&quot;</span><span class="o">;</span>
-<span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">eOp</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span> <span class="c1">// empty Optional 객체 생성</span>
-<span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">nullableOp</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">nStr</span><span class="o">);</span> <span class="c1">// null 을 허용하는 Optional 객체 생성</span>
-<span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">notNullableOp</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">str</span><span class="o">);</span> <span class="c1">// str 에 접근하는 시점이 아니라 Optional 객체를 생성하는 이 순간 parameter 의 null 여부를 체크하여 NPE 가 발생</span>
-<span class="k">if</span><span class="o">(</span> <span class="n">notNullableOp</span><span class="o">.</span><span class="na">isPresent</span><span class="o">()</span> <span class="o">)</span> <span class="o">{</span>
- <span class="c1">// Optional 객체에 값이 있는지 확인 후 아래 코드를 실행</span>
- <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">notNullableOp</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
-<span class="o">}</span>
-<span class="n">notNullableOp</span><span class="o">.</span><span class="na">ifPresent</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span> <span class="c1">// Optional 객체에 값이 있는지 확인 후 전달받은 function 을 실행</span>
-<span class="n">notNullableOp</span><span class="o">.</span><span class="na">ifPresent</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">});</span>
-<span class="n">nullableOp</span><span class="o">.</span><span class="na">ifPresent</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span> <span class="c1">// null 이므로 실행되지 않는다.</span>
-<span class="n">String</span> <span class="n">emtpyStr</span> <span class="o">=</span> <span class="n">eOp</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;Empty String&quot;</span><span class="o">);</span> <span class="c1">// Optional 객체가 empty 일 경우 (null 일 경우) &quot;Empty String&quot; 의 reference 를 return.</span>
-<span class="n">String</span> <span class="n">exStr</span> <span class="o">=</span> <span class="n">eOp</span><span class="o">.</span><span class="na">orElseThrow</span><span class="o">(</span><span class="n">Exception</span><span class="o">::</span><span class="k">new</span><span class="o">);</span> <span class="c1">// Optional 객체가 empty 일 경우 (null 일 경우) 지정된 Exception 을 throw.</span>
-<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">notNullableOp</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;Too long string&quot;</span><span class="o">));</span>
-</pre></div>
-
-
-<p>Optional 과 map 을 이용하여 null check 없이 jsonNode 접근하기:</p>
-<div class="highlight"><pre><span></span><span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">rootNode</span><span class="o">)</span>
- <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">node</span> <span class="o">-&gt;</span> <span class="n">node</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;secondNode&quot;</span><span class="o">))</span>
- <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">node</span> <span class="o">-&gt;</span> <span class="n">node</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;thirdNode&quot;</span><span class="o">))</span>
- <span class="o">.</span><span class="na">ifPresent</span><span class="o">(</span><span class="n">node</span> <span class="o">-&gt;</span> <span class="o">{</span>
- <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">));</span>
- <span class="o">})</span>
-</pre></div>
-
-
-<p>if else 를 이용한 null 체크는 source code readability 를 떨어뜨린다. Optional 과 Java doc 을 이용한 직관적인 코드 작성을 하자.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Java 에서 NPE (NullPointerException) 을 피하면서 코딩하기 위한 습관들</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/avoid-null-pointer-exception-in-java.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -330,32 +390,6 @@
 <p>tags: <a href="https://imjang57.github.io/garret/tag/function.html">function</a> <a href="https://imjang57.github.io/garret/tag/method.html">method</a> <a href="https://imjang57.github.io/garret/tag/procedure.html">procedure</a> <a href="https://imjang57.github.io/garret/tag/sub-routine.html">sub-routine</a> <a href="https://imjang57.github.io/garret/tag/programming.html">programming</a> </p>
 </footer><!-- /.post-info -->                <p>Function, Method, Procedure 의 차이점</p>
                 <a class="readmore" href="https://imjang57.github.io/garret/function-and-method.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/parameter-and-argument.html" rel="bookmark"
-                           title="Permalink to Parameter and Argument">Parameter and Argument</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-03T00:00:00+09:00">
-                Published: 화 03 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-03T00:00:00+09:00">
-                Updated: 화 03 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/programming.html">programming</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/parameter.html">parameter</a> <a href="https://imjang57.github.io/garret/tag/argument.html">argument</a> <a href="https://imjang57.github.io/garret/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->                <p>Parameter 와 Argument 의 정확한 의미</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/parameter-and-argument.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
