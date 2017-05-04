@@ -1,5 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-04T00:00:00+09:00</updated><entry><title>Vim Basics</title><link href="https://imjang57.github.io/garret/vim-basics.html" rel="alternate"></link><published>2017-05-04T00:00:00+09:00</published><updated>2017-05-04T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-04:/garret/vim-basics.html</id><summary type="html">&lt;p&gt;Vim 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;VIM (VI Improved)&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-04T00:00:00+09:00</updated><entry><title>Vim Basic Regular Expression</title><link href="https://imjang57.github.io/garret/vim-basic-regular-expression.html" rel="alternate"></link><published>2017-05-04T00:00:00+09:00</published><updated>2017-05-04T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-04:/garret/vim-basic-regular-expression.html</id><summary type="html">&lt;p&gt;Vim 에서 사용가능한 정규표현식의 기본 사용법에 대한 글이다.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;정규 표현식 (regular expression)&lt;/h1&gt;
+&lt;p&gt;정규표현식이란 주로 문자열 내에서 검색이나 조작에 사용되는 표현식으로써 특정한 패턴을 가지고 그 패턴에 부합되는 문자열을 찾아내 원하는 일을 수행 할 수가 있다.&lt;/p&gt;
+&lt;p&gt;정규표현식은 vim, sed, grep, emacs, perl 등 프로그램이나 프로그래밍 언어 등에서 문자열을 다루는 용도로 사용되고 있다.&lt;/p&gt;
+&lt;p&gt;정규표현식이 쓰이는 모든 프로그램에서 동일한 문법으로 정규표현식을 규정하고 있지는 않는다. 기본적인 내용은 모두 같지만 약간의 표현 형식이 다르다. 즉, 이 글에 작성한 내용은 다른 프로그램이나 언어에서 사용하는 정규표현식과 다를 수 있다.&lt;/p&gt;
+&lt;p&gt;Vim 의 &lt;code&gt;:help pattern&lt;/code&gt; 을 참고하자.&lt;/p&gt;
+&lt;h1&gt;Character&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;[ ]&lt;/code&gt; 안에는 알파벳이나 숫자가 올 수 있고 이 안에 나열되어 있는 문자 중 한 문자를 가리킨다. 즉 [abc] 는 검색에서 한 문자처럼 취급을 받는다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[abc]&lt;/code&gt; : a, b, c 문자 중 한 문자&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;b[abc]ll&lt;/code&gt; : ball, bbll, bcll 중 하나&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;[ ]&lt;/code&gt; 안에는 문자의 범위가 들어 갈 수도 있다. 대소문자를 구분하니 주의해야 한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[a-z]&lt;/code&gt; : 소문자 a 부터 z 중 한 문자&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[0-9]&lt;/code&gt; : 숫자 0 부터 9 중 한 문자&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;[A-Z0-9]&lt;/code&gt; : 대문자 A 부터 Z 와 숫자 0 부터 9 중 한 문자&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;정규표현식에서 &lt;code&gt;.&lt;/code&gt; 은 new line 을 제외한 모든 문자를 가리킨다. 즉 알파벳, 공백과 같은 특수문자, 숫자 모두 &lt;code&gt;.&lt;/code&gt; 로 표현할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;^&lt;/code&gt; 가 &lt;code&gt;[ ]&lt;/code&gt; 안에 들어오면 안에 나열되어 있는 문자를 제외한 다른 모든 문자를 나타낸다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[^a-z]&lt;/code&gt; : 알파벳 소문자를 제외한 모든 문자&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;특수문자는 항상 &lt;code&gt;\&lt;/code&gt; 와 같이 쓰여야 문자 그대로의 의미를 나타낸다. 공백(Space)는 &lt;code&gt;\&lt;/code&gt; 로 Space 앞에 &lt;code&gt;\&lt;/code&gt; 를 붙여주면 된다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;[A-Z][0-9][0-9]&lt;/code&gt; : 첫문자는 무조건 대문자로 시작하고 곧바로 숫자가 2자리 오는 패턴&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;^&lt;/code&gt; 는 문자열의 가장 처음을 의미한다. Vim 에서 &lt;code&gt;/^The&lt;/code&gt; 로 검색을 하게 되면 줄의 맨 처음에 위치한 The 만 찾게 된다. &lt;code&gt;[ ]&lt;/code&gt; 내에 있던 &lt;code&gt;^&lt;/code&gt; 과 다른 의미이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$&lt;/code&gt; 는 문자열의 가장 마지막을 의미한다. &lt;code&gt;/today$&lt;/code&gt; 로 검색하면 줄의 마지막에 위치한 today 만 찾게 된다.&lt;/p&gt;
+&lt;h1&gt;Iteration&lt;/h1&gt;
+&lt;p&gt;반복을 지정하는 표현식은 문자 뒤에 적어 앞에 있는 문자가 몇 개까지 반복되는 지를 지정한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;*&lt;/code&gt; : 0 번 이상&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;+&lt;/code&gt; : 1 번 이상&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-&lt;/code&gt; : 0번 혹은 1번&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;+&lt;/code&gt; 와 &lt;code&gt;-&lt;/code&gt; 는 전통적인 Vi 에서는 제공되지 않고 Vim 에서만 사용할 수 있다. 물론 리눅스에 설치되어 있는 Vi 는 Vim 이기 때문에 사용 가능하다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab*&lt;/code&gt; : b 라는 문자가 없을 수도 있고 한번 이상 올 수도 있다. &lt;code&gt;a&lt;/code&gt;, &lt;code&gt;ab&lt;/code&gt;, &lt;code&gt;abb&lt;/code&gt;, &lt;code&gt;abbb&lt;/code&gt;, &lt;code&gt;abbbb&lt;/code&gt;, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ab+&lt;/code&gt; : 반드시 b 라는 문자가 한번 이상 와야 한다. &lt;code&gt;ab&lt;/code&gt;, &lt;code&gt;abb&lt;/code&gt;, &lt;code&gt;abbb&lt;/code&gt;, &lt;code&gt;abbbb&lt;/code&gt;, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ab-&lt;/code&gt; : a 뒤에 b가 올 수도 오지 않을 수 도 있다. &lt;code&gt;a&lt;/code&gt;, &lt;code&gt;ab&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;( )&lt;/code&gt; 를 사용하여 문자열을 반복시킬 수도 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(abc)*&lt;/code&gt; : abc 문자열이 0번 이상 반복&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(abc)+&lt;/code&gt; : abc 문자열이 1번 이상 반복&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Vim 에서 &lt;code&gt;/(abc)*&lt;/code&gt; 로 검색 명령을 내리면 Vim 은 모든 문자가 검색결과로 지정된다. &lt;code&gt;*&lt;/code&gt; 은 0 번도 포함하기 때문이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt; &amp;gt;&lt;/code&gt; 를 사용하여 문자열의 범위를 한정할 수도 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;\&amp;lt;abc\&amp;gt;&lt;/code&gt; : 정확하게 abc 인 것만 찾는다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;정리하면 반드시 줄의 시작은 알파벳 하나 이상으로 시작하고 중간에 하나 이상의 공백 문자 다음에 2개 이상의 숫자가 오는 패턴은 정규표현식으로 다음과 같이 표현된다 : &lt;code&gt;^[A-Za-z]+ +[0-9][0-9]+&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Replace&lt;/h1&gt;
+&lt;p&gt;Vim 은 검색과 동시에 치환도 가능하다 : &lt;code&gt;:&amp;lt;시작줄 번호&amp;gt;,&amp;lt;끝 번호&amp;gt; s/검색어/바꿀단어/옵션&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:1,10 s/The/the/gc&lt;/code&gt; : 1번째 줄에서 10번째 줄 사이에 있는 "The" 라는 단어를 "the"로 치환&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;g&lt;/code&gt; 라는 옵션은 모든 검색어에 대해 변경을 실시하게 해준다. 만약 &lt;code&gt;g&lt;/code&gt; 옵션이 없을 경우 한 줄에 2 개 이상의 The 가 있을 경우 첫 번째 &lt;code&gt;The&lt;/code&gt; 만 &lt;code&gt;the&lt;/code&gt; 로 변경을 하게 된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;c&lt;/code&gt; 라는 옵션은 치환이 발생할 때마다 정말 치환할 것인지를 묻는 prompt 를 출력한다.&lt;/p&gt;
+&lt;p&gt;이외에 줄 번호를 가리키는 특별한 문자가 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.&lt;/code&gt; : 현재 커서가 놓여 있는 줄의 번호 &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$&lt;/code&gt; : 마지막 줄&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:.,$ s/The/the/g&lt;/code&gt; : 현재에서 마지막 줄까지 모든 &lt;code&gt;The&lt;/code&gt; 를 &lt;code&gt;the&lt;/code&gt; 로 치환&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:1,$ s/\&amp;lt;be\&amp;gt;/BE/g&lt;/code&gt; : 모든 줄에서 다른 단어에 포함되지 않은 &lt;code&gt;be&lt;/code&gt; 라는 단어를 검색하여 대문자 &lt;code&gt;BE&lt;/code&gt; 로 변경&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;또는 아래와 같이 한번에 전체 문서에 대해서 치환을 수행할 수도 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:%s/The/the/g&lt;/code&gt; : 현재에서 마지막 줄까지 모든 &lt;code&gt;The&lt;/code&gt; 를 &lt;code&gt;the&lt;/code&gt; 로 치환. &lt;code&gt;:1,$ s/The/the/g&lt;/code&gt; 와 같다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;정규표현식과 변수&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;( )&lt;/code&gt; 는 문자열을 하나의 단위로 보게 하는 역할을 하였다. 하지만 치환에 사용 될 경우 변수 역할도 하게 된다.&lt;/p&gt;
+&lt;p&gt;정규표현식 &lt;code&gt;([a-z]+) ([0-9]+)&lt;/code&gt; 를 만족하는 문자열 &lt;code&gt;abcd 100&lt;/code&gt; 가 있을 때, 정규표현식에서는 각 &lt;code&gt;( )&lt;/code&gt; 을 하나의 단위로 묶으면서 &lt;code&gt;1&lt;/code&gt;, &lt;code&gt;2&lt;/code&gt; 와 같은 변수에 대응을 시킨다. 즉, 첫 번째 &lt;code&gt;( )&lt;/code&gt; 는 &lt;code&gt;1&lt;/code&gt; 이라는 변수에, 두 번째 &lt;code&gt;( )&lt;/code&gt; 는 &lt;code&gt;2&lt;/code&gt; 라는 변수에 저장된다.&lt;/p&gt;
+&lt;p&gt;정규표현식의 변수와 Vim 의 치환을 사용하여 앞 뒤 순서를 바꿀 수 있다 : &lt;code&gt;:1,$ s/([a-z]+)( +)([0-9]+)/321/g&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;s/.../.../g&lt;/code&gt; 와 같은 치환 형식에서 찾을 문자열 부분은 세 개의 &lt;code&gt;( )&lt;/code&gt; 로 이루어져 있어서 각각 변수 &lt;code&gt;1&lt;/code&gt;, &lt;code&gt;2&lt;/code&gt;, &lt;code&gt;3&lt;/code&gt; 에 저장된다. 그리고 치환할 문자열 부분에서 &lt;code&gt;321&lt;/code&gt; 과 같이 반대 순서로 변수를 나열하여 각 문자열들의 순서를 변경할 수 있게 된다.&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>Vim Basics</title><link href="https://imjang57.github.io/garret/vim-basics.html" rel="alternate"></link><published>2017-05-04T00:00:00+09:00</published><updated>2017-05-04T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-04:/garret/vim-basics.html</id><summary type="html">&lt;p&gt;Vim 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;VIM (VI Improved)&lt;/h1&gt;
 &lt;p&gt;이 문서는 Vim 의 가장 기본적인 사용법을 정리한 문서이다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Web page : http://www.vim.org&lt;/li&gt;
@@ -111,7 +185,168 @@
 &lt;p&gt;If you want to search text &lt;em&gt;Hotkeys&lt;/em&gt;, input &lt;code&gt;/Hotkeys&lt;/code&gt;. Searching text is case-sensitive. If you want to ignore case, input &lt;code&gt;:set ignorecase&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;After run &lt;code&gt;/searchtext&lt;/code&gt; command, you can move to next and previous occurrence by &lt;code&gt;n&lt;/code&gt; and &lt;code&gt;N&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Vim provide incremental search. This is helpful when you know only a part of the phrase. After &lt;code&gt;:set incsearch&lt;/code&gt;, vim will start searching by everytime you type.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;searchtext&lt;/code&gt; can be regular expression.&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>JVM Process monitoring with JDK tools</title><link href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/jvm-process-monitoring-with-jdk-tools.html</id><summary type="html">&lt;p&gt;JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;JVM Process monitoring&lt;/h1&gt;
+&lt;p&gt;The &lt;code&gt;searchtext&lt;/code&gt; can be regular expression. For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;delete lines which are matched to pattern : &lt;code&gt;:g/pattern/d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;delete empty lines : &lt;code&gt;:g/^$/d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;delete lines which are include hello : &lt;code&gt;:g/hello/d&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="vim"></category></entry><entry><title>Vim Basics More</title><link href="https://imjang57.github.io/garret/vim-basics-more.html" rel="alternate"></link><published>2017-05-04T00:00:00+09:00</published><updated>2017-05-04T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-04:/garret/vim-basics-more.html</id><summary type="html">&lt;p&gt;Vim 기본 사용법에 대해 더 알면 좋은 내용들에 대한 글이다.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Vim Basics More&lt;/h1&gt;
+&lt;p&gt;Vim 에 대해 추가적으로 알면 좋은 내용들에 대해 정리한 글이다.&lt;/p&gt;
+&lt;h1&gt;&lt;em&gt;buffer&lt;/em&gt;, &lt;em&gt;window&lt;/em&gt;, &lt;em&gt;tab&lt;/em&gt;&lt;/h1&gt;
+&lt;p&gt;Vim 에서 &lt;em&gt;buffer&lt;/em&gt;  는 열려 있는 파일(file which is opened)를 뜻한다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;window&lt;/em&gt; 는 Vim 이 어떤 것을 출력하기 위한 component 로 &lt;em&gt;buffer&lt;/em&gt; 를 출력하는 방법이다. 사실 Vim 의 &lt;em&gt;buffer&lt;/em&gt; 는 text 만 출력할 수 있는 것이 아니다. Vim 화면을 가로나 세로로 분할하면 이 &lt;em&gt;windows&lt;/em&gt; 가 새로 만들어 지고 각 &lt;em&gt;window&lt;/em&gt; 에 &lt;em&gt;buffer&lt;/em&gt; 가 출력된다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;tab&lt;/em&gt; 은 Vim 의 Layout 이다. 여러 &lt;em&gt;windows&lt;/em&gt; 들의 집합이다. 대부분의 Text editor 나 Internet browser 에서 사용하는 tab 과는 개념이 다르다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A buffer is the in-memory text of a file.&lt;/li&gt;
+&lt;li&gt;A window is a viewport on a buffer.&lt;/li&gt;
+&lt;li&gt;A tab page is a collection of windows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;대충 간략하게 정리하면 파일은 &lt;em&gt;buffer&lt;/em&gt; 에 로드되고, &lt;em&gt;buffer&lt;/em&gt; 는 &lt;em&gt;window&lt;/em&gt; 에 의해 출력되고, &lt;em&gt;window&lt;/em&gt; 는 &lt;em&gt;tab&lt;/em&gt; 에 의해 layout 이 결정된다.&lt;/p&gt;
+&lt;h2&gt;Vim &lt;em&gt;buffer&lt;/em&gt; management&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;list of current buffers : &lt;code&gt;:ls&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;open new file (buffer) : &lt;code&gt;:e &amp;lt;path&amp;gt;&lt;/code&gt;, &lt;code&gt;:edit &amp;lt;path&amp;gt;&lt;/code&gt; (with enhanced tab completion (put set wildmenu in your .vimrc))&lt;/li&gt;
+&lt;li&gt;save file (buffer) : &lt;code&gt;:w&lt;/code&gt;, &lt;code&gt;:write&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;close file (buffer) : &lt;code&gt;:bd&lt;/code&gt;, &lt;code&gt;:bw&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;switch between all open files (buffers) : &lt;code&gt;:b&amp;lt;buffer number&amp;gt;&lt;/code&gt; (&lt;code&gt;:b#&lt;/code&gt; chooses the last visited file)&lt;/li&gt;
+&lt;li&gt;previous buffer : &lt;code&gt;:bp&lt;/code&gt;, &lt;code&gt;:bprevious&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;next buffer : &lt;code&gt;:bn&lt;/code&gt;, &lt;code&gt;:bnext&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;delete buffer : &lt;code&gt;:bd [buffer numbers...]&lt;/code&gt;, &lt;code&gt;:bw&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Close all buffer : &lt;code&gt;:%bd&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Close buffer from buffer number 1 to 1000 : &lt;code&gt;:1,1000bd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;:ls&lt;/code&gt; 를 실행하면 Vim 의 하단에 다음과 같이 현재 열려진 &lt;em&gt;buffer&lt;/em&gt; 들을 보여준다. 아래 화면에서 &lt;em&gt;buffer&lt;/em&gt; 를 선택하여 이동할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;1 %a   &amp;quot;./checkin.pl&amp;quot;            line 1
+2 #    &amp;quot;./grabakamailogs.pl&amp;quot;     line 1
+3      &amp;quot;./grabwmlogs.pl&amp;quot;         line 0
+  etc.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;%&lt;/code&gt; 는 현재 편집 중인 &lt;em&gt;buffer&lt;/em&gt; (current buffer) 를 참조한다. &lt;code&gt;#&lt;/code&gt; 는 직전에 편집하던 &lt;em&gt;buffer&lt;/em&gt; (alternative buffer) 를 참조한다. &lt;code&gt;ctrl + shift + 6&lt;/code&gt; 를 실행하면 두 &lt;em&gt;buffer&lt;/em&gt; 사이를 switch 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;e &amp;lt;path&amp;gt;&lt;/code&gt; 를 실행하면 새로운 &lt;em&gt;buffer&lt;/em&gt; 를 만들고 전달 받은 파일의 내용을 로드한다. &lt;code&gt;:e foo.txt bar.txt&lt;/code&gt;, &lt;code&gt;e /foo/bar/*.txt&lt;/code&gt; 와 같이 한 번에 여러 &lt;em&gt;buffer&lt;/em&gt; 를 생성하지는 못한다. 만약, 여러 파일을 한 번에 열고 싶으면 처음에 Vim 을 실행할 때 &lt;code&gt;Vim file1.txt file2.txt&lt;/code&gt; 와 같이 실행하면 된다. 아니면 &lt;code&gt;arga [paths...]&lt;/code&gt; 를 실행하면 여러 파일들로 새로운 &lt;em&gt;buffer&lt;/em&gt; 를 생성하고 대신 새로운 &lt;em&gt;buffer&lt;/em&gt; 로 switch 를 하지는 않는다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:arga foo.txt bar.txt
+:argadd /foo/bar/*.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Install &lt;em&gt;BufOnly&lt;/em&gt; plugin&lt;/h2&gt;
+&lt;p&gt;Vim 으로 &lt;em&gt;buffer&lt;/em&gt; 를 사용하다보면 불편할 때가 있는데, 예를 들면 지금 편집중인 &lt;em&gt;buffer&lt;/em&gt; 를 빼고 나머지 &lt;em&gt;buffer&lt;/em&gt; 들을 모두 닫고 싶을 때이다. &lt;code&gt;:ls&lt;/code&gt; 로 현재 생성되어 있는 &lt;em&gt;buffer&lt;/em&gt; 를 확인하고 &lt;code&gt;bd &amp;lt;buffer number&amp;gt;&lt;/code&gt; 로 일일이 하나씩 &lt;em&gt;buffer&lt;/em&gt; 를 삭제해야 한다. 그래서 나는 &lt;em&gt;BufOnly&lt;/em&gt; 라는 plugin 을 설치해서 사용한다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Download &lt;code&gt;BufOnly.vim&lt;/code&gt; Vimscript at &lt;a href="http://www.vim.org/scripts/script.php?script_id=1071"&gt;BufOnly page&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Goto &lt;code&gt;$VIMRUNTIME&lt;/code&gt; : &lt;code&gt;:echo $VIMRUNTIME&lt;/code&gt;, &lt;code&gt;:!explorer $VIMRUNTIME&lt;/code&gt; in Vim.&lt;/li&gt;
+&lt;li&gt;Copy downloaded &lt;code&gt;BufOnly.vim&lt;/code&gt; to &lt;code&gt;$VIMRUNTIME&lt;/code&gt; directory or &lt;code&gt;~/.vim/plugin/BufOnly.vim&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Restart Vim&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;참고로 &lt;code&gt;$VIMRUNTIME&lt;/code&gt; 은 Vim 실행 후 &lt;em&gt;Normal mode&lt;/em&gt; 에서 &lt;code&gt;:echo $VIMRUNTIME&lt;/code&gt; 으로 확인할 수 있으며 Vim 이 실행되는 root path 이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;close buffers : &lt;code&gt;:BufOnly [buffer number]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Vim &lt;em&gt;window&lt;/em&gt; management&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;split window horizontal : &lt;code&gt;:sp [path]&lt;/code&gt;, &lt;code&gt;:split [path]&lt;/code&gt;, &lt;code&gt;Ctrl + w, s&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;split window vertical : &lt;code&gt;vs [path]&lt;/code&gt;, &lt;code&gt;:vertical split [path]&lt;/code&gt;, &lt;code&gt;Ctrl + w, v&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;resize all windows same : &lt;code&gt;Ctrl - w, =&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;resize horizontal : &lt;code&gt;:resize 60&lt;/code&gt;, &lt;code&gt;:res 60&lt;/code&gt;, &lt;code&gt;:resize +5&lt;/code&gt;, &lt;code&gt;:res +5&lt;/code&gt;, &lt;code&gt;:resize -5&lt;/code&gt;, &lt;code&gt;:res -5&lt;/code&gt;, &lt;code&gt;ctrl + w, +&lt;/code&gt;, &lt;code&gt;ctrl + w, -&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;resize vertical :  &lt;code&gt;:vertical resize 60&lt;/code&gt;, &lt;code&gt;:vertical res 60&lt;/code&gt;, &lt;code&gt;:vertical resize +5&lt;/code&gt;, &lt;code&gt;:vertical res +5&lt;/code&gt;, &lt;code&gt;:vertical resize -5&lt;/code&gt;, &lt;code&gt;:vertical res -5&lt;/code&gt;, &lt;code&gt;ctrl + w, &amp;gt;&lt;/code&gt;, &lt;code&gt;ctrl + w, &amp;lt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;switch between splitscreens : &lt;code&gt;ctrl + w, arrow key&lt;/code&gt;, &lt;code&gt;ctrl + w, &amp;lt;h|j|k|l&amp;gt;&lt;/code&gt;, &lt;code&gt;ctrl + w, n&lt;/code&gt;, &lt;code&gt;ctrl + w, p&lt;/code&gt;, &lt;code&gt;ctrl + w, w&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;close the current window : &lt;code&gt;ctrl + w, c&lt;/code&gt;, &lt;code&gt;:q&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;close all windows except the current one : &lt;code&gt;ctrl + w, o&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To resize in different steps, you can create maps that will adjust the window size differently. For example to increase the window size by a factor of 1.5 and decrease the window size by 0.67, you can map this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;nnoremap &amp;lt;silent&amp;gt; &amp;lt;Leader&amp;gt;+ :exe &amp;quot;resize &amp;quot; . (winheight(0) * 3/2)&amp;lt;CR&amp;gt;
+nnoremap &amp;lt;silent&amp;gt; &amp;lt;Leader&amp;gt;- :exe &amp;quot;resize &amp;quot; . (winheight(0) * 2/3)&amp;lt;CR&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Vim &lt;em&gt;tab&lt;/em&gt; management&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;add new tab : &lt;code&gt;:tabe &amp;lt;path&amp;gt;&lt;/code&gt;, &lt;code&gt;:tabedit &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;add buffer to tab : &lt;code&gt;:&amp;lt;tab number&amp;gt;tabe &amp;lt;path&amp;gt;&lt;/code&gt;, &lt;code&gt;:&amp;lt;tab number&amp;gt;tabedit &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;close tab : &lt;code&gt;:tabc&lt;/code&gt;, &lt;code&gt;:tabclose&lt;/code&gt;, &lt;code&gt;:&amp;lt;tab number&amp;gt;tabc&lt;/code&gt;, &lt;code&gt;:&amp;lt;tab number&amp;gt;tabclose&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;switch between tabs : &lt;code&gt;:tabn&lt;/code&gt;, &lt;code&gt;:tabnext&lt;/code&gt;, &lt;code&gt;:tabp&lt;/code&gt;, &lt;code&gt;:tabprevious&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;switch to next tab by number : &lt;code&gt;gt&lt;/code&gt;, &lt;code&gt;&amp;lt;number&amp;gt;gt&lt;/code&gt;, &lt;code&gt;ctrl + PageDown&lt;/code&gt;, &lt;code&gt;&amp;lt;number&amp;gt;ctrl + PageDown&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;switch to previous tab by number : &lt;code&gt;gT&lt;/code&gt;, &lt;code&gt;&amp;lt;number&amp;gt;gT&lt;/code&gt;, &lt;code&gt;ctrl + PageUp&lt;/code&gt;, &lt;code&gt;&amp;lt;number&amp;gt;ctrl + PageUp&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;go to tab : &lt;code&gt;:tabmove &amp;lt;tab number&amp;gt;&lt;/code&gt;, &lt;code&gt;:tabm &amp;lt;tab number&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you map &lt;code&gt;:tabn&lt;/code&gt; and &lt;code&gt;:tabp&lt;/code&gt; to your &lt;code&gt;F7&lt;/code&gt; and &lt;code&gt;F8&lt;/code&gt; keys you can easily switch between files.&lt;/p&gt;
+&lt;h1&gt;Selection&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;- select : &lt;code&gt;v, [h|j|k|l|g|G|...]&lt;/code&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;- select vertical : &lt;code&gt;ctrl + v, [h|j|k|l|g|G|...]&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1&gt;Indentation&lt;/h1&gt;
+&lt;p&gt;In command mode,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;indent current line by shiftwidth spaces : &lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt;, &lt;code&gt;:&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;de-indent current line by shiftwidth spaces : &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;, &lt;code&gt;:&amp;lt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;re-indent current line : &lt;code&gt;==&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;indent 5 lines : &lt;code&gt;5&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;de-indent 5 lines : &lt;code&gt;5&amp;lt;&amp;lt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;re-indent 5 lines : &lt;code&gt;5==&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;indent lines 4 to 8, inclusive : &lt;code&gt;:4,8&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;indent selected lines : Select lines and use &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;increase indent of a curly-braces block : put cursor on one of the curly braces and use &lt;code&gt;&amp;gt;, %&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;decrease indent of a curly-braces block : put cursor on one of the curly braces and use &lt;code&gt;&amp;lt;, %&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;re-indent a curly-braces block : put cursor on one of the curly braces and use &lt;code&gt;=, %&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Paste text, aligning indentation with surroundings : &lt;code&gt;]p&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;re-indent entire buffer : &lt;code&gt;gg=G&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In insert mode,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;insert indent at start of line : &lt;code&gt;ctrl + t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;remove indent at start of line : &lt;code&gt;ctrl + d&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;vim settings in &lt;code&gt;.vimrc&lt;/code&gt; file for indentation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;set expandtab       &amp;quot;Use softtabstop spaces instead of tab characters for indentation
+set shiftwidth=4    &amp;quot;Indent by 4 spaces when using &amp;gt;&amp;gt;, &amp;lt;&amp;lt;, == etc.
+set softtabstop=4   &amp;quot;Indent by 4 spaces when pressing &amp;lt;TAB&amp;gt;
+
+set autoindent      &amp;quot;Keep indentation from previous line
+set smartindent     &amp;quot;Automatically inserts indentation in some cases
+set cindent         &amp;quot;Like smartindent, but stricter and more customisable
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Vim has intelligent indentation based on filetype. Try adding this to your &lt;code&gt;.vimrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;has&lt;/span&gt; (&lt;span class="s"&gt;&amp;quot;autocmd&amp;quot;&lt;/span&gt;)
+    &amp;quot; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;detection&lt;/span&gt;. &lt;span class="n"&gt;Indent&lt;/span&gt; &lt;span class="n"&gt;based&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;filetype&lt;/span&gt;. &lt;span class="n"&gt;Recommended&lt;/span&gt;.
+    &lt;span class="n"&gt;filetype&lt;/span&gt; &lt;span class="n"&gt;plugin&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;
+&lt;span class="n"&gt;endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Folding&lt;/h1&gt;
+&lt;p&gt;여러 line 들을 folding 하면 필요 없는 부분들을 숨겨서 긴 source code 등을 보는데 더 수월할 때가 많다.&lt;/p&gt;
+&lt;p&gt;folding 을 하는 가장 기본적인 방법은 원하는 line 들을 선택한 후 &lt;code&gt;z, f&lt;/code&gt;, &lt;code&gt;:fold&lt;/code&gt;, &lt;code&gt;:fo&lt;/code&gt; 를 실행하는 것이다.&lt;/p&gt;
+&lt;p&gt;unfolding 은 folding 된 line 에서 &lt;code&gt;z, o&lt;/code&gt;, &lt;code&gt;:foldopen&lt;/code&gt;, &lt;code&gt;:foldo&lt;/code&gt; 중 하나를 실행하면 된다.&lt;/p&gt;
+&lt;p&gt;자세한 내용은 &lt;code&gt;:help fold&lt;/code&gt; 를 참고하자.&lt;/p&gt;
+&lt;h1&gt;Get the name of the current file&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Register &lt;code&gt;%&lt;/code&gt; contains the name of the current file&lt;/li&gt;
+&lt;li&gt;Register &lt;code&gt;#&lt;/code&gt; contains the name of the alternate file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;현재 작업 중인 buffer 의 file name 을 확인하려면 register &lt;code&gt;%&lt;/code&gt; 를 확인하면 된다 : &lt;code&gt;:echo @%&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;기타 file path 를 확인하기 위한 command :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:echo expand('%:t')&lt;/code&gt; : &lt;code&gt;my.txt&lt;/code&gt;, name of file ('tail')&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:echo expand('%:p')&lt;/code&gt; : &lt;code&gt;/abc/def/my.txt&lt;/code&gt;, full path&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:echo expand('%:p:h')&lt;/code&gt; : &lt;code&gt;/abc/def&lt;/code&gt;, directory containing file ('head')&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:echo expand('%:p:h:t')&lt;/code&gt; : &lt;code&gt;dev&lt;/code&gt;, First get the full path with &lt;code&gt;:p&lt;/code&gt; (&lt;code&gt;/abc/def/my.txt&lt;/code&gt;), then get the head of that with &lt;code&gt;:h&lt;/code&gt; (&lt;code&gt;/abc/def&lt;/code&gt;), then get the tail of that with &lt;code&gt;:t&lt;/code&gt; (&lt;code&gt;def&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:echo expand('%:r')&lt;/code&gt; : &lt;code&gt;my&lt;/code&gt;, name of file less one extension ('root')&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:echo expand('%:e')&lt;/code&gt; : &lt;code&gt;txt&lt;/code&gt; name of file's extension ('extension')&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more info run &lt;code&gt;:help expand&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If all that is wanted is to display the name of the current file, type &lt;code&gt;Ctrl-G&lt;/code&gt; (or press &lt;code&gt;1 then Ctrl-G&lt;/code&gt; for the full path).&lt;/p&gt;
+&lt;p&gt;When using &lt;code&gt;@%&lt;/code&gt;, the name is displayed relative to the current directory.&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>JVM Process monitoring with JDK tools</title><link href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/jvm-process-monitoring-with-jdk-tools.html</id><summary type="html">&lt;p&gt;JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;JVM Process monitoring&lt;/h1&gt;
 &lt;p&gt;요즘 일 때문에 오랜만에 자바를 사용하고 있고, 스칼라에 관심이 생겨 공부해보고 있다. 그런데 둘다 &lt;em&gt;JVM&lt;/em&gt; 기반 언어다 보니 JVM 에 대해 알아야 겠다는 생각이 들었다. (사실 일하다가 JVM 모니터링 할 일이 생긴 김에 간단하게 정리한다.) 어쨌든 둘 다 JVM 에서 동작하는 녀석들이라 JVM 모니터링에 대해 간단하게 남겨보고자 한다.&lt;/p&gt;
 &lt;p&gt;자바든 스칼라든 실행되면 JVM 프로세스이다. 자바나 스칼라로 쓰여진 코드는 Java Bytecode 로 컴파일되고, JVM 은 이 Bytecode 를 실행한다. 그러므로 컴파일 된 이후에는 자바로 작성했든 스칼라로 작성했든 JVM 입장에서는 그냥 똑같은 Bytecode 이다. 그러니 같은 방법(JVM Process monitoring)으로 모니터링할 수 있다.&lt;/p&gt;
 &lt;h1&gt;JVM Monitoring tools&lt;/h1&gt;

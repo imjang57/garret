@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Vim Basics More</title>
+        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
+        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
+                <nav><ul>
+                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
+                    <li class="active"><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://imjang57.github.io/garret/vim-basics-more.html" rel="bookmark"
+           title="Permalink to Vim Basics More">Vim Basics More</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-05-04T00:00:00+09:00">
+                Published: 목 04 5월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-05-04T00:00:00+09:00">
+                Updated: 목 04 5월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
+</footer><!-- /.post-info -->      <h1>Vim Basics More</h1>
+<p>Vim 에 대해 추가적으로 알면 좋은 내용들에 대해 정리한 글이다.</p>
+<h1><em>buffer</em>, <em>window</em>, <em>tab</em></h1>
+<p>Vim 에서 <em>buffer</em>  는 열려 있는 파일(file which is opened)를 뜻한다.</p>
+<p><em>window</em> 는 Vim 이 어떤 것을 출력하기 위한 component 로 <em>buffer</em> 를 출력하는 방법이다. 사실 Vim 의 <em>buffer</em> 는 text 만 출력할 수 있는 것이 아니다. Vim 화면을 가로나 세로로 분할하면 이 <em>windows</em> 가 새로 만들어 지고 각 <em>window</em> 에 <em>buffer</em> 가 출력된다.</p>
+<p><em>tab</em> 은 Vim 의 Layout 이다. 여러 <em>windows</em> 들의 집합이다. 대부분의 Text editor 나 Internet browser 에서 사용하는 tab 과는 개념이 다르다.</p>
+<ul>
+<li>A buffer is the in-memory text of a file.</li>
+<li>A window is a viewport on a buffer.</li>
+<li>A tab page is a collection of windows.</li>
+</ul>
+<p>대충 간략하게 정리하면 파일은 <em>buffer</em> 에 로드되고, <em>buffer</em> 는 <em>window</em> 에 의해 출력되고, <em>window</em> 는 <em>tab</em> 에 의해 layout 이 결정된다.</p>
+<h2>Vim <em>buffer</em> management</h2>
+<ul>
+<li>list of current buffers : <code>:ls</code></li>
+<li>open new file (buffer) : <code>:e &lt;path&gt;</code>, <code>:edit &lt;path&gt;</code> (with enhanced tab completion (put set wildmenu in your .vimrc))</li>
+<li>save file (buffer) : <code>:w</code>, <code>:write</code></li>
+<li>close file (buffer) : <code>:bd</code>, <code>:bw</code></li>
+<li>switch between all open files (buffers) : <code>:b&lt;buffer number&gt;</code> (<code>:b#</code> chooses the last visited file)</li>
+<li>previous buffer : <code>:bp</code>, <code>:bprevious</code></li>
+<li>next buffer : <code>:bn</code>, <code>:bnext</code></li>
+<li>delete buffer : <code>:bd [buffer numbers...]</code>, <code>:bw</code></li>
+<li>Close all buffer : <code>:%bd</code></li>
+<li>Close buffer from buffer number 1 to 1000 : <code>:1,1000bd</code></li>
+</ul>
+<p><code>:ls</code> 를 실행하면 Vim 의 하단에 다음과 같이 현재 열려진 <em>buffer</em> 들을 보여준다. 아래 화면에서 <em>buffer</em> 를 선택하여 이동할 수 있다.</p>
+<div class="highlight"><pre><span></span>1 %a   &quot;./checkin.pl&quot;            line 1
+2 #    &quot;./grabakamailogs.pl&quot;     line 1
+3      &quot;./grabwmlogs.pl&quot;         line 0
+  etc.
+</pre></div>
+
+
+<p><code>%</code> 는 현재 편집 중인 <em>buffer</em> (current buffer) 를 참조한다. <code>#</code> 는 직전에 편집하던 <em>buffer</em> (alternative buffer) 를 참조한다. <code>ctrl + shift + 6</code> 를 실행하면 두 <em>buffer</em> 사이를 switch 한다.</p>
+<p><code>e &lt;path&gt;</code> 를 실행하면 새로운 <em>buffer</em> 를 만들고 전달 받은 파일의 내용을 로드한다. <code>:e foo.txt bar.txt</code>, <code>e /foo/bar/*.txt</code> 와 같이 한 번에 여러 <em>buffer</em> 를 생성하지는 못한다. 만약, 여러 파일을 한 번에 열고 싶으면 처음에 Vim 을 실행할 때 <code>Vim file1.txt file2.txt</code> 와 같이 실행하면 된다. 아니면 <code>arga [paths...]</code> 를 실행하면 여러 파일들로 새로운 <em>buffer</em> 를 생성하고 대신 새로운 <em>buffer</em> 로 switch 를 하지는 않는다.</p>
+<div class="highlight"><pre><span></span>:arga foo.txt bar.txt
+:argadd /foo/bar/*.txt
+</pre></div>
+
+
+<h2>Install <em>BufOnly</em> plugin</h2>
+<p>Vim 으로 <em>buffer</em> 를 사용하다보면 불편할 때가 있는데, 예를 들면 지금 편집중인 <em>buffer</em> 를 빼고 나머지 <em>buffer</em> 들을 모두 닫고 싶을 때이다. <code>:ls</code> 로 현재 생성되어 있는 <em>buffer</em> 를 확인하고 <code>bd &lt;buffer number&gt;</code> 로 일일이 하나씩 <em>buffer</em> 를 삭제해야 한다. 그래서 나는 <em>BufOnly</em> 라는 plugin 을 설치해서 사용한다.</p>
+<ol>
+<li>Download <code>BufOnly.vim</code> Vimscript at <a href="http://www.vim.org/scripts/script.php?script_id=1071">BufOnly page</a>.</li>
+<li>Goto <code>$VIMRUNTIME</code> : <code>:echo $VIMRUNTIME</code>, <code>:!explorer $VIMRUNTIME</code> in Vim.</li>
+<li>Copy downloaded <code>BufOnly.vim</code> to <code>$VIMRUNTIME</code> directory or <code>~/.vim/plugin/BufOnly.vim</code>.</li>
+<li>Restart Vim</li>
+</ol>
+<p>참고로 <code>$VIMRUNTIME</code> 은 Vim 실행 후 <em>Normal mode</em> 에서 <code>:echo $VIMRUNTIME</code> 으로 확인할 수 있으며 Vim 이 실행되는 root path 이다.</p>
+<ul>
+<li>close buffers : <code>:BufOnly [buffer number]</code></li>
+</ul>
+<h2>Vim <em>window</em> management</h2>
+<ul>
+<li>split window horizontal : <code>:sp [path]</code>, <code>:split [path]</code>, <code>Ctrl + w, s</code></li>
+<li>split window vertical : <code>vs [path]</code>, <code>:vertical split [path]</code>, <code>Ctrl + w, v</code></li>
+<li>resize all windows same : <code>Ctrl - w, =</code></li>
+<li>resize horizontal : <code>:resize 60</code>, <code>:res 60</code>, <code>:resize +5</code>, <code>:res +5</code>, <code>:resize -5</code>, <code>:res -5</code>, <code>ctrl + w, +</code>, <code>ctrl + w, -</code></li>
+<li>resize vertical :  <code>:vertical resize 60</code>, <code>:vertical res 60</code>, <code>:vertical resize +5</code>, <code>:vertical res +5</code>, <code>:vertical resize -5</code>, <code>:vertical res -5</code>, <code>ctrl + w, &gt;</code>, <code>ctrl + w, &lt;</code></li>
+<li>switch between splitscreens : <code>ctrl + w, arrow key</code>, <code>ctrl + w, &lt;h|j|k|l&gt;</code>, <code>ctrl + w, n</code>, <code>ctrl + w, p</code>, <code>ctrl + w, w</code></li>
+<li>close the current window : <code>ctrl + w, c</code>, <code>:q</code></li>
+<li>close all windows except the current one : <code>ctrl + w, o</code></li>
+</ul>
+<p>To resize in different steps, you can create maps that will adjust the window size differently. For example to increase the window size by a factor of 1.5 and decrease the window size by 0.67, you can map this:</p>
+<div class="highlight"><pre><span></span>nnoremap &lt;silent&gt; &lt;Leader&gt;+ :exe &quot;resize &quot; . (winheight(0) * 3/2)&lt;CR&gt;
+nnoremap &lt;silent&gt; &lt;Leader&gt;- :exe &quot;resize &quot; . (winheight(0) * 2/3)&lt;CR&gt;
+</pre></div>
+
+
+<h2>Vim <em>tab</em> management</h2>
+<ul>
+<li>add new tab : <code>:tabe &lt;path&gt;</code>, <code>:tabedit &lt;path&gt;</code></li>
+<li>add buffer to tab : <code>:&lt;tab number&gt;tabe &lt;path&gt;</code>, <code>:&lt;tab number&gt;tabedit &lt;path&gt;</code></li>
+<li>close tab : <code>:tabc</code>, <code>:tabclose</code>, <code>:&lt;tab number&gt;tabc</code>, <code>:&lt;tab number&gt;tabclose</code></li>
+<li>switch between tabs : <code>:tabn</code>, <code>:tabnext</code>, <code>:tabp</code>, <code>:tabprevious</code></li>
+<li>switch to next tab by number : <code>gt</code>, <code>&lt;number&gt;gt</code>, <code>ctrl + PageDown</code>, <code>&lt;number&gt;ctrl + PageDown</code></li>
+<li>switch to previous tab by number : <code>gT</code>, <code>&lt;number&gt;gT</code>, <code>ctrl + PageUp</code>, <code>&lt;number&gt;ctrl + PageUp</code></li>
+<li>go to tab : <code>:tabmove &lt;tab number&gt;</code>, <code>:tabm &lt;tab number&gt;</code></li>
+</ul>
+<p>If you map <code>:tabn</code> and <code>:tabp</code> to your <code>F7</code> and <code>F8</code> keys you can easily switch between files.</p>
+<h1>Selection</h1>
+<table>
+<thead>
+<tr>
+<th>- select : <code>v, [h|j|k|l|g|G|...]</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- select vertical : <code>ctrl + v, [h|j|k|l|g|G|...]</code></td>
+</tr>
+</tbody>
+</table>
+<h1>Indentation</h1>
+<p>In command mode,</p>
+<ul>
+<li>indent current line by shiftwidth spaces : <code>&gt;&gt;</code>, <code>:&gt;</code></li>
+<li>de-indent current line by shiftwidth spaces : <code>&lt;&lt;</code>, <code>:&lt;</code></li>
+<li>re-indent current line : <code>==</code></li>
+<li>indent 5 lines : <code>5&gt;&gt;</code></li>
+<li>de-indent 5 lines : <code>5&lt;&lt;</code></li>
+<li>re-indent 5 lines : <code>5==</code></li>
+<li>indent lines 4 to 8, inclusive : <code>:4,8&gt;</code></li>
+<li>indent selected lines : Select lines and use <code>&gt;</code></li>
+<li>increase indent of a curly-braces block : put cursor on one of the curly braces and use <code>&gt;, %</code></li>
+<li>decrease indent of a curly-braces block : put cursor on one of the curly braces and use <code>&lt;, %</code></li>
+<li>re-indent a curly-braces block : put cursor on one of the curly braces and use <code>=, %</code></li>
+<li>Paste text, aligning indentation with surroundings : <code>]p</code></li>
+<li>re-indent entire buffer : <code>gg=G</code></li>
+</ul>
+<p>In insert mode,</p>
+<ul>
+<li>insert indent at start of line : <code>ctrl + t</code></li>
+<li>remove indent at start of line : <code>ctrl + d</code></li>
+</ul>
+<p>vim settings in <code>.vimrc</code> file for indentation:</p>
+<div class="highlight"><pre><span></span>set expandtab       &quot;Use softtabstop spaces instead of tab characters for indentation
+set shiftwidth=4    &quot;Indent by 4 spaces when using &gt;&gt;, &lt;&lt;, == etc.
+set softtabstop=4   &quot;Indent by 4 spaces when pressing &lt;TAB&gt;
+
+set autoindent      &quot;Keep indentation from previous line
+set smartindent     &quot;Automatically inserts indentation in some cases
+set cindent         &quot;Like smartindent, but stricter and more customisable
+</pre></div>
+
+
+<p>Vim has intelligent indentation based on filetype. Try adding this to your <code>.vimrc</code>:</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="k">has</span> (<span class="s">&quot;autocmd&quot;</span>)
+    &quot; <span class="n">File</span> <span class="n">type</span> <span class="n">detection</span>. <span class="n">Indent</span> <span class="n">based</span> <span class="n">on</span> <span class="n">filetype</span>. <span class="n">Recommended</span>.
+    <span class="n">filetype</span> <span class="n">plugin</span> <span class="n">indent</span> <span class="n">on</span>
+<span class="n">endif</span>
+</pre></div>
+
+
+<h1>Folding</h1>
+<p>여러 line 들을 folding 하면 필요 없는 부분들을 숨겨서 긴 source code 등을 보는데 더 수월할 때가 많다.</p>
+<p>folding 을 하는 가장 기본적인 방법은 원하는 line 들을 선택한 후 <code>z, f</code>, <code>:fold</code>, <code>:fo</code> 를 실행하는 것이다.</p>
+<p>unfolding 은 folding 된 line 에서 <code>z, o</code>, <code>:foldopen</code>, <code>:foldo</code> 중 하나를 실행하면 된다.</p>
+<p>자세한 내용은 <code>:help fold</code> 를 참고하자.</p>
+<h1>Get the name of the current file</h1>
+<ul>
+<li>Register <code>%</code> contains the name of the current file</li>
+<li>Register <code>#</code> contains the name of the alternate file.</li>
+</ul>
+<p>현재 작업 중인 buffer 의 file name 을 확인하려면 register <code>%</code> 를 확인하면 된다 : <code>:echo @%</code></p>
+<p>기타 file path 를 확인하기 위한 command :</p>
+<ul>
+<li><code>:echo expand('%:t')</code> : <code>my.txt</code>, name of file ('tail')</li>
+<li><code>:echo expand('%:p')</code> : <code>/abc/def/my.txt</code>, full path</li>
+<li><code>:echo expand('%:p:h')</code> : <code>/abc/def</code>, directory containing file ('head')</li>
+<li><code>:echo expand('%:p:h:t')</code> : <code>dev</code>, First get the full path with <code>:p</code> (<code>/abc/def/my.txt</code>), then get the head of that with <code>:h</code> (<code>/abc/def</code>), then get the tail of that with <code>:t</code> (<code>def</code>)</li>
+<li><code>:echo expand('%:r')</code> : <code>my</code>, name of file less one extension ('root')</li>
+<li><code>:echo expand('%:e')</code> : <code>txt</code> name of file's extension ('extension')</li>
+</ul>
+<p>For more info run <code>:help expand</code></p>
+<p>If all that is wanted is to display the name of the current file, type <code>Ctrl-G</code> (or press <code>1 then Ctrl-G</code> for the full path).</p>
+<p>When using <code>@%</code>, the name is displayed relative to the current directory.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>

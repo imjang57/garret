@@ -159,7 +159,12 @@
 <p>If you want to search text <em>Hotkeys</em>, input <code>/Hotkeys</code>. Searching text is case-sensitive. If you want to ignore case, input <code>:set ignorecase</code>.</p>
 <p>After run <code>/searchtext</code> command, you can move to next and previous occurrence by <code>n</code> and <code>N</code>.</p>
 <p>Vim provide incremental search. This is helpful when you know only a part of the phrase. After <code>:set incsearch</code>, vim will start searching by everytime you type.</p>
-<p>The <code>searchtext</code> can be regular expression.</p>
+<p>The <code>searchtext</code> can be regular expression. For example:</p>
+<ul>
+<li>delete lines which are matched to pattern : <code>:g/pattern/d</code></li>
+<li>delete empty lines : <code>:g/^$/d</code></li>
+<li>delete lines which are include hello : <code>:g/hello/d</code></li>
+</ul>
     </div><!-- /.entry-content -->
 
   </article>

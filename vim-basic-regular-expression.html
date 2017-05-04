@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>garret - tools</title>
+        <title>Vim Basic Regular Expression</title>
         <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
         <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
@@ -24,10 +24,15 @@
                     <li class="active"><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://imjang57.github.io/garret/vim-basic-regular-expression.html" rel="bookmark"
+           title="Permalink to Vim Basic Regular Expression">Vim Basic Regular Expression</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/vim-basic-regular-expression.html">Vim Basic Regular Expression</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-05-04T00:00:00+09:00">
                 Published: 목 04 5월 2017
@@ -42,7 +47,7 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info --><h1>정규 표현식 (regular expression)</h1>
+</footer><!-- /.post-info -->      <h1>정규 표현식 (regular expression)</h1>
 <p>정규표현식이란 주로 문자열 내에서 검색이나 조작에 사용되는 표현식으로써 특정한 패턴을 가지고 그 패턴에 부합되는 문자열을 찾아내 원하는 일을 수행 할 수가 있다.</p>
 <p>정규표현식은 vim, sed, grep, emacs, perl 등 프로그램이나 프로그래밍 언어 등에서 문자열을 다루는 용도로 사용되고 있다.</p>
 <p>정규표현식이 쓰이는 모든 프로그램에서 동일한 문법으로 정규표현식을 규정하고 있지는 않는다. 기본적인 내용은 모두 같지만 약간의 표현 형식이 다르다. 즉, 이 글에 작성한 내용은 다른 프로그램이나 언어에서 사용하는 정규표현식과 다를 수 있다.</p>
@@ -116,170 +121,11 @@
 <p><code>( )</code> 는 문자열을 하나의 단위로 보게 하는 역할을 하였다. 하지만 치환에 사용 될 경우 변수 역할도 하게 된다.</p>
 <p>정규표현식 <code>([a-z]+) ([0-9]+)</code> 를 만족하는 문자열 <code>abcd 100</code> 가 있을 때, 정규표현식에서는 각 <code>( )</code> 을 하나의 단위로 묶으면서 <code>1</code>, <code>2</code> 와 같은 변수에 대응을 시킨다. 즉, 첫 번째 <code>( )</code> 는 <code>1</code> 이라는 변수에, 두 번째 <code>( )</code> 는 <code>2</code> 라는 변수에 저장된다.</p>
 <p>정규표현식의 변수와 Vim 의 치환을 사용하여 앞 뒤 순서를 바꿀 수 있다 : <code>:1,$ s/([a-z]+)( +)([0-9]+)/321/g</code></p>
-<p><code>s/.../.../g</code> 와 같은 치환 형식에서 찾을 문자열 부분은 세 개의 <code>( )</code> 로 이루어져 있어서 각각 변수 <code>1</code>, <code>2</code>, <code>3</code> 에 저장된다. 그리고 치환할 문자열 부분에서 <code>321</code> 과 같이 반대 순서로 변수를 나열하여 각 문자열들의 순서를 변경할 수 있게 된다.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p><code>s/.../.../g</code> 와 같은 치환 형식에서 찾을 문자열 부분은 세 개의 <code>( )</code> 로 이루어져 있어서 각각 변수 <code>1</code>, <code>2</code>, <code>3</code> 에 저장된다. 그리고 치환할 문자열 부분에서 <code>321</code> 과 같이 반대 순서로 변수를 나열하여 각 문자열들의 순서를 변경할 수 있게 된다.</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/vim-basics.html" rel="bookmark"
-                           title="Permalink to Vim Basics">Vim Basics</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-04T00:00:00+09:00">
-                Published: 목 04 5월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-04T00:00:00+09:00">
-                Updated: 목 04 5월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info -->                <p>Vim 기본 사용법</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/vim-basics.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/vim-basics-more.html" rel="bookmark"
-                           title="Permalink to Vim Basics More">Vim Basics More</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-04T00:00:00+09:00">
-                Published: 목 04 5월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-04T00:00:00+09:00">
-                Updated: 목 04 5월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info -->                <p>Vim 기본 사용법에 대해 더 알면 좋은 내용들에 대한 글이다.</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/vim-basics-more.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="bookmark"
-                           title="Permalink to JVM Process monitoring with JDK tools">JVM Process monitoring with JDK tools</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-18T00:00:00+09:00">
-                Published: 수 18 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
-                Updated: 수 18 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/java.html">java</a> <a href="https://imjang57.github.io/garret/tag/jvm.html">jvm</a> <a href="https://imjang57.github.io/garret/tag/monitoring.html">monitoring</a> <a href="https://imjang57.github.io/garret/tag/jps.html">jps</a> <a href="https://imjang57.github.io/garret/tag/stat.html">stat</a> <a href="https://imjang57.github.io/garret/tag/stack.html">stack</a> </p>
-</footer><!-- /.post-info -->                <p>JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/git-basics.html" rel="bookmark"
-                           title="Permalink to Git Basics">Git Basics</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-05T00:00:00+09:00">
-                Published: 목 05 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-05T00:00:00+09:00">
-                Updated: 목 05 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/git.html">git</a> </p>
-</footer><!-- /.post-info -->                <p>Git 기본 사용법</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/git-basics.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html" rel="bookmark"
-                           title="Permalink to Shell, Bash, Zsh">Shell, Bash, Zsh</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-12-31T00:00:00+09:00">
-                Published: 토 31 12월 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-12-31T00:00:00+09:00">
-                Updated: 토 31 12월 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/shell.html">shell</a> <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> <a href="https://imjang57.github.io/garret/tag/zsh.html">zsh</a> </p>
-</footer><!-- /.post-info -->                <p>내가 사용하는 Shell 에 대한 소개와 설치 과정</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/tmux-introduction.html" rel="bookmark"
-                           title="Permalink to TMUX Introduction">TMUX Introduction</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-12-31T00:00:00+09:00">
-                Published: 토 31 12월 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-12-31T00:00:00+09:00">
-                Updated: 토 31 12월 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/tmux.html">tmux</a> </p>
-</footer><!-- /.post-info -->                <p>TMUX 설치 및 사용법에 대한 간단한 소개</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/tmux-introduction.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
