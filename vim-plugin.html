@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Vim Plugin</title>
+        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
+        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
+                <nav><ul>
+                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
+                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
+                    <li class="active"><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://imjang57.github.io/garret/vim-plugin.html" rel="bookmark"
+           title="Permalink to Vim Plugin">Vim Plugin</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-05-05T00:00:00+09:00">
+                Published: 금 05 5월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-05-05T00:00:00+09:00">
+                Updated: 금 05 5월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
+</footer><!-- /.post-info -->      <h1>Vim Plugin</h1>
+<p>Vim 은 <em>Vim script</em> 라는 자체 스크립트 언어를 제공하여 Plugin 을 만들 수 있게 한다. 이 스크립트들은 <code>plugin-name.vim</code> 과 같이 vim 이라는 확장자(extension) 을 갖는다. <em>Vim script</em> 는 <a href="http://www.vim.org/scripts/index.php">Vim script page</a> 에 많이 업로드되어 있다.</p>
+<p>환경 설정을 위해 사용되는 <code>.vimrc</code> 파일도 사실은 <em>Vim script</em> 이다.</p>
+<p>Vim plugin 은 2가지 종류가 있다.</p>
+<ul>
+<li>filetype plugin : 특정 file type 에 대해서 동작하는 plugin. Default 로 <code>$VIMRUNTIME/ftplugin</code> directory 에서 관리된다.</li>
+<li>global plugin : 모든 file type 에 대해서 동작하는 plugin. Default 로 <code>$VIMRUNTIME/plugin</code> directory 에서 관리된다.</li>
+</ul>
+<p>각 plugin 의 위치가 <code>$VIMRUNTIME</code> 밑에 꼭 있어야 하는 것은 아니다. Vim plugin 을 관리하는 plugin 을 설치하면 각자가 Runtime path 를 관리하여 <code>~/.vim/bundle</code> 에 각 plugin 디렉터리를 생성하고 그 하위에 <code>ftplugin</code> 과 <code>plugin</code> 등 필요한 디렉터리들을 생성해서 사용하기도 한다.</p>
+<h1>Vundle</h1>
+<p>Vim plugin 을 관리하기 위한 여러 plugin 들이 있는데 나는 <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> 을 사용한다.</p>
+<p>자세한 내용은 <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> 에 가면 설치 방법부터 잘 나와있으니 참고하자.</p>
+<p>설치는 매우 쉽다. git clone 하여 <code>~/.vim/bundle/Vundle.vim</code> 에 설치하겨 <code>~/.vimrc</code> 파일에 Vundle 을 위한 설정과 설치하여 사용할 Plugin 목록을 입력해주기만 하면 된다.</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+</pre></div>
+
+
+<p>Vundle 은 인터넷을 통해 각 plugin 들을 받아서 <code>~/.vim/bundle</code> 에 설치한다.</p>
+<h2>My <code>.vimrc</code> including Vundle</h2>
+<div class="highlight"><pre><span></span>&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are basic vim configurations
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Refer `:help quickref` (quickref.txt)
+syntax on
+set nu                   &quot;line numbers
+set tabstop=4            &quot;tab stop
+set softtabstop=4        &quot;soft tabstop
+&quot;set expandtab            &quot;soft tab: fill tab with blank characters(space)
+set shiftwidth=4         &quot;tab stop for &#39;&gt;&#39; command
+set autoindent           &quot;Auto indentation
+set cindent              &quot;The C programming language indentation
+set smartindent          &quot;smart autoindenting for C programs
+set history=100          &quot;remember work history
+set hlsearch             &quot;hilighting search word
+set showmatch            &quot;hilighting matched parentheses : (),{}
+set ruler                &quot;show current cursor&#39;s location at lower right side
+set showmode             &quot;To be able to see what mode you are in.
+set laststatus=2         &quot;always show status bar
+set nobackup             &quot;don&#39;t create backup file
+set relativenumber
+&quot;set backup               &quot;create backup file
+&quot;set backupdir=~/vim/backup &quot;set directory where backup file is saved
+set nocompatible         &quot;be improved, required
+colorscheme evening
+
+
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are encoding configurations
+&quot;auto detected file encoding list which is used when vim opens file
+set fencs=utf-8,euc-kr,cp949,cp932,euc-jp,shift-jis,big5,latin1,ucs-2le
+&quot;Use command :set fileencoding=utf-8 when you change current file&#39;s encoding
+
+
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are key mappings
+nnoremap &lt;leader&gt;q :bp&lt;CR&gt;
+nnoremap &lt;leader&gt;w :bn&lt;CR&gt;
+
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are Vundle Plugin configurations
+filetype off
+
+&quot; set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+&quot; alternatively, pass a path where Vundle should install plugins
+&quot;call vundle#begin(&#39;~/some/path/here&#39;)
+
+&quot; let Vundle manage Vundle, required
+Plugin &#39;VundleVim/Vundle.vim&#39;
+
+&quot; The following are examples of different formats supported.
+&quot; Keep Plugin commands between vundle#begin/end.
+&quot; plugin on GitHub repo
+&quot;Plugin &#39;tpope/vim-fugitive&#39;
+&quot; plugin from http://vim-scripts.org/vim/scripts.html
+&quot;Plugin &#39;L9&#39;
+&quot; Git plugin not hosted on GitHub
+&quot;Plugin &#39;git://git.wincent.com/command-t.git&#39;
+&quot; git repos on your local machine (i.e. when working on your own plugin)
+&quot;Plugin &#39;file:///home/gmarik/path/to/plugin&#39;
+&quot; The sparkup vim script is in a subdirectory of this repo called vim.
+&quot; Pass the path to set the runtimepath properly.
+&quot;Plugin &#39;rstacruz/sparkup&#39;, {&#39;rtp&#39;: &#39;vim/&#39;}
+&quot; Install L9 and avoid a Naming conflict if you&#39;ve already installed a
+&quot; different version somewhere else.
+&quot;Plugin &#39;ascenator/L9&#39;, {&#39;name&#39;: &#39;newL9&#39;}
+
+Plugin &#39;The-NERD-tree&#39;
+Plugin &#39;AutoComplPop&#39;
+Plugin &#39;majutsushi/tagbar&#39;
+Plugin &#39;airblade/vim-gitgutter&#39;
+Plugin &#39;vim-airline/vim-airline&#39;
+Plugin &#39;vim-airline/vim-airline-themes&#39;
+Plugin &#39;kien/ctrlp.vim&#39;
+Plugin &#39;pathogen.vim&#39;
+
+let g:airline#extensions#tabline#enabled = 1
+
+let NERDTreeWinPost = &quot;left&quot;
+
+nmap &lt;F7&gt; :NERDTree&lt;CR&gt;
+&quot;nmap &lt;F8&gt; :TlistToggle&lt;CR&gt;
+nmap &lt;F8&gt; :TagbarToggle&lt;CR&gt;
+filetype on
+
+let Tlist_Ctags_Cmd = &quot;/usr/bin/ctags&quot;
+let Tlist_Inc_Winwidth = 0
+let Tlist_Exit_OnlyWindow = 0
+let Tlist_Auto_Open = 0
+let Tlist_Use_Right_Window = 1
+
+&quot; All of your Plugins must be added before the following line
+call vundle#end()            &quot; required
+filetype plugin indent on    &quot; required
+&quot; To ignore plugin indent changes, instead use:
+&quot;filetype plugin on
+&quot;
+&quot; Brief help
+&quot; :PluginList       - lists configured plugins
+&quot; :PluginInstall    - installs plugins; append `!` to update or just
+&quot; :PluginUpdate
+&quot; :PluginSearch foo - searches for foo; append `!` to refresh local cache
+&quot; :PluginClean      - confirms removal of unused plugins; append `!` to
+&quot;auto-approve removal
+&quot;
+&quot; see :h vundle for more details or wiki for FAQ
+&quot; Put your non-Plugin stuff after this line
+
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are configurations for auto syntax highlighting
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;If you want to force syntax to current file,
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;run &#39;set syntax javascript&#39; in command mode.
+augroup filetype
+    au!
+    au! BufRead,BufNewFile *.asdf set syntax=javascript
+augroup END
+
+let g:ctrlp_custom_ignore = {
+    \ &#39;dir&#39;: &#39;\.git$\|vendor$&#39;,
+    \ &#39;file&#39;: &#39;\v\.(exe|so|dll)$&#39;
+        \ }
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</body>
+</html>
