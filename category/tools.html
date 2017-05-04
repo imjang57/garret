@@ -27,7 +27,157 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/vim-basic-regular-expression.html">Vim Basic Regular Expression</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/vim-configuration.html">Vim Configuration</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-05-05T00:00:00+09:00">
+                Published: 금 05 5월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-05-05T00:00:00+09:00">
+                Updated: 금 05 5월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
+</footer><!-- /.post-info --><h1>Vim Configuration</h1>
+<p>Vim 은 실행 중에 여러 설정들을 필요에따라 바꿔서 사용할 수 있다. 그리고 설정 파일을 생성하여 원하는 설정을 적용할 수도 있다.</p>
+<p>Vim 설정 파일은 보통 <code>.vimrc</code> 라는 이름으로 생성되는데, 사용자의 Home 밑에 <code>~/.vimrc</code> 로 생성하면 Vim 이 자동으로 이 파일을 찾아서 파일이 있으면 파일의 내용을 확인하여 설정을 적용한다.</p>
+<h2>Key mapping</h2>
+<p>Vim 에서 Key mapping 할 때 <code>map</code> 또는 <code>noremap</code> 을 사용하게 된다.</p>
+<p>Vim 에서 <code>:map j gg</code> 를 실행하면 <code>j</code> 가 <code>gg</code> 로 mapping 되어서 <em>Normal mode</em> 에서 <code>j</code> 를 입력하면 <code>gg</code> 가 실행된다.</p>
+<p>만약 <code>:map j gg</code>, <code>:map Q j</code> 를 실행하면 <code>j</code> 를 눌러도, <code>Q</code> 를 눌러도 <code>gg</code> 가 실행된다. <code>Q</code> 가 <code>j</code> 로 mapping 되고, 다시 <code>j</code> 가 <code>gg</code> 로 mapping 되는 것이다.</p>
+<p><code>:map j gg</code>, <code>:map Q j</code>, <code>:map gg Q</code> 와 같이 무한으로 재귀적으로 참조하게 되면 오류가 발생한다. <code>map</code> 은 recursive key mapping 을 하기 때문이다.</p>
+<p><code>:map</code> 과 반대로 <code>:noremap</code> 은 non-recursive key mapping 이다. <code>:map j gg</code>, <code>:map Q j</code>, <code>:map gg Q</code> 를 해도 오류가 발생하지 않는다. <code>Q</code> 를 누르면 <code>j</code> 를 누른 것과 같다. 한 번 key mapping 하여 변환되면 끝이다.</p>
+<p>Vim 은 또한 각 mode 별로 key mapping 을 설정할 수 있다.</p>
+<ul>
+<li><code>nmap</code> : display normal mode maps</li>
+<li><code>imap</code> : display insert mode maps</li>
+<li><code>vmap</code> : display visual and select mode maps</li>
+<li><code>smap</code> : display select mode maps</li>
+<li><code>xmap</code> : display visual mode maps</li>
+<li><code>cmap</code> : display command-line mode maps</li>
+<li><code>omap</code> : display operator pending mode maps</li>
+</ul>
+<p>예를 들어, <code>:nnoremap g gg</code> 를 실행하면 <em>Normal mode</em> 에서 <code>g</code> 를 누르면 <code>gg</code> 로 non-recursive mapping 을 한다.</p>
+<p>key mapping 을 할 때 특수 기능 키에 대해 mapping 을 하려면 아래 내용을 참고하여 mapping 하자.</p>
+<ul>
+<li><code>&lt;BS&gt;</code> : Backspace</li>
+<li><code>&lt;Tab&gt;</code> : Tab</li>
+<li><code>&lt;CR&gt;</code> : Enter</li>
+<li><code>&lt;Enter&gt;</code> : Enter</li>
+<li><code>&lt;Return&gt;</code> : Enter</li>
+<li><code>&lt;Esc&gt;</code> : Escape</li>
+<li><code>&lt;Space&gt;</code> : Space</li>
+<li><code>&lt;Up&gt;</code> : Up arrow</li>
+<li><code>&lt;Down&gt;</code> : Down arrow</li>
+<li><code>&lt;Left&gt;</code> : Left arrow</li>
+<li><code>&lt;Right&gt;</code> : Right arrow</li>
+<li><code>&lt;F1&gt;</code> - <code>&lt;F12&gt;</code> : Function keys 1 to 12</li>
+<li><code>#1</code>, <code>#2</code> .. <code>#9</code>, <code>#0</code> : Function keys F1 to F9, F10</li>
+<li><code>&lt;Insert&gt;</code> : Insert</li>
+<li><code>&lt;Del&gt;</code> : Delete</li>
+<li><code>&lt;Home&gt;</code> : Home</li>
+<li><code>&lt;End&gt;</code> : End</li>
+<li><code>&lt;PageUp&gt;</code> : Page-Up</li>
+<li><code>&lt;PageDown&gt;</code> : Page-Down</li>
+</ul>
+<p>만약 <code>:imap ,&lt;Space&gt; &lt;Space&gt;&lt;Space&gt;&lt;Space&gt;&lt;Space&gt;</code> 와 같이 key mapping 을 하면, <code>,&lt;Space&gt;</code> 를 입력할 때마다 4개의 Space 가 입력된다.</p>
+<p>key mapping 에 대한 자세한 내용은 <code>:help key-mapping</code> 또는 <a href="http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_%28Part_1%29">Mapping keys in Vim - Tutorial (Part 1)</a> 을 참고하자.</p>
+<h2><leader> key</h2>
+<p>Vim 에는 leader key 가 있다. Default 로 <code>\</code> 가 leader key 로 되어 있는데, 설정에서 이 leader key 를 이용하여 많은 작업들에 대한 단축키를 생성할 수 있다.</p>
+<p>예를 들어, <code>:map &lt;leader&gt;A g</code> 를 실행하면  <code>\A</code> 를 입력했을 때 <code>g</code> 를 실행한 것과 같은 결과를 얻을 수 있게 된다.</p>
+<p>leader key 를 <code>,</code> 로 변경하려면 <code>:let mapleader=","</code> 를 실행한다.</p>
+<h1>My <code>.vimrc</code> file</h1>
+<div class="highlight"><pre><span></span><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are basic vim configurations</span>
+<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Refer `:help quickref` (quickref.txt)</span>
+<span class="nb">syntax</span> <span class="k">on</span>
+<span class="k">set</span> <span class="k">nu</span>                   <span class="c">&quot;line numbers</span>
+<span class="k">set</span> <span class="nb">tabstop</span><span class="p">=</span><span class="m">4</span>            <span class="c">&quot;tab stop</span>
+<span class="k">set</span> <span class="nb">softtabstop</span><span class="p">=</span><span class="m">4</span>        <span class="c">&quot;soft tabstop</span>
+<span class="c">&quot;set expandtab            &quot;soft tab: fill tab with blank characters(space)</span>
+<span class="k">set</span> <span class="nb">shiftwidth</span><span class="p">=</span><span class="m">4</span>         <span class="c">&quot;tab stop for &#39;&gt;&#39; command</span>
+<span class="k">set</span> <span class="nb">autoindent</span>           <span class="c">&quot;Auto indentation</span>
+<span class="k">set</span> <span class="nb">cindent</span>              <span class="c">&quot;The C programming language indentation</span>
+<span class="k">set</span> <span class="nb">smartindent</span>          <span class="c">&quot;smart autoindenting for C programs</span>
+<span class="k">set</span> <span class="k">history</span><span class="p">=</span><span class="m">100</span>          <span class="c">&quot;remember work history</span>
+<span class="k">set</span> <span class="nb">hlsearch</span>             <span class="c">&quot;hilighting search word</span>
+<span class="k">set</span> <span class="nb">showmatch</span>            <span class="c">&quot;hilighting matched parentheses : (),{}</span>
+<span class="k">set</span> <span class="nb">ruler</span>                <span class="c">&quot;show current cursor&#39;s location at lower right side</span>
+<span class="k">set</span> <span class="nb">showmode</span>             <span class="c">&quot;To be able to see what mode you are in.</span>
+<span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>         <span class="c">&quot;always show status bar</span>
+<span class="k">set</span> <span class="nb">nobackup</span>             <span class="c">&quot;don&#39;t create backup file</span>
+<span class="k">set</span> <span class="nb">relativenumber</span>
+<span class="c">&quot;&quot;set backup               &quot;create backup file</span>
+<span class="c">&quot;set backupdir=~/vim/backup &quot;set directory where backup file is saved</span>
+<span class="k">set</span> <span class="nb">nocompatible</span>         <span class="c">&quot;be improved, required</span>
+<span class="k">colorscheme</span> evening
+
+
+<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are encoding configurations</span>
+<span class="c">&quot;auto detected file encoding list which is used when vim opens file</span>
+<span class="k">set</span> <span class="nb">fencs</span><span class="p">=</span>utf<span class="m">-8</span><span class="p">,</span>euc<span class="p">-</span>kr<span class="p">,</span>cp949<span class="p">,</span>cp932<span class="p">,</span>euc<span class="p">-</span>jp<span class="p">,</span>shift<span class="p">-</span>jis<span class="p">,</span>big5<span class="p">,</span>latin1<span class="p">,</span>ucs<span class="m">-2</span>le
+<span class="c">&quot;Use command :set fileencoding=utf-8 when you change current file&#39;s encoding</span>
+
+
+<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are key mappings</span>
+<span class="nb">nnoremap</span> <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">q</span> :<span class="k">bp</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+<span class="nb">nnoremap</span> <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">w</span> :<span class="k">bn</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+</pre></div>
+
+
+<p>Vim 일반 설정 :</p>
+<ul>
+<li><code>set nocompatible</code> : vi 호환성을 위한 기능을 사용하지 않는다.</li>
+<li><code>syntax on</code> : syntax highlighing 을 사용한다.</li>
+<li><code>set nu</code> : 왼쪽에 line number 를 보여준다.</li>
+<li><code>set tabstop=4</code> : tab size 를 4로 지정한다.</li>
+<li><code>set softtabstop=4</code> : tab size 를 4로 지정한다.</li>
+<li><code>set shiftwidth=4</code> : tab size 를 4로 지정한다.</li>
+<li><code>set expandtab</code> : tag 을 space 로 사용하도록 한다.</li>
+<li><code>set relativenumber</code> : line number 를 현재 위치한 line 에서 상대적인 값으로 보여준다.</li>
+<li><code>set hlsearch</code> : <code>/</code> 로 검색할 때 검색된 문자열에 highlight 를 해준다.</li>
+<li><code>set ignorecase</code> : <code>/</code> 로 검색할 때 대소문자를 구분하지 않는다.</li>
+<li><code>set autoindent</code> : 새로운 line 을 입력할 때 자동으로 indent 를 적용한다.</li>
+<li><code>set cindent</code> : 새로운 line 을 입력할 때 C style 의 indent 를 적용한다.</li>
+<li><code>set smartindent</code> : </li>
+<li><code>set showmode</code> : 현재 어떤 mode 인지를 status bar 에 보여준다.(NORMAL, INSERT, VISUAL, etc)</li>
+<li><code>set nobackup</code> : 파일을 열어서 buffer 를 생성할 때 backup 파일을 만들지 않는다.</li>
+<li><code>set ruler</code> : 현재 cursor 의 위치를 하단에 있는 status bar 의 오른쪽에 보여준다.</li>
+<li><code>set history=100</code> : 100 개의 work history 를 저장한다.</li>
+<li><code>set showmatch</code> : <code>(</code> 와 <code>)</code>, <code>{</code> 와 <code>}</code> 등 matched parentheses 에 hlghlight 적용한다.</li>
+<li><code>set colorscheme evening</code> : evening color theme 를 사용한다.</li>
+<li><code>set fences=utf-8,euc-kr,cp949,latin1</code> : vim 이 파일을 열 때 자동으로 인식할 file encoding 목록을 지정한다.</li>
+</ul>
+<p>Vim key 설정 :</p>
+<ul>
+<li><code>let mapleader = ","</code> : leader key 를 '\' 에서 ',' 로 변경한다.</li>
+<li><code>nnoremap &lt;leader&gt;q :bp&lt;CR&gt;</code> : <code>&lt;leader key&gt; + q</code> 를 누르면 previous buffer 로 이동한다. <code>:bp</code> 명령과 같은 일을 한다.</li>
+<li><code>nnoremap &lt;leader&gt;w :bn&lt;CR&gt;</code> : <code>&lt;leader key&gt; + w</code> 를 누르면 next buffer 로 이동한다. <code>:bn</code> 명령과 같은 일을 한다.</li>
+</ul>
+<h1>References</h1>
+<ul>
+<li><a href="http://jaeheeship.github.io/console/2013/11/15/vimrc-configuration.html">vim 설정파일 알아보기</a></li>
+<li><a href="http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_%28Part_1%29">Mapping keys in Vim - Tutorial (Part 1)</a></li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/vim-basic-regular-expression.html" rel="bookmark"
+                           title="Permalink to Vim Basic Regular Expression">Vim Basic Regular Expression</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-05-04T00:00:00+09:00">
                 Published: 목 04 5월 2017
@@ -42,86 +192,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info --><h1>정규 표현식 (regular expression)</h1>
-<p>정규표현식이란 주로 문자열 내에서 검색이나 조작에 사용되는 표현식으로써 특정한 패턴을 가지고 그 패턴에 부합되는 문자열을 찾아내 원하는 일을 수행 할 수가 있다.</p>
-<p>정규표현식은 vim, sed, grep, emacs, perl 등 프로그램이나 프로그래밍 언어 등에서 문자열을 다루는 용도로 사용되고 있다.</p>
-<p>정규표현식이 쓰이는 모든 프로그램에서 동일한 문법으로 정규표현식을 규정하고 있지는 않는다. 기본적인 내용은 모두 같지만 약간의 표현 형식이 다르다. 즉, 이 글에 작성한 내용은 다른 프로그램이나 언어에서 사용하는 정규표현식과 다를 수 있다.</p>
-<p>Vim 의 <code>:help pattern</code> 을 참고하자.</p>
-<h1>Character</h1>
-<p><code>[ ]</code> 안에는 알파벳이나 숫자가 올 수 있고 이 안에 나열되어 있는 문자 중 한 문자를 가리킨다. 즉 [abc] 는 검색에서 한 문자처럼 취급을 받는다.</p>
-<ul>
-<li><code>[abc]</code> : a, b, c 문자 중 한 문자</li>
-<li><code>b[abc]ll</code> : ball, bbll, bcll 중 하나</li>
-</ul>
-<p><code>[ ]</code> 안에는 문자의 범위가 들어 갈 수도 있다. 대소문자를 구분하니 주의해야 한다.</p>
-<ul>
-<li><code>[a-z]</code> : 소문자 a 부터 z 중 한 문자</li>
-<li><code>[0-9]</code> : 숫자 0 부터 9 중 한 문자</li>
-<li><code>[A-Z0-9]</code> : 대문자 A 부터 Z 와 숫자 0 부터 9 중 한 문자</li>
-</ul>
-<p>정규표현식에서 <code>.</code> 은 new line 을 제외한 모든 문자를 가리킨다. 즉 알파벳, 공백과 같은 특수문자, 숫자 모두 <code>.</code> 로 표현할 수 있다.</p>
-<p><code>^</code> 가 <code>[ ]</code> 안에 들어오면 안에 나열되어 있는 문자를 제외한 다른 모든 문자를 나타낸다.</p>
-<ul>
-<li><code>[^a-z]</code> : 알파벳 소문자를 제외한 모든 문자</li>
-</ul>
-<p>특수문자는 항상 <code>\</code> 와 같이 쓰여야 문자 그대로의 의미를 나타낸다. 공백(Space)는 <code>\</code> 로 Space 앞에 <code>\</code> 를 붙여주면 된다.</p>
-<ul>
-<li><code>[A-Z][0-9][0-9]</code> : 첫문자는 무조건 대문자로 시작하고 곧바로 숫자가 2자리 오는 패턴</li>
-</ul>
-<p><code>^</code> 는 문자열의 가장 처음을 의미한다. Vim 에서 <code>/^The</code> 로 검색을 하게 되면 줄의 맨 처음에 위치한 The 만 찾게 된다. <code>[ ]</code> 내에 있던 <code>^</code> 과 다른 의미이다.</p>
-<p><code>$</code> 는 문자열의 가장 마지막을 의미한다. <code>/today$</code> 로 검색하면 줄의 마지막에 위치한 today 만 찾게 된다.</p>
-<h1>Iteration</h1>
-<p>반복을 지정하는 표현식은 문자 뒤에 적어 앞에 있는 문자가 몇 개까지 반복되는 지를 지정한다.</p>
-<ul>
-<li><code>*</code> : 0 번 이상</li>
-<li><code>+</code> : 1 번 이상</li>
-<li><code>-</code> : 0번 혹은 1번</li>
-</ul>
-<p><code>+</code> 와 <code>-</code> 는 전통적인 Vi 에서는 제공되지 않고 Vim 에서만 사용할 수 있다. 물론 리눅스에 설치되어 있는 Vi 는 Vim 이기 때문에 사용 가능하다.</p>
-<ul>
-<li><code>ab*</code> : b 라는 문자가 없을 수도 있고 한번 이상 올 수도 있다. <code>a</code>, <code>ab</code>, <code>abb</code>, <code>abbb</code>, <code>abbbb</code>, etc.</li>
-<li><code>ab+</code> : 반드시 b 라는 문자가 한번 이상 와야 한다. <code>ab</code>, <code>abb</code>, <code>abbb</code>, <code>abbbb</code>, etc.</li>
-<li><code>ab-</code> : a 뒤에 b가 올 수도 오지 않을 수 도 있다. <code>a</code>, <code>ab</code>.</li>
-</ul>
-<p><code>( )</code> 를 사용하여 문자열을 반복시킬 수도 있다.</p>
-<ul>
-<li><code>(abc)*</code> : abc 문자열이 0번 이상 반복</li>
-<li><code>(abc)+</code> : abc 문자열이 1번 이상 반복</li>
-</ul>
-<p>Vim 에서 <code>/(abc)*</code> 로 검색 명령을 내리면 Vim 은 모든 문자가 검색결과로 지정된다. <code>*</code> 은 0 번도 포함하기 때문이다.</p>
-<p><code>&lt; &gt;</code> 를 사용하여 문자열의 범위를 한정할 수도 있다.</p>
-<ul>
-<li><code>\&lt;abc\&gt;</code> : 정확하게 abc 인 것만 찾는다.</li>
-</ul>
-<p>정리하면 반드시 줄의 시작은 알파벳 하나 이상으로 시작하고 중간에 하나 이상의 공백 문자 다음에 2개 이상의 숫자가 오는 패턴은 정규표현식으로 다음과 같이 표현된다 : <code>^[A-Za-z]+ +[0-9][0-9]+</code></p>
-<h1>Replace</h1>
-<p>Vim 은 검색과 동시에 치환도 가능하다 : <code>:&lt;시작줄 번호&gt;,&lt;끝 번호&gt; s/검색어/바꿀단어/옵션</code></p>
-<ul>
-<li><code>:1,10 s/The/the/gc</code> : 1번째 줄에서 10번째 줄 사이에 있는 "The" 라는 단어를 "the"로 치환</li>
-</ul>
-<p><code>g</code> 라는 옵션은 모든 검색어에 대해 변경을 실시하게 해준다. 만약 <code>g</code> 옵션이 없을 경우 한 줄에 2 개 이상의 The 가 있을 경우 첫 번째 <code>The</code> 만 <code>the</code> 로 변경을 하게 된다.</p>
-<p><code>c</code> 라는 옵션은 치환이 발생할 때마다 정말 치환할 것인지를 묻는 prompt 를 출력한다.</p>
-<p>이외에 줄 번호를 가리키는 특별한 문자가 있다.</p>
-<ul>
-<li><code>.</code> : 현재 커서가 놓여 있는 줄의 번호 </li>
-<li><code>$</code> : 마지막 줄</li>
-<li><code>:.,$ s/The/the/g</code> : 현재에서 마지막 줄까지 모든 <code>The</code> 를 <code>the</code> 로 치환</li>
-<li><code>:1,$ s/\&lt;be\&gt;/BE/g</code> : 모든 줄에서 다른 단어에 포함되지 않은 <code>be</code> 라는 단어를 검색하여 대문자 <code>BE</code> 로 변경</li>
-</ul>
-<p>또는 아래와 같이 한번에 전체 문서에 대해서 치환을 수행할 수도 있다.</p>
-<ul>
-<li><code>:%s/The/the/g</code> : 현재에서 마지막 줄까지 모든 <code>The</code> 를 <code>the</code> 로 치환. <code>:1,$ s/The/the/g</code> 와 같다.</li>
-</ul>
-<h1>정규표현식과 변수</h1>
-<p><code>( )</code> 는 문자열을 하나의 단위로 보게 하는 역할을 하였다. 하지만 치환에 사용 될 경우 변수 역할도 하게 된다.</p>
-<p>정규표현식 <code>([a-z]+) ([0-9]+)</code> 를 만족하는 문자열 <code>abcd 100</code> 가 있을 때, 정규표현식에서는 각 <code>( )</code> 을 하나의 단위로 묶으면서 <code>1</code>, <code>2</code> 와 같은 변수에 대응을 시킨다. 즉, 첫 번째 <code>( )</code> 는 <code>1</code> 이라는 변수에, 두 번째 <code>( )</code> 는 <code>2</code> 라는 변수에 저장된다.</p>
-<p>정규표현식의 변수와 Vim 의 치환을 사용하여 앞 뒤 순서를 바꿀 수 있다 : <code>:1,$ s/([a-z]+)( +)([0-9]+)/321/g</code></p>
-<p><code>s/.../.../g</code> 와 같은 치환 형식에서 찾을 문자열 부분은 세 개의 <code>( )</code> 로 이루어져 있어서 각각 변수 <code>1</code>, <code>2</code>, <code>3</code> 에 저장된다. 그리고 치환할 문자열 부분에서 <code>321</code> 과 같이 반대 순서로 변수를 나열하여 각 문자열들의 순서를 변경할 수 있게 된다.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Vim 에서 사용가능한 정규표현식의 기본 사용법에 대한 글이다.</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/vim-basic-regular-expression.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
