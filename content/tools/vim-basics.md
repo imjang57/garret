@@ -135,5 +135,8 @@ After run `/searchtext` command, you can move to next and previous occurrence by
 
 Vim provide incremental search. This is helpful when you know only a part of the phrase. After `:set incsearch`, vim will start searching by everytime you type.
 
-The `searchtext` can be regular expression.
+The `searchtext` can be regular expression. For example:
 
+- delete lines which are matched to pattern : `:g/pattern/d`
+- delete empty lines : `:g/^$/d`
+- delete lines which are include hello : `:g/hello/d`
