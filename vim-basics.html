@@ -91,17 +91,32 @@
 <li>go to head of line : <code>^</code>, <code>0</code></li>
 <li>go to tail of line : <code>$</code></li>
 <li>page up / down : <code>ctrl + b</code> / <code>ctrl + f</code></li>
+<li>page up / down half : <code>ctrl + d</code> / <code>ctrl + u</code></li>
 <li>jump to start of file : <code>gg</code></li>
 <li>jump to end of file : <code>G</code></li>
 <li>jump to top / bottom / middle of window : <code>H</code> / <code>L</code> / <code>M</code></li>
 <li>move to previous / next sentence : <code>(</code> / <code>)</code></li>
 <li>move to previous / next paragraph : <code>{</code> / <code>}</code></li>
 </ul>
+<h1>Editing</h1>
+<ul>
+<li>insert before the curosr : <code>i</code></li>
+<li>insert at the beginning of the line : <code>I</code></li>
+<li>insert (append) after the cursor : <code>a</code></li>
+<li>insert (append) at the End of the line : <code>A</code></li>
+<li>append (open) a new line below the current line : <code>o</code></li>
+<li>append (open) a new line above the current line : <code>O</code></li>
+<li>replace a single character : <code>r</code></li>
+<li>replace from current cursor : <code>R</code></li>
+<li>join line below to the current one : <code>J</code></li>
+<li>exit <em>Insert mode</em> (swith to <em>Normal mode</em>) : <code>ESC</code></li>
+</ul>
 <h1>Open and Close file</h1>
 <p>Vim 에서 파일을 열면 <em>buffer</em> 라는 것을 생성하여 파일의 내용을 메모리에 올린 후 작업을 수행하게 된다.</p>
 <ul>
 <li>Open file (buffer) : <code>:e &lt;path&gt;</code>, <code>:edit &lt;path&gt;</code></li>
 <li>Save file (buffer) : <code>:w</code>, <code>:write</code></li>
+<li>Save file (buffer) as : <code>:saveas &lt;path&gt;</code></li>
 <li>Close file (buffer) : <code>:bd</code>, <code>:bw</code></li>
 <li>Quit Vim : <code>:q</code></li>
 <li>Print Working Directory : <code>:pwd</code></li>
@@ -113,6 +128,7 @@
 <ul>
 <li>mark current location as a : <code>ma</code></li>
 <li>goto mark a : <code>'a</code> (cursor located on first non-blank character), `a (cursor located on marked character)</li>
+<li>list of marks : <code>:marks</code></li>
 </ul>
 <h1>Abbreviation</h1>
 <ul>
@@ -120,25 +136,26 @@
 <li>unset abbreviation foo : <code>:unab foo</code></li>
 </ul>
 <p>위의 예의 경우, <em>Insert mode</em>  에서 foo 와 <SPACEBAR|ENTER> 를 입력하면 foooo 가 입력된다.</p>
-<h1>Cut, Copy and Paste</h1>
+<h1>Cut (Delete), Copy (Yank) and Paste (Put)</h1>
 <ul>
-<li>cut word : <code>dw</code> (start from cursor), <code>daw</code> (whole word)</li>
-<li>cut current line : <code>dd</code>, <code>:d</code></li>
-<li>cut 4 lines : <code>4dd</code></li>
-<li>cut from cursor to end of current line : <code>D</code></li>
-<li>cut one character of cursor : <code>x</code></li>
-<li>cut one character before cursor : <code>X</code></li>
-<li>cut 3 character of cursor : <code>3x</code></li>
-<li>cut 3 character before cursor : <code>3X</code></li>
-<li>cut lines from 4 to 10 inclusive : <code>:4,10d</code></li>
+<li>cut (delete) word : <code>dw</code> (start from cursor), <code>daw</code> (whole word)</li>
+<li>cut (delete) current line : <code>dd</code>, <code>:d</code></li>
+<li>cut (delete) 4 lines : <code>4dd</code></li>
+<li>cut (delete) to the end of the line : <code>d$</code></li>
+<li>cut (delete) from cursor to end of current line : <code>D</code></li>
+<li>cut (delete) one character of cursor : <code>x</code></li>
+<li>cut (delete) one character before cursor : <code>X</code></li>
+<li>cut (delete) 3 character of cursor : <code>3x</code></li>
+<li>cut (delete) 3 character before cursor : <code>3X</code></li>
+<li>cut (delete) lines from 4 to 10 inclusive : <code>:4,10d</code></li>
 <li>copy (yank) word : <code>yw</code> (start from cursor), <code>yaw</code> (whole word)</li>
 <li>copy (yank) current line : <code>yy</code>, <code>Y</code>, <code>:y</code></li>
 <li>copy (yank) 4 lines : <code>4yy</code></li>
 <li>copy (yank) lines from 4 to 10 inclusive : <code>:4,10y</code></li>
-<li>paste at after current : <code>p</code></li>
-<li>paste at before current : <code>P</code></li>
-<li>cut from current line to end of text : <code>dG</code></li>
-<li>cut from current line to start of text : <code>dgg</code></li>
+<li>paste (put) at after current : <code>p</code></li>
+<li>paste (put) at before current : <code>P</code></li>
+<li>cut (delete) from current line to end of text : <code>dG</code></li>
+<li>cut (delete) from current line to start of text : <code>dgg</code></li>
 </ul>
 <h1>Undo and Redo</h1>
 <ul>
@@ -164,6 +181,18 @@
 <li>delete lines which are matched to pattern : <code>:g/pattern/d</code></li>
 <li>delete empty lines : <code>:g/^$/d</code></li>
 <li>delete lines which are include hello : <code>:g/hello/d</code></li>
+</ul>
+<h1>Macro</h1>
+<ul>
+<li>record macro as a : <code>qa</code></li>
+<li>stop recording macro : <code>q</code></li>
+<li>run macro a : <code>@a</code></li>
+<li>rerun last run macro : <code>@@</code></li>
+</ul>
+<h1>References</h1>
+<ul>
+<li><a href="https://vim.rtorr.com/">Vim Cheat Sheet</a></li>
+<li><a href="https://github.com/rtorr/vim-cheat-sheet">Vim Cheat Sheet Github</a></li>
 </ul>
     </div><!-- /.entry-content -->
 
