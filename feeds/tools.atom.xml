@@ -52,8 +52,10 @@
 &lt;h1&gt;Open and Close file&lt;/h1&gt;
 &lt;p&gt;Vim 에서 파일을 열면 &lt;em&gt;buffer&lt;/em&gt; 라는 것을 생성하여 파일의 내용을 메모리에 올린 후 작업을 수행하게 된다.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Open file : &lt;code&gt;:e &amp;lt;path&amp;gt;&lt;/code&gt;, &lt;code&gt;:edit &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Save file : &lt;code&gt;:w&lt;/code&gt;, &lt;code&gt;:write&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Open file (buffer) : &lt;code&gt;:e &amp;lt;path&amp;gt;&lt;/code&gt;, &lt;code&gt;:edit &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Save file (buffer) : &lt;code&gt;:w&lt;/code&gt;, &lt;code&gt;:write&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Close file (buffer) : &lt;code&gt;:bd&lt;/code&gt;, &lt;code&gt;:bw&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Quit Vim : &lt;code&gt;:q&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Print Working Directory : &lt;code&gt;:pwd&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Print path of current file : &lt;code&gt;:echo @%&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Print absolute path of current file : &lt;code&gt;echo expand('%:p')&lt;/code&gt;&lt;/li&gt;

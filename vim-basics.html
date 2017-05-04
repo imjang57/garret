@@ -100,8 +100,10 @@
 <h1>Open and Close file</h1>
 <p>Vim 에서 파일을 열면 <em>buffer</em> 라는 것을 생성하여 파일의 내용을 메모리에 올린 후 작업을 수행하게 된다.</p>
 <ul>
-<li>Open file : <code>:e &lt;path&gt;</code>, <code>:edit &lt;path&gt;</code></li>
-<li>Save file : <code>:w</code>, <code>:write</code></li>
+<li>Open file (buffer) : <code>:e &lt;path&gt;</code>, <code>:edit &lt;path&gt;</code></li>
+<li>Save file (buffer) : <code>:w</code>, <code>:write</code></li>
+<li>Close file (buffer) : <code>:bd</code>, <code>:bw</code></li>
+<li>Quit Vim : <code>:q</code></li>
 <li>Print Working Directory : <code>:pwd</code></li>
 <li>Print path of current file : <code>:echo @%</code></li>
 <li>Print absolute path of current file : <code>echo expand('%:p')</code></li>
