@@ -145,15 +145,6 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""Belows are configurations for auto syntax highlighting
-""""""""""If you want to force syntax to current file,
-""""""""""run 'set syntax javascript' in command mode.
-augroup filetype
-    au!
-    au! BufRead,BufNewFile *.asdf set syntax=javascript
-augroup END
-
 let g:ctrlp_custom_ignore = {
     \ 'dir': '\.git$\|vendor$',
     \ 'file': '\v\.(exe|so|dll)$'
