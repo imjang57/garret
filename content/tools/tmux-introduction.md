@@ -1,6 +1,6 @@
 Title: TMUX Introduction
 Date: 2016-12-31
-Modified: 2016-12-31
+Modified: 2017-05-05
 Tags: tmux
 Slug: tmux-introduction
 Authors: imjang57
@@ -65,6 +65,12 @@ $ tmux rename-session -t <target session> <new session name>
 ```
 
 생성된 session 을 종료하고 싶으면 session 내에서 `exit` 를 실행한다. 또는 `ctrl + d` 를 입력한다.
+
+생성되어 있는 session 을 없애려면 다음을 실행한다:
+
+```
+$ tmux kill-session -t <session name>
+```
 
 ### attach and detach session
 
@@ -153,6 +159,68 @@ command mode 에서 명령을 입력하며 _pane_ 의 size 를 조절할 수 있
 # Configuration file
 
 tmux configuration file 은 `~/.tmux.conf` 이다.
+
+```
+setw -g mode-keys vi
+set -g status-keys vi
+
+# 0 is too far from `.
+set -g base-index 1
+
+# To change prefix
+set -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+bind-key v split-window -h
+bind-key s split-window -v
+
+bind-key J resize-pane -D 5
+bind-key K resize-pane -U 5
+bind-key H resize-pane -L 5
+bind-key L resize-pane -R 5
+
+bind-key M-j resize-pane -D
+bind-key M-k resize-pane -U
+bind-key M-h resize-pane -L
+bind-key M-l resize-pane -R
+
+# Vim style pane selection
+bind h select-pane -L
+bind j select-pane -D 
+bind k select-pane -U
+bind l select-pane -R
+
+# Use Alt-vim keys without prefix key to switch panes
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D 
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# Reload tmux config
+bind r source-file ~/.tmux.conf
+
+# THEME
+set -g status-bg black
+set -g status-fg white
+set -g window-status-current-bg white
+set -g window-status-current-fg black
+set -g window-status-current-attr bold
+set -g status-interval 60
+set -g status-left-length 30
+set -g status-left '#[fg=green](#S) #(whoami)'
+set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]'
+```
 
 # Key binding
 
