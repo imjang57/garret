@@ -38,8 +38,8 @@
                 Published: 토 31 12월 2016
         </abbr>
 		<br />
-        <abbr class="modified" title="2016-12-31T00:00:00+09:00">
-                Updated: 토 31 12월 2016
+        <abbr class="modified" title="2017-05-05T00:00:00+09:00">
+                Updated: 금 05 5월 2017
         </abbr>
 
         <address class="vcard author">
@@ -93,6 +93,11 @@ $ tmux new -s &lt;session name&gt;
 
 
 <p>생성된 session 을 종료하고 싶으면 session 내에서 <code>exit</code> 를 실행한다. 또는 <code>ctrl + d</code> 를 입력한다.</p>
+<p>생성되어 있는 session 을 없애려면 다음을 실행한다:</p>
+<div class="highlight"><pre><span></span>$ tmux kill-session -t &lt;session name&gt;
+</pre></div>
+
+
 <h3>attach and detach session</h3>
 <p><em>session</em> 을 실행한 후 이를 유지하고 <em>session</em> 밖으로 나갈 수도 있다. 서버만 내려가지 않는다면 이 <em>session</em> 을 계속 유지시킬 수 있다. 이렇게 동작하는 것을 <em>session</em> 을 detach 한다고 하는데 command mode 에서 <code>detach</code> 를 입력하여 실행할 수 있다. 또는 <code>ctrl + b, d</code> 를 입력해도 된다.</p>
 <p>이미 생성된 session 의 목록을 확인하려면 아래 명령을 실행한다.</p>
@@ -147,6 +152,68 @@ testsession: <span class="m">1</span> windows <span class="o">(</span>created Th
 </ul>
 <h1>Configuration file</h1>
 <p>tmux configuration file 은 <code>~/.tmux.conf</code> 이다.</p>
+<div class="highlight"><pre><span></span>setw -g mode-keys vi
+set -g status-keys vi
+
+# 0 is too far from `.
+set -g base-index 1
+
+# To change prefix
+set -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+bind-key v split-window -h
+bind-key s split-window -v
+
+bind-key J resize-pane -D 5
+bind-key K resize-pane -U 5
+bind-key H resize-pane -L 5
+bind-key L resize-pane -R 5
+
+bind-key M-j resize-pane -D
+bind-key M-k resize-pane -U
+bind-key M-h resize-pane -L
+bind-key M-l resize-pane -R
+
+# Vim style pane selection
+bind h select-pane -L
+bind j select-pane -D 
+bind k select-pane -U
+bind l select-pane -R
+
+# Use Alt-vim keys without prefix key to switch panes
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D 
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# Reload tmux config
+bind r source-file ~/.tmux.conf
+
+# THEME
+set -g status-bg black
+set -g status-fg white
+set -g window-status-current-bg white
+set -g window-status-current-fg black
+set -g window-status-current-attr bold
+set -g status-interval 60
+set -g status-left-length 30
+set -g status-left &#39;#[fg=green](#S) #(whoami)&#39;
+set -g status-right &#39;#[fg=yellow]#(cut -d &quot; &quot; -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]&#39;
+</pre></div>
+
+
 <h1>Key binding</h1>
 <p><code>ctrl + b + ?</code> 을 입력하면 현재의 key binding 리스트를 볼 수 있다.</p>
 <p>사용자가 원하면 <code>~/.tmux.conf</code> 파일에 key binding 를 설정할 수 있다. 자세한 내용은 tmux manpage 를 참고하자.</p>

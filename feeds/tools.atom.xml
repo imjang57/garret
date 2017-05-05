@@ -1179,7 +1179,7 @@ ssh=&amp;#39;ssh -o StrictHostKeyChecking=no -t&amp;#39;
 
 &lt;p&gt;변경 후 &lt;code&gt;~/.zshrc&lt;/code&gt; 파일을 다시 적용하면 theme 가 적용된다. 만약 &lt;code&gt;ZSH_THEME="random"&lt;/code&gt; 으로 하면 여러 테마들이 로그인할 때마다 랜덤으로 적용된다.&lt;/p&gt;
 &lt;p&gt;agnoster 테마는 Powerline font 를 필요로 한다. 이 폰트는 &lt;a href="https://github.com/powerline/fonts"&gt;Powerline github&lt;/a&gt; 에서 받을 수 있다. 이 저장소를 clone 한 후 &lt;code&gt;install.sh&lt;/code&gt; 파일을 실행하면 알아서 폰트를 설치해준다.&lt;/p&gt;
-&lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>TMUX Introduction</title><link href="https://imjang57.github.io/garret/tmux-introduction.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/tmux-introduction.html</id><summary type="html">&lt;p&gt;TMUX 설치 및 사용법에 대한 간단한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;TMUX (Terminal Multiplexer)&lt;/h1&gt;
+&lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>TMUX Introduction</title><link href="https://imjang57.github.io/garret/tmux-introduction.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2017-05-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/tmux-introduction.html</id><summary type="html">&lt;p&gt;TMUX 설치 및 사용법에 대한 간단한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;TMUX (Terminal Multiplexer)&lt;/h1&gt;
 &lt;p&gt;&lt;em&gt;tmux&lt;/em&gt; 는 terminal session 을 관리하기 위한 tool 이다. 여러 session 을 생성하여 서로 다른 workspace 를 만들 수 있고, session 을 유지시켜서 server 가 완전히 power off 되지않는다면 workspace 를 유지할 수도 있다.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;tmux&lt;/em&gt; + &lt;em&gt;vim&lt;/em&gt; + &lt;em&gt;bash&lt;/em&gt; 는 매우 강력한 linux environment 를 제공한다.&lt;/p&gt;
 &lt;h2&gt;설치&lt;/h2&gt;
@@ -1225,6 +1225,11 @@ $ tmux new -s &amp;lt;session name&amp;gt;
 
 
 &lt;p&gt;생성된 session 을 종료하고 싶으면 session 내에서 &lt;code&gt;exit&lt;/code&gt; 를 실행한다. 또는 &lt;code&gt;ctrl + d&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;p&gt;생성되어 있는 session 을 없애려면 다음을 실행한다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tmux kill-session -t &amp;lt;session name&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h3&gt;attach and detach session&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;session&lt;/em&gt; 을 실행한 후 이를 유지하고 &lt;em&gt;session&lt;/em&gt; 밖으로 나갈 수도 있다. 서버만 내려가지 않는다면 이 &lt;em&gt;session&lt;/em&gt; 을 계속 유지시킬 수 있다. 이렇게 동작하는 것을 &lt;em&gt;session&lt;/em&gt; 을 detach 한다고 하는데 command mode 에서 &lt;code&gt;detach&lt;/code&gt; 를 입력하여 실행할 수 있다. 또는 &lt;code&gt;ctrl + b, d&lt;/code&gt; 를 입력해도 된다.&lt;/p&gt;
 &lt;p&gt;이미 생성된 session 의 목록을 확인하려면 아래 명령을 실행한다.&lt;/p&gt;
@@ -1279,6 +1284,68 @@ testsession: &lt;span class="m"&gt;1&lt;/span&gt; windows &lt;span class="o"&gt;
 &lt;/ul&gt;
 &lt;h1&gt;Configuration file&lt;/h1&gt;
 &lt;p&gt;tmux configuration file 은 &lt;code&gt;~/.tmux.conf&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;setw -g mode-keys vi
+set -g status-keys vi
+
+# 0 is too far from `.
+set -g base-index 1
+
+# To change prefix
+set -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+bind-key v split-window -h
+bind-key s split-window -v
+
+bind-key J resize-pane -D 5
+bind-key K resize-pane -U 5
+bind-key H resize-pane -L 5
+bind-key L resize-pane -R 5
+
+bind-key M-j resize-pane -D
+bind-key M-k resize-pane -U
+bind-key M-h resize-pane -L
+bind-key M-l resize-pane -R
+
+# Vim style pane selection
+bind h select-pane -L
+bind j select-pane -D 
+bind k select-pane -U
+bind l select-pane -R
+
+# Use Alt-vim keys without prefix key to switch panes
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D 
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# Reload tmux config
+bind r source-file ~/.tmux.conf
+
+# THEME
+set -g status-bg black
+set -g status-fg white
+set -g window-status-current-bg white
+set -g window-status-current-fg black
+set -g window-status-current-attr bold
+set -g status-interval 60
+set -g status-left-length 30
+set -g status-left &amp;#39;#[fg=green](#S) #(whoami)&amp;#39;
+set -g status-right &amp;#39;#[fg=yellow]#(cut -d &amp;quot; &amp;quot; -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h1&gt;Key binding&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;ctrl + b + ?&lt;/code&gt; 을 입력하면 현재의 key binding 리스트를 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;사용자가 원하면 &lt;code&gt;~/.tmux.conf&lt;/code&gt; 파일에 key binding 를 설정할 수 있다. 자세한 내용은 tmux manpage 를 참고하자.&lt;/p&gt;
