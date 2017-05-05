@@ -1155,7 +1155,7 @@ git commit --amend
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;alias ll=&amp;#39;ls -GFhil&amp;#39;
 alias lt=&amp;#39;ls -altr&amp;#39;
 alias vi=&amp;#39;vim&amp;#39;
-ssh=&amp;#39;ssh -o StrictHostKeyChecking=no&amp;#39;
+ssh=&amp;#39;ssh -o StrictHostKeyChecking=no&amp;#39; -t
 &lt;/pre&gt;&lt;/div&gt;
 
 
