@@ -1790,7 +1790,7 @@ Are you sure you want to uninstall Homebrew? &lt;span class="o"&gt;[&lt;/span&gt
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;alias ll=&amp;#39;ls -GFhil&amp;#39;
 alias lt=&amp;#39;ls -altr&amp;#39;
 alias vi=&amp;#39;vim&amp;#39;
-ssh=&amp;#39;ssh -o StrictHostKeyChecking=no&amp;#39; -t
+ssh=&amp;#39;ssh -o StrictHostKeyChecking=no -t&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;
 
 
