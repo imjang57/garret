@@ -38,8 +38,8 @@
                 Published: 목 04 5월 2017
         </abbr>
 		<br />
-        <abbr class="modified" title="2017-05-04T00:00:00+09:00">
-                Updated: 목 04 5월 2017
+        <abbr class="modified" title="2017-05-07T00:00:00+09:00">
+                Updated: 일 07 5월 2017
         </abbr>
 
         <address class="vcard author">
@@ -52,7 +52,8 @@
 <p>정규표현식은 vim, sed, grep, emacs, perl 등 프로그램이나 프로그래밍 언어 등에서 문자열을 다루는 용도로 사용되고 있다.</p>
 <p>정규표현식이 쓰이는 모든 프로그램에서 동일한 문법으로 정규표현식을 규정하고 있지는 않는다. 기본적인 내용은 모두 같지만 약간의 표현 형식이 다르다. 즉, 이 글에 작성한 내용은 다른 프로그램이나 언어에서 사용하는 정규표현식과 다를 수 있다.</p>
 <p>Vim 의 <code>:help pattern</code> 을 참고하자.</p>
-<h1>Character</h1>
+<h1>Basic Vim Regular Expression</h1>
+<p>여기에 나오는 정규표현식은 Vim 뿐만 아니라 Vim 의 전신인 Vi 에서도 사용되는 정규표현식이다.</p>
 <p><code>[ ]</code> 안에는 알파벳이나 숫자가 올 수 있고 이 안에 나열되어 있는 문자 중 한 문자를 가리킨다. 즉 [abc] 는 검색에서 한 문자처럼 취급을 받는다.</p>
 <ul>
 <li><code>[abc]</code> : a, b, c 문자 중 한 문자</li>
@@ -61,44 +62,60 @@
 <p><code>[ ]</code> 안에는 문자의 범위가 들어 갈 수도 있다. 대소문자를 구분하니 주의해야 한다.</p>
 <ul>
 <li><code>[a-z]</code> : 소문자 a 부터 z 중 한 문자</li>
+<li><code>[a-f]</code> : 소문자 a 부터 f 중 한 문자</li>
 <li><code>[0-9]</code> : 숫자 0 부터 9 중 한 문자</li>
 <li><code>[A-Z0-9]</code> : 대문자 A 부터 Z 와 숫자 0 부터 9 중 한 문자</li>
+<li><code>[A-Z][0-9][0-9]</code> : 첫문자는 무조건 대문자로 시작하고 곧바로 숫자가 2자리 오는 패턴</li>
 </ul>
-<p>정규표현식에서 <code>.</code> 은 new line 을 제외한 모든 문자를 가리킨다. 즉 알파벳, 공백과 같은 특수문자, 숫자 모두 <code>.</code> 로 표현할 수 있다.</p>
+<p>정규표현식에서 <code>.</code> 은 new line 을 제외한 모든 문자 하나를 가리킨다. 즉 알파벳, 공백과 같은 특수문자, 숫자 모두 <code>.</code> 로 표현할 수 있다.</p>
+<ul>
+<li><code>a.d</code> : <code>aad</code>, <code>abd</code>, <code>acd</code>, <code>add</code>, <code>aed</code>, ..., <code>a1d</code>, <code>a2d</code>, <code>a3d</code>, ..., <code>a d</code>, etc</li>
+</ul>
 <p><code>^</code> 가 <code>[ ]</code> 안에 들어오면 안에 나열되어 있는 문자를 제외한 다른 모든 문자를 나타낸다.</p>
 <ul>
 <li><code>[^a-z]</code> : 알파벳 소문자를 제외한 모든 문자</li>
 </ul>
-<p>특수문자는 항상 <code>\</code> 와 같이 쓰여야 문자 그대로의 의미를 나타낸다. 공백(Space)는 <code>\</code> 로 Space 앞에 <code>\</code> 를 붙여주면 된다.</p>
-<ul>
-<li><code>[A-Z][0-9][0-9]</code> : 첫문자는 무조건 대문자로 시작하고 곧바로 숫자가 2자리 오는 패턴</li>
-</ul>
+<p>특수문자는 항상 <code>\</code> 와 같이 쓰여야 문자 그대로의 의미를 나타낸다. 예를 들어, 공백(Space)는 <code>\</code> 로 Space 앞에 <code>\</code> 를 붙여주면 된다.</p>
 <p><code>^</code> 는 문자열의 가장 처음을 의미한다. Vim 에서 <code>/^The</code> 로 검색을 하게 되면 줄의 맨 처음에 위치한 The 만 찾게 된다. <code>[ ]</code> 내에 있던 <code>^</code> 과 다른 의미이다.</p>
 <p><code>$</code> 는 문자열의 가장 마지막을 의미한다. <code>/today$</code> 로 검색하면 줄의 마지막에 위치한 today 만 찾게 된다.</p>
-<h1>Iteration</h1>
-<p>반복을 지정하는 표현식은 문자 뒤에 적어 앞에 있는 문자가 몇 개까지 반복되는 지를 지정한다.</p>
+<p><code>*</code> 는 0번 이상의 반복을 의미한다. 만약 단순히 <code>[a-z]*</code> 라고 검색하게 되면 전체 문서가 선택된다. <code>*</code> 는 0번 이상을 뜻하기 때문에 모든 문자들이 이 조건을 만족하게 된다.</p>
 <ul>
-<li><code>*</code> : 0 번 이상</li>
-<li><code>+</code> : 1 번 이상</li>
-<li><code>-</code> : 0번 혹은 1번</li>
-</ul>
-<p><code>+</code> 와 <code>-</code> 는 전통적인 Vi 에서는 제공되지 않고 Vim 에서만 사용할 수 있다. 물론 리눅스에 설치되어 있는 Vi 는 Vim 이기 때문에 사용 가능하다.</p>
-<ul>
+<li><code>a*</code> : null string, a, aa, aaa, aaaa, etc</li>
 <li><code>ab*</code> : b 라는 문자가 없을 수도 있고 한번 이상 올 수도 있다. <code>a</code>, <code>ab</code>, <code>abb</code>, <code>abbb</code>, <code>abbbb</code>, etc.</li>
-<li><code>ab+</code> : 반드시 b 라는 문자가 한번 이상 와야 한다. <code>ab</code>, <code>abb</code>, <code>abbb</code>, <code>abbbb</code>, etc.</li>
-<li><code>ab-</code> : a 뒤에 b가 올 수도 오지 않을 수 도 있다. <code>a</code>, <code>ab</code>.</li>
 </ul>
-<p><code>( )</code> 를 사용하여 문자열을 반복시킬 수도 있다.</p>
+<h1>Extended Vim Regular Expression</h1>
+<p>기존의 Vi 정규표현식만으로는 표현할 수 있는 패턴에 한계가 있어서 Vim 에서는 몇가지 패턴이 추가되었다. 사실 이 추가된 내용도 다른 대부분의 프로그램이나 언어에서 지원하는 정규표현식이다. 다만, 이 추가적인 정규표현식을 Vim 에서 사용하려면 정규표현식 문법을 위한 각 문자 앞에 <code>\</code> 을 붙여야 한다.</p>
 <ul>
-<li><code>(abc)*</code> : abc 문자열이 0번 이상 반복</li>
-<li><code>(abc)+</code> : abc 문자열이 1번 이상 반복</li>
+<li><code>+</code> : 1번 이상</li>
+<li><code>?</code> : 0번 혹은 1번</li>
+<li><code>( )</code> : 여러 문자들을 group 으로 만듬</li>
+<li><code>|</code> : 논리연산자 or 와 같은 역할</li>
+<li><code>&lt; &gt;</code> : 문자열의 범위를 한정</li>
+<li><code>{n,m}</code> : n번 이상 m 번 이하 반복 (matching 되는 가능한 긴 길이의 문자열을 나타냄)</li>
+<li><code>{n}</code> : n번 반복</li>
+<li><code>{n,}</code> : n번 이상 반복 (matching 되는 가능한 긴 길이의 문자열을 나타냄)</li>
+<li><code>{,m}</code> : m번 이하 반복 (matching 되는 가능한 긴 길이의 문자열을 나타냄)</li>
+<li><code>{}</code> : 0번 이상 반복 (<code>*</code> 와 같음)</li>
+<li><code>{-n, m}</code> : n번 이상 m 번 이하 반복 (matching 되는 가능한 짧은 길이의 문자열을 나타냄)</li>
+<li><code>{-n}</code> : n번 반복</li>
+<li><code>{-n,}</code> : n번 이상 반복 (matching 되는 가능한 짧은 길이의 문자열을 나타냄)</li>
+<li><code>{-,m}</code> : m번 이하 반복 (matching 되는 가능한 짧은 길이의 문자열을 나타냄)</li>
+<li><code>{-}</code> : 0번 이상 반복</li>
 </ul>
-<p>Vim 에서 <code>/(abc)*</code> 로 검색 명령을 내리면 Vim 은 모든 문자가 검색결과로 지정된다. <code>*</code> 은 0 번도 포함하기 때문이다.</p>
-<p><code>&lt; &gt;</code> 를 사용하여 문자열의 범위를 한정할 수도 있다.</p>
+<p>예를 들면 아래와 같이 사용할 수 있다:</p>
 <ul>
+<li><code>ab\+</code> : 반드시 b 라는 문자가 한번 이상 와야 한다. <code>ab</code>, <code>abb</code>, <code>abbb</code>, <code>abbbb</code>, etc.</li>
+<li><code>ab\?</code> : a 뒤에 b가 올 수도 오지 않을 수 도 있다. <code>a</code>, <code>ab</code>.</li>
+<li><code>\(abc\)*</code> : abc 문자열이 0번 이상 반복된다.</li>
+<li><code>\(abc\)\+</code> : abc 문자열이 1번 이상 반복된다.</li>
+<li><code>DEB\|GIT</code> : DEB 또는 GIT 을 찾는다.</li>
+<li><code>GIT\(HUB\|TER\)</code> : GIT 으로 시작되고 HUB 또는 TER 가 이어지는 문자열을 검색한다. 즉, GITHUB, GITTER 가 검색된다.</li>
 <li><code>\&lt;abc\&gt;</code> : 정확하게 abc 인 것만 찾는다.</li>
+<li><code>\&lt;GIT\(HUB\|TER\)\&gt;</code> : 정확하게 GITHUB, GITTER 인 것만 검색한다.</li>
+<li><code>S\{2,4}</code> : S 가 2번 이상 4번 이하 반복되는 문자열을 검색한다.</li>
+<li><code>A.\{}A</code> : ASSSSASSSSASSSASSSSSA 라는 문자열이 있으면 문자열 전체가 패턴 매치되는 하나의 결과가 된다. <code>A.*A</code> 와 같다.</li>
+<li><code>A.\{-}A</code> : ASSSSASSSSASSSASSSSSA 라는 문자열이 있으면 처음 ASSSSA 는 패턴 매치되는 하나의 결과, 그 다음 SSSS 는 매치 되지 않는 문자열, 그 다음 ASSSA 는 패턴 매치되는 하나의 결과, 그 다음 SSSSSA 는 매치 되지 않는 문자열이 된다. 즉, 매치되는 최소 길이의 문자열을 찾는다.</li>
 </ul>
-<p>정리하면 반드시 줄의 시작은 알파벳 하나 이상으로 시작하고 중간에 하나 이상의 공백 문자 다음에 2개 이상의 숫자가 오는 패턴은 정규표현식으로 다음과 같이 표현된다 : <code>^[A-Za-z]+ +[0-9][0-9]+</code></p>
 <h1>Replace</h1>
 <p>Vim 은 검색과 동시에 치환도 가능하다 : <code>:&lt;시작줄 번호&gt;,&lt;끝 번호&gt; s/검색어/바꿀단어/옵션</code></p>
 <ul>
@@ -120,7 +137,7 @@
 <h1>정규표현식과 변수</h1>
 <p><code>( )</code> 는 문자열을 하나의 단위로 보게 하는 역할을 하였다. 하지만 치환에 사용 될 경우 변수 역할도 하게 된다.</p>
 <p>정규표현식 <code>([a-z]+) ([0-9]+)</code> 를 만족하는 문자열 <code>abcd 100</code> 가 있을 때, 정규표현식에서는 각 <code>( )</code> 을 하나의 단위로 묶으면서 <code>1</code>, <code>2</code> 와 같은 변수에 대응을 시킨다. 즉, 첫 번째 <code>( )</code> 는 <code>1</code> 이라는 변수에, 두 번째 <code>( )</code> 는 <code>2</code> 라는 변수에 저장된다.</p>
-<p>정규표현식의 변수와 Vim 의 치환을 사용하여 앞 뒤 순서를 바꿀 수 있다 : <code>:1,$ s/([a-z]+)( +)([0-9]+)/321/g</code></p>
+<p>정규표현식의 변수와 Vim 의 치환을 사용하여 앞 뒤 순서를 바꿀 수 있다 : <code>:1,$ s/\([a-z]\+\)\( \+\)\([0-9]\+\)/321/g</code></p>
 <p><code>s/.../.../g</code> 와 같은 치환 형식에서 찾을 문자열 부분은 세 개의 <code>( )</code> 로 이루어져 있어서 각각 변수 <code>1</code>, <code>2</code>, <code>3</code> 에 저장된다. 그리고 치환할 문자열 부분에서 <code>321</code> 과 같이 반대 순서로 변수를 나열하여 각 문자열들의 순서를 변경할 수 있게 된다.</p>
     </div><!-- /.entry-content -->
 
