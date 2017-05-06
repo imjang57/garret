@@ -27,7 +27,177 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/vim-configuration.html">Vim Configuration</a></h1>
+                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/linux-help-man-info-tldp.html">Linux help, man, info, TLDP</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-05-07T00:00:00+09:00">
+                Published: 일 07 5월 2017
+        </abbr>
+		<br />
+        <abbr class="modified" title="2017-05-07T00:00:00+09:00">
+                Updated: 일 07 5월 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
+        </address>
+<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
+<p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/help.html">help</a> <a href="https://imjang57.github.io/garret/tag/man.html">man</a> <a href="https://imjang57.github.io/garret/tag/info.html">info</a> </p>
+</footer><!-- /.post-info --><h1>Linux <em>help</em>, <em>man pages</em>, GNU <em>info</em>, TLDP</h1>
+<p>Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글이다.</p>
+<p>Linux 를 사용하다보면 Console 등의 CLI (Command-Line Interface) 에서 여러 명령어들을 사용하게 된다. 그런데 매우 많은 명령어들이 있고 각 명령어마다 다양한 옵션과 Argument 를 사용할 수 있기 때문에 이들의 사용법을 모두 외우는 것은 거의 불가능하고 비효율적이다.</p>
+<p>그래서 어떤 명령어에 대해 익히면 이후에는 <code>--help</code> 옵션, <em>man pages</em> utility, GNU <em>info</em> utility 등을 참고하며 사용하게 된다.</p>
+<p>명령어들을 만든 개발자들은 왠만하면 <code>--help</code> 정도는 최소한 제공하며, Linux 에서 사용되는 대부분의 명령들은 잘 작성된 <code>--help</code> 와 <em>man pages</em>  매뉴얼을 제공한다. 사실 이들을 제공하지 않으면 Linux 를 사용하는게 매우 힘들어 진다.</p>
+<p>또한, 자발적인 기여자들이 모여 TLDP()</p>
+<h1><code>--help</code> 옵션</h1>
+<p><code>--help</code> 옵션을 거의 필수적인 요소이다. 이게 없다면 프로그램을 사용하는 사람은 한 명도 없을 수도 있다. 최소한 사용방법을 알아야 할 것 아닌가.</p>
+<p><em>man pages</em> 나 <em>info</em> 의 경우는 그 자체로 하나의 프로그램이라 (정말 극소수이지만) 어떤 시스템에는 없을 수도 있다. 따라서 <code>--help</code> 옵션을 개발자가 사용자에게 제공해줄 수 있는 최소한의 문서이다.</p>
+<p>예를 들어, <code>man</code> 명령은 다음과 같은 <code>--help</code> 를 출력한다.</p>
+<div class="highlight"><pre><span></span>man --help
+man, version 1.6c
+
+usage: man [-adfhktwW] [section] [-M path] [-P pager] [-S list]
+    [-m system] [-p string] name ...
+
+  a : find all matching entries
+  c : do not use cat file
+  d : print gobs of debugging information
+  D : as for -d, but also display the pages
+  f : same as whatis(1)
+  h : print this help message
+  k : same as apropos(1)
+  K : search for a string in all pages
+  t : use troff to format pages for printing
+  w : print location of man page(s) that would be displayed
+      (if no name given: print directories that would be searched)
+  W : as for -w, but display filenames only
+
+  C file   : use `file&#39; as configuration file
+  M path   : set search path for manual pages to `path&#39;
+  P pager  : use program `pager&#39; to display pages
+  S list   : colon separated section list
+  m system : search for alternate system&#39;s man pages
+  p string : string tells which preprocessors to run
+               e - [n]eqn(1)   p - pic(1)    t - tbl(1)
+               g - grap(1)     r - refer(1)  v - vgrind(1)
+</pre></div>
+
+
+<h1><em>man pages</em></h1>
+<p><em>man pages</em> 는 Unix 와 Linux 에서 대부분 기본 제공되는 도구이다. <em>man pages</em> 라는 프로그램 이름은 <em>manual pages</em> 를 의미한다.</p>
+<p><code>man &lt;page name&gt;</code> 과 같이 실행 할 수 있다. 예를 들어 <code>man man</code> 을 실행하면 아래와 같이 <code>man</code> 명령어에 대한 도움말을 볼 수 있다.</p>
+<div class="highlight"><pre><span></span>man(1)                                                                                                                           man(1)
+
+
+
+NAME
+       man - format and display the on-line manual pages
+
+SYNOPSIS
+       man  [-acdfFhkKtwW]  [--path]  [-m system] [-p string] [-C config_file] [-M pathlist] [-P pager] [-B browser] [-H htmlpager] [-S
+       section_list] [section] name ...
+
+
+DESCRIPTION
+       man formats and displays the on-line manual pages.  If you specify section, man only looks in that section of the manual.   name
+       is normally the name of the manual page, which is typically the name of a command, function, or file.  However, if name contains
+       a slash (/) then man interprets it as a file specification, so that you can do man ./foo.5 or even man /cd/foo/bar.1.gz.
+
+       See below for a description of where man looks for the manual page files.
+
+
+OPTIONS
+       -C  config_file
+              Specify the configuration file to use; the default is /private/etc/man.conf.  (See man.conf(5).)
+
+       -M  path
+              Specify the list of directories to search for man pages.  Separate the directories with colons.  An  empty  list  is  the
+              same as not specifying -M at all.  See SEARCH PATH FOR MANUAL PAGES.
+
+       -P  pager
+              Specify  which  pager to use.  This option overrides the MANPAGER environment variable, which in turn overrides the PAGER
+              variable.  By default, man uses /usr/bin/less -is.
+
+       -B     Specify which browser to use on HTML files.  This option overrides the BROWSER environment variable. By default, man uses
+              /usr/bin/less-is,
+
+       -H     Specify a command that renders HTML files as text.  This option overrides the HTMLPAGER environment variable. By default,
+              man uses /bin/cat,
+
+       -S  section_list
+              List is a colon separated list of manual sections to search.  This option overrides the MANSECT environment variable.
+
+...........
+</pre></div>
+
+
+<p><code>man</code> 을 실행한 결과는 <code>less</code> 나 <code>more</code> 같은 pager utility 를 사용하여 출력된다. <code>q</code> 를 입력하면 종료되고, <code>/</code> 를 입력하면 문자열 검색을 수행할 수 있다.</p>
+<p><em>man pages</em> 는 주제에 따라 여러가지 secton 으로 나누어서 제공된다:</p>
+<ul>
+<li>1 : User commands</li>
+<li>2 : System calls</li>
+<li>3 : Subroutines (Libraries)</li>
+<li>4 : Devices (files in <code>/dev</code> directory)</li>
+<li>5 : File formats (example : format of <code>/etc/passwd</code> file)</li>
+<li>6 : Games</li>
+<li>7 : Miscellaneous (Macro, naming rules, etc)</li>
+<li>8 : System administration</li>
+<li>9 : Local</li>
+<li>10 : New</li>
+</ul>
+<p><code>man write</code> 라고 실행하면 <em>write</em> 라는 사용자 명령어에 대한 내용을 출력하고 <code>man 2 write</code> 라고 실행하면 <em>write</em> 라는 linux kernel system call 에 대한 내용을 출력한다.</p>
+<p><code>man passwd</code> 라고 실행하면 <em>passwd</em> 라는 사용자 명령어에 대한 내용을 출력하고 <code>man 5 passwd</code> 라고 실행하면 관련된 파일(<code>/etc/passwd</code>)들에 대한 내용을 출력한다</p>
+<p><code>man -k passwd</code> 를 실행하면 passwd 라는 키워드와 관련있는 매뉴얼들의 목록을 출력한다. <code>-k</code> 옵션을 키워드를 의미한다.</p>
+<div class="highlight"><pre><span></span>$ man -k passwd
+chkpasswd<span class="o">(</span>8<span class="o">)</span>             - verifies user password against various systems
+firmwarepasswd<span class="o">(</span>8<span class="o">)</span>        - tool <span class="k">for</span> setting and removing firmware passwords on a system
+htpasswd<span class="o">(</span>1<span class="o">)</span>              - Manage user files <span class="k">for</span> basic authentication
+kpasswd<span class="o">(</span>1<span class="o">)</span>               - Kerberos <span class="m">5</span> password changing program
+kpasswdd<span class="o">(</span>8<span class="o">)</span>              - Kerberos <span class="m">5</span> password changing server
+ldappasswd<span class="o">(</span>1<span class="o">)</span>            - change the password of an LDAP entry
+passwd<span class="o">(</span>1<span class="o">)</span>                - modify a user<span class="err">&#39;</span>s password
+passwd<span class="o">(</span>1ssl<span class="o">)</span>             - compute password hashes
+passwd<span class="o">(</span>5<span class="o">)</span>, master.passwd<span class="o">(</span>5<span class="o">)</span> - format of the password file
+slapd-passwd<span class="o">(</span>5<span class="o">)</span>          - /etc/passwd backend to slapd
+slappasswd<span class="o">(</span>8<span class="o">)</span>            - OpenLDAP password utility
+</pre></div>
+
+
+<p><em>man pages</em> 가 화면에 출력하기 위한 문서들은 <code>/usr/share/doc</code> 에 저장되며 최초에는 압축파일 형태로 있다가 최초에 출력될 때 압축 해제된다.</p>
+<p>참고로, <a href="https://linux.die.net/man/">Linux man pages</a>와 같이 온라인에서 man pages 를 확인할 수 있는 여러 사이트들도 있다.</p>
+<h1>GNU <em>info</em></h1>
+<p><em>man pages</em> 는 Unix 에서 시작되어 오랜 시간 사용되고 있는 도구이다. GNU 에서는 조금 더 문서를 잘 표현할 수 있는 잘 정의된 포맷을 제안했고 이를 Redhat 에서 개발 및 배포했는데 이것이 <em>info</em> 라는 프로그램이다.</p>
+<p><code>info [menu item]</code> 의 형태로 실행되며 실행된 상태에서 여러 명령들을 입력하여 다양한 작업을 수행할 수 있다. <code>info</code> 가 실행된 상태에서 <code>?</code> 를 입력하면 사용 가능한 명령들을 확인할 수 있으며 각 키보드 입력을 위한 표기법은 다음과 같다.</p>
+<ul>
+<li><code>C-key</code> : <em>CONTROL</em> + key (example : <code>C-h</code> 는 <em>CONTROL</em> + h key 를 의미)</li>
+<li><code>M-key</code> : <em>META</em>(<em>ALT</em>) + key (example : <code>M-x</code> 는 <em>META</em> + x key 를 의미)</li>
+</ul>
+<p>그런데 사실, GNU 에서 만든 프로그램들은 GNU <em>info</em> 에 더 자세히 문서화가 되고 최신으로 업데이트 되어 있다고는 하지만 대부분의 경우 <em>man pages</em> 프로그램만으로도 충분했기에 잘 사용하지 않는다. 인터페이스도 익숙하지 않아서 더 사용하지 않는다.</p>
+<h1>TLDP</h1>
+<p><a href="http://www.tldp.org/">TLDP (The Linux Documentation Project)</a>는 자발적으로 참여하는 봉사자들에 의해 진행되는 프로젝트로, 리눅스에 대한 내용을 문서화하기 위한 프로젝트이다. <a href="https://github.com/tLDP/LDP">Github repository</a>도 있다.</p>
+<p><a href="https://ko.wikipedia.org/wiki/%EB%A6%AC%EB%88%85%EC%8A%A4_%EB%AC%B8%EC%84%9C%ED%99%94_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8">wikipedia 의 설명</a>에 다음과 같이 언급되어 있다.</p>
+<blockquote>
+<p>리눅스 문서화 프로젝트 (The Linux Documentation Project, TLDP)는 전적으로 자발적인 참여로 진행되는 프로젝트로 리눅스 관련 문서를 만드는 데 목표가 있다.
+이 프로젝트는 처음엔 리눅스 해커들끼리 각자가 만들어 놓은 문서를 공유하기 위한 목적으로 시작되었다. 따라서 문서의 수준은 직업 시스템 어드민(admin) 등 숙달된 사용자들의 눈높이에 맞춰져 있었다. 그러나 현재에는 초보자들이 따라할 수 있는 강좌도 많이 포함하고 있다.
+현재 LDP는 475개 이상의 문서를 제공하고 있다. 이 중 십여개는 일반 책의 분량이고, 이들 대부분은 오라일리 등의 컴퓨터 전문 출판사에 의해 출판되어 책으로 구입할 수 있다. LDP는 또한 사용자가 단계적으로 따라해서 목적을 이룰 수 있는 다수의 HowTo 문서 또한 제공한다. 문서의 목적은 매우 다양해서 특정 모뎀의 설정 같은 매우 구체적인 것일 수도 있고, 네트워크 관리와 같은 광대하고 추상적인 것일 수 있다.</p>
+</blockquote>
+<p>또한, 설명에 따르면 TLDP 는 리눅스 관련된 최초에 웹 사이트이다.</p>
+<p>KLDP 에서도 매우 많은 TLDP 문서의 번역을 제공하고 있다. 예를 들면 <a href="https://wiki.kldp.org/Translations/html/SysAdminGuide-KLDP/book1.html">The Linux System Administrators' Guide 번역</a>과 같은 것들이 있다. KLDP 의 더 많은 번역 문서들은 <a href="https://wiki.kldp.org/Translations/html/">여기</a>에서 확인할 수 있다.</p>
+<h1>기타</h1>
+<p>IT는 매우 많은 분야가 있고 매우 많은 요소들이 결합되어 유기적으로 동작한다. 한 명이 모든 내용을 알기는 불가능하다. 그래서 웹을 통한 지식 공유가 매우 중요하다. 내 분야에서의 기초 지식과 핵심 원리에 집중하고 나머지는 위임하거나 협력해야 한다.</p>
+<p>TLDP 외에도 <a href="https://www.google.com/">google</a> 검색을 습관화하고 <a href="http://stackoverflow.com/">stack overflow</a> 등을 적극 활용하면 좋다. 단, 잘못된 지식이나 오래된 지식은 거를 수도 있어야 하니 무조건적으로 맹신하는 것은 좋지 않다.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://imjang57.github.io/garret/vim-configuration.html" rel="bookmark"
+                           title="Permalink to Vim Configuration">Vim Configuration</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-05-05T00:00:00+09:00">
                 Published: 금 05 5월 2017
@@ -42,134 +212,10 @@
         </address>
 <p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
 <p>tags: <a href="https://imjang57.github.io/garret/tag/vim.html">vim</a> </p>
-</footer><!-- /.post-info --><h1>Vim Configuration</h1>
-<p>Vim 은 실행 중에 여러 설정들을 필요에따라 바꿔서 사용할 수 있다. 그리고 설정 파일을 생성하여 원하는 설정을 적용할 수도 있다.</p>
-<p>Vim 설정 파일은 보통 <code>.vimrc</code> 라는 이름으로 생성되는데, 사용자의 Home 밑에 <code>~/.vimrc</code> 로 생성하면 Vim 이 자동으로 이 파일을 찾아서 파일이 있으면 파일의 내용을 확인하여 설정을 적용한다.</p>
-<h2>Key mapping</h2>
-<p>Vim 에서 Key mapping 할 때 <code>map</code> 또는 <code>noremap</code> 을 사용하게 된다.</p>
-<p>Vim 에서 <code>:map j gg</code> 를 실행하면 <code>j</code> 가 <code>gg</code> 로 mapping 되어서 <em>Normal mode</em> 에서 <code>j</code> 를 입력하면 <code>gg</code> 가 실행된다.</p>
-<p>만약 <code>:map j gg</code>, <code>:map Q j</code> 를 실행하면 <code>j</code> 를 눌러도, <code>Q</code> 를 눌러도 <code>gg</code> 가 실행된다. <code>Q</code> 가 <code>j</code> 로 mapping 되고, 다시 <code>j</code> 가 <code>gg</code> 로 mapping 되는 것이다.</p>
-<p><code>:map j gg</code>, <code>:map Q j</code>, <code>:map gg Q</code> 와 같이 무한으로 재귀적으로 참조하게 되면 오류가 발생한다. <code>map</code> 은 recursive key mapping 을 하기 때문이다.</p>
-<p><code>:map</code> 과 반대로 <code>:noremap</code> 은 non-recursive key mapping 이다. <code>:map j gg</code>, <code>:map Q j</code>, <code>:map gg Q</code> 를 해도 오류가 발생하지 않는다. <code>Q</code> 를 누르면 <code>j</code> 를 누른 것과 같다. 한 번 key mapping 하여 변환되면 끝이다.</p>
-<p>Vim 은 또한 각 mode 별로 key mapping 을 설정할 수 있다.</p>
-<ul>
-<li><code>nmap</code> : display normal mode maps</li>
-<li><code>imap</code> : display insert mode maps</li>
-<li><code>vmap</code> : display visual and select mode maps</li>
-<li><code>smap</code> : display select mode maps</li>
-<li><code>xmap</code> : display visual mode maps</li>
-<li><code>cmap</code> : display command-line mode maps</li>
-<li><code>omap</code> : display operator pending mode maps</li>
-</ul>
-<p>예를 들어, <code>:nnoremap g gg</code> 를 실행하면 <em>Normal mode</em> 에서 <code>g</code> 를 누르면 <code>gg</code> 로 non-recursive mapping 을 한다.</p>
-<p>key mapping 을 할 때 특수 기능 키에 대해 mapping 을 하려면 아래 내용을 참고하여 mapping 하자.</p>
-<ul>
-<li><code>&lt;BS&gt;</code> : Backspace</li>
-<li><code>&lt;Tab&gt;</code> : Tab</li>
-<li><code>&lt;CR&gt;</code> : Enter</li>
-<li><code>&lt;Enter&gt;</code> : Enter</li>
-<li><code>&lt;Return&gt;</code> : Enter</li>
-<li><code>&lt;Esc&gt;</code> : Escape</li>
-<li><code>&lt;Space&gt;</code> : Space</li>
-<li><code>&lt;Up&gt;</code> : Up arrow</li>
-<li><code>&lt;Down&gt;</code> : Down arrow</li>
-<li><code>&lt;Left&gt;</code> : Left arrow</li>
-<li><code>&lt;Right&gt;</code> : Right arrow</li>
-<li><code>&lt;F1&gt;</code> - <code>&lt;F12&gt;</code> : Function keys 1 to 12</li>
-<li><code>#1</code>, <code>#2</code> .. <code>#9</code>, <code>#0</code> : Function keys F1 to F9, F10</li>
-<li><code>&lt;Insert&gt;</code> : Insert</li>
-<li><code>&lt;Del&gt;</code> : Delete</li>
-<li><code>&lt;Home&gt;</code> : Home</li>
-<li><code>&lt;End&gt;</code> : End</li>
-<li><code>&lt;PageUp&gt;</code> : Page-Up</li>
-<li><code>&lt;PageDown&gt;</code> : Page-Down</li>
-</ul>
-<p>만약 <code>:imap ,&lt;Space&gt; &lt;Space&gt;&lt;Space&gt;&lt;Space&gt;&lt;Space&gt;</code> 와 같이 key mapping 을 하면, <code>,&lt;Space&gt;</code> 를 입력할 때마다 4개의 Space 가 입력된다.</p>
-<p>key mapping 에 대한 자세한 내용은 <code>:help key-mapping</code> 또는 <a href="http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_%28Part_1%29">Mapping keys in Vim - Tutorial (Part 1)</a> 을 참고하자.</p>
-<h2><leader> key</h2>
-<p>Vim 에는 leader key 가 있다. Default 로 <code>\</code> 가 leader key 로 되어 있는데, 설정에서 이 leader key 를 이용하여 많은 작업들에 대한 단축키를 생성할 수 있다.</p>
-<p>예를 들어, <code>:map &lt;leader&gt;A g</code> 를 실행하면  <code>\A</code> 를 입력했을 때 <code>g</code> 를 실행한 것과 같은 결과를 얻을 수 있게 된다. 이때 leader key 를 누른 후 1초 내에 다음 key 를 입력해야 한다.</p>
-<p>leader key 를 <code>,</code> 로 변경하려면 <code>:let mapleader=","</code> 를 실행한다.</p>
-<h1>My <code>.vimrc</code> file</h1>
-<div class="highlight"><pre><span></span><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are basic vim configurations</span>
-<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Refer `:help quickref` (quickref.txt)</span>
-<span class="nb">syntax</span> <span class="k">on</span>
-<span class="k">set</span> <span class="k">nu</span>                   <span class="c">&quot;line numbers</span>
-<span class="k">set</span> <span class="nb">tabstop</span><span class="p">=</span><span class="m">4</span>            <span class="c">&quot;tab stop</span>
-<span class="k">set</span> <span class="nb">softtabstop</span><span class="p">=</span><span class="m">4</span>        <span class="c">&quot;soft tabstop</span>
-<span class="c">&quot;set expandtab            &quot;soft tab: fill tab with blank characters(space)</span>
-<span class="k">set</span> <span class="nb">shiftwidth</span><span class="p">=</span><span class="m">4</span>         <span class="c">&quot;tab stop for &#39;&gt;&#39; command</span>
-<span class="k">set</span> <span class="nb">autoindent</span>           <span class="c">&quot;Auto indentation</span>
-<span class="k">set</span> <span class="nb">cindent</span>              <span class="c">&quot;The C programming language indentation</span>
-<span class="k">set</span> <span class="nb">smartindent</span>          <span class="c">&quot;smart autoindenting for C programs</span>
-<span class="k">set</span> <span class="k">history</span><span class="p">=</span><span class="m">100</span>          <span class="c">&quot;remember work history</span>
-<span class="k">set</span> <span class="nb">hlsearch</span>             <span class="c">&quot;hilighting search word</span>
-<span class="k">set</span> <span class="nb">showmatch</span>            <span class="c">&quot;hilighting matched parentheses : (),{}</span>
-<span class="k">set</span> <span class="nb">ruler</span>                <span class="c">&quot;show current cursor&#39;s location at lower right side</span>
-<span class="k">set</span> <span class="nb">showmode</span>             <span class="c">&quot;To be able to see what mode you are in.</span>
-<span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>         <span class="c">&quot;always show status bar</span>
-<span class="k">set</span> <span class="nb">nobackup</span>             <span class="c">&quot;don&#39;t create backup file</span>
-<span class="k">set</span> <span class="nb">relativenumber</span>
-<span class="c">&quot;&quot;set backup               &quot;create backup file</span>
-<span class="c">&quot;set backupdir=~/vim/backup &quot;set directory where backup file is saved</span>
-<span class="k">set</span> <span class="nb">nocompatible</span>         <span class="c">&quot;be improved, required</span>
-<span class="k">colorscheme</span> evening
-
-
-<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are encoding configurations</span>
-<span class="c">&quot;auto detected file encoding list which is used when vim opens file</span>
-<span class="k">set</span> <span class="nb">fencs</span><span class="p">=</span>utf<span class="m">-8</span><span class="p">,</span>euc<span class="p">-</span>kr<span class="p">,</span>cp949<span class="p">,</span>cp932<span class="p">,</span>euc<span class="p">-</span>jp<span class="p">,</span>shift<span class="p">-</span>jis<span class="p">,</span>big5<span class="p">,</span>latin1<span class="p">,</span>ucs<span class="m">-2</span>le
-<span class="c">&quot;Use command :set fileencoding=utf-8 when you change current file&#39;s encoding</span>
-
-
-<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-<span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are key mappings</span>
-<span class="nb">nnoremap</span> <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">q</span> :<span class="k">bp</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
-<span class="nb">nnoremap</span> <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">w</span> :<span class="k">bn</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
-</pre></div>
-
-
-<p>Vim 일반 설정 :</p>
-<ul>
-<li><code>set nocompatible</code> : vi 호환성을 위한 기능을 사용하지 않는다.</li>
-<li><code>syntax on</code> : syntax highlighing 을 사용한다.</li>
-<li><code>set nu</code> : 왼쪽에 line number 를 보여준다.</li>
-<li><code>set tabstop=4</code> : tab size 를 4로 지정한다.</li>
-<li><code>set softtabstop=4</code> : tab size 를 4로 지정한다.</li>
-<li><code>set shiftwidth=4</code> : tab size 를 4로 지정한다.</li>
-<li><code>set expandtab</code> : tag 을 space 로 사용하도록 한다.</li>
-<li><code>set relativenumber</code> : line number 를 현재 위치한 line 에서 상대적인 값으로 보여준다.</li>
-<li><code>set hlsearch</code> : <code>/</code> 로 검색할 때 검색된 문자열에 highlight 를 해준다.</li>
-<li><code>set ignorecase</code> : <code>/</code> 로 검색할 때 대소문자를 구분하지 않는다.</li>
-<li><code>set autoindent</code> : 새로운 line 을 입력할 때 자동으로 indent 를 적용한다.</li>
-<li><code>set cindent</code> : 새로운 line 을 입력할 때 C style 의 indent 를 적용한다.</li>
-<li><code>set smartindent</code> : </li>
-<li><code>set showmode</code> : 현재 어떤 mode 인지를 status bar 에 보여준다.(NORMAL, INSERT, VISUAL, etc)</li>
-<li><code>set nobackup</code> : 파일을 열어서 buffer 를 생성할 때 backup 파일을 만들지 않는다.</li>
-<li><code>set ruler</code> : 현재 cursor 의 위치를 하단에 있는 status bar 의 오른쪽에 보여준다.</li>
-<li><code>set history=100</code> : 100 개의 work history 를 저장한다.</li>
-<li><code>set showmatch</code> : <code>(</code> 와 <code>)</code>, <code>{</code> 와 <code>}</code> 등 matched parentheses 에 hlghlight 적용한다.</li>
-<li><code>set colorscheme evening</code> : evening color theme 를 사용한다.</li>
-<li><code>set fences=utf-8,euc-kr,cp949,latin1</code> : vim 이 파일을 열 때 자동으로 인식할 file encoding 목록을 지정한다.</li>
-</ul>
-<p>Vim key 설정 :</p>
-<ul>
-<li><code>let mapleader = ","</code> : leader key 를 '\' 에서 ',' 로 변경한다.</li>
-<li><code>nnoremap &lt;leader&gt;q :bp&lt;CR&gt;</code> : <code>&lt;leader key&gt; + q</code> 를 누르면 previous buffer 로 이동한다. <code>:bp</code> 명령과 같은 일을 한다.</li>
-<li><code>nnoremap &lt;leader&gt;w :bn&lt;CR&gt;</code> : <code>&lt;leader key&gt; + w</code> 를 누르면 next buffer 로 이동한다. <code>:bn</code> 명령과 같은 일을 한다.</li>
-</ul>
-<h1>References</h1>
-<ul>
-<li><a href="http://jaeheeship.github.io/console/2013/11/15/vimrc-configuration.html">vim 설정파일 알아보기</a></li>
-<li><a href="http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_%28Part_1%29">Mapping keys in Vim - Tutorial (Part 1)</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Vim 설정</p>
+                <a class="readmore" href="https://imjang57.github.io/garret/vim-configuration.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
