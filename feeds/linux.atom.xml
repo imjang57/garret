@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - linux</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/linux.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-01-18T00:00:00+09:00</updated><entry><title>Bash script 로 각 디렉터리들의 실제 사용량 조회하기</title><link href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/check-disk-usage-of-directories-with-bash-script.html</id><summary type="html">&lt;p&gt;Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 각 디렉터리 별 디스크 사용량 확인하기&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - linux</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/linux.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-08T00:00:00+09:00</updated><entry><title>Bash script 로 각 디렉터리들의 실제 사용량 조회하기</title><link href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/check-disk-usage-of-directories-with-bash-script.html</id><summary type="html">&lt;p&gt;Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 각 디렉터리 별 디스크 사용량 확인하기&lt;/h1&gt;
 &lt;p&gt;리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.&lt;/p&gt;
 &lt;p&gt;스크립트:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# make newlines the only seperator (IFS : Internal Field Separator)&lt;/span&gt;
@@ -289,4 +289,283 @@ iptables -L -v
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;http://webdir.tistory.com/170&lt;/li&gt;
-&lt;/ul&gt;</content><category term="iptables"></category></entry></feed>
+&lt;/ul&gt;</content><category term="iptables"></category></entry><entry><title>Linux 에서 파일 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-file-management.html</id><summary type="html">&lt;p&gt;Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
+&lt;p&gt;Linux 에서 파일 목록 확인, 파일 내용 확인, 사용 중인 파일 확인, 파일 정보 변경, 파일 비교, 패치 등을 위한 명령어들을 정리한 글이다.&lt;/p&gt;
+&lt;p&gt;리눅스에서는 모든 것이 파일로 관리된다. 일반적으로 알고 있는 파일 외에 console, socket, device 등도 모두 파일이다. 그래서 리눅스에서 모든 인터페이스는 File Descriptor 를 기반으로 하고 모든 입력과 출력은 File Descriptor 를 통해 이루어진다.&lt;/p&gt;
+&lt;h1&gt;파일 목록 조회&lt;/h1&gt;
+&lt;p&gt;일반적으로 파일 목록을 조회하는 명령어는 &lt;code&gt;ls&lt;/code&gt; 이다. &lt;code&gt;ls -alh [path]&lt;/code&gt; 와 같이 여러 옵션을 전달할 수 있다. &lt;code&gt;-a&lt;/code&gt; 는 숨김파일(리눅스에서는 &lt;code&gt;.&lt;/code&gt; 으로 시작하면 숨김파일로 처리한다)을 포함한 모든 파일을 보여준다. &lt;code&gt;-l&lt;/code&gt; 옵션을 file name 외에 mode bits, owner, group, modification time 등의 추가적인 정보도 보여준다. &lt;code&gt;-h&lt;/code&gt; 옵션을 파일의 크기를 사람이 쉽게 인식할 수 있도록 크기에 따라 KB, MB, GB 단위로 바꿔서 보여준다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lsof&lt;/code&gt; 명령어는 사용 중인 파일, 즉 열려 있는 파일들을 확인할 수 있는 명령어이다. user name, process id, network protocol, network port, command name 등 여러 기준으로 사용 중인 파일들을 확인할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;lsof -u &amp;lt;usrename&amp;gt;&lt;/code&gt; : 특정 사용자가 열어서 사용중인 파일들을 검색&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof &amp;lt;file path&amp;gt;&lt;/code&gt; : 특정 파일을 사용하는 프로세스와 사용자 확인 가능&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof +D &amp;lt;directory path&amp;gt;&lt;/code&gt; : 특정 directory 밑에 있는 열려있는 파일들을 검색&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof -p &amp;lt;process id&amp;gt;&lt;/code&gt; : process id 가 사용 중인 파일들을 검색&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof -i&lt;/code&gt; : 모든 네트웍 포트 중 열려있는 포트를 검색&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof -i TCP&lt;/code&gt; : 모든 TCP 포트 중 열려있는 포트를 검색&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof -i TCP:22&lt;/code&gt; : 22번 TCP 포트를 사용중인 프로세스와 사용자 확인 가능&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof -i TCP:22-80&lt;/code&gt; : 22번에서 80번까지의 TCP 포트 중 열려있는 포트를 검색&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lsof -c httpd&lt;/code&gt; : httpd command 가 사용 중인 파일들을 검색&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;또한 &lt;code&gt;fuser&lt;/code&gt; 명령어를 사용하면 파일을 사용 중인 process id 를 확인할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fuser -n tcp 22&lt;/code&gt; : tcp 22 port 를 사용중인 process id 를 확인&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuser -n file &amp;lt;file path&amp;gt;&lt;/code&gt; : 특정 파일을 사용중인 process id 를 확인&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;file&lt;/code&gt; 이라는 명령어를 사용하면 특정 파일의 type 을 확인할 수 있다. 일반적인 파일이 어떤 파일인지 확인할 때 사용되는데 Text file 인지, 실행 파일, Python code 인지, Shell script 인지를 알 수 있으며 Encoding(ASCII, UTF-8 등) 이 무엇인지도 확인가능하다.&lt;/p&gt;
+&lt;h1&gt;파일 메타 정보 변경&lt;/h1&gt;
+&lt;p&gt;Linux 에서 파일은 Owner 와 Group owner 가 있고, mode bits 가 있어서 여러 사용자들이 파일에 대해 어떤 권한까지 접근할 수 있는지를 지정할 수 있다. 이 정보들은 &lt;code&gt;ls -l&lt;/code&gt; 을 실행하면 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chown&lt;/code&gt; 은 파일의 owner 정보를 변경한다. &lt;code&gt;chown [-R] &amp;lt;username&amp;gt;:&amp;lt;groupname&amp;gt; &amp;lt;path&amp;gt;&lt;/code&gt; 와 같이실행할 수 있고 &lt;code&gt;-R&lt;/code&gt; 옵션이 있으면 하위 디렉터리들과 파일들도 모두 같이 변경한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chmod&lt;/code&gt; 는 파일의 mode bits 를 변경한다. &lt;code&gt;chown [-R] 755 &amp;lt;path&amp;gt;&lt;/code&gt; 와 같이 실행할 수 있고 &lt;code&gt;-R&lt;/code&gt; 옵션이 있으면 하위 디렉터리들과 파일들도 모두 같이 변경한다. 또한 sticky bit 를 설정하려면 &lt;code&gt;chown [-R] 1777 &amp;lt;path&amp;gt;&lt;/code&gt; 와 같이 mode bits 를 1777 하면 된다.&lt;/p&gt;
+&lt;h1&gt;파일 처리&lt;/h1&gt;
+&lt;p&gt;파일은 복사, 이동, 삭제 등이 가능하다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mv&lt;/code&gt; : move (rename) files&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cp&lt;/code&gt; : copy files and directories&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cp -r &amp;lt;src&amp;gt; &amp;lt;dst&amp;gt;&lt;/code&gt; : &lt;code&gt;-r&lt;/code&gt; 옵션을 전달하면 recursive 하게 복사를 수행하여 하위 파일들과 디렉터리들도 모두 복사된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rm&lt;/code&gt; : remove files or directories&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rm -r&lt;/code&gt; : recursive 하게 삭제&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rm -f&lt;/code&gt; : 삭제 여부를 묻는 prompting 없이 삭제한다. 그리고 삭제하는 파일이 없어도 에러로 처리하지 않고 그냥 넘어간다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;또한 directory 만을 위한 명령어도 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rmdir&lt;/code&gt; : remove empty directories&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkdir&lt;/code&gt; : make directories&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mkdir -p &amp;lt;path&amp;gt;&lt;/code&gt; : &lt;code&gt;-p&lt;/code&gt; 옵션을 directory 를 생성할 때 parent directory 가 없을 경우 parent directory 들도 같이 생성한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Link 생성&lt;/h1&gt;
+&lt;p&gt;Linux 에서는 Symbolic link 와 Hard link 가 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ln&lt;/code&gt; : make links between files&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ln -s &amp;lt;target&amp;gt; &amp;lt;link name&amp;gt;&lt;/code&gt; : Symbolic link 를 생성한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;파일 내용 출력&lt;/h1&gt;
+&lt;p&gt;텍스트 파일의 경우 내용을 확인할 수 있는 여러 명령어들이 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cat&lt;/code&gt; 은 concatenate and print files 라고 man pages 에 나와있듯이 파일을 출력하고 내용을 추가하기 위해 사용된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cat &amp;lt;filepath&amp;gt;&lt;/code&gt; 를 실행하면 특정 파일의 냉용을 출력한다. 파일의 내용이 많을 경우 &lt;code&gt;cat &amp;lt;filepath&amp;gt; | less&lt;/code&gt; 또는 &lt;code&gt;cat &amp;lt;filepath&amp;gt; | more&lt;/code&gt; 와 같이 pipe 를 사용하여 파일의 내용을 pager utility 로 확인하면 된다. 그냥 &lt;code&gt;cat&lt;/code&gt; 을 실행하면 Stdin (Standard in) 으로 한줄을 입력받고 바로 Stddout (Standard out) 으로 바로 출력한다. 만약 파일에 내용을 저장하려면 &lt;code&gt;cat &amp;gt; &amp;lt;filepath&amp;gt;&lt;/code&gt; 를 실행하면 된다. 입력을 종료하려면 &lt;code&gt;C-D&lt;/code&gt; (&lt;code&gt;ctrl + D&lt;/code&gt;) 를 입력하여 End-of-file signal 을 전송하여 &lt;code&gt;cat&lt;/code&gt; 을 종료한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;tail&lt;/code&gt; 은 파일의 마지막 부분을 출력하는 명령어이다. &lt;code&gt;tail [-n &amp;lt;number&amp;gt;] &amp;lt;file path&amp;gt;&lt;/code&gt; 와 같이 실행할 수 있다. default 로 마지막 10줄을 출력하며 &lt;code&gt;-n&lt;/code&gt; 옵션을 사용하여 출력할 line 수를 지정할 수 있다. &lt;code&gt;tail -f &amp;lt;file path&amp;gt;&lt;/code&gt; 를 실행하면 파일의 내용이 추가되는 것을 바로 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;head&lt;/code&gt; 는 &lt;code&gt;tail&lt;/code&gt; 과 반대로 파일의 처음 부분을 출력하는 명령이다. &lt;code&gt;head [-n &amp;lt;number&amp;gt;] &amp;lt;file path&amp;gt;&lt;/code&gt; 와 같이 실행할 수 있다. default 로 처음 10줄을 출력하며 &lt;code&gt;-n&lt;/code&gt; 옵션을 사용하여 출력할 line 수를 지정할 수 있다.&lt;/p&gt;
+&lt;h1&gt;파일 비교&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;diff&lt;/code&gt; 를 사용하여 두 파일의 내용을 비교할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;diff &amp;lt;file1&amp;gt; &amp;lt;file2&amp;gt;&lt;/code&gt; 와 같이 실행되는데 대부분 &lt;code&gt;diff -uNr &amp;lt;file1&amp;gt; &amp;lt;file1&amp;gt;&lt;/code&gt; 와 같이 옵션을 전달하여 사용된다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-u&lt;/code&gt; : diff output format 을 unified format 으로 지정한다. context format 등 다른 format 들도 있지만 보통 &lt;code&gt;-u&lt;/code&gt; 옵션을 사용한다. format에 대한 자세한 내용은 따로 googling 해보자.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-r&lt;/code&gt; : recursive 를 의미한다. 즉, sub-directory 까지 모두 포함하여 실행한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-N&lt;/code&gt; : 새 파일도 포함하여 실행한다. 존재하지 않는 original file 을 empty file 로 취급한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Make and apply patches using diff and patch command&lt;/h1&gt;
+&lt;p&gt;패치(patch) 파일은 두 파일들간의 차이들을 출력해 주는 프로그램인 &lt;code&gt;diff&lt;/code&gt; 에 의해 생성된 파일을 의미한다. 주로 쓰이는 때는 어떤 프로그램에서 기능향상이나 문제점을 해결하기 위해 소스파일들을 고치고 나서 고친 부분에 대한 정보만을 기록해 놓고 싶을때 쓰인다. 고친 소스파일 전체보다도 고친 부분에 대한 정보만을 갖고 있으면 저장해야 되는 양이 적고, 어떤 부분을 고쳤는지 파악하기도 쉽다는 장점이 있다. (특히 비공식적인 패치 적용시 프로그램이 버젼업이 되어 소스가 변경되었을때 유용하다.) 패치파일의 확장자는 사용자 임의이긴 하지만 알아보기 쉽도록 주로 &lt;code&gt;.diff&lt;/code&gt; 또는 &lt;code&gt;.patch&lt;/code&gt; 를 사용한다.&lt;/p&gt;
+&lt;h2&gt;diff example&lt;/h2&gt;
+&lt;p&gt;아래와 같이 &lt;code&gt;hello.c&lt;/code&gt; 라는 file 이 있다.:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;
+
+&lt;span class="cpf"&gt;int main(void) {&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위에서 'hello' 라는 문구 대신 '안녕하세요'로 바꾸고 싶다고 하자. 먼저 다음과 같이 위의 &lt;code&gt;hello.c&lt;/code&gt; 파일을 &lt;code&gt;hello.c.orig&lt;/code&gt; 라는 파일로 백업해 둔다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cp hello.c hello.c.orig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 &lt;code&gt;hello.c&lt;/code&gt; 파일을 다음과 같이 고친다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;
+
+&lt;span class="cpf"&gt;int main(void) {&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;안녕하세요&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이 두 파일의 차이점을 패치 파일로 기록해 두기 위해 다음과 같이 &lt;code&gt;diff&lt;/code&gt; 명령을 이용한다.:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ diff -uNr hello.c.orig hello.c &amp;gt; hello-hangul.patch
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;생성된 &lt;code&gt;hello-hangul.patch&lt;/code&gt; 라는 파일은 단순한 텍스트 파일이다. 그 내용을 보기 위해 다음과 같은 명령을 실행해 보자:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat hello-hangul.patch
+--- hello.c.orig      Sun Jan &lt;span class="m"&gt;16&lt;/span&gt; 16:54:32 2000
++++ hello.c   Sun Jan &lt;span class="m"&gt;16&lt;/span&gt; 16:53:04 2000
+@@ -2,6 +2,6 @@
+
+int main&lt;span class="o"&gt;(&lt;/span&gt;void&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+- printf&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hello\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
++ printf&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;안녕하세요\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; 0&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;고친 파일의 이름, 고친 부분의 아래 위 세줄의 내용과 고친 부분이 -, + 로 표시되어 있는 것을 알 수 있다. 만약, 수정한 파일이 많다면 &lt;code&gt;diff&lt;/code&gt; 를 file 단위가 아니라 directory 단위로 실행시킬 수 있다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ diff -uNr &lt;span class="o"&gt;[&lt;/span&gt;from-directory&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;to-directory&lt;span class="o"&gt;]&lt;/span&gt; &amp;gt; directory_patch.diff
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;paatch file 을 만들기 전에 &lt;code&gt;make clean&lt;/code&gt; 등을 이용하여 컴파일 과정의 결과로 생성되는 object file 들이나 기타 불필요한 파일들을 정리하고 실행하자.&lt;/p&gt;
+&lt;h2&gt;Apply patch file: Using patch command&lt;/h2&gt;
+&lt;p&gt;다음은 패치 파일과 변형되지 않은 원래 프로그램 소스 파일을 가지고 있을 때 패치를 적용하는 방법이다. 일단 패치를 적용하기 위해서는 &lt;code&gt;patch&lt;/code&gt; 라는 명령어를 이용하는데, 그 일반적인 형식은 다음과 같다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ patch &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;originalfile &lt;span class="o"&gt;[&lt;/span&gt;patchfile&lt;span class="o"&gt;]]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;일단 패치 파일을 살펴본다. 패치의 맨 윗줄을 보면 다음과 같이 파일에 관한 정보가 있는 부분이 있다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- xchat-1.2.0/src/serverlist.h.orig   Wed Aug 25 14:48:57 1999&lt;/span&gt;
+&lt;span class="gi"&gt;+++ xchat-1.2.0/src/serverlist.h        Sun Oct 31 18:06:13 1999&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;변경되지 않은 프로그램의 소스 디렉토리로 이동한다음 다음과 같이 &lt;code&gt;patch&lt;/code&gt; 라는 명령을 이용하여 패치를 한다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; xchat-1.2.0/
+$ patch -p1 &amp;lt; ../xchat-1.2.0-serverlist.patch
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;patch&lt;/code&gt; command 는 입력을 stdin 으로 받을 수 있기 때문에 redirect 를 이용해서 patch file 내용을 전달한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;-p&lt;/code&gt; 옵션은 patch file 의 정보에 있는 path 에서 몇 단계를 제외할 지를 나타낸다. 예를 들어 위에서 처럼 &lt;code&gt;-p1&lt;/code&gt; 옵션을 주면 patch 적용 path 는 xchat-1.2.0 이 제외된 &lt;code&gt;src/serverlist.h&lt;/code&gt; 가 되고, 현재 위치(directory, path) 를 기준으로 &lt;code&gt;src/serverlist.h&lt;/code&gt; 파일에 패치를 적용한다. 만약 그 상위디렉토리에서 패치를 적용하기 원한다면 그냥 다음과 같이 하면 될 것이다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ patch -p0 &amp;lt; xchat-1.2.0-serverlist.patch
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="file"></category></entry><entry><title>Linux 에서 사용자 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-user-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-user-management.html</id><summary type="html">&lt;p&gt;Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
+&lt;p&gt;Linux 에서 사용자 추가, 사용자 정보 변경, 사용자 삭제, 그룹 추가, 그룹 삭제, 로그인한 사용자 정보 확인, 로그인 내역 확인 등을 위한 명령어들을 정리한 글이다.&lt;/p&gt;
+&lt;h1&gt;Login message&lt;/h1&gt;
+&lt;p&gt;각 명령어들에 대해 알아보기 전에 리눅스에 로그인 하면 여러 메시지들이 출력되는 시스템들이 있다. 시스템마다 내용이 다르게 출력되는데 이는 아래의 2가지 파일을 이용해서 만든 것이다. 참고용으로 알고 가자.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/motd&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/issue&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;참고로, motd 는 message of the day 를 의미한다.&lt;/p&gt;
+&lt;h1&gt;Add new user&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;useradd&lt;/code&gt; 와 &lt;code&gt;adduser&lt;/code&gt; 2개의 명령어가 존재하는데 같은 거다. &lt;code&gt;adduser&lt;/code&gt; 는 사실 &lt;code&gt;useradd&lt;/code&gt; 의 symbolic link 이기 때문에 같은 명령어이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;useradd&lt;/code&gt; 는 새로운 사용자를 추가하는 명령이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;useradd&lt;/code&gt; 는 실행될 때 &lt;code&gt;/etc/default/useradd&lt;/code&gt; 파일과 &lt;code&gt;/etc/login.defs&lt;/code&gt; 파일을 참고하여 실행되기 때문에 두 파일의 내용에 따라 결과가 다르게 나타날 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/default/useradd&lt;/code&gt; 파일:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# useradd defaults file
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;예를 들면 &lt;code&gt;/etc/default/useradd&lt;/code&gt; 파일에 &lt;code&gt;SKEL&lt;/code&gt; 의 값으로 새로운 사용자의 Home directory 에 생성될 기본 파일들을 지정할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/login.defs&lt;/code&gt; 파일:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#
+# Please note that the parameters in this configuration file control the
+# behavior of the tools from the shadow-utils component. None of these
+# tools uses the PAM mechanism, and the utilities that use PAM (such as the
+# passwd command) should therefore be configured elsewhere. Refer to
+# /etc/pam.d/system-auth for more information.
+#
+
+# *REQUIRED*
+#   Directory where mailboxes reside, _or_ name of file, relative to the
+#   home directory.  If you _do_ define both, MAIL_DIR takes precedence.
+#   QMAIL_DIR is for Qmail
+#
+#QMAIL_DIR  Maildir
+MAIL_DIR    /var/spool/mail
+#MAIL_FILE  .mail
+
+# Password aging controls:
+#
+#   PASS_MAX_DAYS   Maximum number of days a password may be used.
+#   PASS_MIN_DAYS   Minimum number of days allowed between password changes.
+#   PASS_MIN_LEN    Minimum acceptable password length.
+#   PASS_WARN_AGE   Number of days warning given before a password expires.
+#
+PASS_MAX_DAYS   99999
+PASS_MIN_DAYS   0
+PASS_MIN_LEN    5
+PASS_WARN_AGE   7
+
+#
+# Min/max values for automatic uid selection in useradd
+#
+UID_MIN                  1000
+UID_MAX                 60000
+# System accounts
+SYS_UID_MIN               201
+SYS_UID_MAX               999
+
+#
+# Min/max values for automatic gid selection in groupadd
+#
+GID_MIN                  1000
+GID_MAX                 60000
+# System accounts
+SYS_GID_MIN               201
+SYS_GID_MAX               999
+
+#
+# If defined, this command is run when removing a user.
+# It should remove any at/cron/print jobs etc. owned by
+# the user to be removed (passed as the first argument).
+#
+#USERDEL_CMD    /usr/sbin/userdel_local
+
+#
+# If useradd should create home directories for users by default
+# On RH systems, we do. This option is overridden with the -m flag on
+# useradd command line.
+#
+CREATE_HOME yes
+
+# The permission mask is initialized to this value. If not specified, 
+# the permission mask will be initialized to 022.
+UMASK           077
+
+# This enables userdel to remove user groups if no members exist.
+#
+USERGROUPS_ENAB yes
+
+# Use SHA512 to encrypt password.
+ENCRYPT_METHOD SHA512
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;/etc/login.defs&lt;/code&gt; 파일에도 여러 가지 값들이 있는데 &lt;code&gt;CREATE_HOME&lt;/code&gt; 값에 따라 &lt;code&gt;useradd&lt;/code&gt; 가 사용자 Home directory 를 생성할지 여부를 결정하게 된다. 만약 이 값이 &lt;code&gt;yes&lt;/code&gt; 면 자동으로 생성하고 &lt;code&gt;no&lt;/code&gt; 면 자동으로 생성하지 않도록 되어 &lt;code&gt;useradd -d &amp;lt;home path&amp;gt; &amp;lt;username&amp;gt; &amp;amp;&amp;amp; mkdir &amp;lt;home path&amp;gt;&lt;/code&gt; 와 같이 &lt;code&gt;-d&lt;/code&gt; 옵션을 주어 home directory 를 설정하고 home directory 를 직접 생성해주어야 한다.&lt;/p&gt;
+&lt;h1&gt;Delete user&lt;/h1&gt;
+&lt;p&gt;사용자를 삭제하려면 &lt;code&gt;userdel&lt;/code&gt; 명령을 사용하면 된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;userdel &amp;lt;username&amp;gt;&lt;/code&gt; 을 실행하면 사용자를 삭제한다. 하지만 사용자의 home directory 는 삭제하지 않는다. home directory 도 같이 삭제하려면 &lt;code&gt;userdel -r &amp;lt;username&amp;gt;&lt;/code&gt; 과 같이 &lt;code&gt;-r&lt;/code&gt; 옵션을 전달하여 실행한다.&lt;/p&gt;
+&lt;h1&gt;Change user account&lt;/h1&gt;
+&lt;p&gt;사용자 정보를 변경하는 명령어는 &lt;code&gt;usermod&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;p&gt;사용자의 home directory 를 변경하려면 &lt;code&gt;usermod -d &amp;lt;path&amp;gt; &amp;lt;user&amp;gt;&lt;/code&gt; 를 실행한다.&lt;/p&gt;
+&lt;p&gt;사용자의 group 을 변경하려면 &lt;code&gt;usermod -G &amp;lt;groupname&amp;gt;&lt;/code&gt; 을 실행한다. groupname 은 &lt;code&gt;,&lt;/code&gt; 로 구분되는 여러 group 들이 올 수 있다.&lt;/p&gt;
+&lt;p&gt;만약 사용자의 group 을 기존 group 에 추가하려 하면 &lt;code&gt;usermod -aG &amp;lt;groupname&amp;gt;&lt;/code&gt; 을 실행한다.&lt;/p&gt;
+&lt;p&gt;사용자의 prior group (initial login group) 을 변경하려면 &lt;code&gt;usermod -g &amp;lt;groupname&amp;gt;&lt;/code&gt; 을 실행한다. &lt;code&gt;-g&lt;/code&gt; 옵션을 사용하면 home directory 이하의 모든 파일들의 group 도 같이 변경된다. home directory 외부에 있는 파일들을 직접 변경해주어야 한다.&lt;/p&gt;
+&lt;h1&gt;Change user password&lt;/h1&gt;
+&lt;p&gt;사용자의 login password 를 변경하려면 &lt;code&gt;passwd&lt;/code&gt; 명령을 사용한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;passwd &amp;lt;username&amp;gt;&lt;/code&gt; 을 실행하면 된다.&lt;/p&gt;
+&lt;h1&gt;Group&lt;/h1&gt;
+&lt;p&gt;새로운 group 을 추가하려면 &lt;code&gt;groupadd&lt;/code&gt; 명령어를 사용한다. &lt;code&gt;groupadd &amp;lt;groupname&amp;gt;&lt;/code&gt; 을 하면 새로운 group 이 생성된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;groups&lt;/code&gt; 명령어를 사용하면 사용자의 group 목록을 알 수 있다. 그냥 &lt;code&gt;groups&lt;/code&gt; 를 실행하면 현재 로그인된 사용자의 group 목록을 확인할 수 있으며, 특정 사용자의 group 목록을 확인하려면 &lt;code&gt;groups &amp;lt;username&amp;gt;&lt;/code&gt; 을 실행한다.&lt;/p&gt;
+&lt;p&gt;group 을 삭제하려면 &lt;code&gt;groupdel&lt;/code&gt; 명령을 사용한다.&lt;/p&gt;
+&lt;h1&gt;Show user informations&lt;/h1&gt;
+&lt;p&gt;사용자 정보와 관련된 여러 내용을 확인하는 명령어들이 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;whoami&lt;/code&gt;, &lt;code&gt;who am i&lt;/code&gt; 2가지 명령들은 다 같은 명령들인데 현재 로그인 중인 사용자를 보여준다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lastlog&lt;/code&gt; 는 각 사용자들 또는 특정 사용자가 최근에 언제 어디에서 로그인했는지 정보를 알려준다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;last&lt;/code&gt; 는 특정 사용자가 로그인 한 history 를 보여준다. &lt;code&gt;/var/log/wtmp&lt;/code&gt; 파일의 내용을 보여주는 명령이다. &lt;code&gt;/var/log/wtmp&lt;/code&gt; 파일은 Text 가 아니라 binary 이기 때문에 last 명령으로만 확인할 수 있다. &lt;code&gt;last [username]&lt;/code&gt; 과 같이 실행할 수 있는데, 만약 &lt;code&gt;last reboot&lt;/code&gt; 를 실행하면 시스템이 리부트된 내역을 보여준다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;who&lt;/code&gt;, 는 현재 누가 로그인한 상태인지를 보여준다. &lt;code&gt;who -H&lt;/code&gt; 와 같이 &lt;code&gt;-H&lt;/code&gt; 옵션을 주면 결과에 헤더도 붙일 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;w&lt;/code&gt; 는 현재 누가 로그인한 상태이고 어떤 작업을 하고 있는지를 보여준다. Terminal Type, FROM (remote host 의 IP address 또는 domain name), LOGIN@ (접속 시간), IDLE (최종 명령 후 대기 시간), WHAT (현재 사용 중인 Shell 이나 작업 등) 등을 출력한다.&lt;/p&gt;
+&lt;h1&gt;Related files&lt;/h1&gt;
+&lt;p&gt;Linux 에서 사용자 정보와 관련된 여러가지 파일들이 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/passwd&lt;/code&gt; : User account information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/shadow&lt;/code&gt; : Secure user account information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/group&lt;/code&gt; : Group account information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/gshadow&lt;/code&gt; : Secure group account information&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/login.defs&lt;/code&gt; : Shadow password suite configuration&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/skel&lt;/code&gt; : Directory containing default files.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="linux"></category><category term="user"></category></entry></feed>
