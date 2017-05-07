@@ -1,5 +1,5 @@
 Title: Linux help, man, info, TLDP
-Date: 2017-05-07
+Date: 2017-01-01
 Modified: 2017-05-07
 Tags: linux, help, man, info
 Slug: linux-help-man-info-tldp
