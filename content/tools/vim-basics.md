@@ -1,5 +1,5 @@
 Title: Vim Basics
-Date: 2017-05-04
+Date: 2017-05-03
 Modified: 2017-05-04
 Tags: vim
 Slug: vim-basics

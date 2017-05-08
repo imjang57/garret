@@ -1,5 +1,5 @@
 Title: Vim Configuration
-Date: 2017-05-05
+Date: 2017-05-04
 Modified: 2017-05-05
 Tags: vim
 Slug: vim-configuration
