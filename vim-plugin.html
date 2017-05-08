@@ -66,45 +66,8 @@
 
 <p>Vundle 은 인터넷을 통해 각 plugin 들을 받아서 <code>~/.vim/bundle</code> 에 설치한다.</p>
 <h2>My <code>.vimrc</code> including Vundle</h2>
+<p>아래 내용은 Vundle 과 Vundle 로 설치한 Plugin 들을 위한 <code>.vimrc</code> 파일 내용이다. (기본적인 <code>.vimrc</code> 파일 내용은 <a href="https://imjang57.github.io/garret/vim-configuration.html">vim configuration</a> 을 참고하자):</p>
 <div class="highlight"><pre><span></span>&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are basic vim configurations
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Refer `:help quickref` (quickref.txt)
-syntax on
-set nu                   &quot;line numbers
-set tabstop=4            &quot;tab stop
-set softtabstop=4        &quot;soft tabstop
-&quot;set expandtab            &quot;soft tab: fill tab with blank characters(space)
-set shiftwidth=4         &quot;tab stop for &#39;&gt;&#39; command
-set autoindent           &quot;Auto indentation
-set cindent              &quot;The C programming language indentation
-set smartindent          &quot;smart autoindenting for C programs
-set history=100          &quot;remember work history
-set hlsearch             &quot;hilighting search word
-set showmatch            &quot;hilighting matched parentheses : (),{}
-set ruler                &quot;show current cursor&#39;s location at lower right side
-set showmode             &quot;To be able to see what mode you are in.
-set laststatus=2         &quot;always show status bar
-set nobackup             &quot;don&#39;t create backup file
-set relativenumber
-&quot;set backup               &quot;create backup file
-&quot;set backupdir=~/vim/backup &quot;set directory where backup file is saved
-set nocompatible         &quot;be improved, required
-colorscheme evening
-
-
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are encoding configurations
-&quot;auto detected file encoding list which is used when vim opens file
-set fencs=utf-8,euc-kr,cp949,cp932,euc-jp,shift-jis,big5,latin1,ucs-2le
-&quot;Use command :set fileencoding=utf-8 when you change current file&#39;s encoding
-
-
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;belows are key mappings
-nnoremap &lt;leader&gt;q :bp&lt;CR&gt;
-nnoremap &lt;leader&gt;w :bn&lt;CR&gt;
-
-&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
 &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;Belows are Vundle Plugin configurations
 filetype off
 
