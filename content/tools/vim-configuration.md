@@ -100,6 +100,12 @@ colorscheme evening
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""belows are settings for gvim running on high resolution
+set guifont=Consolas:h11:cANSI
+"set guifontwide=Dotumche:h11:cDEFAULT
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""belows are encoding configurations
 "auto detected file encoding list which is used when vim opens file
 set fencs=utf-8,euc-kr,cp949,cp932,euc-jp,shift-jis,big5,latin1,ucs-2le
