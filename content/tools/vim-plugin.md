@@ -35,45 +35,9 @@ Vundle 은 인터넷을 통해 각 plugin 들을 받아서 `~/.vim/bundle` 에 �
 
 ## My `.vimrc` including Vundle
 
+아래 내용은 Vundle 과 Vundle 로 설치한 Plugin 들을 위한 `.vimrc` 파일 내용이다. (기본적인 `.vimrc` 파일 내용은 [vim configuration]({filename}/tools/vim-configuration.md) 을 참고하자):
+
 ```
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""Belows are basic vim configurations
-""""""""""Refer `:help quickref` (quickref.txt)
-syntax on
-set nu                   "line numbers
-set tabstop=4            "tab stop
-set softtabstop=4        "soft tabstop
-"set expandtab            "soft tab: fill tab with blank characters(space)
-set shiftwidth=4         "tab stop for '>' command
-set autoindent           "Auto indentation
-set cindent              "The C programming language indentation
-set smartindent          "smart autoindenting for C programs
-set history=100          "remember work history
-set hlsearch             "hilighting search word
-set showmatch            "hilighting matched parentheses : (),{}
-set ruler                "show current cursor's location at lower right side
-set showmode             "To be able to see what mode you are in.
-set laststatus=2         "always show status bar
-set nobackup             "don't create backup file
-set relativenumber
-"set backup               "create backup file
-"set backupdir=~/vim/backup "set directory where backup file is saved
-set nocompatible         "be improved, required
-colorscheme evening
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""belows are encoding configurations
-"auto detected file encoding list which is used when vim opens file
-set fencs=utf-8,euc-kr,cp949,cp932,euc-jp,shift-jis,big5,latin1,ucs-2le
-"Use command :set fileencoding=utf-8 when you change current file's encoding
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""belows are key mappings
-nnoremap <leader>q :bp<CR>
-nnoremap <leader>w :bn<CR>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""Belows are Vundle Plugin configurations
 filetype off
