@@ -63,15 +63,9 @@ let g:airline#extensions#tabline#enabled = 1
 let NERDTreeWinPost = &amp;quot;left&amp;quot;
 
 nmap &amp;lt;F7&amp;gt; :NERDTree&amp;lt;CR&amp;gt;
-&amp;quot;nmap &amp;lt;F8&amp;gt; :TlistToggle&amp;lt;CR&amp;gt;
 nmap &amp;lt;F8&amp;gt; :TagbarToggle&amp;lt;CR&amp;gt;
-filetype on
 
-let Tlist_Ctags_Cmd = &amp;quot;/usr/bin/ctags&amp;quot;
-let Tlist_Inc_Winwidth = 0
-let Tlist_Exit_OnlyWindow = 0
-let Tlist_Auto_Open = 0
-let Tlist_Use_Right_Window = 1
+filetype on
 
 &amp;quot; All of your Plugins must be added before the following line
 call vundle#end()            &amp;quot; required
