@@ -116,6 +116,8 @@ set fencs=utf-8,euc-kr,cp949,cp932,euc-jp,shift-jis,big5,latin1,ucs-2le
 """"""""""belows are key mappings
 nnoremap <leader>q :bp<CR>
 nnoremap <leader>w :bn<CR>
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 ```
 
 Vim 일반 설정 :
