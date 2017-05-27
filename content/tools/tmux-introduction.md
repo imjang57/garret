@@ -283,6 +283,55 @@ http://haruair.com/blog/2124
 http://nodeqa.com/nodejs_ref/99
 ```
 
+# Summary
+
+## Sessions
+
+- start new session : `tmux`, `tmux new-session -s testsession`, `tmux new -s testsession`
+- attach session : `tmux attach-session -t testsession`, `tmux attach -t testsession`, `tmux a -t testsession`
+- detach current session : `ctrl + b, d`
+- list sessions : `tmux list-sessions`, `tmux ls`
+- kill session : `tmux kill-session -t testsession`
+
+## Run tmux commands in tmux session
+
+- open tmux command prompt : `ctrl + b, :`
+- list binding keys (shortcuts) : `ctrl + b, ?`
+
+## Windows
+
+- create window : `ctrl + b, c`
+- list windows : `ctrl + b, w`
+- next window : `ctrl + b, n`
+- previous window : `ctrl + b, p`
+- kill window : `ctrl + b, &`
+
+## Panes
+
+- vertical split : `ctrl + b, %`
+- horizontal split : `ctrl + b, "`
+- swap panes : `ctrl + b, o`
+- show pan numbers : `ctrl + b, o` (when the numbers show up, type the key to goto that pane)
+- kill pane : `ctrl + b, x`
+- move the current pane left : `ctrl + b, {`
+- move the current pane right : `ctrl + b, }`
+- toggle pane zoom : `ctrl + b, z`
+
+## Resizing Panes
+
+- Resizes the current pane down : `ctrl + b, :` and `resize-pane -D`
+- Resizes the current pane up : `ctrl + b, :` and `resize-pane -U`
+- Resizes the current pane left : `ctrl + b, :` and `resize-pane -L`
+- Resizes the current pane right : `ctrl + b, :` and `resize-pane -R`
+- Resizes the current pane down by 20 cells : `ctrl + b, :` and `resize-pane -D 20`
+- Resizes the current pane up by 20 cells : `ctrl + b, :` and `resize-pane -U 20`
+- Resizes the current pane left by 20 cells : `ctrl + b, :` and `resize-pane -L 20`
+- Resizes the current pane right by 20 cells : `ctrl + b, :` and `resize-pane -R 20`
+
+## Copy mode
+
+- Copy mode on : `ctrl + b, [`
+
 # References
 
 - [tmux web](https://tmux.github.io)
