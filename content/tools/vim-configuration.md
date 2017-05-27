@@ -96,7 +96,8 @@ set relativenumber
 ""set backup               "create backup file
 "set backupdir=~/vim/backup "set directory where backup file is saved
 set nocompatible         "be improved, required
-colorscheme evening
+colorscheme desert
+"colorscheme evening
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

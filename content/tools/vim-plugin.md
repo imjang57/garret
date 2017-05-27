@@ -81,6 +81,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 let NERDTreeWinPost = "left"
 
+nmap <F6> :NERDTreeFind<CR>
 nmap <F7> :NERDTree<CR>
 nmap <F8> :TagbarToggle<CR>
 
