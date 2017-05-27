@@ -62,6 +62,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 let NERDTreeWinPost = &amp;quot;left&amp;quot;
 
+nmap &amp;lt;F6&amp;gt; :NERDTreeFind&amp;lt;CR&amp;gt;
 nmap &amp;lt;F7&amp;gt; :NERDTree&amp;lt;CR&amp;gt;
 nmap &amp;lt;F8&amp;gt; :TagbarToggle&amp;lt;CR&amp;gt;
 
@@ -251,7 +252,8 @@ let g:ctrlp_custom_ignore = {
 &lt;span class="c"&gt;&amp;quot;&amp;quot;set backup               &amp;quot;create backup file&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;set backupdir=~/vim/backup &amp;quot;set directory where backup file is saved&lt;/span&gt;
 &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;nocompatible&lt;/span&gt;         &lt;span class="c"&gt;&amp;quot;be improved, required&lt;/span&gt;
-&lt;span class="k"&gt;colorscheme&lt;/span&gt; evening
+&lt;span class="k"&gt;colorscheme&lt;/span&gt; desert
+&lt;span class="c"&gt;&amp;quot;colorscheme evening&lt;/span&gt;
 
 
 &lt;span class="c"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -2580,6 +2582,54 @@ http://nodeqa.com/nodejs_ref/99
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h1&gt;Summary&lt;/h1&gt;
+&lt;h2&gt;Sessions&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;start new session : &lt;code&gt;tmux&lt;/code&gt;, &lt;code&gt;tmux new-session -s testsession&lt;/code&gt;, &lt;code&gt;tmux new -s testsession&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;attach session : &lt;code&gt;tmux attach-session -t testsession&lt;/code&gt;, &lt;code&gt;tmux attach -t testsession&lt;/code&gt;, &lt;code&gt;tmux a -t testsession&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;detach current session : &lt;code&gt;ctrl + b, d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;list sessions : &lt;code&gt;tmux list-sessions&lt;/code&gt;, &lt;code&gt;tmux ls&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;kill session : &lt;code&gt;tmux kill-session -t testsession&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Run tmux commands in tmux session&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;open tmux command prompt : &lt;code&gt;ctrl + b, :&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;list binding keys (shortcuts) : &lt;code&gt;ctrl + b, ?&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Windows&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;create window : &lt;code&gt;ctrl + b, c&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;list windows : &lt;code&gt;ctrl + b, w&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;next window : &lt;code&gt;ctrl + b, n&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;previous window : &lt;code&gt;ctrl + b, p&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;kill window : &lt;code&gt;ctrl + b, &amp;amp;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Panes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;vertical split : &lt;code&gt;ctrl + b, %&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;horizontal split : &lt;code&gt;ctrl + b, "&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;swap panes : &lt;code&gt;ctrl + b, o&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;show pan numbers : &lt;code&gt;ctrl + b, o&lt;/code&gt; (when the numbers show up, type the key to goto that pane)&lt;/li&gt;
+&lt;li&gt;kill pane : &lt;code&gt;ctrl + b, x&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;move the current pane left : &lt;code&gt;ctrl + b, {&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;move the current pane right : &lt;code&gt;ctrl + b, }&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;toggle pane zoom : &lt;code&gt;ctrl + b, z&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Resizing Panes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Resizes the current pane down : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -D&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane up : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -U&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane left : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -L&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane right : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -R&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane down by 20 cells : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -D 20&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane up by 20 cells : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -U 20&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane left by 20 cells : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -L 20&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Resizes the current pane right by 20 cells : &lt;code&gt;ctrl + b, :&lt;/code&gt; and &lt;code&gt;resize-pane -R 20&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Copy mode&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Copy mode on : &lt;code&gt;ctrl + b, [&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://tmux.github.io"&gt;tmux web&lt;/a&gt;&lt;/li&gt;

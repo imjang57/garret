@@ -257,6 +257,54 @@ http://nodeqa.com/nodejs_ref/99
 </pre></div>
 
 
+<h1>Summary</h1>
+<h2>Sessions</h2>
+<ul>
+<li>start new session : <code>tmux</code>, <code>tmux new-session -s testsession</code>, <code>tmux new -s testsession</code></li>
+<li>attach session : <code>tmux attach-session -t testsession</code>, <code>tmux attach -t testsession</code>, <code>tmux a -t testsession</code></li>
+<li>detach current session : <code>ctrl + b, d</code></li>
+<li>list sessions : <code>tmux list-sessions</code>, <code>tmux ls</code></li>
+<li>kill session : <code>tmux kill-session -t testsession</code></li>
+</ul>
+<h2>Run tmux commands in tmux session</h2>
+<ul>
+<li>open tmux command prompt : <code>ctrl + b, :</code></li>
+<li>list binding keys (shortcuts) : <code>ctrl + b, ?</code></li>
+</ul>
+<h2>Windows</h2>
+<ul>
+<li>create window : <code>ctrl + b, c</code></li>
+<li>list windows : <code>ctrl + b, w</code></li>
+<li>next window : <code>ctrl + b, n</code></li>
+<li>previous window : <code>ctrl + b, p</code></li>
+<li>kill window : <code>ctrl + b, &amp;</code></li>
+</ul>
+<h2>Panes</h2>
+<ul>
+<li>vertical split : <code>ctrl + b, %</code></li>
+<li>horizontal split : <code>ctrl + b, "</code></li>
+<li>swap panes : <code>ctrl + b, o</code></li>
+<li>show pan numbers : <code>ctrl + b, o</code> (when the numbers show up, type the key to goto that pane)</li>
+<li>kill pane : <code>ctrl + b, x</code></li>
+<li>move the current pane left : <code>ctrl + b, {</code></li>
+<li>move the current pane right : <code>ctrl + b, }</code></li>
+<li>toggle pane zoom : <code>ctrl + b, z</code></li>
+</ul>
+<h2>Resizing Panes</h2>
+<ul>
+<li>Resizes the current pane down : <code>ctrl + b, :</code> and <code>resize-pane -D</code></li>
+<li>Resizes the current pane up : <code>ctrl + b, :</code> and <code>resize-pane -U</code></li>
+<li>Resizes the current pane left : <code>ctrl + b, :</code> and <code>resize-pane -L</code></li>
+<li>Resizes the current pane right : <code>ctrl + b, :</code> and <code>resize-pane -R</code></li>
+<li>Resizes the current pane down by 20 cells : <code>ctrl + b, :</code> and <code>resize-pane -D 20</code></li>
+<li>Resizes the current pane up by 20 cells : <code>ctrl + b, :</code> and <code>resize-pane -U 20</code></li>
+<li>Resizes the current pane left by 20 cells : <code>ctrl + b, :</code> and <code>resize-pane -L 20</code></li>
+<li>Resizes the current pane right by 20 cells : <code>ctrl + b, :</code> and <code>resize-pane -R 20</code></li>
+</ul>
+<h2>Copy mode</h2>
+<ul>
+<li>Copy mode on : <code>ctrl + b, [</code></li>
+</ul>
 <h1>References</h1>
 <ul>
 <li><a href="https://tmux.github.io">tmux web</a></li>
