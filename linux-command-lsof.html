@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Linux lsof command | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/linux-command-lsof.html">
+
+
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/linux.atom.xml">  
+  <meta name="description" content="lsof 명령어에 대한 설명">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Linux lsof command
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2017-01-12T00:00:00+09:00">
+          <i class="fa fa-clock-o"></i>
+          목 12 1월 2017
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="https://imjang57.github.io/garret/tag/linux.html">#linux</a>,               <a href="https://imjang57.github.io/garret/tag/lsof.html">#lsof</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>lsof</h1>
+<p><code>lsof</code> 는 "list open files"의 약자로 시스템에서 열린 파일 목록을 알려주고 사용하는 프로세스, 디바이스 정보, 파일의 종류등 상세한 정보를 출력해주는 명령어(Command)이다.</p>
+<p>리눅스와 유닉스는 추상화된 파일 시스템(VFS - Virtual File System)을 사용하므로 일반 파일, 디렉터리, 네트워크 소켓, 라이브러리, 심볼릭 링크 등도 모두 파일로 처리되며 <code>lsof</code> 에서 상세한 정보를 확인할 수 있다.</p>
+<h2>모든 열린 파일 출력</h2>
+<p>옵션 없이 <code>lsof</code> 명령을 실행하면 모든 열린 파일 정보를 출력한다.</p>
+<div class="highlight"><pre><span></span>$ lsof
+</pre></div>
+
+
+<p>컬럼별 의미는 다음과 같다.</p>
+<ol>
+<li><code>COMMAND</code> : 실행한 명령어</li>
+<li><code>PID</code> : process id</li>
+<li><code>USER</code> : 실행한 사용자</li>
+<li><code>FD</code> : File Descriptor, 파일의 종류. <ol>
+<li><code>cwd</code> : current working directory</li>
+<li><code>rtd</code> : root directory</li>
+<li><code>mem</code> : memory-mapped file</li>
+<li><code>txt</code> : program text (code and data);</li>
+</ol>
+</li>
+<li><code>TYPE</code> : 파일 종류<ol>
+<li><code>DIR</code> : 디렉터리</li>
+<li><code>CHR</code> :  character special file</li>
+<li><code>REG</code> : regular file</li>
+<li><code>unix</code> : 유닉스 도메인 소켓 (MySQL 등이 사용하는 소켓으로 로컬 프로세스에서만 사용 가능하며 TCP/UDP 보다 속도가 매우 빠름)</li>
+</ol>
+</li>
+<li><code>DEVICE</code> : 장치 번호</li>
+<li><code>SIZE/OFF</code>: 파일의 크기나 오프셋</li>
+<li><code>NODE</code>: 노드 번호</li>
+<li><code>NAME</code>:  파일명</li>
+</ol>
+<h2>특정 사용자에 의해 열린 파일 출력</h2>
+<p><code>-u</code> 옵션으로 사용자를 지정할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ lsof -u myuser
+</pre></div>
+
+
+<p><code>^</code>를 추가하면 특정 사용자는 제외할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ lsof -u ^myuser
+</pre></div>
+
+
+<p>동시에 사용할 수도 있다.</p>
+<div class="highlight"><pre><span></span>$ lsof -u myuser -u ^root -u ^daemon
+</pre></div>
+
+
+<h2>특정 프로세스가 오픈한 파일 확인</h2>
+<p>프로세스(Process)의 PID로 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof -p 1234
+</pre></div>
+
+
+<p>특정 파일을 사용하는 프로세스 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof /var/log/httpd/access_log
+</pre></div>
+
+
+<p>특정 디렉터리 내 열린 파일 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof +D /tmp
+</pre></div>
+
+
+<p>특정 포트를 사용하는 프로세스 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof -i TCP:22
+$ lsof -i TCP:22-80
+</pre></div>
+
+
+<p>특정 명령어가 사용하는 포트 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof -c httpd
+</pre></div>
+
+
+<h2>Service Name 대신 port 번호 확인</h2>
+<p>IANA 에 등록한 well known 포트는 <code>/etc/services</code> 파일에 지정되어 있으므로 서비스를 파악하기 용이하다. 하지만 자체 개발한 서비스가 <code>/etc/services</code> 파일에 등록된 포트를 사용할 경우에는 서비스 이름보다 포트 번호로 표시하는 게 낫다. <code>-P</code> 옵션을 사용하면 서비스 이름대신 포트 번호로 표시해 준다.</p>
+<p>예로 java 로 서비스하고 있는 모든 listen 하는 포트를 표시하려면 아래 명령을 실행한다.</p>
+<div class="highlight"><pre><span></span>$ lsof -i TCP -P <span class="p">|</span> grep java <span class="p">|</span> grep LISTEN
+</pre></div>
+
+
+<p>IPv4 또는 IPv6 포트만 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof -i 4
+$ lsof -i 6
+</pre></div>
+
+
+<p>열려 있는 모든 네트워크 포트 확인 :</p>
+<div class="highlight"><pre><span></span>$ lsof -i
+$ lsof -i TCP
+$ lsof -i UDP
+</pre></div>
+
+
+<h2>특정 사용자가 오픈한 모든 프로세스 중지</h2>
+<p><code>-t</code> 옵션은 자세한 정보를 출력하지 않고 pid 정보만 출력한다. 다음 명령은 imjang57 사용자로 구동한 프로세스의 id 를 리턴한다.</p>
+<div class="highlight"><pre><span></span>lsof -t -u imjang57
+13324
+</pre></div>
+
+
+<p>이를 응용하여 <code>kill</code> 명령어에 pid 만 전달할 수 있으므로 아래와 같이 사용하면 imjang57 사용자의 모든 프로세스를 중지하게 된다.</p>
+<div class="highlight"><pre><span></span>kill -KILL $(lsof -t -u imjang57
+</pre></div>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>

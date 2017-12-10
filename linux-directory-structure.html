@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Linux Directory Structure | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/linux-directory-structure.html">
+
+
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/linux.atom.xml">  
+  <meta name="description" content="리눅스 디렉터리 구조">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Linux Directory Structure
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2016-12-22T00:00:00+09:00">
+          <i class="fa fa-clock-o"></i>
+          목 22 12월 2016
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="https://imjang57.github.io/garret/tag/linux.html">#linux</a>,               <a href="https://imjang57.github.io/garret/tag/directory.html">#directory</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>Linux directory</h1>
+<p>수많은 배포판을 가진 리눅스는 배포판마다 각각의 특징을 가지며 조금씩 다른 시스템 구조를 가지고 있다. 하지만 대부분의 대포판들은 리눅스 파일시스템 표준인 <strong>FSSTND(Filesystem Hierarchy Standard)</strong> 스펙을 준수하고 있다. 우리가 익히 많이 들어 알고 있는 대부분의 배포판들은 이 표준을 지키며 개발되었다. FSSTND 파일시스템 표준은 디렉토리의 용도에 대한 기준을 준비해 두고서 그 용도에 맞도록 사용하자는 리눅스 파일시스템 구성의 기준이 되는 표준안이라고 할 수 있다.</p>
+<p>FSSTND에 대한 자세한 설명은 다음 URL들을 참고하자.</p>
+<ul>
+<li>wikipedia: https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard</li>
+<li>official web site: https://wiki.linuxfoundation.org/lsb/fhs</li>
+</ul>
+<p>여러 디렉터리의 용도가 정의되어 있지만 자주 사용되는 디렉터리들에 대해 설명하면 다음과 같다.</p>
+<ul>
+<li><code>/</code> : 최상위 디렉토리. 루트디렉토리를 의미하고 리눅스 모든 디렉토리의 시작점이다.</li>
+<li><code>/bin</code> : 기본적인 명령어가 저장된 디렉토리. 리눅스 사용에 있어 가장 기본적인 명령어인 <code>mv</code>, <code>cp</code>, <code>df</code>, <code>rm</code> 등이 이 디렉토리에 존재한다. 그리고 이 디렉토리 안에 있는 명령어들은 <code>root</code> 뿐만 아니라 일반 사용자들도 사용할 수 있다.</li>
+<li><code>/boot</code> : 리눅스 부트로더(boot loader)가 존재하는 디렉토리. 즉 GRUB과 같은 부트로더에 관한 파일들이 여기에 존재한다.</li>
+<li><code>/dev</code> : 시스템 디바이스(device) 파일을 저장하고 있는 디렉토리. 하드디스크 <code>/dev/sda</code>, CDROM <code>/dev/cdrom</code> 등과 같은 장치파일이 이곳에 존재한다.</li>
+<li><code>/etc</code> : 리눅스 시스템의 거의 모든 설정파일이 존재하는 디렉토리. <code>/etc/passwd</code>, <code>/etc/group</code> 등 거의 모든 시스템관련 설정파일이 이곳에 존재한다.</li>
+<li><code>/home</code> : 사용자 홈 디렉토리. 안에 각 사용자들의 디렉토리들이 모여있다.</li>
+<li><code>/lib</code> : 커널모듈파일과 라이브러리파일 등이 존재하는 디렉토리</li>
+<li><code>/media</code> : USB, CDROM 등과 같이 탈부착이 가능한 장치들의 마운트포인트로 사용되는 디렉토리</li>
+<li><code>/mnt</code> : <code>/media</code> 디렉토리와 비슷한 용도로 사용</li>
+<li><code>/proc</code> : 가상파일시스템이라고 불리는 곳으로 현재 메모리에 존재하는 모든 작업들이 파일형태로 존재하는 디렉토리. 디스크상에 존재하는 것이 아니라 메모리상에 존재하기 때문에 가상파일시스템이라고 부른다. 이곳에 존재하는 파일 중에 커널의 옵션값을 변경할 수 있는 파라미터파일들이 있기 때문에 시스템 운용에 있어 매우 중요한 의미를 가진다.</li>
+<li><code>/root</code> : 시스템 최고관리자의 홈 디렉토리</li>
+<li><code>/sbin</code> : <code>/bin</code>과는 달리 시스템 관리자들이 사용하는 리눅스 명령어들(<code>halt</code>, <code>shutdown</code> 등)이 모여있는 디렉토리</li>
+<li><code>/tmp</code> : 시스템 모든 사용자들이 공동으로 사용하는 디렉토리. 일반 사용자 또는 각종 프로세서에서 사용되는 파일들이 생성되는 곳이다.</li>
+<li><code>/usr</code> : 시스템이 아닌 일반 사용자들이 주로 사용하는 디렉토리</li>
+<li><code>/usr/bin</code> : 일반 사용자들이 사용 가능한 명령어 파일들이 존재하는 디렉토리</li>
+<li><code>/usr/include</code> : C 프로그래밍에 필요한 헤더파일이 모여 있는 디렉토리</li>
+<li><code>/usr/lib</code> : <code>/lib</code>에 들어가지 않은 라이브러리들이 모여 있는 디렉토리</li>
+<li><code>/usr/sbin</code> : <code>/bin</code>에 제외된 명령어와 네트워크 관련 명령어들이 들어있는 디렉토리</li>
+<li><code>/usr/src</code> : 프로그램 소스가 저장되는 곳</li>
+<li><code>/usr/local</code> : mysql, apache, php 등과 같은 어플리케이션들을 소스로 컴파일설치할 때 사용되는 디렉토리</li>
+<li><code>/var</code> : 시스템 사용중 임시로 생성되고 삭제되는 데이터를 저장하기 위한 디렉토리. 모든 시스템 로그파일은 <code>/var/log</code>에 저장된다.</li>
+<li><code>/lost+found</code> : 최상위 디렉토리인 <code>/</code> 디렉토리에만 존재하는 것이 아니라 파일 시스템마다 존재할 수 있는 디렉토리. 이 디렉토리는 <code>fsck</code> 또는 <code>e2fsck</code> 등과 같은 파일 시스템 체크 및 복구유틸리티 실행후에 주로 생성되는 것으로 복구되지 앟은 채로 블록(block)만 존재하는 파일이 존재하는 곳.</li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,257 +1,313 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-        <meta charset="utf-8" />
-        <title>garret - linux</title>
-        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
-        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
-                <nav><ul>
-                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
-                    <li class="active"><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html">Bash script 로 각 디렉터리들의 실제 사용량 조회하기</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2017-01-18T00:00:00+09:00">
-                Published: 수 18 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
-                Updated: 수 18 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/bash.html">bash</a> <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/du.html">du</a> <a href="https://imjang57.github.io/garret/tag/disk.html">disk</a> </p>
-</footer><!-- /.post-info --><h1>Linux 에서 각 디렉터리 별 디스크 사용량 확인하기</h1>
-<p>리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.</p>
-<p>스크립트:</p>
-<div class="highlight"><pre><span></span><span class="c1"># make newlines the only seperator (IFS : Internal Field Separator)</span>
-<span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span><span class="p">;</span> <span class="k">for</span> d in <span class="k">$(</span>ls -l <span class="p">|</span> grep <span class="s1">&#39;^d&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print substr($0, index($0, $9)) }&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> du -hs <span class="nv">$d</span><span class="p">;</span> <span class="k">done</span>
-</pre></div>
+  <title>  linux Articles | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/category/linux.html">
 
 
-<p>처음에 <code>IFS</code> 를 지정해주지 않으면 디렉터리 이름에 공백이 들어간 경우 디렉터리 이름이 공백을 기준으로 split 되어 별도의 디렉터리처럼 동작하게 된다.</p>
-<p>나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, <code>grep</code> 으로 디렉터리만 뽑아내고, <code>awk</code> 로 파일 이름만 뽑아내고, <code>for</code> statement 를 사용해서 각 디렉터리마다 <code>du</code> 명령을 사용한다.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/ssh-with-key.html" rel="bookmark"
-                           title="Permalink to SSH with key">SSH with key</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-02T00:00:00+09:00">
-                Published: 월 02 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-02T00:00:00+09:00">
-                Updated: 월 02 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/key-gen.html">key-gen</a> </p>
-</footer><!-- /.post-info -->                <p>Key 로 SSH 로그인 하기 위한 과정</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/ssh-with-key.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="bookmark"
-                           title="Permalink to SSH Brute force 막기">SSH Brute force 막기</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-01T00:00:00+09:00">
-                Updated: 일 01 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/ssh.html">ssh</a> <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> <a href="https://imjang57.github.io/garret/tag/brute-force.html">brute force</a> </p>
-</footer><!-- /.post-info -->                <p>SSH Brute force 공격 시도를 막는 설정</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/defence-ssh-brute-force.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/iptables.html" rel="bookmark"
-                           title="Permalink to iptables">iptables</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-01T00:00:00+09:00">
-                Updated: 일 01 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/iptables.html">iptables</a> </p>
-</footer><!-- /.post-info -->                <p>iptables 사용법</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/iptables.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="bookmark"
-                           title="Permalink to Linux 에서 파일 관리를 위한 명령어들">Linux 에서 파일 관리를 위한 명령어들</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-08T00:00:00+09:00">
-                Updated: 월 08 5월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/file.html">file</a> </p>
-</footer><!-- /.post-info -->                <p>Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/linux-command-for-file-management.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/linux-command-for-permission.html" rel="bookmark"
-                           title="Permalink to Linux 에서 사용자 권한 관리">Linux 에서 사용자 권한 관리</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-08T00:00:00+09:00">
-                Updated: 월 08 5월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/file.html">file</a> </p>
-</footer><!-- /.post-info -->                <p>Linux 에서 사용자 권한 관리에 대한 글</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/linux-command-for-permission.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://imjang57.github.io/garret/linux-command-for-user-management.html" rel="bookmark"
-                           title="Permalink to Linux 에서 사용자 관리를 위한 명령어들">Linux 에서 사용자 관리를 위한 명령어들</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-08T00:00:00+09:00">
-                Updated: 월 08 5월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/user.html">user</a> </p>
-</footer><!-- /.post-info -->                <p>Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)</p>
-                <a class="readmore" href="https://imjang57.github.io/garret/linux-command-for-user-management.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/linux.atom.xml">  
+    <meta name="description" content="A private blog site for engineering and thinkin.">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-90095241-1', 'auto');
     ga('send', 'pageview');
-    </script>
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  linux Articles
+</h1>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-02-14T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            화 14 2월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-check-disk-usage-of-directories.html">Linux 에서 각 디렉터리들의 실제 사용량 조회하기</a>
+        </h4>
+        <div class="content">
+          Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-23T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            월 23 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-memory-overcommit.html">Linux Memory overcommit</a>
+        </h4>
+        <div class="content">
+          리눅스에서 새로운 프로세스가 실행될 때 메모리 할당하는 과정과 overcommit 설정에 대한 설명
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-18T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            수 18 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-command-fdisk.html">Linux Partition 관리 : fdisk</a>
+        </h4>
+        <div class="content">
+          리눅스에서 fdisk 명령을 사용하여 파티션(Partition)을 관리하는 방법
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-18T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            수 18 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-hostname-management.html">Linux에서 hostname 관리</a>
+        </h4>
+        <div class="content">
+          Linux에서 호스트명(hostname)을 확인 및 변경하는 방법
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-12T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            목 12 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-command-lsof.html">Linux lsof command</a>
+        </h4>
+        <div class="content">
+          lsof 명령어에 대한 설명
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-01T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            일 01 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-command-for-file-management.html">Linux 에서 파일 관리를 위한 명령어들</a>
+        </h4>
+        <div class="content">
+          Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-01T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            일 01 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-command-for-permission.html">Linux 에서 사용자 권한 관리</a>
+        </h4>
+        <div class="content">
+          Linux 에서 사용자 권한 관리에 대한 글
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-01T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            일 01 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-command-for-user-management.html">Linux 에서 사용자 관리를 위한 명령어들</a>
+        </h4>
+        <div class="content">
+          Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-01T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            일 01 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-command-iptables.html">iptables</a>
+        </h4>
+        <div class="content">
+          iptables 사용법
+        </div>
+      </div>
+    </article>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2016-12-22T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            목 22 12월 2016
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/linux-directory-structure.html">Linux Directory Structure</a>
+        </h4>
+        <div class="content">
+          리눅스 디렉터리 구조
+        </div>
+      </div>
+    </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
 </body>
+
 </html>

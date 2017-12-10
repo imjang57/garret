@@ -780,7 +780,107 @@ $
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.wolfe.id.au/2011/10/16/monitoring-the-openjdk-from-the-cli/"&gt;Monitoring the OpenJDK from the CLI&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://d2.naver.com/helloworld/6043"&gt;Garbage Collection 모니터링 방법&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="java"></category><category term="jvm"></category><category term="monitoring"></category><category term="jps"></category><category term="stat"></category><category term="stack"></category></entry><entry><title>Git Basics</title><link href="https://imjang57.github.io/garret/git-basics.html" rel="alternate"></link><published>2017-01-05T00:00:00+09:00</published><updated>2017-01-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-05:/garret/git-basics.html</id><summary type="html">&lt;p&gt;Git 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git Basic&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="java"></category><category term="jvm"></category><category term="monitoring"></category><category term="jps"></category><category term="stat"></category><category term="stack"></category></entry><entry><title>SSH Brute force 막기</title><link href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="alternate"></link><published>2017-01-12T00:00:00+09:00</published><updated>2017-01-12T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-12:/garret/defence-ssh-brute-force.html</id><summary type="html">&lt;p&gt;SSH Brute force 공격 시도를 막는 설정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ssh brute force 막기&lt;/h1&gt;
+&lt;p&gt;AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..&lt;/p&gt;
+&lt;p&gt;어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)&lt;/p&gt;
+&lt;p&gt;brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.&lt;/p&gt;
+&lt;p&gt;ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.&lt;/p&gt;
+&lt;p&gt;blacklist 와 ssh chain 생성:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -N blacklist
+# iptables -N ssh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A blacklist -m recent --set --name blacklist
+# iptables -A blacklist -j REJECT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ssh chain 은 다음과 같다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
+# iptables -A ssh -m recent --set --name ssh
+# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
+# iptables -A ssh -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이 ssh chain 은 다음과 같이 동작한다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.&lt;/li&gt;
+&lt;li&gt;접속 주소를 "ssh" 목록이 기록한다.&lt;/li&gt;
+&lt;li&gt;접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.&lt;/li&gt;
+&lt;li&gt;위의 3개가 다 통과하면 ssh 접속을 허락한다.&lt;/li&gt;
+&lt;/ol&gt;</content><category term="ssh"></category><category term="iptables"></category><category term="brute force"></category></entry><entry><title>SSH Host-key identification</title><link href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2017-01-11T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/ssh-host-key-identification.html</id><summary type="html">&lt;p&gt;This is about SSH Host-key identification.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH host key&lt;/h1&gt;
+&lt;p&gt;가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now &lt;span class="o"&gt;(&lt;/span&gt;man-in-the-middle
+attack&lt;span class="o"&gt;)&lt;/span&gt;!
+It is also possible that a host key has just been changed.
+The fingerprint &lt;span class="k"&gt;for&lt;/span&gt; the ECDSA key sent by the remote host is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Please contact your system administrator.
+Add correct host key in /home/imjang57/.ssh/known_hosts to get rid of
+this message.
+Offending ECDSA key in /home/imjang57/.ssh/known_hosts:8
+  remove with: ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R
+192.168.0.5
+ECDSA host key &lt;span class="k"&gt;for&lt;/span&gt; 192.168.0.5 has changed and you have
+requested strict checking.
+Host key verification failed.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;Host Key&lt;/em&gt; 가 달라서 발생하는 문제다. 자세히 말하면, 클라이언트 측에 등록된 SSH 서버의 호스트 키가 현재 접속 시도하면서 새롭게 받은 호스크 키와 달라서 발생한 문제이다.&lt;/p&gt;
+&lt;p&gt;SSH 서버에서 호스트 키를 새롭게 생성했거나, 클라이언트 측에서 SSH 서버의 호스트 키를 수동으로 입력했는데 잘못입력했거나, 서버를 재설치했거나, 기타 등등의 이유로 기존에 저장된 호스트 키와 연결시도하면서 새롭게 받은 호스트 키가 다를 수 있다.&lt;/p&gt;
+&lt;p&gt;이는 SSH 연결을 시도하는 서버가 정말 내가 연결하려는 서버가 맞는지를 체크할 수 있는 기능이다. HTTPS 를 사용할 때 신뢰할 수 있는 사이트인지 확인하는 것과 비슷한 이유로 제공되는 기능이다.&lt;/p&gt;
+&lt;h2&gt;해결 방법&lt;/h2&gt;
+&lt;p&gt;해결하는 방법은 여러개가 있다.&lt;/p&gt;
+&lt;h3&gt;known_host 삭제하여 해결&lt;/h3&gt;
+&lt;p&gt;보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 &lt;user_home&gt;/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R 192.168.0.5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
+The authenticity of host &lt;span class="s1"&gt;&amp;#39;192.168.0.5&amp;#39;&lt;/span&gt; can&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t be established.
+ECDSA key fingerprint is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Are you sure you want to &lt;span class="k"&gt;continue&lt;/span&gt; connecting &lt;span class="o"&gt;(&lt;/span&gt;yes/no&lt;span class="o"&gt;)&lt;/span&gt;?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;yes 를 입력하면 호스트 키를 &lt;user_home&gt;/.ssh/known_hosts 파일에 저장하고 SSH 접속하게 된다.&lt;/p&gt;
+&lt;p&gt;만약 명령어 치는게 귀찮으면 그냥 known_hosts 파일 삭제하면 된다.&lt;/p&gt;
+&lt;h3&gt;StrictHostKeyChecking 설정을 off 하여 해결&lt;/h3&gt;
+&lt;p&gt;리눅스에서 ssh 설정은 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 디렉터리에 있다. &lt;code&gt;ssh_config&lt;/code&gt; 파일은 클라이언트 설정 파일, &lt;code&gt;sshd_config&lt;/code&gt; 는 서버(데몬) 설정 파일이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ssh_config&lt;/code&gt; 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;StrictHostKeyChecking no
+&lt;span class="nv"&gt;UserKnownHostsFile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/null
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;호스트 키 새로 생성하는 방법&lt;/h2&gt;
+&lt;p&gt;서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.&lt;/p&gt;
+&lt;p&gt;호스트 키는 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 에 저장되어 있다. &lt;em&gt;RSA&lt;/em&gt;, &lt;em&gt;DSA&lt;/em&gt;, &lt;em&gt;ECDSA&lt;/em&gt; 세 가지 종류의 키 파일들이 보통 생성되어 있다.&lt;/p&gt;
+&lt;p&gt;새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t rsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t dsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t ecdsa -b 521
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="ssh"></category></entry><entry><title>Git Basics</title><link href="https://imjang57.github.io/garret/git-basics.html" rel="alternate"></link><published>2017-01-05T00:00:00+09:00</published><updated>2017-01-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-05:/garret/git-basics.html</id><summary type="html">&lt;p&gt;Git 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git Basic&lt;/h1&gt;
 &lt;p&gt;이 글은 Git 에 대해 기본적인 내용은 알고 있다고 생각하고 정리 목적으로 작성된 글이니 Git 을 아예 모르면 &lt;a href="http://git-scm.com/book/"&gt;Git Book&lt;/a&gt; 을 먼저 숙지하자.&lt;/p&gt;
 &lt;p&gt;아래 내용들에 알면 Git 을 잘 사용하기 위한 개념들은 다 알고 있다고 봐도 된다.&lt;/p&gt;
 &lt;ul&gt;
@@ -1104,7 +1204,112 @@ git commit --amend
 &lt;li&gt;&lt;a href="http://git-scm.com/book/en/v2"&gt;Git Book English&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://git-scm.com/book/ko/v2"&gt;Git Book Korean&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://rogerdudler.github.io/git-guide/index.ko.html"&gt;git - 간편 안내서&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="git"></category></entry><entry><title>Linux help, man, info, TLDP</title><link href="https://imjang57.github.io/garret/linux-help-man-info-tldp.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-07T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-help-man-info-tldp.html</id><summary type="html">&lt;p&gt;Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux &lt;em&gt;help&lt;/em&gt;, &lt;em&gt;man pages&lt;/em&gt;, GNU &lt;em&gt;info&lt;/em&gt;, TLDP&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="git"></category></entry><entry><title>SSH Timeout Configuration</title><link href="https://imjang57.github.io/garret/ssh-timeout-configuration.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-timeout-configuration.html</id><summary type="html">&lt;p&gt;SSH 접속 시 Timeout 설정하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH Timeout 관련 설정&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;TCPKeepAlive yes
+ClientAliveInterval 30
+ClientAliveCountMax 99999
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;restart sshd:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ systemctl restart sshd
+&lt;/pre&gt;&lt;/div&gt;</content><category term="ssh"></category><category term="timeout"></category></entry><entry><title>SSH Tunneling</title><link href="https://imjang57.github.io/garret/ssh-tunneling.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-tunneling.html</id><summary type="html">&lt;p&gt;SSH Tunneling 사용 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH Tunneling&lt;/h1&gt;
+&lt;p&gt;SSH(Secure SHell)는 이름에서 알 수 있듯이 보안성이 좋은 프로토콜이다. SSH는 비대칭키를 이용한 인증(Authentication), 대칭키를 이용한 데이터 암호화(Encryption), 네트웍을 통해 전송된 데이터가 변경되지 않았음을 보장하는 무결성(Integrity) 등을 제공한다.&lt;/p&gt;
+&lt;p&gt;이외에 SSH는 정말 유용한 기능을 제공하는데 바로 포트 포워딩(Port Forwarding)을 이용한 터널링(Tunneling)이다.&lt;/p&gt;
+&lt;p&gt;SSH 클라이언트가 SSH 서버에 연결되면 둘 사이에 연결이 생성되는데 이를 보통 &lt;strong&gt;터널(Tunnel)&lt;/strong&gt; 이라고 한다. 그리고 이 터널은 클라이언트와 서버 사이에서 암호화로 보호되는 통로이다. 보통은 이 터널을 통해서 클라이언트와 서버가 통신하는데, 포트 포워딩이라는 기술을 사용하면 이 터널을 다른 애플리케이션들이 이용하도록 할 수가 있다. 이를 터널링이라고 한다. 터널링을 사용하면 애플리케이션은 별도로 개발할 필요 없이 SSH의 보안 통로를 사용할 수 있게 되는 것이다. 터널링은 TCP만 가능하고 UDP는 불가능하다.&lt;/p&gt;
+&lt;p&gt;터널링은 크게 &lt;strong&gt;로컬 포트 포워딩(Local Port Forwarding)&lt;/strong&gt; 과 &lt;strong&gt;리모트 포트 포워딩(Remote Port Forwarding)&lt;/strong&gt; 으로 나누어져 있다. 어디가 요청을 받고 어느 방향으로 전달해주냐에 따라 나누어 진다. 그리고 포트 포워딩을 통한 SSH 터널링은 SSH 연결이 유지되는 동안에만 사용할 수 있다.&lt;/p&gt;
+&lt;h1&gt;Local Port Forwarding&lt;/h1&gt;
+&lt;p&gt;로컬 포트 포워딩은 SSH 클라이언트가 요청을 받아 SSH 서버를 통해 다른 서버로 요청을 포워딩해주는 것이다. 로컬 포트 포워딩은 다음과 같이 실행하면 사용할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -L&amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt; port number&amp;gt;:&amp;lt;host&amp;gt;:&amp;lt;remote port number&amp;gt; &amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;span class="o"&gt;[&lt;/span&gt;:&amp;lt;SSH server port&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;&amp;lt;local port number&amp;gt;&lt;/code&gt;는 SSH 클라이언트가 애플리케이션을 위해 포트를 열고 대기(LISTEN)하고 있는 포트 번호이다. &lt;code&gt;&amp;lt;host&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버 주소이다. &lt;code&gt;&amp;lt;remote port number&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버의 포트 번호이다. 그리고 SSH 연결을 위해 &lt;code&gt;&amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;/code&gt;를 전달한다.&lt;/p&gt;
+&lt;p&gt;예를 들어, SSH를 통해서만 연결이 가능한 분리된 네트웍이 있다고 하자. 하나는 &lt;code&gt;192.168.0.0/24&lt;/code&gt;이고 다른 하나는 &lt;code&gt;192.169.0.0/24&lt;/code&gt;이다. SSH 클라이언트는 &lt;code&gt;192.168.0.5&lt;/code&gt;, 애플리케이션은 &lt;code&gt;192.168.0.10&lt;/code&gt;, SSH 서버는 &lt;code&gt;192.169.0.5:22&lt;/code&gt;, API 서버는 &lt;code&gt;192.169.0.10:10050&lt;/code&gt;일 때 로컬 호스트에서 로컬 포트 포워딩으로 API 서버에 요청을 하려면 다음과 같이 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -L10010:192.169.0.10:10050 myuser@192.169.0.5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 애플리케이션은 &lt;code&gt;192.168.0.5:10010&lt;/code&gt;으로 요청하면 SSH 터널을 통해 API 서버로 요청을 전달할 수 있다. 즉, 애플리케이션 -&amp;gt; SSH 클라이언트 -&amp;gt; SSH 서버 -&amp;gt; API 서버로 전달이 되는 것이다.&lt;/p&gt;
+&lt;h1&gt;Remote Port Forwaring&lt;/h1&gt;
+&lt;p&gt;리모트 포트 포워딩은 로컬 포트 포워딩과 반대이다. SSH 서버가 요청을 받아 SSH 클라이언트를 통해 다른 서버로 요청을 포워딩해주는 것이다. 리모트 포트 포워딩은 다음과 같이 실행하면 사용할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -R&amp;lt;remote port number&amp;gt;:&amp;lt;host&amp;gt;:&amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt; port number&amp;gt; &amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;span class="o"&gt;[&lt;/span&gt;:&amp;lt;SSH server port&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;&amp;lt;remote port number&amp;gt;&lt;/code&gt;는 SSH 서버가 애플리케이션을 위해 포트를 열고 대기(LISTEN)하고 있는 포트 번호이다. &lt;code&gt;&amp;lt;host&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버 주소이다. &lt;code&gt;&amp;lt;local port number&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버의 포트 번호이다. 그리고 SSH 연결을 위해 &lt;code&gt;&amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;/code&gt;를 전달한다.&lt;/p&gt;
+&lt;p&gt;가만히 보면 로컬 포트 포워딩과 순서가 반대인 것을 알 수 있다. 예를 들어, 예를 들어, SSH를 통해서만 연결이 가능한 분리된 네트웍이 있다고 하자. 하나는 &lt;code&gt;192.168.0.0/24&lt;/code&gt;이고 다른 하나는 &lt;code&gt;192.169.0.0/24&lt;/code&gt;이다. SSH 클라이언트는 &lt;code&gt;192.168.0.5&lt;/code&gt;, API 서버는 &lt;code&gt;192.168.0.10&lt;/code&gt;, SSH 서버는 &lt;code&gt;192.169.0.5:22&lt;/code&gt;, 애플리케이션은 &lt;code&gt;192.169.0.10:10050&lt;/code&gt;일 때 로컬 호스트에서 로컬 포트 포워딩으로 API 서버에 요청을 하려면 다음과 같이 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -R10050:192.168.0.10:10010 myuser@192.169.0.5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 애플리케이션은 &lt;code&gt;192.169.0.5:10050&lt;/code&gt;으로 요청하면 SSH 터널을 통해 API 서버로 요청을 전달할 수 있다. 즉, 애플리케이션 -&amp;gt; SSH 서버 -&amp;gt; SSH 클라이언트 -&amp;gt; API 서버로 전달이 되는 것이다.&lt;/p&gt;
+&lt;h1&gt;참고사항&lt;/h1&gt;
+&lt;p&gt;SSH 터널링을 이용하면 방화벽을 우회할 수 있고, SSH가 제공하는 암호화된 통신을 쉽게 다른 목적으로도 사용할 수 있다. 그러니 SSH 접근 권한과 관련된 정보(로그인 정보, SSH Key 등)를 잘 관리하자.&lt;/p&gt;</content><category term="ssh"></category><category term="tunneling"></category></entry><entry><title>SSH with key</title><link href="https://imjang57.github.io/garret/ssh-with-key.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-with-key.html</id><summary type="html">&lt;p&gt;Key 로 SSH 로그인 하기 위한 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH with key file&lt;/h1&gt;
+&lt;p&gt;SSH를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때... 이 때 키(Key) 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다. 또한, 비밀키(Private Key) 를 잘 관리하여 SSH 접속에 대한 보안을 강화할 수도 있다. 물론 모든 보안이 그렇듯이 얼마나 비밀키를 잘 관리하느냐가 중요하다.&lt;/p&gt;
+&lt;p&gt;SSH에서 키를 이용한 로그인을 위해 키파일(Key file)을 생성하고 SSH 서버에 키의 정보를 등록해주어야 한다. 키를 생성할 때 여러 암호화 알고리즘을 사용할 수 있지만 보통 RSA 비대칭키 암호화(RSA asymmetric encryption) 방식을 많이 사용한다. RSA 키파일을 생성하고 이 키를 이용하여 SSH 로그인하기 위해 다음과 같은 과정이 필요하다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;공개키(Public Key) 와 비밀키(Private Key) 를 생성&lt;/li&gt;
+&lt;li&gt;로컬 호스트(Local Host), 즉 SSH 클라이언트(SSH Client)에 비밀키를 저장&lt;/li&gt;
+&lt;li&gt;원격 호스트(Remote Host), 즉 SSH 서버(SSH Server)에 공개키를 등록&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;SSH 접속이 진행되는 과정을 살펴보면 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SSH 클라이언트가 SSH 서버 측에 접속 요청&lt;/li&gt;
+&lt;li&gt;SSH 서버는 자신의 공개키(위에서 생성한 키가 아니라 원래 SSH 서버가 가지고 있는 키)를 SSH 클라이언트에게 전달&lt;/li&gt;
+&lt;li&gt;SSH 클라이언트는 SSH 서버가 전달한 공개키로 자신의 비밀키를 암호화하여 SSH 서버에게 전달&lt;/li&gt;
+&lt;li&gt;SSH 서버는 자신이 가진 공개키 목록을 보고 SSH 클라이언트가 전달한 비밀키와 매칭되는 공개키가 있으면 로그인을 승인&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;위에서 언급한 대로 로그인 과정에서는 비대칭키를 사용한다. 하지만 로그인이 성공한 이후에는 대칭키를 만들고, 비대칭키로 생성된 대칭키를 공유하고, 이후 데이터 전송에는 이 대칭키(Symmetric key)를 사용한다. 비대칭키는 연산이 더 오래걸리기 때문이다.&lt;/p&gt;
+&lt;h2&gt;Key 생성&lt;/h2&gt;
+&lt;p&gt;먼저 Public Key 와 Private Key 를 생성한다. 리눅스에서는 아래와 같은 명령을 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key &lt;span class="o"&gt;(&lt;/span&gt;/home/axl/.ssh/id_rsa&lt;span class="o"&gt;)&lt;/span&gt;: &amp;lt;&lt;span class="k"&gt;return&lt;/span&gt;&amp;gt;
+Enter passphrase &lt;span class="o"&gt;(&lt;/span&gt;empty &lt;span class="k"&gt;for&lt;/span&gt; no passphrase&lt;span class="o"&gt;)&lt;/span&gt;: &amp;lt;Type the passphrase&amp;gt;
+Enter same passphrase again: &amp;lt;Type the passphrase&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt; 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 &lt;code&gt;$HOME/.ssh/&lt;/code&gt; 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. &lt;code&gt;passphrase&lt;/code&gt; 는 비밀키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.&lt;/p&gt;
+&lt;p&gt;키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 아래 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;drwx------  &lt;span class="m"&gt;2&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:54 .
+drwxr-xr-x &lt;span class="m"&gt;16&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Mar  &lt;span class="m"&gt;1&lt;/span&gt; 06:02 ..
+-rw-rw-r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;790&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 06:04 authorized_keys
+-rw-------  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;1675&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:51 id_rsa
+-rw-r--r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;395&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:51 id_rsa.pub
+-rw-r--r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;2216&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 18:34 known_hosts
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;authorized_keys&lt;/code&gt; 파일은 없을수도 있다. 보통 SSH 서버 측에서 접속을 허용할 공개키 정보를 저장하는 파일이다. &lt;code&gt;id_rsa&lt;/code&gt; 파일은 비밀키를 저장한 파일이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. 또한, 함부로 수정되어서는 안되므로 파일 권한을 꼭 600으로 지정해주자. &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일은 공개키를 저장한 파일이다. 접속하려는 원격 호스트의 &lt;code&gt;authorized_keys&lt;/code&gt;에 &lt;code&gt;id_rsa.pub&lt;/code&gt;파일에 저장된 공개키를 추가해야 키를 이용한 로그인을 할 수 있다.&lt;/p&gt;
+&lt;h2&gt;Remote Host 에 Public Key 등록&lt;/h2&gt;
+&lt;p&gt;이제 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일을 리모트 서버의 &lt;code&gt;$HOME/.ssh/authorized_keys&lt;/code&gt; 파일에 추가해줘야 한다. SSH Server의 &lt;code&gt;authorized_keys&lt;/code&gt; 의 내용이 SSH Client의 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일과 같아야 한다.&lt;/p&gt;
+&lt;p&gt;아래와 같이 SCP (Secure Copy) 를 이용하여 Public Key 를 Remote Host 에 복사한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;scp &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.ssh/id_rsa.pub root@server.net:id_rsa.pub&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 Public Key 를 Remote Host 의 authorized_keys 에 추가한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;cat &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/id_rsa.pub &amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.ssh/authorized_keys&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;SSH 접속&lt;/h2&gt;
+&lt;p&gt;이후에는 비밀번호 없이 바로 SSH 접속이 가능하다.&lt;/p&gt;
+&lt;p&gt;만약 Private Key 를 다른 곳에 저장했다면 아래와 같이 &lt;code&gt;-i&lt;/code&gt; 옵션을 사용하여 키를 지정할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh root@server.net -i keyfile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Remote Host 의 SSHD 설정&lt;/h2&gt;
+&lt;p&gt;Key 를 이용한 SSH 로그인을 사용하기 위해서는 Remote Host 의 SSHD 설정에서 RSA 키 인증을 사용하도록 설정해야 한다. 아래와 같은 내용이 있는지 SSHD 설정 파일 (&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;) 을 확인한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;RSAAuthentication yes
+#DSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;</content><category term="ssh"></category><category term="key-gen"></category></entry><entry><title>Linux help, man, info, TLDP</title><link href="https://imjang57.github.io/garret/linux-help-man-info-tldp.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-07T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-help-man-info-tldp.html</id><summary type="html">&lt;p&gt;Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux &lt;em&gt;help&lt;/em&gt;, &lt;em&gt;man pages&lt;/em&gt;, GNU &lt;em&gt;info&lt;/em&gt;, TLDP&lt;/h1&gt;
 &lt;p&gt;Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글이다.&lt;/p&gt;
 &lt;p&gt;Linux 를 사용하다보면 Console 등의 CLI (Command-Line Interface) 에서 여러 명령어들을 사용하게 된다. 그런데 매우 많은 명령어들이 있고 각 명령어마다 다양한 옵션과 Argument 를 사용할 수 있기 때문에 이들의 사용법을 모두 외우는 것은 거의 불가능하고 비효율적이다.&lt;/p&gt;
 &lt;p&gt;그래서 어떤 명령어에 대해 익히면 이후에는 &lt;code&gt;--help&lt;/code&gt; 옵션, &lt;em&gt;man pages&lt;/em&gt; utility, GNU &lt;em&gt;info&lt;/em&gt; utility 등을 참고하며 사용하게 된다.&lt;/p&gt;
@@ -1246,7 +1451,40 @@ slappasswd&lt;span class="o"&gt;(&lt;/span&gt;8&lt;span class="o"&gt;)&lt;/span&
 &lt;p&gt;KLDP 에서도 매우 많은 TLDP 문서의 번역을 제공하고 있다. 예를 들면 &lt;a href="https://wiki.kldp.org/Translations/html/SysAdminGuide-KLDP/book1.html"&gt;The Linux System Administrators' Guide 번역&lt;/a&gt;과 같은 것들이 있다. KLDP 의 더 많은 번역 문서들은 &lt;a href="https://wiki.kldp.org/Translations/html/"&gt;여기&lt;/a&gt;에서 확인할 수 있다.&lt;/p&gt;
 &lt;h1&gt;기타&lt;/h1&gt;
 &lt;p&gt;IT는 매우 많은 분야가 있고 매우 많은 요소들이 결합되어 유기적으로 동작한다. 한 명이 모든 내용을 알기는 불가능하다. 그래서 웹을 통한 지식 공유가 매우 중요하다. 내 분야에서의 기초 지식과 핵심 원리에 집중하고 나머지는 위임하거나 협력해야 한다.&lt;/p&gt;
-&lt;p&gt;TLDP 외에도 &lt;a href="https://www.google.com/"&gt;google&lt;/a&gt; 검색을 습관화하고 &lt;a href="http://stackoverflow.com/"&gt;stack overflow&lt;/a&gt; 등을 적극 활용하면 좋다. 단, 잘못된 지식이나 오래된 지식은 거를 수도 있어야 하니 무조건적으로 맹신하는 것은 좋지 않다.&lt;/p&gt;</content><category term="linux"></category><category term="help"></category><category term="man"></category><category term="info"></category></entry><entry><title>Shell, Bash, Zsh</title><link href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/introduction-shell-bash-zsh.html</id><summary type="html">&lt;p&gt;내가 사용하는 Shell 에 대한 소개와 설치 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Shell&lt;/h1&gt;
+&lt;p&gt;TLDP 외에도 &lt;a href="https://www.google.com/"&gt;google&lt;/a&gt; 검색을 습관화하고 &lt;a href="http://stackoverflow.com/"&gt;stack overflow&lt;/a&gt; 등을 적극 활용하면 좋다. 단, 잘못된 지식이나 오래된 지식은 거를 수도 있어야 하니 무조건적으로 맹신하는 것은 좋지 않다.&lt;/p&gt;</content><category term="linux"></category><category term="help"></category><category term="man"></category><category term="info"></category></entry><entry><title>특수 문자들의 영어 이름</title><link href="https://imjang57.github.io/garret/name-of-special-characters.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/name-of-special-characters.html</id><summary type="html">&lt;p&gt;특수 문자들의 영어 이름&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Special characters name&lt;/h1&gt;
+&lt;p&gt;개발자로 살면 다양한 특수문자들을 사용하게 되는데 구글링하거나 다른 사람과 대화할 때 이들의 이름이 기억안나 당황하는 경우가 많다. 그래서 이들의 영어 이름을 메모한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;#39; : single quotation mark, single quote
+&amp;quot; : double quotation mark, double quote
+* : asterisk, bullet
+$ : dollar
+- : dash, hyphen, minus sign
+_ : underscore
+% : percent sign
+# : pound sign, number of, hashtag
+&amp;amp; : ampersand
+: : colon
+; : semi-colon
+| : vertical bar, pipe
+\ : backslash
+/ : slash, divide
+&amp;lt; : less than sign
+&amp;gt; : greater than sign
+? : question mark
+! : exclamation mark
+() : parentheses, bracket
+( : open parenthesss
+) : close parenthesss
+[] : square bracket
+{} : curly bracket
++ : plus sign
+= : equal sign
+. : dot, period
+, : comma
+^ : caret, modifier letter, circumflex accent
+` : grave accent, back tick, back quote
+~ : tilde
+@ : at symbol
+&lt;/pre&gt;&lt;/div&gt;</content><category term="special characters"></category></entry><entry><title>Shell, Bash, Zsh</title><link href="https://imjang57.github.io/garret/shell-introduction-bash-zsh.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/shell-introduction-bash-zsh.html</id><summary type="html">&lt;p&gt;내가 사용하는 Shell 에 대한 소개와 설치 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Shell&lt;/h1&gt;
 &lt;p&gt;&lt;em&gt;Shell&lt;/em&gt; 은 &lt;em&gt;OS&lt;/em&gt; (&lt;em&gt;Operating System&lt;/em&gt;) 가 제공하는 여러 서비스들을 사용하기 위한 User interface 를 말한다. &lt;em&gt;CLI&lt;/em&gt; (&lt;em&gt;Command-line interface&lt;/em&gt;) 도 &lt;em&gt;Shell&lt;/em&gt; 이고 &lt;em&gt;GUI&lt;/em&gt; (&lt;em&gt;Graphical User Interface&lt;/em&gt;) 도 &lt;em&gt;Shell&lt;/em&gt; 이다.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Linux&lt;/em&gt; 와 &lt;em&gt;OS X&lt;/em&gt; 에서는 보통 &lt;em&gt;Bash&lt;/em&gt; 가 Default shell 로 제공된다. 이 외에 &lt;em&gt;csh&lt;/em&gt;, &lt;em&gt;ksh&lt;/em&gt;, &lt;em&gt;zsh&lt;/em&gt; 등 많은 &lt;em&gt;Shell&lt;/em&gt; 들이 있다.&lt;/p&gt;
 &lt;p&gt;요즘 가장 많이 사용되는 Linux 와 OS X  에서 Default shell 이고 수 많은 shell script 들이 &lt;em&gt;Bash&lt;/em&gt; 를 기반으로 작성되기 때문에 &lt;em&gt;Bash&lt;/em&gt; 는 필수이다. 여기에 나는 개인적으로 사용되는 환경에서는 &lt;em&gt;Zsh&lt;/em&gt; 을 추가로 설치해서 사용한다.&lt;/p&gt;

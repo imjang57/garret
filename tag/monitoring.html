@@ -1,253 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-        <meta charset="utf-8" />
-        <title>garret - monitoring</title>
-        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
-        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
-                <nav><ul>
-                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html">JVM Process monitoring with JDK tools</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2017-01-18T00:00:00+09:00">
-                Published: 수 18 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
-                Updated: 수 18 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/java.html">java</a> <a href="https://imjang57.github.io/garret/tag/jvm.html">jvm</a> <a href="https://imjang57.github.io/garret/tag/monitoring.html">monitoring</a> <a href="https://imjang57.github.io/garret/tag/jps.html">jps</a> <a href="https://imjang57.github.io/garret/tag/stat.html">stat</a> <a href="https://imjang57.github.io/garret/tag/stack.html">stack</a> </p>
-</footer><!-- /.post-info --><h1>JVM Process monitoring</h1>
-<p>요즘 일 때문에 오랜만에 자바를 사용하고 있고, 스칼라에 관심이 생겨 공부해보고 있다. 그런데 둘다 <em>JVM</em> 기반 언어다 보니 JVM 에 대해 알아야 겠다는 생각이 들었다. (사실 일하다가 JVM 모니터링 할 일이 생긴 김에 간단하게 정리한다.) 어쨌든 둘 다 JVM 에서 동작하는 녀석들이라 JVM 모니터링에 대해 간단하게 남겨보고자 한다.</p>
-<p>자바든 스칼라든 실행되면 JVM 프로세스이다. 자바나 스칼라로 쓰여진 코드는 Java Bytecode 로 컴파일되고, JVM 은 이 Bytecode 를 실행한다. 그러므로 컴파일 된 이후에는 자바로 작성했든 스칼라로 작성했든 JVM 입장에서는 그냥 똑같은 Bytecode 이다. 그러니 같은 방법(JVM Process monitoring)으로 모니터링할 수 있다.</p>
-<h1>JVM Monitoring tools</h1>
-<p><em>JDK (Java Development Kit)</em> 를 설치하면 기본적으로 자바 코드를 컴파일하기 위한 <code>javac</code>, 컴파일된 bytecode 를 실행하는 <code>java</code> 를 제공한다. 그리고 개발자들을 위한 다양한 도구들을 기본적으로 제공한다. 모니터링을 위해서 아래 도구들을 사용가능하다.(물론 아래 도구들 외에 더 많다.)</p>
-<ul>
-<li><code>jps</code> : JVM Process Status</li>
-<li><code>jstat</code> : JVM Statistics</li>
-<li><code>jhat</code> : Java Heap Analysis Tool</li>
-<li><code>jstack</code> : Java thread Stack traces</li>
-</ul>
-<p><em>VisualVM</em> 과 같은 GUI 도구도 있지만 어쨌든 기본은 CLI 도구들이고, GUI 도구들도 CLI 도구들을 이용하는 형태이다.</p>
-<h1>JVM Monitoring</h1>
-<p>JVM 프로세스를 모니터링하려면 당연히 JVM 프로세스가 있어야 한다. 테스트 프로그램은 임시로 tomcat 을 사용하였다.</p>
-<ul>
-<li><code>yum install -y tomcat</code></li>
-<li><code>passwd tomcat</code></li>
-<li><code>/etc/passwd</code> 파일에서 tomcat 계정의 login shell 을 bash 로 지정</li>
-<li><code>sudo service tomcat start</code></li>
-<li>tomcat 계정으로 전환(<code>su - tomcat</code>)</li>
-</ul>
-<h2>jps : JVM Process Status</h2>
-<p><code>jps</code> 를 실행하면 JVM Process 목록과 PID 를 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span>$ jps
-<span class="m">17285</span> Bootstrap
-<span class="m">17322</span> Jps
-$ jps -m
-<span class="m">17285</span> Bootstrap start
-<span class="m">17398</span> Jps -m
-$ jps -ml
-<span class="m">17285</span> org.apache.catalina.startup.Bootstrap start
-<span class="m">17413</span> sun.tools.jps.Jps -ml
-$
-</pre></div>
+  <title>  #monitoring Articles | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/tag/monitoring.html">
 
 
-<h2>jstat: JVM Statistics</h2>
-<p><code>jps</code> 에서 확인한 PID 로 <code>jstat</code> 를 실행할 수 있다. 위에서 tomcat 을 실행하는 Bootstrap 의 PID 가 17285 이므로 이를 이용하여 <code>jstat</code> 을 실행하였다. 그리고 1000 밀리초 단위로 통계치를 수집하도록 하였다. 결과는 퍼센트(%)로 출력된다.</p>
-<div class="highlight"><pre><span></span>$ jstat -gcutil <span class="m">17285</span> 1000
-  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   
-  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
-  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
-  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
-  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
-  0.00  98.44  60.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005
-$
-</pre></div>
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
 
-
-<p>위에서처럼 <code>-gcutil</code> 옵션을 사용하면 Java Heap 현황을 확인할 수 있다.</p>
-<ul>
-<li><em>GCT</em> : Garbage Collection Time (seconds, 누적)</li>
-<li><em>FGCT</em> : Full GCT (seconds, 누적)</li>
-<li><em>FGC</em> : Full Garbage Collection 발생 회수</li>
-<li><em>M</em> : Metaspace 영역의 사용률</li>
-<li><em>S0</em> : Survivor 0 영역의 사용률</li>
-<li><em>S1</em> : Survivor 1 영역의 사용률</li>
-<li><em>E</em> : Eden 영역의 사용률</li>
-<li><em>O</em> : Old 영역의 사용률</li>
-<li><em>CCS</em> : Compressed Class Space (part of metaspace)</li>
-<li><em>YGC</em> : Young GC 발생 회수</li>
-<li><em>YGCT</em> : Young GC Time (seconds, 누적)</li>
-</ul>
-<p>FGCT 열의 값이 계속 증가하면 문제가 있는 것이다.</p>
-<p>M 열은 Metadata 를 위한 힙 영역이다. 이 영역은 자바8부터 M(Metaspace)로 표시되기 시작했고 이전 버전까지는 P(Permgen, Permanent Generation) 영역이라고 불리었다. 클래스의 Metadata, JVM 내부 객체 등이 저장되는 중요한 곳이다. 매우 무조건 자바 프로그램의 경우 이 영역에서 <code>java.lang.OutOfMemoryError</code> 를 만날 수도 있다.</p>
-<p><code>-gcutil</code> 대신 <code>-gccause</code> 옵션을 사용하면 <code>-gcutil</code> 의 결과에 GC 의 원인까지 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span>$ jstat -gccause <span class="m">17285</span> 1000
-  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC                 
-  0.00  98.44  61.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005 Allocation Failure   No GC               
-  0.00  98.44  61.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005 Allocation Failure   No GC               
-  0.00  98.44  61.41   5.27  96.61  89.46      <span class="m">1</span>    0.005     <span class="m">0</span>    0.000    0.005 Allocation Failure   No GC               
-$
-</pre></div>
-
-
-<ul>
-<li><em>LGCC</em> : 지난 GC의 발생 이유</li>
-<li><em>GCC</em> : 현재 GC의 발생 이유</li>
-</ul>
-<h2>jstack: Java thread Stack traces</h2>
-<p><code>jstack</code> 을 이용하면 현재 Java 프로세스의 stack dump 를 얻을 수 있다. <code>jstack</code> 을 이용하면 현재 실행 중인 여러 thread 들의 stack 을 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span>$ jstack 17285
-2016-12-26 10:32:20
-Full thread dump OpenJDK 64-Bit Server VM <span class="o">(</span>25.111-b15 mixed mode<span class="o">)</span>:
-<span class="s2">&quot;Attach Listener&quot;</span> <span class="c1">#17 daemon prio=9 os_prio=0 tid=0x00007f48d0001000 nid=0x458b waiting on condition [0x0000000000000000]</span>
-   java.lang.Thread.State: RUNNABLE
-<span class="s2">&quot;ajp-bio-8009-AsyncTimeout&quot;</span> <span class="c1">#15 daemon prio=5 os_prio=0 tid=0x00007f491049c800 nid=0x43a9 waiting on condition [0x00007f48f8ba4000]</span>
-   java.lang.Thread.State: TIMED_WAITING <span class="o">(</span>sleeping<span class="o">)</span>
- at java.lang.Thread.sleep<span class="o">(</span>Native Method<span class="o">)</span>
- at org.apache.tomcat.util.net.JIoEndpoint<span class="nv">$AsyncTimeout</span>.run<span class="o">(</span>JIoEndpoint.java:152<span class="o">)</span>
- at java.lang.Thread.run<span class="o">(</span>Thread.java:745<span class="o">)</span>
-<span class="s2">&quot;ajp-bio-8009-Acceptor-0&quot;</span> <span class="c1">#14 daemon prio=5 os_prio=0 tid=0x00007f491049a000 nid=0x43a8 runnable [0x00007f48f8ca5000]</span>
-   java.lang.Thread.State: RUNNABLE
- at java.net.PlainSocketImpl.socketAccept<span class="o">(</span>Native Method<span class="o">)</span>
- at java.net.AbstractPlainSocketImpl.accept<span class="o">(</span>AbstractPlainSocketImpl.java:409<span class="o">)</span>
- at java.net.ServerSocket.implAccept<span class="o">(</span>ServerSocket.java:545<span class="o">)</span>
- at java.net.ServerSocket.accept<span class="o">(</span>ServerSocket.java:513<span class="o">)</span>
- at org.apache.tomcat.util.net.DefaultServerSocketFactory.acceptSocket<span class="o">(</span>DefaultServerSocketFactory.java:60<span class="o">)</span>
- at org.apache.tomcat.util.net.JIoEndpoint<span class="nv">$Acceptor</span>.run<span class="o">(</span>JIoEndpoint.java:222<span class="o">)</span>
- at java.lang.Thread.run<span class="o">(</span>Thread.java:745<span class="o">)</span>
-<span class="s2">&quot;ContainerBackgroundProcessor[StandardEngine[Catalina]]&quot;</span> <span class="c1">#13 daemon prio=5 os_prio=0 tid=0x00007f4910497000 nid=0x43a7 waiting on condition [0x00007f48f8da6000]</span>
-   java.lang.Thread.State: TIMED_WAITING <span class="o">(</span>sleeping<span class="o">)</span>
- at java.lang.Thread.sleep<span class="o">(</span>Native Method<span class="o">)</span>
- at org.apache.catalina.core.ContainerBase<span class="nv">$ContainerBackgroundProcessor</span>.run<span class="o">(</span>ContainerBase.java:1510<span class="o">)</span>
- at java.lang.Thread.run<span class="o">(</span>Thread.java:745<span class="o">)</span>
-<span class="s2">&quot;GC Daemon&quot;</span> <span class="c1">#11 daemon prio=2 os_prio=0 tid=0x00007f491040c800 nid=0x43a5 in Object.wait() [0x00007f48fa637000]</span>
-   java.lang.Thread.State: TIMED_WAITING <span class="o">(</span>on object monitor<span class="o">)</span>
- at java.lang.Object.wait<span class="o">(</span>Native Method<span class="o">)</span>
- - waiting on &lt;0x00000000ecfdd7d0&gt; <span class="o">(</span>a sun.misc.GC<span class="nv">$LatencyLock</span><span class="o">)</span>
- at sun.misc.GC<span class="nv">$Daemon</span>.run<span class="o">(</span>GC.java:117<span class="o">)</span>
- - locked &lt;0x00000000ecfdd7d0&gt; <span class="o">(</span>a sun.misc.GC<span class="nv">$LatencyLock</span><span class="o">)</span>
-<span class="s2">&quot;Service Thread&quot;</span> <span class="c1">#8 daemon prio=9 os_prio=0 tid=0x00007f49100e1000 nid=0x43a3 runnable [0x0000000000000000]</span>
-   java.lang.Thread.State: RUNNABLE
-<span class="s2">&quot;C1 CompilerThread2&quot;</span> <span class="c1">#7 daemon prio=9 os_prio=0 tid=0x00007f49100ce000 nid=0x43a2 waiting on condition [0x0000000000000000]</span>
-   java.lang.Thread.State: RUNNABLE
-<span class="s2">&quot;C2 CompilerThread1&quot;</span> <span class="c1">#6 daemon prio=9 os_prio=0 tid=0x00007f49100cc800 nid=0x43a1 waiting on condition [0x0000000000000000]</span>
-   java.lang.Thread.State: RUNNABLE
-<span class="s2">&quot;C2 CompilerThread0&quot;</span> <span class="c1">#5 daemon prio=9 os_prio=0 tid=0x00007f49100bf000 nid=0x43a0 waiting on condition [0x0000000000000000]</span>
-   java.lang.Thread.State: RUNNABLE
-<span class="s2">&quot;Signal Dispatcher&quot;</span> <span class="c1">#4 daemon prio=9 os_prio=0 tid=0x00007f49100bc800 nid=0x439f runnable [0x0000000000000000]</span>
-   java.lang.Thread.State: RUNNABLE
-<span class="s2">&quot;Finalizer&quot;</span> <span class="c1">#3 daemon prio=8 os_prio=0 tid=0x00007f4910093000 nid=0x439e in Object.wait() [0x00007f48fb5f4000]</span>
-   java.lang.Thread.State: WAITING <span class="o">(</span>on object monitor<span class="o">)</span>
- at java.lang.Object.wait<span class="o">(</span>Native Method<span class="o">)</span>
- - waiting on &lt;0x00000000edd08988&gt; <span class="o">(</span>a java.lang.ref.ReferenceQueue<span class="nv">$Lock</span><span class="o">)</span>
- at java.lang.ref.ReferenceQueue.remove<span class="o">(</span>ReferenceQueue.java:143<span class="o">)</span>
- - locked &lt;0x00000000edd08988&gt; <span class="o">(</span>a java.lang.ref.ReferenceQueue<span class="nv">$Lock</span><span class="o">)</span>
- at java.lang.ref.ReferenceQueue.remove<span class="o">(</span>ReferenceQueue.java:164<span class="o">)</span>
- at java.lang.ref.Finalizer<span class="nv">$FinalizerThread</span>.run<span class="o">(</span>Finalizer.java:209<span class="o">)</span>
-<span class="s2">&quot;Reference Handler&quot;</span> <span class="c1">#2 daemon prio=10 os_prio=0 tid=0x00007f491008e800 nid=0x439d in Object.wait() [0x00007f48fb6f5000]</span>
-   java.lang.Thread.State: WAITING <span class="o">(</span>on object monitor<span class="o">)</span>
- at java.lang.Object.wait<span class="o">(</span>Native Method<span class="o">)</span>
- - waiting on &lt;0x00000000edd00970&gt; <span class="o">(</span>a java.lang.ref.Reference<span class="nv">$Lock</span><span class="o">)</span>
- at java.lang.Object.wait<span class="o">(</span>Object.java:502<span class="o">)</span>
- at java.lang.ref.Reference.tryHandlePending<span class="o">(</span>Reference.java:191<span class="o">)</span>
- - locked &lt;0x00000000edd00970&gt; <span class="o">(</span>a java.lang.ref.Reference<span class="nv">$Lock</span><span class="o">)</span>
- at java.lang.ref.Reference<span class="nv">$ReferenceHandler</span>.run<span class="o">(</span>Reference.java:153<span class="o">)</span>
-<span class="s2">&quot;main&quot;</span> <span class="c1">#1 prio=5 os_prio=0 tid=0x00007f4910009000 nid=0x4397 runnable [0x00007f4919dbd000]</span>
-   java.lang.Thread.State: RUNNABLE
- at java.net.PlainSocketImpl.socketAccept<span class="o">(</span>Native Method<span class="o">)</span>
- at java.net.AbstractPlainSocketImpl.accept<span class="o">(</span>AbstractPlainSocketImpl.java:409<span class="o">)</span>
- at java.net.ServerSocket.implAccept<span class="o">(</span>ServerSocket.java:545<span class="o">)</span>
- at java.net.ServerSocket.accept<span class="o">(</span>ServerSocket.java:513<span class="o">)</span>
- at org.apache.catalina.core.StandardServer.await<span class="o">(</span>StandardServer.java:470<span class="o">)</span>
- at org.apache.catalina.startup.Catalina.await<span class="o">(</span>Catalina.java:781<span class="o">)</span>
- at org.apache.catalina.startup.Catalina.start<span class="o">(</span>Catalina.java:727<span class="o">)</span>
- at sun.reflect.NativeMethodAccessorImpl.invoke0<span class="o">(</span>Native Method<span class="o">)</span>
- at sun.reflect.NativeMethodAccessorImpl.invoke<span class="o">(</span>NativeMethodAccessorImpl.java:62<span class="o">)</span>
- at sun.reflect.DelegatingMethodAccessorImpl.invoke<span class="o">(</span>DelegatingMethodAccessorImpl.java:43<span class="o">)</span>
- at java.lang.reflect.Method.invoke<span class="o">(</span>Method.java:498<span class="o">)</span>
- at org.apache.catalina.startup.Bootstrap.start<span class="o">(</span>Bootstrap.java:294<span class="o">)</span>
- at org.apache.catalina.startup.Bootstrap.main<span class="o">(</span>Bootstrap.java:428<span class="o">)</span>
-<span class="s2">&quot;VM Thread&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f4910084800 <span class="nv">nid</span><span class="o">=</span>0x439c runnable
-<span class="s2">&quot;GC task thread#0 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f491001e000 <span class="nv">nid</span><span class="o">=</span>0x4398 runnable
-<span class="s2">&quot;GC task thread#1 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f491001f800 <span class="nv">nid</span><span class="o">=</span>0x4399 runnable
-<span class="s2">&quot;GC task thread#2 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f4910021800 <span class="nv">nid</span><span class="o">=</span>0x439a runnable
-<span class="s2">&quot;GC task thread#3 (ParallelGC)&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f4910023800 <span class="nv">nid</span><span class="o">=</span>0x439b runnable
-<span class="s2">&quot;VM Periodic Task Thread&quot;</span> <span class="nv">os_prio</span><span class="o">=</span><span class="m">0</span> <span class="nv">tid</span><span class="o">=</span>0x00007f49100ef800 <span class="nv">nid</span><span class="o">=</span>0x43a4 waiting on condition
-JNI global references: 44
-$
-</pre></div>
-
-
-<h1>References</h1>
-<ul>
-<li><a href="https://www.wolfe.id.au/2011/10/16/monitoring-the-openjdk-from-the-cli/">Monitoring the OpenJDK from the CLI</a></li>
-<li><a href="http://d2.naver.com/helloworld/6043">Garbage Collection 모니터링 방법</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  
+    <meta name="description" content="A private blog site for engineering and thinkin.">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-90095241-1', 'auto');
     ga('send', 'pageview');
-    </script>
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  #monitoring Articles
+</h1>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2017-01-18T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            수 18 1월 2017
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html">JVM Process monitoring with JDK tools</a>
+        </h4>
+        <div class="content">
+          JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개
+        </div>
+      </div>
+    </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
 </body>
+
 </html>

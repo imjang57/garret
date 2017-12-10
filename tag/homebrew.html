@@ -1,172 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-        <meta charset="utf-8" />
-        <title>garret - homebrew</title>
-        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
-        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
-                <nav><ul>
-                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/homebrew-install-and-uninstall.html">HomeBrew Install And Uninstall</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2016-12-31T00:00:00+09:00">
-                Published: 토 31 12월 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-12-31T00:00:00+09:00">
-                Updated: 토 31 12월 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/mac.html">mac</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/mac.html">mac</a> <a href="https://imjang57.github.io/garret/tag/os-x.html">os x</a> <a href="https://imjang57.github.io/garret/tag/homebrew.html">homebrew</a> </p>
-</footer><!-- /.post-info --><h1>HomeBrew</h1>
-<p>HomeBrew 는 OS X (이제는 MacOS) 에서 패키지 관리를 자동으로 해주는 도구이다. 이 글을 쓸 때는 최신 버전이 1.1.5 이다.</p>
-<p>HomeBrew 를 설치하려면 _Command Line Tools (CLT) for Xcode_가 필요하다. 귀찮으니 그냥 Xcode 설치하자. Xcode 에 다 포함되어 있다.</p>
-<h2>Install</h2>
-<p><a href="https://github.com/Homebrew">Homebrew Github Project</a>에 가면 <a href="https://github.com/Homebrew/install">install repository</a> 가 있다. 여기에 <code>install</code> 과  <code>uninstall</code> 이라는 스크립트를 제공해서 HomeBrew 를 설치하고 삭제할 수 있게 해준다.(Bash 는 아니고 Ruby 인 듯)</p>
-<p><code>install</code> 스크립트로 설치하려면 아래와 같이 실행하면 된다.</p>
-<div class="highlight"><pre><span></span>/usr/bin/ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
-</pre></div>
+  <title>  #homebrew Articles | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/tag/homebrew.html">
 
 
-<p>위 스크립트로 설치하면 <code>/usr/local</code> 에 HomeBrew 가 설치된다. 그런데 이 때 HomeBrew 를 위한 local git repository (<code>.git</code> 디렉터리) 도 <code>/usr/local</code> 에 생기고 다른 라이선스 관련 파일 등도 여기에 생성된다..-_-.. 이건 좀.. 그래서 uninstall 스크립트로 삭제하면 깨끗하게 지워지니까 일단 넘어가자. 이게 정 마음에 안들면 <a href="https://github.com/Homebrew/brew/blob/master/docs/Installation.md#installation">installation guide</a> 를 참고해서 직접 <code>git clone</code> 해서 설치하자.</p>
-<p><code>install</code> 스크립트로 실행하면 아래와 같이 설치되는 목록들을 보여준다.</p>
-<div class="highlight"><pre><span></span>$ /usr/bin/ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
-<span class="o">==</span>&gt; This script will install:
-/usr/local/bin/brew
-/usr/local/share/doc/homebrew
-/usr/local/share/man/man1/brew.1
-/usr/local/share/zsh/site-functions/_brew
-/usr/local/etc/bash_completion.d/brew
-/usr/local/Homebrew
-<span class="o">==</span>&gt; The following new directories will be created:
-/usr/local/Cellar
-/usr/local/Homebrew
-/usr/local/Frameworks
-/usr/local/include
-/usr/local/opt
-/usr/local/sbin
-/usr/local/share/zsh
-/usr/local/share/zsh/site-functions
-/usr/local/var
-</pre></div>
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
 
-
-<h2>Uninstall</h2>
-<p>설치때와 마찬가지로 <a href="https://github.com/Homebrew/install">install repository</a>에서 제공하는 <code>uninstall</code> 스크립트를 실행하면 된다.</p>
-<div class="highlight"><pre><span></span>$ /usr/bin/ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall<span class="k">)</span><span class="s2">&quot;</span>
-Warning: This script will remove:
-/Library/Caches/Homebrew/
-/Users/youngho/Library/Logs/Homebrew/
-/usr/local/.git/
-/usr/local/.gitignore
-/usr/local/.travis.yml
-/usr/local/.yardopts
-/usr/local/CODEOFCONDUCT.md
-/usr/local/CONTRIBUTING.md
-/usr/local/Cellar/
-/usr/local/LICENSE.txt
-/usr/local/Library/
-/usr/local/README.md
-/usr/local/SUPPORTERS.md
-/usr/local/bin/brew
-/usr/local/share/doc/homebrew/
-/usr/local/share/man/man1/brew.1
-Are you sure you want to uninstall Homebrew? <span class="o">[</span>y/N<span class="o">]</span>
-</pre></div>
-
-
-<h1>Usage</h1>
-<p>사용법은 매우 쉬우니 대충 적고 넘어간다.</p>
-<p>실행 명령어는 <code>brew</code> 이다.</p>
-<div class="highlight"><pre><span></span>$ which brew
-/usr/local/bin/brew
-</pre></div>
-
-
-<p>brew man page 에 더 자세한 내용이 많으니 참고하자.</p>
-<div class="highlight"><pre><span></span>$ man <span class="m">1</span> brew
-</pre></div>
-
-
-<p>주로 사용하는 명령들의 목록:</p>
-<ul>
-<li><code>brew help</code></li>
-<li><code>brew config</code></li>
-<li><code>brew list [FORMULA...]</code></li>
-<li><code>brew info [FORMULA...]</code></li>
-<li><code>brew search &lt;TEXT|/REGEX/&gt;</code></li>
-<li><code>brew install FORMULA...</code></li>
-<li><code>brew uninstall FORMULA...</code></li>
-<li><code>brew upgrade [FORMULA...]</code></li>
-</ul>
-<p>HomeBrew 자체를 업그레이드하려면 <code>brew update</code> 명령을 실행하면 되는데 지금은 잘 되는지 모르겠다. 0.9 버전일 사용할 때 <em>El Capitan</em> 되면서 <em>System Integrity Protection</em> 이라는 기능이 생겨서 제대로 안됐었는데, 맥 복구 모드(recovery mode)로 부팅해서 기능을 끄고 해서 해결했었던가 기억이 잘 안난다. 나중에 업데이트 할 일 생기면 다시 시도해보자.</p>
-<h1>References</h1>
-<ul>
-<li><a href="http://brew.sh">HomeBrew Web</a></li>
-<li><a href="https://github.com/Homebrew/brew">HomeBrew Github</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  
+    <meta name="description" content="A private blog site for engineering and thinkin.">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-90095241-1', 'auto');
     ga('send', 'pageview');
-    </script>
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  #homebrew Articles
+</h1>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2016-12-31T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            토 31 12월 2016
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/mac.html">mac</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/homebrew-install-and-uninstall.html">HomeBrew Install And Uninstall</a>
+        </h4>
+        <div class="content">
+          HomeBrew 를 설치하고 삭제하는 방법
+        </div>
+      </div>
+    </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
 </body>
+
 </html>

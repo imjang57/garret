@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2016-12-31T00:00:00+09:00</updated><entry><title>HomeBrew Install And Uninstall</title><link href="https://imjang57.github.io/garret/homebrew-install-and-uninstall.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/homebrew-install-and-uninstall.html</id><summary type="html">&lt;p&gt;HomeBrew 를 설치하고 삭제하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;HomeBrew&lt;/h1&gt;
 &lt;p&gt;HomeBrew 는 OS X (이제는 MacOS) 에서 패키지 관리를 자동으로 해주는 도구이다. 이 글을 쓸 때는 최신 버전이 1.1.5 이다.&lt;/p&gt;
-&lt;p&gt;HomeBrew 를 설치하려면 _Command Line Tools (CLT) for Xcode_가 필요하다. 귀찮으니 그냥 Xcode 설치하자. Xcode 에 다 포함되어 있다.&lt;/p&gt;
+&lt;p&gt;HomeBrew 를 설치하려면 "&lt;em&gt;Command Line Tools (CLT) for Xcode&lt;/em&gt;"가 필요하다. 귀찮으니 그냥 Xcode 설치하자. Xcode 에 다 포함되어 있다.&lt;/p&gt;
 &lt;h2&gt;Install&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/Homebrew"&gt;Homebrew Github Project&lt;/a&gt;에 가면 &lt;a href="https://github.com/Homebrew/install"&gt;install repository&lt;/a&gt; 가 있다. 여기에 &lt;code&gt;install&lt;/code&gt; 과  &lt;code&gt;uninstall&lt;/code&gt; 이라는 스크립트를 제공해서 HomeBrew 를 설치하고 삭제할 수 있게 해준다.(Bash 는 아니고 Ruby 인 듯)&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;install&lt;/code&gt; 스크립트로 설치하려면 아래와 같이 실행하면 된다.&lt;/p&gt;
@@ -9,7 +9,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;위 스크립트로 설치하면 &lt;code&gt;/usr/local&lt;/code&gt; 에 HomeBrew 가 설치된다. 그런데 이 때 HomeBrew 를 위한 local git repository (&lt;code&gt;.git&lt;/code&gt; 디렉터리) 도 &lt;code&gt;/usr/local&lt;/code&gt; 에 생기고 다른 라이선스 관련 파일 등도 여기에 생성된다..-_-.. 이건 좀.. 그래서 uninstall 스크립트로 삭제하면 깨끗하게 지워지니까 일단 넘어가자. 이게 정 마음에 안들면 &lt;a href="https://github.com/Homebrew/brew/blob/master/docs/Installation.md#installation"&gt;installation guide&lt;/a&gt; 를 참고해서 직접 &lt;code&gt;git clone&lt;/code&gt; 해서 설치하자.&lt;/p&gt;
+&lt;p&gt;위 스크립트로 설치하면 &lt;code&gt;/usr/local&lt;/code&gt; 에 HomeBrew 가 설치된다. 그런데 이 때 HomeBrew 를 위한 local git repository (&lt;code&gt;.git&lt;/code&gt; 디렉터리) 도 &lt;code&gt;/usr/local&lt;/code&gt; 에 생기고 다른 라이선스 관련 파일 등도 여기에 생성된다.. 이건 좀.. 그래서 uninstall 스크립트로 삭제하면 깨끗하게 지워지니까 일단 넘어가자. 이게 정 마음에 안들면 &lt;a href="https://github.com/Homebrew/brew/blob/master/docs/Installation.md#installation"&gt;installation guide&lt;/a&gt; 를 참고해서 직접 &lt;code&gt;git clone&lt;/code&gt; 해서 설치하자.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;install&lt;/code&gt; 스크립트로 실행하면 아래와 같이 설치되는 목록들을 보여준다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /usr/bin/ruby -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; This script will install:
@@ -56,7 +56,7 @@ Are you sure you want to uninstall Homebrew? &lt;span class="o"&gt;[&lt;/span&gt
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h1&gt;Usage&lt;/h1&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
 &lt;p&gt;사용법은 매우 쉬우니 대충 적고 넘어간다.&lt;/p&gt;
 &lt;p&gt;실행 명령어는 &lt;code&gt;brew&lt;/code&gt; 이다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ which brew
@@ -81,11 +81,27 @@ Are you sure you want to uninstall Homebrew? &lt;span class="o"&gt;[&lt;/span&gt
 &lt;li&gt;&lt;code&gt;brew upgrade [FORMULA...]&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;HomeBrew 자체를 업그레이드하려면 &lt;code&gt;brew update&lt;/code&gt; 명령을 실행하면 되는데 지금은 잘 되는지 모르겠다. 0.9 버전일 사용할 때 &lt;em&gt;El Capitan&lt;/em&gt; 되면서 &lt;em&gt;System Integrity Protection&lt;/em&gt; 이라는 기능이 생겨서 제대로 안됐었는데, 맥 복구 모드(recovery mode)로 부팅해서 기능을 끄고 해서 해결했었던가 기억이 잘 안난다. 나중에 업데이트 할 일 생기면 다시 시도해보자.&lt;/p&gt;
+&lt;h1&gt;Brew Cask&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt;는 &lt;code&gt;brew&lt;/code&gt;를 기반으로 확장한 프로그램이다. &lt;code&gt;brew&lt;/code&gt;처럼 패키지를 관리하는 것을 목표로 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;brew&lt;/code&gt;는 소스 코드를 직접 빌드하는 방법을 사용하지만 &lt;code&gt;brew-cask&lt;/code&gt;는 바이너리를 직접 받아서 설치하고 필요한 설정들을 자동으로 세팅한다. 이는 &lt;code&gt;brew-cask&lt;/code&gt;의 목적이 일반적으로 맥에서 애플리케이션을 설치할 때 사용하는 방법인 Drag-and-Drop 방법을 대체하기 위한 방법이기 때문이다. 때문에 &lt;code&gt;brew-cask&lt;/code&gt;는 소스 코드가 공개되지 않은 상용 프로그램들의 설치도 가능하다.&lt;/p&gt;
+&lt;h2&gt;Install&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt; 설치는 아래와 같이 &lt;code&gt;brew&lt;/code&gt;를 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew tap caskroom/cask
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt;로 맥의 터미널 앱인 iTerm2를 설치하려면 아래와 같이 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew cask install iterm2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt;로 크롬도 설치되고 왠만한 유명한 프로그램은 다 설치 가능하다.&lt;/p&gt;
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://brew.sh"&gt;HomeBrew Web&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/Homebrew/brew"&gt;HomeBrew Github&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="mac"></category><category term="os x"></category><category term="homebrew"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="mac"></category><category term="homebrew"></category><category term="brew"></category><category term="brew cask"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
 &lt;p&gt;예전에 (2015년 인가..??) OS X 가 &lt;em&gt;El Capitan&lt;/em&gt; 으로 업데이트되면서 새롭게 생겨난 시스템 보안 관련 기능이다. &lt;em&gt;Rootless&lt;/em&gt; 라고도 하는 기능이다.&lt;/p&gt;
 &lt;p&gt;보통 Linux/Unix 시스템은 root 사용자가 모든 파일을 읽고 쓸 수 있는데, 이 기능은 &lt;em&gt;Kernel&lt;/em&gt; 자체가 System file 들에 대한 쓰기 작업을 아예 막아 버리는 기능이다. 따라서, 이전에는 sudo 등으로 시스템 파일들을 수정할 수 있었지만 이제는 불가능하다.&lt;/p&gt;
 &lt;p&gt;Rootless 에 의해 보호되는 파일 목록:&lt;/p&gt;

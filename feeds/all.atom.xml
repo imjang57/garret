@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/all.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-08T00:00:00+09:00</updated><entry><title>Vim Plugin</title><link href="https://imjang57.github.io/garret/vim-plugin.html" rel="alternate"></link><published>2017-05-05T00:00:00+09:00</published><updated>2017-05-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-05:/garret/vim-plugin.html</id><summary type="html">&lt;p&gt;Vim Plugin&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Vim Plugin&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/all.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-11-01T00:00:00+09:00</updated><entry><title>PKI, SSL/TLS, 인증서(Certificate), HTTPS</title><link href="https://imjang57.github.io/garret/ssl-pubic-key-infrastructure.html" rel="alternate"></link><published>2017-11-01T00:00:00+09:00</published><updated>2017-11-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-11-01:/garret/ssl-pubic-key-infrastructure.html</id><summary type="html">&lt;p&gt;PKI, SSL/TLS, 인증서, HTTPS 등 인터넷 상의 보안과 인증이 어떤 원리로 동작하는지에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;암호화 (Encryption) : SSL and TLS&lt;/h1&gt;
+&lt;p&gt;TCP/IP 로 패킷(Packet)들이 전송될 때 인터넷 상의 수많은 라우터와 노드들을 지나가게 된다. 그리고 이들 중 어떤 노드에서는 패킷 감청(Package Sniffing)을 하기도 하는데, 암호화가 되어있지 않은 패킷들은 이러한 감청에 속수무책으로 당할 수 밖에 없다. 감청을 통해 정보를 훔치는 것 외에 가로챈 패킷을 변조할 수도 있다. 그래서 이를 막기 위해 네트웍(Network) 상에서 흐르는 패킷들을 암호화하는 기술들이 등장했고 TCP/IP Layer 와 Application Layer 사이에서 데이터를 암호화하는 SSL(Secure Sockets Layer)가 등장했다.&lt;/p&gt;
+&lt;p&gt;SSL은 현재에는 TLS(Transport Layer Security)로 이름이 바뀌었지만 많은 사람들이 아직도 SSL이라는 이름을 많이 사용하고 있다. 그래서 보통 SSL/TLS 등과 같이 표기를 많이 한다. 즉, SSL과 TLS는 같은 녀석이다.&lt;/p&gt;
+&lt;h2&gt;인코딩과 디코딩 (Encoding and Decoding)&lt;/h2&gt;
+&lt;p&gt;정보의 형태를 임의로 변환하는 것을 인코딩(Encoding)이라고 한다. 그리고 인코딩된 정보를 다시 원래대로 되돌리는 것을 디코딩(Decoding)이라고 한다.&lt;/p&gt;
+&lt;p&gt;인코딩의 방법에 따라 디코딩이 될 수도 있고 안될 수도 있다. 예를 들어 가장 기초적인 인코딩 방법인 Base64는 쉽게 원래의 데이터로 디코딩할 수 있지만 해싱(Hashing)은 서로 다른 정보도 같은 값으로 인코딩될 수 있기 때문에 디코딩이 불가능하다.&lt;/p&gt;
+&lt;h2&gt;Base64&lt;/h2&gt;
+&lt;p&gt;Base64는 8 bits 바이너리 데이터(Binary data)를 문자 코드에 영향을 받지 않는 공통 ASCII 문자들로만 이루어진 문자열로 바꾸는 인코딩 방식이다. Base 64 라는 단어를 글자 그대로 번역하여 보면 64진법이란 뜻이다. 64가 2의 제곱수(64 = 2^6)이며, 2의 제곱수들에 기반한 진법들 중에서 화면에 표시되는 ASCII 문자들을 써서 표현할 수 있는 가장 큰 진법이기 때문에 Base64라는 이름이 되었다.&lt;/p&gt;
+&lt;p&gt;Base 64에는 어떤 문자와 기호를 쓰느냐에 따라 여러 변종이 있지만, 잘 알려진 것은 모두 처음 62개는 알파벳 A-Z, a-z와 0-9를 사용하고 있으며 마지막 두 개를 어떤 기호를 쓰느냐의 차이만 있다.&lt;/p&gt;
+&lt;p&gt;베이스64의 정확한 규격은 &lt;a href="https://tools.ietf.org/html/rfc1421"&gt;RFC 1421&lt;/a&gt;, &lt;a href="https://tools.ietf.org/html/rfc2045"&gt;RFC 2045&lt;/a&gt;에 정의된다. 연속된 8 bits 단위로 인코딩하도록 정의되어 있으며, 이는 대부분 시스템에서 파일의 정의와 들어맞는다. 베이스64코딩을 거친 결과물은 원본보다 대략 4/3 정도 크기가 늘어나게 되며, 보통 의미없어 보이는 문자열이 나열된 형태가 된다.&lt;/p&gt;
+&lt;p&gt;데이터를 베이스64로 바꾸는 과정은 다음과 같다. 우선 24 bits 버퍼에 위쪽(MSB)부터 한 바이트(byte)씩 3 바이트를 집어넣는다. 그리고 남은 바이트가 3 바이트 미만이라면, 버퍼의 남은 부분은 0으로 채워넣게 된다. 그리고, 버퍼의 위쪽부터 6 bits씩 잘라 그 값을 읽어, 다음에 정렬된 64개 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"의 문자 중에서 읽은 값 번째 문자를 골라 출력한다. 만약 입력된 바이트가 하나라면 출력 중 두 개만이 사용되고 나머지 둘은 "="으로 패딩되며, 입력된 바이트가 둘이라면 출력 중 세 개 만이 사용되고 나머지 하나는 "="으로 패딩되게 된다. 이것은 원본으로 되돌릴 때 원본에는 없던 비트가 생기는 것을 방지하기 위함이다. 이 과정은 입력 데이터가 끝날 때까지 반복하면 인코딩이 된다.&lt;/p&gt;
+&lt;p&gt;예를 들어 아래의 문장이 있다고 하자.&lt;/p&gt;
+&lt;p&gt;Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.&lt;/p&gt;
+&lt;p&gt;이를 Base64로 인코딩하면 다음과 같다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0
+aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1
+c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0
+aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdl
+LCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이렇게 특정한 패턴으로 인코딩 및 디코딩하는 것이 가장 기초적인 방법이다.&lt;/p&gt;
+&lt;h2&gt;암호화와 복호화 (Encryption and Decryption)&lt;/h2&gt;
+&lt;p&gt;위의 특정한 패턴을 이용한 인코딩/디코딩 방법은 패턴이 파악될 경우 의미가 없어진다. 실제로 2차 세계대전이 발생했을 때 서로 적국의 통신 내용을 파악하기 위해 패턴으로 암호화된 내용을 도청하여 인력을 투입하여 분석했었다. 그래서 매일 패턴을 바꿔가며 통신을 했었다.&lt;/p&gt;
+&lt;p&gt;보안을 위한 암호화/복호화에는 더 복잡하고 어려운 방법이 필요하다. 이를 위해 키(Key)를 이용한 방법이 사용된다. 현대에 암호화라고 하면 보통 이 키를 이용한 인코딩/디코딩 방법을 의미한다.&lt;/p&gt;
+&lt;p&gt;키를 이용한 암호화 방법에는 대칭키 암호화(Symmetric Key Encryption), 비대칭키 암호화(Asymmetric Key Encryption)이 있다. 키를 생성하는 방법은 매우 수학적 이론이 필요한 내용이므로 따로 자료를 찾아보고 여기서는 인코딩/디코딩으로 암호화되는 과정에 집중해서 보자.&lt;/p&gt;
+&lt;h2&gt;대칭키 암호화&lt;/h2&gt;
+&lt;p&gt;대칭키 암호화는 발신자와 수신자가 동일한 알고리즘과 키를 공유하는 방식이다. 이 방법을 사용해서 제대로 보안을 유지하려면 직접 만나서 대칭키를 전달받는 것이 가장 안전한 방법이지만 사람이 많아질 수록 번거로운 방법이 되며, 누군가 키를 유출했을 경우 속수무책으로 당할 수 있다. 키를 잘 관리한다면 충분히 안전할 수도 있지만, 사실 모두가 공개된 환경인 인터넷에서 대칭키를 어떻게 배포하느냐는 중요한 문제를 해결하지 못하면 사용할 수가 없는 방법이기도 하다.&lt;/p&gt;
+&lt;h2&gt;비대칭키 암호화&lt;/h2&gt;
+&lt;p&gt;공개키(Public Key)와 비밀키(Private Key)라고 불리는 두 가지 종류의 키를 사용하는 방식이다. 참고로 비밀키는 개인키라고도 불린다. 공개키로 암호화된 데이터는 비밀키로만 복호화가 되고, 비밀키로 암호화된 데이터는 공개키로만 복호화된다. 이러한 특성을 통해 비대칭키 암호화는 대칭키 안호화가 가지고 있던 고질적 문제(키를 어떻게 배포할 것인가)를 해결하였다.&lt;/p&gt;
+&lt;p&gt;수신자는 비밀키를 갖고 이를 절대 외부로 유출하지 않는다. 그리고 공개키를 인터넷에 공개하여 발신자가 가져갈 수 있도록 한다. 발신자는 인터넷에서 공개키를 가져간 후 공개키로 데이터를 암호화하여 수신자에게 전송한다. 수신자는 본인이 가진 비밀키로 데이터를 복호화한다. 공개키는 아무나 가져가도 암호화만 가능할 뿐 복호화를 할 수 없기 때문에 키의 배포 문제도 해결하면서 높은 보안성도 얻을 수 있다.&lt;/p&gt;
+&lt;p&gt;하지만 비대칭키 암호화는 대칭키 암호화 방법보다도 복잡한 수학적 이론을 사용하기 때문에 속도가 느리고 연산량이 많다. 때문에 보통 비대칭키 암호화 방식으로 둘만의 대칭키를 교환하고 실제 데이터 통신은 둘만 공유하는 대칭키를 이용하여 하는 경우가 많다.&lt;/p&gt;
+&lt;p&gt;보통 비대칭키 알고리즘이라고 하면 RSA 알고리즘을 말한다. RSA 알고리즘은 로널드 라이베스트(Ron Rivest), 아디 샤미르(Adi Shamir), 레너드 애들먼(Leonard Adleman)의 연구에 의해 체계화되었으며, RSA라는 이름은 이들 3명의 이름 앞글자를 딴 것이다.&lt;/p&gt;
+&lt;h2&gt;전자서명 (Digital Signature)&lt;/h2&gt;
+&lt;p&gt;전자서명은 인터넷 상에서 본인을 증빙하기 위한 방법이다. RSA 알고리즘을 이용하여 구현되었으며, 전자서명은 오프라인에서의 수기서명과 동일하다. 보통 인터넷 상에서 어떠한 파일을 배포하거나 서비스를 제공할 때 제공자가 본인이 배포한 것이 맞음을 증빙하고, 데이터가 변조되지 않았음을 증명하는 수단으로 사용된다.&lt;/p&gt;
+&lt;p&gt;예를 들어, 문서 내용을 A라고 하면 잘 알려진 Hash 함수인 SHA1 같은 함수 하나를 정해서 문서 A의 Hash 값을 구하고 이 Hash 값을, 보내는 사람의 비밀키로 암호화 한다. 이런 다음 이렇게 암호화된 Hash값을 원래 문서 A의 끝에 첨부하여 이 문서 전체를 받는 사람에게 보낸다.&lt;/p&gt;
+&lt;p&gt;받는 사람은 먼저 메시지가 오면 해쉬값을 뺀 앞부분의 문서에 대해 보내는 사람이 사용했던 Hash함수를 이용해 받은 문서의 Hash값을 구한다. 그 다음 문서 뒤에 달린 암호화된 Hash값을 보내는 사람의 공개키로 복호화한 다음 이 복호화된 Hash값을, 받은 문서의 Hash값과 비교하게된다. 이 두개의 Hash값이 동일한 값이면 서명이 올바른 것이고 값이 서로 다르거나 변환에 오류가 있으면 서명이 틀린 것이다.&lt;/p&gt;
+&lt;h2&gt;인증서 (Certificate)&lt;/h2&gt;
+&lt;p&gt;전자서명은 데이터가 제공자가 제공한 것이 맞고 변조되지 않았음을 보장해줄 수 있다. 하지만 데이터 제공자, 즉 공개키의 실제 소유자가 실제로 누군지를 증명해주지는 않는다. 그래서 인증서라는 개념이 등장하게 되었다.&lt;/p&gt;
+&lt;p&gt;인증서는 정부기관이나 은행 등 공인된 기관에서 발급받을 수 있다. 기관은 신청자에게 생성된 비밀키와 인증서를 제공해준다. 이때 받는 인증서에는 신청자에 대한 정보, 신청자의 공개키, 유효기간, 인증기관 정보, 인증서에 대한 인증기관의 전자서명 등이 포함되어 있다. 즉, 인증서는 공인된 인증기관이 인증서의 소유자에 대한 신원을 보증해주는 것이다. 그리고 이를 위해 세계적으로 몇몇 인증기관(CA, Certification Authority)들이 존재하고 있으며, 이렇게 비대칭키 암호화 방법을 기반으로 공개키와 인증서를 활용하는 환경을 공개키 기반 구조(PKI, Public Key Infrastructure)라고 한다. HTTPS, SFTP, SSH, SCP 등 현대에서 인터넷 상의 모든 보안 관련된 기능들은 모두 PKI 기반이라고 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;인증기관은 범국제적인 PKI를 위해서 X.509라는 인증서의 국제 표준 규격을 따르고 있다. X.509 는 &lt;a href="https://tools.ietf.org/html/rfc5280"&gt;RFC 5280&lt;/a&gt;에 의해 정의되어 있다. X.509 규격에 따르면 인증서는 최상위 인증기관(Root CA)의 루트 인증서(Root Certificate)를 시작으로 하위 인증기관들의 인증서들이 존재하고 일반 사용자들의 인증서도 존재한다. 루트 인증서를 제공하는 최상위 인증기관은 하위 인증기관들을 인증하고, 하위 인증기관들은 다른 하위 인증기관 또는 일반 사용자들을 인증한다. 즉, 인증기관들의 인증서에는 상위 인증기관의 전자서명이 포함되어 있고, 일반 사용자들의 인증서에는 인증기관의 전자서명이 포함되어 있다. 예외적으로 루트 인증서만 자가서명(Self-signed)되어 있다. 그리고 이러한 PKI 기반 구조에서 사용자가 상위 인증서를 신뢰한다면 그 하위의 모든 인증서도 신뢰하는 것으로 받아들여 진다. 요즘의 시스템들은 모두 신뢰할 수 있는 CA 리스트를 갖고 있어서 이들 하위의 인증서들은 신뢰할 수 있다고 판단한다.&lt;/p&gt;
+&lt;p&gt;일반적으로 인증서는 인증기관에서 유료로 발급받을 수 있다. 인증기관들도 무료 자원봉사를 하는 것은 아니기 떄문에 인증 서비스를 위한 비용을 지불해야 한다. 한국에서는 한국인터넷진흥원(KISA)가 최상위 인증기관(Root CA)이 되는 별도의 PKI 시스템이 있지만, KISA가 아직 국제 최상위 인증기관(Root CA)의 인증을 받지 못해서 (병신같지만) 국내 인증기관(CA)에서 발급받은 인증서는 특정 웹 브라우저들에게는 신뢰받지 못할 수도 있다.&lt;/p&gt;
+&lt;p&gt;참고로 개인도 자가서명된 인증서(Self-signed certificate)를 가질 수 있다. &lt;code&gt;openssl&lt;/code&gt; 등과 같이 SSL 규격을 구현한 프로그램들을 사용하여 생성할 수 있다. 단, 자가서명된 인증서를 사용하려면 시스템(운영체제, 가상머신 등)에 인증서를 추가하는 작업을 별도로 해야 한다.&lt;/p&gt;
+&lt;p&gt;2016년에는 Mozilla, Sisco, Akamai 등이 HTTPS의 보급을 위하여 &lt;a href="https://letsencrypt.org"&gt;Let's Encrypt&lt;/a&gt;라는 비영리 인증기관을 설립하고 무료로 인증서를 발급해주고 있다. 여기서 받은 인증서는 별도의 과정없이 신뢰할 수 있는 인증서로 사용될 수 있다.&lt;/p&gt;
+&lt;h2&gt;SSL/TLS&lt;/h2&gt;
+&lt;p&gt;SSL/TLS는 TCP Layer와 Application Layer 사이에서 비대칭키 암호화를 이용하여 데이터들을 암호화하여 감청을 방지하고, 전송하는 데이터에 전자서명을 첨부하여 변조를 방지하고, 인증서를 이용하여 서버에 대한 인증을 담당한다.&lt;/p&gt;
+&lt;p&gt;SSL Handshake :&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;서버가 클라이언트에게 공개키가 포함되어 있는 인증서를 전달한다.&lt;/li&gt;
+&lt;li&gt;클라이언트는 신뢰하는 CA 리스트를 확인하여 서버의 인증서를 신뢰할 수 있는지 판단한다.&lt;/li&gt;
+&lt;li&gt;클라이언트는 대칭키를 생성하여 서버의 공개키로 암호화하여 서버에게 전달한다.&lt;/li&gt;
+&lt;li&gt;서버아 클라이언트는 대칭키를 이용하여 데이터를 주고받는다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;SSH (Secure SHell) and SSL/TLS&lt;/h2&gt;
+&lt;p&gt;SSH는 보안이 강화된 텔넷(Telnet)이라고 볼 수도 있다. 물론 SSH는 Port Forwarding 등 더 다양한 기능을 제공하고 쓰임새가 더 많지만 어찌되었든 본질은 보안이 강화된 텔넷과도 같다. 그리고 SSH도 보안을 위해 비대칭키 방식과 대칭키 방식을 SSL/TLS와 같은 방법으로 사용한다. 단지 키를 주고받는 메시지의 포맷이 다를 뿐이다. 위에서 언급한 것과 같이 SSL/TLS는 X.509 규격을 따르고 &lt;code&gt;openssl&lt;/code&gt; 등과 같은 프로그램으로 인증서를 생성할 수 있다. SSH는 독자적인 포맷을 따르고 &lt;code&gt;ssh-keygen&lt;/code&gt; 프로그램을 통해서 SSH Key 파일을 생성할 수 있다.&lt;/p&gt;
+&lt;p&gt;어찌되었든 SSH도 SSL/TLS와 똑같은 보안 체계이기 때문에 보안성이 높다. 그래서 보통 보안이 약한 네트웍 통신을 하게 될 경우 SSH Port Forwarding 기능을 통해 Tunneling하여 사용하기도 한다.&lt;/p&gt;</content><category term="ssl"></category><category term="tls"></category><category term="certificate"></category><category term="https"></category></entry><entry><title>Vim Plugin</title><link href="https://imjang57.github.io/garret/vim-plugin.html" rel="alternate"></link><published>2017-05-05T00:00:00+09:00</published><updated>2017-05-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-05:/garret/vim-plugin.html</id><summary type="html">&lt;p&gt;Vim Plugin&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Vim Plugin&lt;/h1&gt;
 &lt;p&gt;Vim 은 &lt;em&gt;Vim script&lt;/em&gt; 라는 자체 스크립트 언어를 제공하여 Plugin 을 만들 수 있게 한다. 이 스크립트들은 &lt;code&gt;plugin-name.vim&lt;/code&gt; 과 같이 vim 이라는 확장자(extension) 을 갖는다. &lt;em&gt;Vim script&lt;/em&gt; 는 &lt;a href="http://www.vim.org/scripts/index.php"&gt;Vim script page&lt;/a&gt; 에 많이 업로드되어 있다.&lt;/p&gt;
 &lt;p&gt;환경 설정을 위해 사용되는 &lt;code&gt;.vimrc&lt;/code&gt; 파일도 사실은 &lt;em&gt;Vim script&lt;/em&gt; 이다.&lt;/p&gt;
 &lt;p&gt;Vim plugin 은 2가지 종류가 있다.&lt;/p&gt;
@@ -613,7 +669,140 @@ set cindent         &amp;quot;Like smartindent, but stricter and more customisab
 &lt;/ul&gt;
 &lt;p&gt;For more info run &lt;code&gt;:help expand&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;If all that is wanted is to display the name of the current file, type &lt;code&gt;Ctrl-G&lt;/code&gt; (or press &lt;code&gt;1 then Ctrl-G&lt;/code&gt; for the full path).&lt;/p&gt;
-&lt;p&gt;When using &lt;code&gt;@%&lt;/code&gt;, the name is displayed relative to the current directory.&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>NPE (NullPointerException) 을 피하자</title><link href="https://imjang57.github.io/garret/avoid-null-pointer-exception-in-java.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/avoid-null-pointer-exception-in-java.html</id><summary type="html">&lt;p&gt;Java 에서 NPE (NullPointerException) 을 피하면서 코딩하기 위한 습관들&lt;/p&gt;</summary><content type="html">&lt;h1&gt;NPE(NullPointerException) 을 피하자.&lt;/h1&gt;
+&lt;p&gt;When using &lt;code&gt;@%&lt;/code&gt;, the name is displayed relative to the current directory.&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>Linux 에서 각 디렉터리들의 실제 사용량 조회하기</title><link href="https://imjang57.github.io/garret/linux-check-disk-usage-of-directories.html" rel="alternate"></link><published>2017-02-14T00:00:00+09:00</published><updated>2017-02-14T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-02-14:/garret/linux-check-disk-usage-of-directories.html</id><summary type="html">&lt;p&gt;Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 각 디렉터리 별 디스크 사용량 확인하기&lt;/h1&gt;
+&lt;p&gt;리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.&lt;/p&gt;
+&lt;p&gt;스크립트:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# make newlines the only seperator (IFS : Internal Field Separator)&lt;/span&gt;
+&lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; d in &lt;span class="k"&gt;$(&lt;/span&gt;ls -l &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;^d&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{ print substr($0, index($0, $9)) }&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; du -hs &lt;span class="nv"&gt;$d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;처음에 &lt;code&gt;IFS&lt;/code&gt; 를 지정해주지 않으면 디렉터리 이름에 공백이 들어간 경우 디렉터리 이름이 공백을 기준으로 split 되어 별도의 디렉터리처럼 동작하게 된다.&lt;/p&gt;
+&lt;p&gt;나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, &lt;code&gt;grep&lt;/code&gt; 으로 디렉터리만 뽑아내고, &lt;code&gt;awk&lt;/code&gt; 로 파일 이름만 뽑아내고, &lt;code&gt;for&lt;/code&gt; statement 를 사용해서 각 디렉터리마다 &lt;code&gt;du&lt;/code&gt; 명령을 사용한다.&lt;/p&gt;</content><category term="bash"></category><category term="linux"></category><category term="du"></category><category term="disk"></category></entry><entry><title>Linux Memory overcommit</title><link href="https://imjang57.github.io/garret/linux-memory-overcommit.html" rel="alternate"></link><published>2017-01-23T00:00:00+09:00</published><updated>2017-01-23T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-23:/garret/linux-memory-overcommit.html</id><summary type="html">&lt;p&gt;리눅스에서 새로운 프로세스가 실행될 때 메모리 할당하는 과정과 overcommit 설정에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux Memory and Over commit&lt;/h1&gt;
+&lt;p&gt;개발한 자바 프로그램을 리눅스에서 실행시키려고 하는데 특정 서버에서만 계속 아래와 같은 메시지를 출력하면서 실행이 되지 않았다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;There is insufficient memory for the Java Runtime Environment to continue.
+Native memory allocation (malloc) failed to allocate 4088 bytes for AllocateHeap
+An error report file with more information is saved as:
+/home/imjang57/hs_err_pid1234.log
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;잠시동안 삽질하다 보니 Linux 의 overcommit 설정때문이라는 것을 알았다.&lt;/p&gt;
+&lt;h2&gt;Linux Memory&lt;/h2&gt;
+&lt;p&gt;자세히 알아보기 전에 먼저 리눅스에서 프로세스가 실행될 때 어떻게 메모리가 할당되는지 얘기해보자.&lt;/p&gt;
+&lt;p&gt;리눅스 시스템은 가상 메모리(Virtual Memory)라는 오래된 개념으로 물리 메모리(Physical Memory)보다 많은 메모리를 사용할 수 있다. (물론 윈도우도 똑같다.) 프로세스는 각각 독립적인 주소 공간을 가지고 있고, 메모리는 Page 라는 최소 단위로 할당된다. 이들 독립적인 주소 공간들은 가상 메모리에 할당된다. 그리고 실제로 프로세스가 필요한 부분만 물리 메모리에 할당하는 Demand-Paging 이라는 방법으로 메모리를 사용한다.&lt;/p&gt;
+&lt;p&gt;물리 메모리를 넘어가는 메모리 공간을 저장하기 위해 Disk 의 특정 영역을 사용하게 되는데 이를 Swap 이라고 한다. 그리고 물리 메모리를 넘어가는 메모리 영역을 사용하기 위해 Disk 에 Page file 을 쓰고, 다시 메모리로 load 하는 작업들을 하게 된다. 이 작업들을 swap-in, swap-out 이라고 하고 Page 단위로 발생한다.&lt;/p&gt;
+&lt;p&gt;자세히 들어가면 Page Table, Page, Page-in/Page-out, Copy on Write, Page replacement algorithm 등등 알아야 할게 많으니 넘어가자. 나도 오래되서 정확하게 기억 안난다. ^^;; 궁금한 내용은 Operating System 공부를 하자.&lt;/p&gt;
+&lt;p&gt;참고로, 리눅스에서 Swap 을 사용하는 빈도를 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /proc/sys/vm/swappiness
+60
+$ sysctl vm.swappiness
+vm.swappiness &lt;span class="o"&gt;=&lt;/span&gt; 60
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;일반적으로 위의 내용처럼 60이 기본값으로 되어 있다. &lt;code&gt;vm.swappiness&lt;/code&gt; 는 swap 영역을 얼마나 사용할 지를 나타내는 값이다. 0으로 설정하면 swap 을 최대한 사용하지 않는다는 뜻이고 100이면 swap 을 최대한 사용한다는 뜻이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vm.swappiness&lt;/code&gt; 값 변경은 아래 명령을 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sysctl vm.swappiness&lt;span class="o"&gt;=&lt;/span&gt;0
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &amp;gt; /proc/sys/vm/swappiness
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;또는 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 에 &lt;code&gt;vm.swappiness=0&lt;/code&gt; 을 추가하면 된다.&lt;/p&gt;
+&lt;p&gt;현재 사용되고 있는 swap 현황을 알고 싶으면 다음과 같이 하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /proc/meminfo &lt;span class="p"&gt;|&lt;/span&gt; grep Swap
+SwapCached: &lt;span class="m"&gt;0&lt;/span&gt; kB
+SwapTotal: &lt;span class="m"&gt;0&lt;/span&gt; kB
+SwapFree: &lt;span class="m"&gt;0&lt;/span&gt; kB
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Linux Memory Commit&lt;/h2&gt;
+&lt;p&gt;리눅스에서 프로세스가 실행될 때 Memory Commit 이라는 작업이 수행된다. &lt;code&gt;malloc()&lt;/code&gt; 등과 같은 시스템 콜(System call)을 사용하여 메모리 할당 요청을 할 때, 시스템 콜은 메모리 영역을 할당해서 주소를 리턴한다. 이때, 실제로 물리 메모리에 할당되는 것은 아니다. 단지 메모리 영역만 만들고 실제 사용될 때가 되어야 물리 메모리에 올라가게 된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fork()&lt;/code&gt; 등의 시스템 콜로 새로운 자식 프로세스를 생성할 때, 자식 프로세스는 부모 프로세스의 메모리 영역을 그대로 복사한다. 그래서 메모리를 많이 쓰는 프로세스에서 &lt;code&gt;fork()&lt;/code&gt; System call 을 사용하면 매우 많은 메모리가 필요하게 된다. 즉, &lt;code&gt;fork&lt;/code&gt; 한 후에 &lt;code&gt;exec&lt;/code&gt; 가 수행되기 전까지 실제로는 자식 프로세스에서 사용되지 않는 메모리들을 commit 하게 된다.(참고로, &lt;code&gt;fork&lt;/code&gt; 는 새로운 프로세스를 시작할 때 메모리 공간을 복사하지만 &lt;code&gt;exec&lt;/code&gt; 는 새로운 프로세스를 실행할 때 현재 메모리 공간을 덮어쓴다. 하지만 &lt;code&gt;exec&lt;/code&gt; 는 &lt;code&gt;exec&lt;/code&gt; 가 실행된 이후의 로직들은 실행되지 않고 사라지게 된다.)&lt;/p&gt;
+&lt;h2&gt;Linux overcommit&lt;/h2&gt;
+&lt;p&gt;리눅스에서는 가상 메모리로 인해 물리 메모리보다 많은 메모리를 사용할 수 있다. 그리고 overcommit 이라는 개념을 적용하여 이를 제어할 수 있게 한다. 리눅스는 새로운 프로세스가 실행될 때 overcommit 설정에 따라서 다음과 같은 행동들 중 하나를 선택한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;메모리가 부족하면 임의의 프로세스를 종료시켜서 메모리를 확보&lt;/li&gt;
+&lt;li&gt;메모리가 부족해도 일단 프로세스 실행&lt;/li&gt;
+&lt;li&gt;프로세스 실행을 중지하고 에러 발생&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;리눅스가 임의로 프로세스를 종료시킬 때 사용되는 모듈을 &lt;strong&gt;OOM Killer(Out Of Memory Killer)&lt;/strong&gt; 라고 한다. OOM Killer 의 동작은 &lt;code&gt;vm.overcommit_memory&lt;/code&gt;, &lt;code&gt;vm.overcommit_ratio&lt;/code&gt; 설정에 의존적이다. &lt;code&gt;overcommit_memory&lt;/code&gt; 가 0이면 Heuristic method, 1 이면 overcommit 사용, 2는 overcommit_ratio 에 따라 제한하게 된다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0: 휴리스틱하게 overcommit 여부를 결정한다. 보통 기본설정이다. 메모리에 대한 요구가 발생했을 때 메모리 공간이 부족하면 실행 중인 프로세스를 강제로 종료시켜 메모리를 확보한다. Page Cache + Swap Memory + Slab Reclaimable 값을 기준으로 결정한다. kernel 의 소스에서 &lt;code&gt;mm/mmap.c&lt;/code&gt; 를 참고하자.&lt;/li&gt;
+&lt;li&gt;1: 항상 overcommit 을 허용한다. 메모리가 실제로 부족해도 충분한 메모리가 있는 것처럼 동작하게 된다.&lt;/li&gt;
+&lt;li&gt;2: overcommit 허용하지 않는다. 메모리가 부족할 경우 메모리 할당 요청한 프로세스를 실행하는게 아니라 에러를 발생시킨다. Swap size + (Ram size * &lt;code&gt;vm.overcommit_ratio&lt;/code&gt;/100) 의 공식에 따라 결정된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OOM Killer 에 의해 죽으면 아래와 같은 에러가 발생한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;May 8 11:18:50 mimul01 kernel: Out of memory: Kill process 3121
+(malloc_test) score 884 or sacrifice child
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;프로세스가 Commit 요청 가능한 크기는 &lt;code&gt;/proc/meminfo&lt;/code&gt; 의 내용으로 확인할 수 있다. CommitLimit 은 요청 가능한 크기의 최대값, Committed_AS 는 사용량을 나타낸다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /proc/meminfo &lt;span class="p"&gt;|&lt;/span&gt; grep Commit
+CommitLimit: &lt;span class="m"&gt;4030664&lt;/span&gt; kB
+Committed_AS: &lt;span class="m"&gt;67748&lt;/span&gt; kB
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Overcommit 설정은 제한된 메모리에서 보다 많은 프로세스를 띄우고 불필요한 메모리로 인한 공간 낭비를 줄일 수 있다는 장점이 있지만 OS 가 프로세스를 임의로 종료시켜 버릴 수 있다는 위험도 있다. 실제 운영에 사용되는 서버라면 매우 조심해야 할 상황이 발생할 수 있다.&lt;/p&gt;
+&lt;p&gt;현재 overcommit 설정 혹인은 다음과 같이 하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sysctl -a &lt;span class="p"&gt;|&lt;/span&gt; grep overcommit
+vm.overcommit_memory &lt;span class="o"&gt;=&lt;/span&gt; 0
+vm.overcommit_ratio &lt;span class="o"&gt;=&lt;/span&gt; 50
+vm.overcommit_kbytes &lt;span class="o"&gt;=&lt;/span&gt; 0
+vm.nr_overcommit_hugepages &lt;span class="o"&gt;=&lt;/span&gt; 0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;또는&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat /proc/sys/vm/overcommit_memory
+0
+cat /proc/sys/vm/overcommit_ratio
+50
+cat /proc/sys/vm/oom_kill_allocating_task
+0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;overcommit 설정을 변경하려면 다음과 같이 하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sysctl vm.overcommit_memory&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;또는 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 에 아래 내용을 추가&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vm.overcommit_memory=1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Linux overcommit test&lt;/h2&gt;
+&lt;p&gt;참고로 overcommit 동작에 대해 테스트해보자.&lt;/p&gt;
+&lt;p&gt;다음 코드는 &lt;code&gt;malloc()&lt;/code&gt;만 하고 메모리에 쓰는 작업은 하지 않는 코드다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;while(1) {
+  block = (void *) malloc((double) GIGABYTE);
+  printf(&amp;quot;Allocated memory.\n&amp;quot;);
+  sleep(1);
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 다음 코드는 메모리에 쓰는 작업까지 한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;while(1) {
+  block = (void *) malloc((double) GIGABYTE);
+  memset(block, 1, GIGABYTE);
+  printf(&amp;quot;Allocated memory.\n&amp;quot;);
+  sleep(1);
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;적절하게 할당하는 메모리 값을 변경해가며 테스트해보자.&lt;/p&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux overcommit handling modes 에 대한 문서: https://www.kernel.org/doc/Documentation/vm/overcommit-accounting&lt;/li&gt;
+&lt;li&gt;vm.overcommit에 대한 짧은 이야기: https://brunch.co.kr/@alden/16&lt;/li&gt;
+&lt;/ul&gt;</content><category term="linux"></category><category term="memory"></category><category term="overcommit"></category></entry><entry><title>NPE (NullPointerException) 을 피하자</title><link href="https://imjang57.github.io/garret/avoid-null-pointer-exception-in-java.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/avoid-null-pointer-exception-in-java.html</id><summary type="html">&lt;p&gt;Java 에서 NPE (NullPointerException) 을 피하면서 코딩하기 위한 습관들&lt;/p&gt;</summary><content type="html">&lt;h1&gt;NPE(NullPointerException) 을 피하자.&lt;/h1&gt;
 &lt;p&gt;자바 개발을 하다보면 가장 많이 만나고 영향이 큰 예외 중 하나가 &lt;em&gt;NPE&lt;/em&gt; 이다. NPE 는 개발자의 습관이나 부주의 등이 대부분 원인이다. 이를 예방하는 가장 좋은 방법은 NPE 를 피하는 코딩 습관을 갖는 것이다.&lt;/p&gt;
 &lt;h2&gt;null 의 의미&lt;/h2&gt;
 &lt;p&gt;자바에서 &lt;code&gt;null&lt;/code&gt; 이란 아래와 같은 상태를 의미한다.&lt;/p&gt;
@@ -689,16 +878,7 @@ set cindent         &amp;quot;Like smartindent, but stricter and more customisab
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;if else 를 이용한 null 체크는 source code readability 를 떨어뜨린다. Optional 과 Java doc 을 이용한 직관적인 코드 작성을 하자.&lt;/p&gt;</content><category term="java"></category><category term="NPE"></category><category term="NullPointerException"></category><category term="null"></category></entry><entry><title>Bash script 로 각 디렉터리들의 실제 사용량 조회하기</title><link href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/check-disk-usage-of-directories-with-bash-script.html</id><summary type="html">&lt;p&gt;Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 각 디렉터리 별 디스크 사용량 확인하기&lt;/h1&gt;
-&lt;p&gt;리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.&lt;/p&gt;
-&lt;p&gt;스크립트:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# make newlines the only seperator (IFS : Internal Field Separator)&lt;/span&gt;
-&lt;span class="nv"&gt;IFS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; d in &lt;span class="k"&gt;$(&lt;/span&gt;ls -l &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;^d&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{ print substr($0, index($0, $9)) }&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; du -hs &lt;span class="nv"&gt;$d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;처음에 &lt;code&gt;IFS&lt;/code&gt; 를 지정해주지 않으면 디렉터리 이름에 공백이 들어간 경우 디렉터리 이름이 공백을 기준으로 split 되어 별도의 디렉터리처럼 동작하게 된다.&lt;/p&gt;
-&lt;p&gt;나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, &lt;code&gt;grep&lt;/code&gt; 으로 디렉터리만 뽑아내고, &lt;code&gt;awk&lt;/code&gt; 로 파일 이름만 뽑아내고, &lt;code&gt;for&lt;/code&gt; statement 를 사용해서 각 디렉터리마다 &lt;code&gt;du&lt;/code&gt; 명령을 사용한다.&lt;/p&gt;</content><category term="bash"></category><category term="linux"></category><category term="du"></category><category term="disk"></category></entry><entry><title>JVM Process monitoring with JDK tools</title><link href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/jvm-process-monitoring-with-jdk-tools.html</id><summary type="html">&lt;p&gt;JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;JVM Process monitoring&lt;/h1&gt;
+&lt;p&gt;if else 를 이용한 null 체크는 source code readability 를 떨어뜨린다. Optional 과 Java doc 을 이용한 직관적인 코드 작성을 하자.&lt;/p&gt;</content><category term="java"></category><category term="NPE"></category><category term="NullPointerException"></category><category term="null"></category></entry><entry><title>JVM Process monitoring with JDK tools</title><link href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/jvm-process-monitoring-with-jdk-tools.html</id><summary type="html">&lt;p&gt;JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개&lt;/p&gt;</summary><content type="html">&lt;h1&gt;JVM Process monitoring&lt;/h1&gt;
 &lt;p&gt;요즘 일 때문에 오랜만에 자바를 사용하고 있고, 스칼라에 관심이 생겨 공부해보고 있다. 그런데 둘다 &lt;em&gt;JVM&lt;/em&gt; 기반 언어다 보니 JVM 에 대해 알아야 겠다는 생각이 들었다. (사실 일하다가 JVM 모니터링 할 일이 생긴 김에 간단하게 정리한다.) 어쨌든 둘 다 JVM 에서 동작하는 녀석들이라 JVM 모니터링에 대해 간단하게 남겨보고자 한다.&lt;/p&gt;
 &lt;p&gt;자바든 스칼라든 실행되면 JVM 프로세스이다. 자바나 스칼라로 쓰여진 코드는 Java Bytecode 로 컴파일되고, JVM 은 이 Bytecode 를 실행한다. 그러므로 컴파일 된 이후에는 자바로 작성했든 스칼라로 작성했든 JVM 입장에서는 그냥 똑같은 Bytecode 이다. 그러니 같은 방법(JVM Process monitoring)으로 모니터링할 수 있다.&lt;/p&gt;
 &lt;h1&gt;JVM Monitoring tools&lt;/h1&gt;
@@ -865,164 +1045,480 @@ $
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.wolfe.id.au/2011/10/16/monitoring-the-openjdk-from-the-cli/"&gt;Monitoring the OpenJDK from the CLI&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://d2.naver.com/helloworld/6043"&gt;Garbage Collection 모니터링 방법&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="java"></category><category term="jvm"></category><category term="monitoring"></category><category term="jps"></category><category term="stat"></category><category term="stack"></category></entry><entry><title>Windows 에서 Filename too long 에러</title><link href="https://imjang57.github.io/garret/windows-error-filename-too-long.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/windows-error-filename-too-long.html</id><summary type="html">&lt;p&gt;Windows 에서 Filename too long 에러가 발생한 경우&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 Filename too long 에러&lt;/h1&gt;
-&lt;p&gt;Windows 에서 Git 사용하다가 아래와 같은 에러가 발생했다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;fatal&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;cannot&lt;/span&gt; &lt;span class="n"&gt;create&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;node_modules/gulp-clean/node_modules/gulp-util/node_modules/dateformat/node_modules/meow/node_modules/normalize-package-data/node_modules/validate-npm-package-license/node_modules/spdx-correct/node_modules/spdx-license-ids&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Filename&lt;/span&gt; &lt;span class="n"&gt;too&lt;/span&gt; &lt;span class="n"&gt;long&lt;/span&gt;
-&lt;span class="n"&gt;warning&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Clone&lt;/span&gt; &lt;span class="n"&gt;succeeded&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;but&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="n"&gt;failed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;You&lt;/span&gt; &lt;span class="n"&gt;can&lt;/span&gt; &lt;span class="n"&gt;inspect&lt;/span&gt; &lt;span class="n"&gt;what&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;checked&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;git status&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;retry&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;git checkout -f HEAD&amp;#39;&lt;/span&gt;
+&lt;/ul&gt;</content><category term="java"></category><category term="jvm"></category><category term="monitoring"></category><category term="jps"></category><category term="stat"></category><category term="stack"></category></entry><entry><title>Linux Partition 관리 : fdisk</title><link href="https://imjang57.github.io/garret/linux-command-fdisk.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/linux-command-fdisk.html</id><summary type="html">&lt;p&gt;리눅스에서 fdisk 명령을 사용하여 파티션(Partition)을 관리하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;fdisk&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;fdisk&lt;/code&gt; 명령은 partition table 을 관리하는 명령이다. 즉, linux 의 disk partition 을 생성, 수정, 삭제할 수 있는 도구이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fdisk&lt;/code&gt; 실행파일의 위치는 &lt;code&gt;/sbin/fdisk&lt;/code&gt; 이다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# which fdisk
+/sbin/fdisk
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;에러 메시지 부분에 파일 이름이 매우 길고 메시지 끝에 &lt;code&gt;Filename too long&lt;/code&gt; 이라는 글자가 보인다. 말그대로 파일 이름이 너무 길어서 나는 에러다.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/22575662/filename-too-long-in-git-for-windows/22575737#22575737"&gt;Stack Overflow&lt;/a&gt;의 답변에 따르면 윈도우의 오래된 파일 API 를 사용하는 경우 파일 이름의 길이가 260글자까지만 가능하다. 최신 API 를 사용하면 4096글자까지 가능하다. Window 의 Git 이 사용하는 MinGW 가 오래된 API 를 사용하는 듯하다.&lt;/p&gt;
-&lt;p&gt;나는 Windows 7 에서 Git 1.9.x 버전을 사용하다가 위 에러를 만났다. 혹시나 해서 현재 최신 버전인 2.10.1 으로 다시 설치해봤지만 여전히 에러가 발생한다. 즉, 아직 고쳐지지 않았다는 이야기..&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/22575662/filename-too-long-in-git-for-windows/26111092#26111092"&gt;같은 StackOverflow 질문에 달린 답변&lt;/a&gt;에 따르면 아래 설정을 하면 된다고 한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config --system core.longpaths true
+&lt;p&gt;fdisk help:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# fdisk -h
+Usage:
+fdisk [options] &amp;lt;disk&amp;gt; change partition table
+fdisk [options] -l &amp;lt;disk&amp;gt; list partition table(s)
+fdisk -s &amp;lt;partition&amp;gt; give partition size(s) in blocks
+Options:
+-b &amp;lt;size&amp;gt; sector size (512, 1024, 2048 or 4096)
+-c switch off DOS-compatible mode
+-h print help
+-u &amp;lt;size&amp;gt; give sizes in sectors instead of cylinders
+-v print version
+-C &amp;lt;number&amp;gt; specify the number of cylinders
+-H &amp;lt;number&amp;gt; specify the number of heads
+-S &amp;lt;number&amp;gt; specify the number of sectors per track
+#
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;하지만 위 설정을 해도 안된다. 위 설정으로 해결된다는 사람도 있는데 내 경우와 다른 점이 무엇인지 잘 모르겠다. 그래서 그냥 리눅스에 clone 한 Git repository 에서 export 해서 zip 으로 압축해서 옮겨왔다. 시간이 많지 않고, 다른 Git client 찾아서 설치하고 테스트하기도 귀찮고 윈도우에서 작업할게 아니라 테스트용이라..&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/msysgit/msysgit/wiki/Git-cannot-create-a-file-or-directory-with-a-long-path"&gt;이 글&lt;/a&gt;에 Git 이 윈도우에서 260자 제한을 건 기술적인 이유가 잘 나와있으니 궁금하면 읽어보자.&lt;/p&gt;
-&lt;p&gt;참고로, zip 파일을 윈도우에서 압축해제 할 때도 위 에러가 발생했다. 내가 사용하던 반디집(Bandizip) 프로그램이 예전 버전이라 오래된 API 를 사용하고 있었나 싶어서 최신으로 업데이트했다. 그러니 매우 잘 동작했다.&lt;/p&gt;</content><category term="windows"></category><category term="error"></category></entry><entry><title>Windows 에서 apache zeppelin 사용 시 HiveContext 에러</title><link href="https://imjang57.github.io/garret/hive-context-error-of-zeppelin-on-windows.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2016-01-10T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/hive-context-error-of-zeppelin-on-windows.html</id><summary type="html">&lt;p&gt;Windows 에서 apache zeppelin 사용 시 HiveContext 에러가 발생하는 경우&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 zeppelin 실행&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html"&gt;윈도우에서 spark-shell을 실행하는 방법&lt;/a&gt; 에서 윈도우에서 spark-shell 을 실행하는 방법에 대해 알아봤다. spark-shell 이 실행가능하니까 당연히 zeppelin 도 실행가능할거라고 생각된다. 그래서 실행해보니 에러가 발생했다..-_-..; 메시지가 매우 긴데.. 다음과 같은 메시지가 나오는 경우였다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Caused by: java.lang.IllegalArgumentException: java.net.URISyntaxException: Relative path in absolute URI: file:C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;code&gt;%ZEPPELIN_HOME%\spark-warehouse&lt;/code&gt; 를 hive 테이블들을 저장하기 위해 사용하는 것 같다. 그래서 &lt;code&gt;%ZEPPELIN_HOME%\spark-warehouse&lt;/code&gt; 폴더를 생성하고 &lt;a href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html"&gt;윈도우에서 spark-shell을 실행하는 방법&lt;/a&gt; 포스트에서 했떤 것 처럼 winutils 를 사용해서 권한을 설정해줬다&lt;/p&gt;
-&lt;p&gt;그런데 같은 에러가 또 발생한다..!!!!..ㅆ....&lt;/p&gt;
-&lt;p&gt;그래서 찾다보니 &lt;a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/"&gt;이 블로그 포스트&lt;/a&gt; 에서 해결책을 찾았다.&lt;/p&gt;
-&lt;p&gt;결론은 &lt;code&gt;spark.sql.warehouse.dir&lt;/code&gt; 이라는 설정값을 정확하게 설정해줘야 한다는 것이다. &lt;code&gt;%ZEPPELIN_HOME%\conf\interpreter.json&lt;/code&gt; 을 열어서 spark interprefter 설정을 찾아서 아래와 같이 &lt;code&gt;spark.sql.warehouse.dir&lt;/code&gt; 을 추가하자.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="err"&gt;...&lt;/span&gt;
-  &lt;span class="nt"&gt;&amp;quot;2C5DV85NF&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2C5DV85NF&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spark&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spark&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;properties&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;spark.sql.warehouse.dir&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;file:///C:/Users/imjan/Desktop/zeppelin-0.6.2/spark-warehouse&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;spark.executor.memory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;args&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.printREPLOutput&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;spark.cores.max&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.dep.additionalRemoteRepository&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spark-packages,http://dl.bintray.com/spark-packages/maven,false;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.sql.stacktrace&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.importImplicit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.concurrentSQL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.useHiveContext&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.pyspark.python&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;python&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.dep.localrepo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;local-repo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.knitr&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.spark.maxResult&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1000&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;master&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;local[*]&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;spark.app.name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Zeppelin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.image.width&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;100%&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.render.options&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;out.format \u003d \u0027html\u0027, comment \u003d NA, echo \u003d FALSE, results \u003d \u0027asis\u0027, message \u003d F, warning \u003d F&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;quot;zeppelin.R.cmd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;R&amp;quot;&lt;/span&gt;
-      &lt;span class="p"&gt;},&lt;/span&gt;
-      &lt;span class="err"&gt;...&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;그리고 아래 코드를 실행해서 테스트해보니 잘된다. &lt;code&gt;%ZEPPELIN_HOME&lt;/code&gt;\spark-warehouse&lt;code&gt;에&lt;/code&gt;tmptable` 이라는 폴더가 생성된 걸 확인할 수 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;hiveCtx&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hive&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;HiveContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;hiveCtx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;select 1, 2&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;saveAsTable&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tmpTable&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;hr&gt;
-&lt;p&gt;위의 내용은 zeppelin 내장 spark interpreter 를 사용한 경우라서 사용 형태라 다른 경우 맞지 않을 수도 있다.&lt;/p&gt;
-&lt;h1&gt;참고&lt;/h1&gt;
+&lt;h2&gt;Disk device name&lt;/h2&gt;
+&lt;p&gt;리눅스에서 디스크장치명은 IDE Disk 인지 SCSI Disk 인지에 따라서 장치명이 주어진다.&lt;/p&gt;
+&lt;p&gt;IDE Disk 인 경우:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://hernandezpaul.wordpress.com/2016/11/14/apache-zeppelin-installation-on-windows-10/"&gt;Apache Zeppelin installation on Windows 10&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="spark"></category><category term="zeppelin"></category></entry><entry><title>Windows 에서 spark-shell 을 실행하는 방법</title><link href="https://imjang57.github.io/garret/run-spark-shell-on-windows.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2016-01-10T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/run-spark-shell-on-windows.html</id><summary type="html">&lt;p&gt;Windows 에서 spark-shell 을 실행하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Windows 에서 spark-shell 실행&lt;/h1&gt;
-&lt;p&gt;윈도우에서 spark-shell 실행 시 NullPointerException 발생할 경우 문제 해결하는 방법에 대한 글이다.&lt;/p&gt;
-&lt;h1&gt;윈도우에서 Spark 실행 시 RuntimeException(NullPointerException) 발생&lt;/h1&gt;
-&lt;p&gt;Spark 은 보통 리눅스에서 사용되지만 Local mode 로 실행하면 윈도우에서도 실행할 수 있다. 그런데 리눅스에서는 단순히 spark-shell 스크립트를 실행하면 되는데 윈도우에서는 아래와 같은 에러가 발생하는 경우가 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;java.lang.RuntimeException: java.lang.NullPointerException&lt;/span&gt;
-&lt;span class="x"&gt;        at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:522)&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.hive.client.ClientWrapper.&amp;lt;init&amp;gt;(ClientWrapper.scala:194)&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.hive.client.IsolatedClientLoader.createClient(IsolatedClientLoader.scala:238)&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.executionHive&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;218&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.executionHive(HiveContext.scala:208)&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.functionRegistry&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;462&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.hive.HiveContext.functionRegistry(HiveContext.scala:461)&lt;/span&gt;
-&lt;span class="x"&gt;at org.apache.spark.sql.UDFRegistration.&amp;lt;init&amp;gt;(UDFRegistration.scala:40)&lt;/span&gt;
-&lt;span class="x"&gt;................&lt;/span&gt;
-&lt;span class="x"&gt;................&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;그냥 NullPointerException 이고 아무런 메시지가 없다…-_-…&lt;/p&gt;
-&lt;p&gt;내 기억에 작년에 분명 spark-shell 을 윈도우에서 잘 썼었는데 갑자기 에러가 나서 당황했는데, HiveContext 가 원인이었다.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://blogs.msdn.microsoft.com/arsen/2016/02/09/resolving-spark-1-6-0-java-lang-nullpointerexception-not-found-value-sqlcontext-error-when-running-spark-shell-on-windows-10-64-bit/"&gt;MSDN 블로그의 한 글&lt;/a&gt;에 따르면 윈도우에서 Spark 이 HiveContext 를 초기화하기 위해서는 &lt;code&gt;winutils.exe&lt;/code&gt; 이라는 파일이 필요하다. 블로그에 따르면 HiveContext 를 초기화하는데 Hadoop 의 Native libraries 를 필요로 하기 때문이라는 듯 하다.&lt;/p&gt;
-&lt;p&gt;이번에 사용하려고 했던 spark 빌드는 hive 를 포함한 빌드이기 때문에 spark-shell 이 실행될 때 무조건 HiveContext 를 초기화하게 되어 있었다. 생각해보니 작년에 사용했던 건 hive 를 제외하고 소스를 빌드해서 사용했던 것 같다.ㅠㅠ&lt;/p&gt;
-&lt;p&gt;어쨌든 이 문제를 해결하기 위해서는 아래와 같은 것들이 필요하다.&lt;/p&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda&lt;/code&gt; : 첫번째(a) IDE Disk (hd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hdb&lt;/code&gt; : 두번째(b) IDE Disk (hd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hdc&lt;/code&gt; : 세번째(c) IDE Disk (hd)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SCSI Disk 인 경우:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/dev/sda&lt;/code&gt; : 첫번째(a) SCSI Disk (sd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/sdb&lt;/code&gt; : 두번째(b) SCSI Disk (sd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/sdc&lt;/code&gt; : 세번째(c) SCSI Disk (sd)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;그리고 디스크 내에서 파티션이 여러개 나누어진 경우 숫자가 붙어서 장치명이 주어진다:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda&lt;/code&gt; : 첫번째(a) IDE디스크 전체를 의미&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda1&lt;/code&gt; : 첫번째(a) IDE디스크 내의 첫번째 파티션&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda2&lt;/code&gt; : 첫번째(a) IDE디스크 내의 두번째 파티션&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;요약하면 다음과 같다.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;winutils.exe 다운로드 및 %HADOOP_HOME%\bin 에 복사&lt;/li&gt;
-&lt;li&gt;HADOOP_HOME 환경 변수 설정&lt;/li&gt;
+&lt;li&gt;hd 로 시작하면 IDE Disk, sd 로 시작하면 SCSI Disk&lt;/li&gt;
+&lt;li&gt;뒤에 알파벳이 붙으면 Disk 자체를 의미하고 Disk 는 a 부터 순서대로 Naming 이 이루어짐&lt;/li&gt;
+&lt;li&gt;뒤에 숫자가 붙으면 Disk 내의 partition 번호를 의미하고 Partition 은 1 부터 순서대로 Naming 이 이루어짐&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;자세한 내용은 블로그에 쉽게 나와있으니 읽어보면 되고, 아래 명령들만 기억하자.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%HADOOP_HOME%&lt;span class="se"&gt;\b&lt;/span&gt;in&lt;span class="se"&gt;\w&lt;/span&gt;inutils.exe ls &lt;span class="se"&gt;\t&lt;/span&gt;mp&lt;span class="se"&gt;\h&lt;/span&gt;ive
-%HADOOP_HOME%&lt;span class="se"&gt;\b&lt;/span&gt;in&lt;span class="se"&gt;\w&lt;/span&gt;inutils.exe chmod &lt;span class="m"&gt;777&lt;/span&gt; &lt;span class="se"&gt;\t&lt;/span&gt;mp&lt;span class="se"&gt;\h&lt;/span&gt;ive
-%HADOOP_HOME%&lt;span class="se"&gt;\b&lt;/span&gt;in&lt;span class="se"&gt;\w&lt;/span&gt;inutils.exe ls &lt;span class="se"&gt;\t&lt;/span&gt;mp&lt;span class="se"&gt;\h&lt;/span&gt;ive
+&lt;p&gt;&lt;code&gt;fdisk&lt;/code&gt; 를 사용하여 현재 시스템의 디스크와 파티션을 확인하고 새로운 파티션을 추가해보자.&lt;/p&gt;
+&lt;h2&gt;디스크 및 파티션 확인하기&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;fisk -l&lt;/code&gt; 을 실행하면 현재 시스템의 모든 디스크 및 파티션 정보를 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# fdisk -l
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+#
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;hadoop 은 설치하고 파일 옮기고 귀찮으니까 그냥 &lt;a href="https://github.com/steveloughran/winutils"&gt;winutils github&lt;/a&gt; 에서 다운로드 하자. 윈도우에서 hadoop 을 잘 쓸 수 있게 &lt;code&gt;winutils.exe&lt;/code&gt; 파일까지 포함시켜서 구성되어 있다. 다운로드 해서 &lt;code&gt;%HADOOP_HOME%&lt;/code&gt; 만 잘 잡아주면 된다.&lt;/p&gt;
-&lt;h1&gt;추가로 발생한 문제&lt;/h1&gt;
-&lt;p&gt;나의 경우에 위 내용을 다 했는데도 에러가 발생했다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;java.lang.RuntimeException: java.lang.RuntimeException: The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:522)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.client.ClientWrapper.&amp;lt;init&amp;gt;(ClientWrapper.scala:204)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.client.IsolatedClientLoader.createClient(IsolatedClientLoader.scala:238)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.executionHive&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;218&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.executionHive(HiveContext.scala:208)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.functionRegistry&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lzycompute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;HiveContext.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;462&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.functionRegistry(HiveContext.scala:461)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.UDFRegistration.&amp;lt;init&amp;gt;(UDFRegistration.scala:40)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.SQLContext.&amp;lt;init&amp;gt;(SQLContext.scala:330)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.&amp;lt;init&amp;gt;(HiveContext.scala:97)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.sql.hive.HiveContext.&amp;lt;init&amp;gt;(HiveContext.scala:101)&lt;/span&gt;
-&lt;span class="x"&gt;  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)&lt;/span&gt;
-&lt;span class="x"&gt;  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)&lt;/span&gt;
-&lt;span class="x"&gt;  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)&lt;/span&gt;
-&lt;span class="x"&gt;  at java.lang.reflect.Constructor.newInstance(Constructor.java:422)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.spark.repl.Main&lt;/span&gt;&lt;span class="p"&gt;$.&lt;/span&gt;&lt;span class="nv"&gt;createSQLContext&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;Main.scala&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;89&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
-&lt;span class="x"&gt;  ... 47 elided&lt;/span&gt;
-&lt;span class="x"&gt;Caused by: java.lang.RuntimeException: The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.createRootHDFSDir(SessionState.java:612)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.createSessionDirs(SessionState.java:554)&lt;/span&gt;
-&lt;span class="x"&gt;  at org.apache.hadoop.hive.ql.session.SessionState.start(SessionState.java:508)&lt;/span&gt;
-&lt;span class="x"&gt;  ... 62 more&lt;/span&gt;
-&lt;span class="x"&gt;&amp;lt;console&amp;gt;:13: error: not found: value sqlContext&lt;/span&gt;
-&lt;span class="x"&gt;       import sqlContext.implicits._&lt;/span&gt;
-&lt;span class="x"&gt;              ^&lt;/span&gt;
-&lt;span class="x"&gt;&amp;lt;console&amp;gt;:13: error: not found: value sqlContext&lt;/span&gt;
-&lt;span class="x"&gt;       import sqlContext.sql&lt;/span&gt;
-&lt;span class="x"&gt;              ^&lt;/span&gt;
+&lt;p&gt;위의 결과에서 Disk device name 이 &lt;code&gt;/dev/vda&lt;/code&gt; 로 되어 있는데 오픈스택 가상머신에서 테스트하여 virtual disk 로 디스크가 인식되어 있기 때문이다. 현재 하나의 디스크를 사용하고 있고, 디스크에 하나의 파티션이 사용되고 있음을 알 수 있다. 디스크 용량은 총 85.9 GB 인데, 현재 파티션이 생성된 것은 8225280 bytes 즉 약 8 GB 이다.&lt;/p&gt;
+&lt;h2&gt;새로운 파티션 추가하기&lt;/h2&gt;
+&lt;p&gt;특정 디스크에 대해 &lt;code&gt;fdisk&lt;/code&gt; 명령을 실행하여 파티션 설정을 하려면 &lt;code&gt;fdisk &amp;lt;device name&amp;gt;&lt;/code&gt; 을 실행한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# fdisk /dev/vda
+WARNING: DOS-compatible mode is deprecated. It’s strongly recommended to
+switch off the mode (command ‘c’) and change display units to
+sectors (command ‘u’).
+Command (m for help):
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;이번에는 그래도 쉽게 이유를 알 수 있었다. 에러 메시지를 보면 다음과 같다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;The root scratch dir: /tmp/hive on HDFS should be writable. Current permissions are: rwx------
+&lt;p&gt;&lt;code&gt;m&lt;/code&gt; 을 입력하면 어떤 명령을 사용할 수 있는지 도움말을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): m
+Command action
+a toggle a bootable flag
+b edit bsd disklabel
+c toggle the dos compatibility flag
+d delete a partition
+l list known partition types
+m print this menu
+n add a new partition
+o create a new empty DOS partition table
+p print the partition table
+q quit without saving changes
+s create a new empty Sun disklabel
+t change a partition’s system id
+u change display/entry units
+v verify the partition table
+w write table to disk and exit
+x extra functionality (experts only)
+Command (m for help):
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;즉, 권한 문제다. 그런데 원래 위의 내용대로 하면 위 문제가 해결되어야 한다. 뭐가 문제인가.&lt;/p&gt;
-&lt;p&gt;문제는 내가 C 드라이브가 아니라 E 드라이브에서 spark-shell 을 실행해서 였다. 위의 내용대로 해서 &lt;code&gt;C:\tmp\hive&lt;/code&gt; 를 생성하고 권한 설정했는데, spark-shell 은 E 드라이브에서 실행해서 실제로는 &lt;code&gt;E:\tmp\hive&lt;/code&gt; 에 접근했던 거였다. 그래서 &lt;code&gt;E:\tmp\hive&lt;/code&gt; 로 다시 권한을 설정하고 실행하니 잘 되었다.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;code&gt;HADOOP_HOME&lt;/code&gt; 을 환경변수로 해주기 귀찮아서 더 해보니까 conf/spark-env.cmd 파일에 아래처럼 추가해줘도 동작한다.&lt;/p&gt;
-&lt;p&gt;set HADOOP_HOME=C:\hadoop\hadoop-2.6.4&lt;/p&gt;
-&lt;h1&gt;참고&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;p&lt;/code&gt; 를 입력하면 현재 디스크 파티션 상태를 확인할 수 있다. fdisk -l 을 실행한 결과가 같은 내용을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): p
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이제 &lt;code&gt;n&lt;/code&gt; 을 입력하여 새로운 파티션을 생성한다. primary partition 으로 생성하기 위해 &lt;code&gt;p&lt;/code&gt; 를 입력하고, 새로 생성되는 partition 은 2번째 partition 이므로 2 를 입력한다. 그리고 partition 의 크기를 지정하기 위해 First cylinder 와 Last cylinder 를 입력하는데 둘 모두 그냥 Enter 를 입력하여 default 로 설정한다. 그리고 마지막으로 파티션 생성 후 &lt;code&gt;p&lt;/code&gt; 를 입력하여 새로운 partition 정보를 확인한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): n
+Command action
+e extended
+p primary partition (1–4)
+p
+Partition number (1–4): 2
+First cylinder (1045–10443, default 1045):
+Using default value 1045
+Last cylinder, +cylinders or +size{K,M,G} (1045–10443, default 10443):
+Using default value 10443
+Command (m for help): p
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+/dev/vda2            1045       10443    75494789+  83  Linux
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;정상적으로 파티션 정보가 생성된 것을 확인한 후 &lt;code&gt;fdisk&lt;/code&gt; 를 나오기 위해 &lt;code&gt;w&lt;/code&gt; 를 입력한다. &lt;code&gt;fdisk&lt;/code&gt; 를 종료할 때 &lt;code&gt;w&lt;/code&gt; 와 &lt;code&gt;q&lt;/code&gt; 2가지 명령을 사용할 수 있는데 &lt;code&gt;w&lt;/code&gt; 는 변경된 내용을 실제 시스템에 적용한 후 종료하는 것이고 &lt;code&gt;q&lt;/code&gt; 는 작업한 내용을 적용하지 않고 종료하는 것이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+#
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Partition Type&lt;/h2&gt;
+&lt;p&gt;fdisk prompt 에서 &lt;code&gt;l&lt;/code&gt; 을 입력하면 Partition type 들의 목록과 Partition Type 의 ID 를 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;Swap partition 은 82, Linux partition 은 83, FAT 는 b 또는 c, FreeBSD partition 은 a5 를 ID 로 사용한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): l
+0  Empty           24  NEC DOS         81  Minix / old Lin bf  Solaris        
+1  FAT12           39  Plan 9          82  Linux swap / So c1  DRDOS/sec (FAT-
+2  XENIX root      3c  PartitionMagic  83  Linux           c4  DRDOS/sec (FAT-
+3  XENIX usr       40  Venix 80286     84  OS/2 hidden C:  c6  DRDOS/sec (FAT-
+4  FAT16 &amp;lt;32M      41  PPC PReP Boot   85  Linux extended  c7  Syrinx         
+5  Extended        42  SFS             86  NTFS volume set da  Non-FS data    
+6  FAT16           4d  QNX4.x          87  NTFS volume set db  CP/M / CTOS / .
+7  HPFS/NTFS       4e  QNX4.x 2nd part 88  Linux plaintext de  Dell Utility   
+8  AIX             4f  QNX4.x 3rd part 8e  Linux LVM       df  BootIt         
+9  AIX bootable    50  OnTrack DM      93  Amoeba          e1  DOS access     
+a  OS/2 Boot Manag 51  OnTrack DM6 Aux 94  Amoeba BBT      e3  DOS R/O        
+b  W95 FAT32       52  CP/M            9f  BSD/OS          e4  SpeedStor      
+c  W95 FAT32 (LBA) 53  OnTrack DM6 Aux a0  IBM Thinkpad hi eb  BeOS fs        
+e  W95 FAT16 (LBA) 54  OnTrackDM6      a5  FreeBSD         ee  GPT            
+f  W95 Ext&amp;#39;d (LBA) 55  EZ-Drive        a6  OpenBSD         ef  EFI (FAT-12/16/
+10  OPUS            56  Golden Bow      a7  NeXTSTEP        f0  Linux/PA-RISC b
+11  Hidden FAT12    5c  Priam Edisk     a8  Darwin UFS      f1  SpeedStor      
+12  Compaq diagnost 61  SpeedStor       a9  NetBSD          f4  SpeedStor      
+14  Hidden FAT16 &amp;lt;3 63  GNU HURD or Sys ab  Darwin boot     f2  DOS secondary  
+16  Hidden FAT16    64  Novell Netware  af  HFS / HFS+      fb  VMware VMFS    
+17  Hidden HPFS/NTF 65  Novell Netware  b7  BSDI fs         fc  VMware VMKCORE
+18  AST SmartSleep  70  DiskSecure Mult b8  BSDI swap       fd  Linux raid auto
+1b  Hidden W95 FAT3 75  PC/IX           bb  Boot Wizard hid fe  LANstep        
+1c  Hidden W95 FAT3 80  Old Minix       be  Solaris boot    ff  BBT            
+1e  Hidden W95 FAT1
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 파티션을 Swap 용으로 사용하고 싶다면 해당 파티션의 타입을 82 로 지정해준다. 만약 3번 파티션을 Swap 으로 사용하고 싶다면 아래와 같이 차례대로 입력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): t
+Partition number (1–4): 3
+Hex code (type L to list codes): 82
+Changed system type of partition 3 to 82 (Linux swap)
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Boot partition 지정하기&lt;/h2&gt;
+&lt;p&gt;Boot flag 를 설정하여 booting 가능한 파티션을 지정할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): a
+Partition number (1–4): 1
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;파티션 정보를 확인하면 아래와 같이 1번 파티션에 Boot 항목이 설정되어 있음을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): p
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+/dev/vda2            1045       10443    75494789+  83  Linux
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;파티션 삭제하기&lt;/h2&gt;
+&lt;p&gt;파티션을 삭제하려면 &lt;code&gt;d&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): d
+Partition number (1–4): 2
+Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+#
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="disk"></category><category term="partition"></category><category term="fdisk"></category></entry><entry><title>Linux에서 hostname 관리</title><link href="https://imjang57.github.io/garret/linux-hostname-management.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/linux-hostname-management.html</id><summary type="html">&lt;p&gt;Linux에서 호스트명(hostname)을 확인 및 변경하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;리눅스(Linux) 호스트명(Hostname) 관리&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://blogs.msdn.microsoft.com/arsen/2016/02/09/resolving-spark-1-6-0-java-lang-nullpointerexception-not-found-value-sqlcontext-error-when-running-spark-shell-on-windows-10-64-bit/"&gt;Resolving Spark 1.6.0 "java.lang.NullPointerException, not found: value sqlContext" error when running spark-shell on Windows 10 (64-bit)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin"&gt;hadoop 2.6.4 winutils github&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="spark"></category></entry><entry><title>Git Basics</title><link href="https://imjang57.github.io/garret/git-basics.html" rel="alternate"></link><published>2017-01-05T00:00:00+09:00</published><updated>2017-01-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-05:/garret/git-basics.html</id><summary type="html">&lt;p&gt;Git 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git Basic&lt;/h1&gt;
+&lt;li&gt;Target : CentOS, Ubuntu&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;호스트명 조회&lt;/h2&gt;
+&lt;p&gt;명령어를 실행해서 현재 호스트명 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ hostname
+younghotestserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Redhat 리눅스에서 호스트명이 저장된 파일 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/sysconfig/network &lt;span class="p"&gt;|&lt;/span&gt; grep HOSTNAME
+younghotestserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ubuntu 리눅스에서 호스트명이 저장된 파일 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/hostname
+younghotestserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;호스트명 변경&lt;/h2&gt;
+&lt;p&gt;리눅스 호스트명 변경 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo hostname newhostname
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;또는&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo &lt;span class="nb"&gt;echo&lt;/span&gt; newhostname &amp;gt; /proc/sys/kernel/hostname
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이 방법은 리눅스가 재부팅될 경우 다시 이전 설정으로 되돌아 간다. 재부팅 후에도 유지되게 하려면 다음과 같이 한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Redhat 리눅스 : &lt;code&gt;/etc/sysconfig/network&lt;/code&gt; 파일에서 HOSTNAME=호스트명 추가 또는 변경&lt;/li&gt;
+&lt;li&gt;Ubuntu 리눅스 : &lt;code&gt;/etc/hostname&lt;/code&gt; 파일에서 호스트명 변경. 참고로 이 파일은 파일 내용 전체가 호스트명이다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;호스트명을 변경하면 &lt;code&gt;/etc/hosts&lt;/code&gt; 파일도 같이 체크해주자. 이 파일은 IP 주소와 호스트명을 매핑하기 위한 정보가 포함되어 있다. 자기 자신을 가리키는 정보도 포함되어 있으므로 같이 수정해주는 것이 좋다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/hosts&lt;/code&gt; 파일의 내용 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;127.0.0.1    localhost    newhostname
+::1          localhost    newhostname
+&lt;/pre&gt;&lt;/div&gt;</content><category term="bash"></category><category term="linux"></category><category term="du"></category><category term="disk"></category></entry><entry><title>SSH Brute force 막기</title><link href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="alternate"></link><published>2017-01-12T00:00:00+09:00</published><updated>2017-01-12T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-12:/garret/defence-ssh-brute-force.html</id><summary type="html">&lt;p&gt;SSH Brute force 공격 시도를 막는 설정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ssh brute force 막기&lt;/h1&gt;
+&lt;p&gt;AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..&lt;/p&gt;
+&lt;p&gt;어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)&lt;/p&gt;
+&lt;p&gt;brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.&lt;/p&gt;
+&lt;p&gt;ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.&lt;/p&gt;
+&lt;p&gt;blacklist 와 ssh chain 생성:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -N blacklist
+# iptables -N ssh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A blacklist -m recent --set --name blacklist
+# iptables -A blacklist -j REJECT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ssh chain 은 다음과 같다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
+# iptables -A ssh -m recent --set --name ssh
+# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
+# iptables -A ssh -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이 ssh chain 은 다음과 같이 동작한다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.&lt;/li&gt;
+&lt;li&gt;접속 주소를 "ssh" 목록이 기록한다.&lt;/li&gt;
+&lt;li&gt;접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.&lt;/li&gt;
+&lt;li&gt;위의 3개가 다 통과하면 ssh 접속을 허락한다.&lt;/li&gt;
+&lt;/ol&gt;</content><category term="ssh"></category><category term="iptables"></category><category term="brute force"></category></entry><entry><title>Linux lsof command</title><link href="https://imjang57.github.io/garret/linux-command-lsof.html" rel="alternate"></link><published>2017-01-12T00:00:00+09:00</published><updated>2017-01-12T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-12:/garret/linux-command-lsof.html</id><summary type="html">&lt;p&gt;lsof 명령어에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;lsof&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;lsof&lt;/code&gt; 는 "list open files"의 약자로 시스템에서 열린 파일 목록을 알려주고 사용하는 프로세스, 디바이스 정보, 파일의 종류등 상세한 정보를 출력해주는 명령어(Command)이다.&lt;/p&gt;
+&lt;p&gt;리눅스와 유닉스는 추상화된 파일 시스템(VFS - Virtual File System)을 사용하므로 일반 파일, 디렉터리, 네트워크 소켓, 라이브러리, 심볼릭 링크 등도 모두 파일로 처리되며 &lt;code&gt;lsof&lt;/code&gt; 에서 상세한 정보를 확인할 수 있다.&lt;/p&gt;
+&lt;h2&gt;모든 열린 파일 출력&lt;/h2&gt;
+&lt;p&gt;옵션 없이 &lt;code&gt;lsof&lt;/code&gt; 명령을 실행하면 모든 열린 파일 정보를 출력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;컬럼별 의미는 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;COMMAND&lt;/code&gt; : 실행한 명령어&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PID&lt;/code&gt; : process id&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;USER&lt;/code&gt; : 실행한 사용자&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FD&lt;/code&gt; : File Descriptor, 파일의 종류. &lt;ol&gt;
+&lt;li&gt;&lt;code&gt;cwd&lt;/code&gt; : current working directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rtd&lt;/code&gt; : root directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mem&lt;/code&gt; : memory-mapped file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;txt&lt;/code&gt; : program text (code and data);&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TYPE&lt;/code&gt; : 파일 종류&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;DIR&lt;/code&gt; : 디렉터리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CHR&lt;/code&gt; :  character special file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;REG&lt;/code&gt; : regular file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unix&lt;/code&gt; : 유닉스 도메인 소켓 (MySQL 등이 사용하는 소켓으로 로컬 프로세스에서만 사용 가능하며 TCP/UDP 보다 속도가 매우 빠름)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DEVICE&lt;/code&gt; : 장치 번호&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SIZE/OFF&lt;/code&gt;: 파일의 크기나 오프셋&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NODE&lt;/code&gt;: 노드 번호&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NAME&lt;/code&gt;:  파일명&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;특정 사용자에 의해 열린 파일 출력&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;-u&lt;/code&gt; 옵션으로 사용자를 지정할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -u myuser
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;^&lt;/code&gt;를 추가하면 특정 사용자는 제외할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -u ^myuser
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;동시에 사용할 수도 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -u myuser -u ^root -u ^daemon
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;특정 프로세스가 오픈한 파일 확인&lt;/h2&gt;
+&lt;p&gt;프로세스(Process)의 PID로 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -p 1234
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 파일을 사용하는 프로세스 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof /var/log/httpd/access_log
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 디렉터리 내 열린 파일 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof +D /tmp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 포트를 사용하는 프로세스 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i TCP:22
+$ lsof -i TCP:22-80
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 명령어가 사용하는 포트 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -c httpd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Service Name 대신 port 번호 확인&lt;/h2&gt;
+&lt;p&gt;IANA 에 등록한 well known 포트는 &lt;code&gt;/etc/services&lt;/code&gt; 파일에 지정되어 있으므로 서비스를 파악하기 용이하다. 하지만 자체 개발한 서비스가 &lt;code&gt;/etc/services&lt;/code&gt; 파일에 등록된 포트를 사용할 경우에는 서비스 이름보다 포트 번호로 표시하는 게 낫다. &lt;code&gt;-P&lt;/code&gt; 옵션을 사용하면 서비스 이름대신 포트 번호로 표시해 준다.&lt;/p&gt;
+&lt;p&gt;예로 java 로 서비스하고 있는 모든 listen 하는 포트를 표시하려면 아래 명령을 실행한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i TCP -P &lt;span class="p"&gt;|&lt;/span&gt; grep java &lt;span class="p"&gt;|&lt;/span&gt; grep LISTEN
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;IPv4 또는 IPv6 포트만 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i 4
+$ lsof -i 6
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;열려 있는 모든 네트워크 포트 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i
+$ lsof -i TCP
+$ lsof -i UDP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;특정 사용자가 오픈한 모든 프로세스 중지&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;-t&lt;/code&gt; 옵션은 자세한 정보를 출력하지 않고 pid 정보만 출력한다. 다음 명령은 imjang57 사용자로 구동한 프로세스의 id 를 리턴한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;lsof -t -u imjang57
+13324
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이를 응용하여 &lt;code&gt;kill&lt;/code&gt; 명령어에 pid 만 전달할 수 있으므로 아래와 같이 사용하면 imjang57 사용자의 모든 프로세스를 중지하게 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;kill -KILL $(lsof -t -u imjang57
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="lsof"></category></entry><entry><title>SSH Host-key identification</title><link href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="alternate"></link><published>2017-01-10T00:00:00+09:00</published><updated>2017-01-11T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-10:/garret/ssh-host-key-identification.html</id><summary type="html">&lt;p&gt;This is about SSH Host-key identification.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH host key&lt;/h1&gt;
+&lt;p&gt;가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now &lt;span class="o"&gt;(&lt;/span&gt;man-in-the-middle
+attack&lt;span class="o"&gt;)&lt;/span&gt;!
+It is also possible that a host key has just been changed.
+The fingerprint &lt;span class="k"&gt;for&lt;/span&gt; the ECDSA key sent by the remote host is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Please contact your system administrator.
+Add correct host key in /home/imjang57/.ssh/known_hosts to get rid of
+this message.
+Offending ECDSA key in /home/imjang57/.ssh/known_hosts:8
+  remove with: ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R
+192.168.0.5
+ECDSA host key &lt;span class="k"&gt;for&lt;/span&gt; 192.168.0.5 has changed and you have
+requested strict checking.
+Host key verification failed.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;Host Key&lt;/em&gt; 가 달라서 발생하는 문제다. 자세히 말하면, 클라이언트 측에 등록된 SSH 서버의 호스트 키가 현재 접속 시도하면서 새롭게 받은 호스크 키와 달라서 발생한 문제이다.&lt;/p&gt;
+&lt;p&gt;SSH 서버에서 호스트 키를 새롭게 생성했거나, 클라이언트 측에서 SSH 서버의 호스트 키를 수동으로 입력했는데 잘못입력했거나, 서버를 재설치했거나, 기타 등등의 이유로 기존에 저장된 호스트 키와 연결시도하면서 새롭게 받은 호스트 키가 다를 수 있다.&lt;/p&gt;
+&lt;p&gt;이는 SSH 연결을 시도하는 서버가 정말 내가 연결하려는 서버가 맞는지를 체크할 수 있는 기능이다. HTTPS 를 사용할 때 신뢰할 수 있는 사이트인지 확인하는 것과 비슷한 이유로 제공되는 기능이다.&lt;/p&gt;
+&lt;h2&gt;해결 방법&lt;/h2&gt;
+&lt;p&gt;해결하는 방법은 여러개가 있다.&lt;/p&gt;
+&lt;h3&gt;known_host 삭제하여 해결&lt;/h3&gt;
+&lt;p&gt;보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 &lt;user_home&gt;/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R 192.168.0.5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
+The authenticity of host &lt;span class="s1"&gt;&amp;#39;192.168.0.5&amp;#39;&lt;/span&gt; can&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t be established.
+ECDSA key fingerprint is
+bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
+Are you sure you want to &lt;span class="k"&gt;continue&lt;/span&gt; connecting &lt;span class="o"&gt;(&lt;/span&gt;yes/no&lt;span class="o"&gt;)&lt;/span&gt;?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;yes 를 입력하면 호스트 키를 &lt;user_home&gt;/.ssh/known_hosts 파일에 저장하고 SSH 접속하게 된다.&lt;/p&gt;
+&lt;p&gt;만약 명령어 치는게 귀찮으면 그냥 known_hosts 파일 삭제하면 된다.&lt;/p&gt;
+&lt;h3&gt;StrictHostKeyChecking 설정을 off 하여 해결&lt;/h3&gt;
+&lt;p&gt;리눅스에서 ssh 설정은 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 디렉터리에 있다. &lt;code&gt;ssh_config&lt;/code&gt; 파일은 클라이언트 설정 파일, &lt;code&gt;sshd_config&lt;/code&gt; 는 서버(데몬) 설정 파일이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ssh_config&lt;/code&gt; 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;StrictHostKeyChecking no
+&lt;span class="nv"&gt;UserKnownHostsFile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/null
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;호스트 키 새로 생성하는 방법&lt;/h2&gt;
+&lt;p&gt;서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.&lt;/p&gt;
+&lt;p&gt;호스트 키는 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 에 저장되어 있다. &lt;em&gt;RSA&lt;/em&gt;, &lt;em&gt;DSA&lt;/em&gt;, &lt;em&gt;ECDSA&lt;/em&gt; 세 가지 종류의 키 파일들이 보통 생성되어 있다.&lt;/p&gt;
+&lt;p&gt;새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t rsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t dsa
+sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t ecdsa -b 521
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="ssh"></category></entry><entry><title>Git Basics</title><link href="https://imjang57.github.io/garret/git-basics.html" rel="alternate"></link><published>2017-01-05T00:00:00+09:00</published><updated>2017-01-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-05:/garret/git-basics.html</id><summary type="html">&lt;p&gt;Git 기본 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git Basic&lt;/h1&gt;
 &lt;p&gt;이 글은 Git 에 대해 기본적인 내용은 알고 있다고 생각하고 정리 목적으로 작성된 글이니 Git 을 아예 모르면 &lt;a href="http://git-scm.com/book/"&gt;Git Book&lt;/a&gt; 을 먼저 숙지하자.&lt;/p&gt;
 &lt;p&gt;아래 내용들에 알면 Git 을 잘 사용하기 위한 개념들은 다 알고 있다고 봐도 된다.&lt;/p&gt;
 &lt;ul&gt;
@@ -1372,16 +1868,64 @@ git commit --amend
 &lt;p&gt;많은 개발자들이 Parameter 와 Argument 를 딱히 구분하지 않고 사용한다. 그런데 이 둘은 엄연히 다르며, 그러다 보니 논쟁하다보면 맥락이 어긋나는 경우가 발생한다.&lt;/p&gt;
 &lt;p&gt;K&amp;amp;R 의 C Programming Language Second Edition 에 다음과 같이 언급한다.&lt;/p&gt;
 &lt;p&gt;We well generally use parameter for a variable named in the parenthesized list in a function definition, and argument for the value used in a call of the function.&lt;/p&gt;
-&lt;p&gt;즉, Parameter(파라미터, 매개변수)는 함수 선언에서 사용되는 변수의 이름을 뜻하며, Argument(인자, 전달인자)는 함수를 호출할 때 전달되는 값을 의미한다.&lt;/p&gt;</content><category term="parameter"></category><category term="argument"></category><category term="programming"></category></entry><entry><title>SSH with key</title><link href="https://imjang57.github.io/garret/ssh-with-key.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-with-key.html</id><summary type="html">&lt;p&gt;Key 로 SSH 로그인 하기 위한 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH with key file&lt;/h1&gt;
-&lt;p&gt;SSH 를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때.. 이 때 key 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다.&lt;/p&gt;
-&lt;p&gt;SSH 에서 key 를 이용한 로그인을 위해 RSA asymmetric encryption (RSA 비대칭키 암호화) 방식을 이용할 수 있다. 이 방법은 아래와 같은 절차를 따라 동작한다. (물론 당연히 다른 암호화 방식의 Key 를 사용해도 된다.)&lt;/p&gt;
+&lt;p&gt;즉, Parameter(파라미터, 매개변수)는 함수 선언에서 사용되는 변수의 이름을 뜻하며, Argument(인자, 전달인자)는 함수를 호출할 때 전달되는 값을 의미한다.&lt;/p&gt;</content><category term="parameter"></category><category term="argument"></category><category term="programming"></category></entry><entry><title>SSH Timeout Configuration</title><link href="https://imjang57.github.io/garret/ssh-timeout-configuration.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-timeout-configuration.html</id><summary type="html">&lt;p&gt;SSH 접속 시 Timeout 설정하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH Timeout 관련 설정&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;TCPKeepAlive yes
+ClientAliveInterval 30
+ClientAliveCountMax 99999
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;restart sshd:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ systemctl restart sshd
+&lt;/pre&gt;&lt;/div&gt;</content><category term="ssh"></category><category term="timeout"></category></entry><entry><title>SSH Tunneling</title><link href="https://imjang57.github.io/garret/ssh-tunneling.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-tunneling.html</id><summary type="html">&lt;p&gt;SSH Tunneling 사용 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH Tunneling&lt;/h1&gt;
+&lt;p&gt;SSH(Secure SHell)는 이름에서 알 수 있듯이 보안성이 좋은 프로토콜이다. SSH는 비대칭키를 이용한 인증(Authentication), 대칭키를 이용한 데이터 암호화(Encryption), 네트웍을 통해 전송된 데이터가 변경되지 않았음을 보장하는 무결성(Integrity) 등을 제공한다.&lt;/p&gt;
+&lt;p&gt;이외에 SSH는 정말 유용한 기능을 제공하는데 바로 포트 포워딩(Port Forwarding)을 이용한 터널링(Tunneling)이다.&lt;/p&gt;
+&lt;p&gt;SSH 클라이언트가 SSH 서버에 연결되면 둘 사이에 연결이 생성되는데 이를 보통 &lt;strong&gt;터널(Tunnel)&lt;/strong&gt; 이라고 한다. 그리고 이 터널은 클라이언트와 서버 사이에서 암호화로 보호되는 통로이다. 보통은 이 터널을 통해서 클라이언트와 서버가 통신하는데, 포트 포워딩이라는 기술을 사용하면 이 터널을 다른 애플리케이션들이 이용하도록 할 수가 있다. 이를 터널링이라고 한다. 터널링을 사용하면 애플리케이션은 별도로 개발할 필요 없이 SSH의 보안 통로를 사용할 수 있게 되는 것이다. 터널링은 TCP만 가능하고 UDP는 불가능하다.&lt;/p&gt;
+&lt;p&gt;터널링은 크게 &lt;strong&gt;로컬 포트 포워딩(Local Port Forwarding)&lt;/strong&gt; 과 &lt;strong&gt;리모트 포트 포워딩(Remote Port Forwarding)&lt;/strong&gt; 으로 나누어져 있다. 어디가 요청을 받고 어느 방향으로 전달해주냐에 따라 나누어 진다. 그리고 포트 포워딩을 통한 SSH 터널링은 SSH 연결이 유지되는 동안에만 사용할 수 있다.&lt;/p&gt;
+&lt;h1&gt;Local Port Forwarding&lt;/h1&gt;
+&lt;p&gt;로컬 포트 포워딩은 SSH 클라이언트가 요청을 받아 SSH 서버를 통해 다른 서버로 요청을 포워딩해주는 것이다. 로컬 포트 포워딩은 다음과 같이 실행하면 사용할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -L&amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt; port number&amp;gt;:&amp;lt;host&amp;gt;:&amp;lt;remote port number&amp;gt; &amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;span class="o"&gt;[&lt;/span&gt;:&amp;lt;SSH server port&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;&amp;lt;local port number&amp;gt;&lt;/code&gt;는 SSH 클라이언트가 애플리케이션을 위해 포트를 열고 대기(LISTEN)하고 있는 포트 번호이다. &lt;code&gt;&amp;lt;host&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버 주소이다. &lt;code&gt;&amp;lt;remote port number&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버의 포트 번호이다. 그리고 SSH 연결을 위해 &lt;code&gt;&amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;/code&gt;를 전달한다.&lt;/p&gt;
+&lt;p&gt;예를 들어, SSH를 통해서만 연결이 가능한 분리된 네트웍이 있다고 하자. 하나는 &lt;code&gt;192.168.0.0/24&lt;/code&gt;이고 다른 하나는 &lt;code&gt;192.169.0.0/24&lt;/code&gt;이다. SSH 클라이언트는 &lt;code&gt;192.168.0.5&lt;/code&gt;, 애플리케이션은 &lt;code&gt;192.168.0.10&lt;/code&gt;, SSH 서버는 &lt;code&gt;192.169.0.5:22&lt;/code&gt;, API 서버는 &lt;code&gt;192.169.0.10:10050&lt;/code&gt;일 때 로컬 호스트에서 로컬 포트 포워딩으로 API 서버에 요청을 하려면 다음과 같이 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -L10010:192.169.0.10:10050 myuser@192.169.0.5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 애플리케이션은 &lt;code&gt;192.168.0.5:10010&lt;/code&gt;으로 요청하면 SSH 터널을 통해 API 서버로 요청을 전달할 수 있다. 즉, 애플리케이션 -&amp;gt; SSH 클라이언트 -&amp;gt; SSH 서버 -&amp;gt; API 서버로 전달이 되는 것이다.&lt;/p&gt;
+&lt;h1&gt;Remote Port Forwaring&lt;/h1&gt;
+&lt;p&gt;리모트 포트 포워딩은 로컬 포트 포워딩과 반대이다. SSH 서버가 요청을 받아 SSH 클라이언트를 통해 다른 서버로 요청을 포워딩해주는 것이다. 리모트 포트 포워딩은 다음과 같이 실행하면 사용할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -R&amp;lt;remote port number&amp;gt;:&amp;lt;host&amp;gt;:&amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt; port number&amp;gt; &amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;span class="o"&gt;[&lt;/span&gt;:&amp;lt;SSH server port&amp;gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;&amp;lt;remote port number&amp;gt;&lt;/code&gt;는 SSH 서버가 애플리케이션을 위해 포트를 열고 대기(LISTEN)하고 있는 포트 번호이다. &lt;code&gt;&amp;lt;host&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버 주소이다. &lt;code&gt;&amp;lt;local port number&amp;gt;&lt;/code&gt;는 애플리케이션이 최종적으로 요청을 전달하려고 하는 서버의 포트 번호이다. 그리고 SSH 연결을 위해 &lt;code&gt;&amp;lt;user&amp;gt;@&amp;lt;SSH server host&amp;gt;&lt;/code&gt;를 전달한다.&lt;/p&gt;
+&lt;p&gt;가만히 보면 로컬 포트 포워딩과 순서가 반대인 것을 알 수 있다. 예를 들어, 예를 들어, SSH를 통해서만 연결이 가능한 분리된 네트웍이 있다고 하자. 하나는 &lt;code&gt;192.168.0.0/24&lt;/code&gt;이고 다른 하나는 &lt;code&gt;192.169.0.0/24&lt;/code&gt;이다. SSH 클라이언트는 &lt;code&gt;192.168.0.5&lt;/code&gt;, API 서버는 &lt;code&gt;192.168.0.10&lt;/code&gt;, SSH 서버는 &lt;code&gt;192.169.0.5:22&lt;/code&gt;, 애플리케이션은 &lt;code&gt;192.169.0.10:10050&lt;/code&gt;일 때 로컬 호스트에서 로컬 포트 포워딩으로 API 서버에 요청을 하려면 다음과 같이 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -R10050:192.168.0.10:10010 myuser@192.169.0.5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 애플리케이션은 &lt;code&gt;192.169.0.5:10050&lt;/code&gt;으로 요청하면 SSH 터널을 통해 API 서버로 요청을 전달할 수 있다. 즉, 애플리케이션 -&amp;gt; SSH 서버 -&amp;gt; SSH 클라이언트 -&amp;gt; API 서버로 전달이 되는 것이다.&lt;/p&gt;
+&lt;h1&gt;참고사항&lt;/h1&gt;
+&lt;p&gt;SSH 터널링을 이용하면 방화벽을 우회할 수 있고, SSH가 제공하는 암호화된 통신을 쉽게 다른 목적으로도 사용할 수 있다. 그러니 SSH 접근 권한과 관련된 정보(로그인 정보, SSH Key 등)를 잘 관리하자.&lt;/p&gt;</content><category term="ssh"></category><category term="tunneling"></category></entry><entry><title>SSH with key</title><link href="https://imjang57.github.io/garret/ssh-with-key.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-with-key.html</id><summary type="html">&lt;p&gt;Key 로 SSH 로그인 하기 위한 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH with key file&lt;/h1&gt;
+&lt;p&gt;SSH를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때... 이 때 키(Key) 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다. 또한, 비밀키(Private Key) 를 잘 관리하여 SSH 접속에 대한 보안을 강화할 수도 있다. 물론 모든 보안이 그렇듯이 얼마나 비밀키를 잘 관리하느냐가 중요하다.&lt;/p&gt;
+&lt;p&gt;SSH에서 키를 이용한 로그인을 위해 키파일(Key file)을 생성하고 SSH 서버에 키의 정보를 등록해주어야 한다. 키를 생성할 때 여러 암호화 알고리즘을 사용할 수 있지만 보통 RSA 비대칭키 암호화(RSA asymmetric encryption) 방식을 많이 사용한다. RSA 키파일을 생성하고 이 키를 이용하여 SSH 로그인하기 위해 다음과 같은 과정이 필요하다.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Public Key (공개키) 와 Private Key (비공개키) 를 생성&lt;/li&gt;
-&lt;li&gt;Local Host (SSH Client) 에 Private Key 저장&lt;/li&gt;
-&lt;li&gt;Remote Host (SSH Server) 에 Public Key 등록&lt;/li&gt;
-&lt;li&gt;Local Host 가 Remote  Host 에 접속 요청을 하면서 Public Key 전달&lt;/li&gt;
-&lt;li&gt;Remote Host 는 Public Key 를 받아서 등록된 Public Key 인지 검사한 후 승인 또는 비승인&lt;/li&gt;
+&lt;li&gt;공개키(Public Key) 와 비밀키(Private Key) 를 생성&lt;/li&gt;
+&lt;li&gt;로컬 호스트(Local Host), 즉 SSH 클라이언트(SSH Client)에 비밀키를 저장&lt;/li&gt;
+&lt;li&gt;원격 호스트(Remote Host), 즉 SSH 서버(SSH Server)에 공개키를 등록&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;SSH 접속이 진행되는 과정을 살펴보면 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SSH 클라이언트가 SSH 서버 측에 접속 요청&lt;/li&gt;
+&lt;li&gt;SSH 서버는 자신의 공개키(위에서 생성한 키가 아니라 원래 SSH 서버가 가지고 있는 키)를 SSH 클라이언트에게 전달&lt;/li&gt;
+&lt;li&gt;SSH 클라이언트는 SSH 서버가 전달한 공개키로 자신의 비밀키를 암호화하여 SSH 서버에게 전달&lt;/li&gt;
+&lt;li&gt;SSH 서버는 자신이 가진 공개키 목록을 보고 SSH 클라이언트가 전달한 비밀키와 매칭되는 공개키가 있으면 로그인을 승인&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;위에서 언급한 대로 로그인 과정에서는 비대칭키를 사용한다. 하지만 로그인이 성공한 이후에는 대칭키를 만들고, 비대칭키로 생성된 대칭키를 공유하고, 이후 데이터 전송에는 이 대칭키(Symmetric key)를 사용한다. 비대칭키는 연산이 더 오래걸리기 때문이다.&lt;/p&gt;
 &lt;h2&gt;Key 생성&lt;/h2&gt;
 &lt;p&gt;먼저 Public Key 와 Private Key 를 생성한다. 리눅스에서는 아래와 같은 명령을 실행하면 된다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh-keygen -t rsa
@@ -1392,8 +1936,8 @@ Enter same passphrase again: &amp;lt;Type the passphrase&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt; 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 &lt;code&gt;$HOME/.ssh&lt;/code&gt; 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. passphrase 는 비공개키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.&lt;/p&gt;
-&lt;p&gt;키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt; 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 &lt;code&gt;$HOME/.ssh/&lt;/code&gt; 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. &lt;code&gt;passphrase&lt;/code&gt; 는 비밀키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.&lt;/p&gt;
+&lt;p&gt;키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 아래 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;drwx------  &lt;span class="m"&gt;2&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:54 .
 drwxr-xr-x &lt;span class="m"&gt;16&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Mar  &lt;span class="m"&gt;1&lt;/span&gt; 06:02 ..
 -rw-rw-r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;790&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 06:04 authorized_keys
@@ -1403,16 +1947,16 @@ drwxr-xr-x &lt;span class="m"&gt;16&lt;/span&gt; ubuntu ubuntu &lt;span class="m
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;authorized_keys&lt;/code&gt; 파일은 없을수도 있다. &lt;code&gt;id_rsa&lt;/code&gt; 파일은 private key 이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일은 public key 이다. 접속하려는 Remote Host 의 &lt;code&gt;authorized_keys&lt;/code&gt; 에 입력한다. &lt;code&gt;authorized_keys&lt;/code&gt; 파일은 Remote Host 의 &lt;code&gt;.ssh&lt;/code&gt; 디렉토리 아래에 위치하면서 &lt;code&gt;id_rsa.pub&lt;/code&gt; 키의 값을 저장한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;authorized_keys&lt;/code&gt; 파일은 없을수도 있다. 보통 SSH 서버 측에서 접속을 허용할 공개키 정보를 저장하는 파일이다. &lt;code&gt;id_rsa&lt;/code&gt; 파일은 비밀키를 저장한 파일이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. 또한, 함부로 수정되어서는 안되므로 파일 권한을 꼭 600으로 지정해주자. &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일은 공개키를 저장한 파일이다. 접속하려는 원격 호스트의 &lt;code&gt;authorized_keys&lt;/code&gt;에 &lt;code&gt;id_rsa.pub&lt;/code&gt;파일에 저장된 공개키를 추가해야 키를 이용한 로그인을 할 수 있다.&lt;/p&gt;
 &lt;h2&gt;Remote Host 에 Public Key 등록&lt;/h2&gt;
 &lt;p&gt;이제 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일을 리모트 서버의 &lt;code&gt;$HOME/.ssh/authorized_keys&lt;/code&gt; 파일에 추가해줘야 한다. SSH Server의 &lt;code&gt;authorized_keys&lt;/code&gt; 의 내용이 SSH Client의 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일과 같아야 한다.&lt;/p&gt;
 &lt;p&gt;아래와 같이 SCP (Secure Copy) 를 이용하여 Public Key 를 Remote Host 에 복사한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;scp &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.ssh/id_rsa.pub root@server.net:id_rsa.pub
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;scp &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.ssh/id_rsa.pub root@server.net:id_rsa.pub&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;그리고 Public Key 를 Remote Host 의 authorized_keys 에 추가한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat &lt;span class="nv"&gt;$HOME&lt;/span&gt;/id_rsa.pub &amp;gt;&amp;gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.ssh/authorized_keys
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;cat &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/id_rsa.pub &amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.ssh/authorized_keys&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1429,231 +1973,7 @@ drwxr-xr-x &lt;span class="m"&gt;16&lt;/span&gt; ubuntu ubuntu &lt;span class="m
 #DSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
-&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="ssh"></category><category term="key-gen"></category></entry><entry><title>SSH Brute force 막기</title><link href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/defence-ssh-brute-force.html</id><summary type="html">&lt;p&gt;SSH Brute force 공격 시도를 막는 설정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ssh brute force 막기&lt;/h1&gt;
-&lt;p&gt;AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..&lt;/p&gt;
-&lt;p&gt;어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)&lt;/p&gt;
-&lt;p&gt;brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.&lt;/p&gt;
-&lt;p&gt;ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.&lt;/p&gt;
-&lt;p&gt;blacklist 와 ssh chain 생성:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -N blacklist
-# iptables -N ssh
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A blacklist -m recent --set --name blacklist
-# iptables -A blacklist -j REJECT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;ssh chain 은 다음과 같다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
-# iptables -A ssh -m recent --set --name ssh
-# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
-# iptables -A ssh -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;이 ssh chain 은 다음과 같이 동작한다.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.&lt;/li&gt;
-&lt;li&gt;접속 주소를 "ssh" 목록이 기록한다.&lt;/li&gt;
-&lt;li&gt;접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.&lt;/li&gt;
-&lt;li&gt;위의 3개가 다 통과하면 ssh 접속을 허락한다.&lt;/li&gt;
-&lt;/ol&gt;</content><category term="ssh"></category><category term="iptables"></category><category term="brute force"></category></entry><entry><title>iptables</title><link href="https://imjang57.github.io/garret/iptables.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/iptables.html</id><summary type="html">&lt;p&gt;iptables 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iptables&lt;/h1&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 리눅스에서 네트웍 방화벽으로 사용되는 도구이다. Source, Destination, Protocol, State 등으로 다양한 조건을 설정할 수 있다. 리눅스 호스트에서 제공되는 가장 기초적인 방화벽 도구이며, C언어로 작성된 packet filtering framework 인 &lt;a href="https://www.netfilter.org"&gt;netfilter&lt;/a&gt; 를 기반으로 동작한다. 사실은 iptables 가 netfilter 의 하위 프로젝트라고 볼 수도 있다. 보통 &lt;em&gt;netfilter/iptables&lt;/em&gt; 와 같이 함께 언급되기도 한다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="http://www.netfilter.org"&gt;netfilter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.netfilter.org/projects/iptables/index.html"&gt;iptables&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://git.netfilter.org/"&gt;netfilter git repository&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://git.netfilter.org/iptables/"&gt;iptables git repository&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;대부분의 리눅스 배포판에서 &lt;em&gt;iptables&lt;/em&gt; 는 기본적으로 제공된다. &lt;code&gt;iptables&lt;/code&gt; 명령으로 방화벽 정책 관련 작업을 수행할 수 있고 &lt;em&gt;iptables-service&lt;/em&gt; 패키지를 설치하면 Daemon 형태로 관리가 가능하다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용되는 정책(Rule)을 저장하기 위한 파일의 위치는 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 이다.&lt;/p&gt;
-&lt;p&gt;참고로, CentOS 7 부터는 &lt;em&gt;iptables&lt;/em&gt; 대신 &lt;a href="http://www.firewalld.org"&gt;firewalld&lt;/a&gt; 가 사용된다. 클라우드 환경에서의 조금 더 유연한 방화벽 관리를 위해 python 으로 만든 도구인데, 내부적으로는 &lt;em&gt;netfilter/iptables&lt;/em&gt; 를 사용한 front-end for the iptables 이다. 사용자 입장에서는 그저 명령어를 &lt;code&gt;iptables&lt;/code&gt; 대신에 &lt;code&gt;firewall-cmd&lt;/code&gt; 나 &lt;code&gt;firewall-config&lt;/code&gt; 를 사용하게 된 것이다. CentOS 7 에는 &lt;em&gt;iptables&lt;/em&gt; 자체는 있지만 &lt;em&gt;iptables-service&lt;/em&gt; 가 없어서 &lt;em&gt;firewalld&lt;/em&gt; 로 방화벽을 관리하도록 하는데, 사실 &lt;em&gt;filrewalld&lt;/em&gt; 를 끄고, &lt;em&gt;iptables-service&lt;/em&gt; 를 설치한 후 사용할 수도 있다(인터넷에 찾으면 많이 나온다). 하지만 이왕 바뀐거 나중에 다시 롤백되지 않을 가능성이 크니 익숙해지는게 좋을 테고 익숙해지면 &lt;em&gt;Redhat&lt;/em&gt; 이 &lt;em&gt;firewalld&lt;/em&gt; 를 선택한 이유도 알게 될 지도.. 어쨌든 이 글에선 &lt;em&gt;firewalld&lt;/em&gt; 에 대해선 다루지 않는다.&lt;/p&gt;
-&lt;p&gt;만약 iptables 가 설치되어 있지 않다면 아래와 같이 설치하자.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ yum install iptables iptables-service
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;tables&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 4개의 &lt;em&gt;table&lt;/em&gt; 을 관리한다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;filter&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;nat&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;mangle&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;raw&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;보통 사용하는 &lt;em&gt;table&lt;/em&gt; 은 &lt;em&gt;filter&lt;/em&gt; 이다.&lt;/p&gt;
-&lt;h2&gt;chain&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;filter table&lt;/em&gt; 에는 &lt;em&gt;INPUT&lt;/em&gt;, &lt;em&gt;OUTPUT&lt;/em&gt;, &lt;em&gt;FORWARD&lt;/em&gt; 3개의 &lt;em&gt;chain&lt;/em&gt; 이 있다. 각 &lt;em&gt;chain&lt;/em&gt; 들은 Network Traffic (IP Packet) 에 대하여 정해진 규칙들을 수행한다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;INPUT&lt;/em&gt; : Host 를 향해 들어오는 Packet&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;OUTPUT&lt;/em&gt; : Host 에서 나가는 Packet&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;FORWARD&lt;/em&gt; : Host 가 Destination 이 아닌 Packet&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;INPUT chain&lt;/em&gt; 에 해당하는 Packet 을 허용(&lt;em&gt;ACCEPT&lt;/em&gt;), 거부(&lt;em&gt;REJECT&lt;/em&gt;), 또는 드랍(&lt;em&gt;DROP&lt;/em&gt;) 할 지 결정할 수 있다.&lt;/p&gt;
-&lt;h2&gt;match&lt;/h2&gt;
-&lt;p&gt;어떤 Packet 에 규칙을 적용할지 판단하기 위한 조건이다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--source&lt;/code&gt; (&lt;code&gt;-s&lt;/code&gt;) : Source IP address 또는 Network&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--destination&lt;/code&gt; (&lt;code&gt;-d&lt;/code&gt;) : Destination address 또는 Network&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--protocol&lt;/code&gt; (&lt;code&gt;-p&lt;/code&gt;) : Protocol&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--in-interface&lt;/code&gt; (&lt;code&gt;-i&lt;/code&gt;) : 입력 interface&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--out-interface&lt;/code&gt; (&lt;code&gt;-o&lt;/code&gt;) : 출력 interface&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--state&lt;/code&gt; : 연결 상태&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--string&lt;/code&gt; : Application Layer Data 의 Byte 순서&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--comment&lt;/code&gt; : Kernel memory 내의 규칙과 연계되는 최대 256 bytes 주석&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--syn&lt;/code&gt; (&lt;code&gt;-y&lt;/code&gt;) : SYN Packet 을 허용하지 않음&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--fragment&lt;/code&gt; (&lt;code&gt;-f&lt;/code&gt;) : 두 번째 이후의 조각에 대해서 규칙을 명시&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--table&lt;/code&gt; (&lt;code&gt;-t&lt;/code&gt;) : 처리될 table&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--jump&lt;/code&gt; (&lt;code&gt;-j&lt;/code&gt;) : 규칙에 맞는 Packet 을 어떻게 처리할 것인가를 명시&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--match&lt;/code&gt; (&lt;code&gt;-m&lt;/code&gt;) : 특정 module 과의 매치&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;target&lt;/h2&gt;
-&lt;p&gt;Packet 에 적용하려는 동작이다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;ACCEPT&lt;/em&gt; : Packet 을 받아들인다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;DROP&lt;/em&gt; : Packet 을 버린다. Packet 을 송신한 쪽은 아무런 응답도 받지 못한다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;REJECT&lt;/em&gt; : Packet 을 버리고 이와 동시에 적절한 응답 패킷(connection refused)을 전송한다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;LOG&lt;/em&gt; : Packet 을 syslog에 기록한다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;RETURN&lt;/em&gt; : 호출 체인 내에서 Packet 처리를 계속한다.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;연결 추적(Connection Tracking)&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 연결 추적(connection tracking)이라는 방법을 사용하여 내부 Network 상 서비스 연결 상태에 따라서 그 연결을 감시하고 제한할 수 있게 해준다. 연결 추적 방식은 연결 상태를 표에 저장하기 때문에, 다음과 같은 연결 상태에 따라서 시스템 관리자가 연결을 허용하거나 거부할 수 있다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;NEW&lt;/em&gt; : 새로운 Connection 을 요청하는 Packet, (예: &lt;em&gt;HTTP&lt;/em&gt; 요청)&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;ESTABLISHED&lt;/em&gt; : 기존 Connection 의 일부인 Packet&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;RELATED&lt;/em&gt; : 기존 Connection 에 속하지만 새로운 Connection 을 요청하는 Packet, 예를 들면 접속 port 가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 port 라도 사용 가능하다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;INVALID&lt;/em&gt; : 연결 추적표에서 어디 Connection 에도 속하지 않은 Packet&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;상태에 기반(stateful)한 &lt;em&gt;iptables&lt;/em&gt; 연결 추적 기능은 어느 Network Protocol 에서나 사용 가능하다. &lt;em&gt;UDP&lt;/em&gt; 와 같이 상태를 저장하지 않는 (stateless) Protocol 에서도 사용할 수 있다.&lt;/p&gt;
-&lt;h2&gt;명령어(commond)&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용 가능한 명령들의 목록:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-A&lt;/code&gt; (&lt;code&gt;--append&lt;/code&gt;) : 새로운 규칙을 추가한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-D&lt;/code&gt; (&lt;code&gt;--delete&lt;/code&gt;) : 규칙을 삭제한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-C&lt;/code&gt; (&lt;code&gt;--check&lt;/code&gt;) : 패킷을 테스트한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-R&lt;/code&gt; (&lt;code&gt;--replace&lt;/code&gt;) : 새로운 규칙으로 교체한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-I&lt;/code&gt; (&lt;code&gt;--insert&lt;/code&gt;) : 새로운 규칙을 삽입한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; (&lt;code&gt;--list&lt;/code&gt;) : 규칙을 출력한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-F&lt;/code&gt; (&lt;code&gt;--flush&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 으로부터 규칙을 모두 삭제한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-Z&lt;/code&gt; (&lt;code&gt;--zero&lt;/code&gt;) : 모든 &lt;em&gt;chain&lt;/em&gt; 의 패킷과 바이트 카운터 값을 0으로 만든다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-N&lt;/code&gt; (&lt;code&gt;--new&lt;/code&gt;) : 새로운 &lt;em&gt;chain&lt;/em&gt; 을 만든다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-X&lt;/code&gt; (&lt;code&gt;--delete-chain&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 을 삭제한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-P&lt;/code&gt; (&lt;code&gt;--policy&lt;/code&gt;) : 기본정책을 변경한다.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;추가로 &lt;code&gt;-L&lt;/code&gt; 옵션 이용시 &lt;code&gt;-n&lt;/code&gt; (&lt;code&gt;--numeric&lt;/code&gt;) 옵션을 추가하면 address 와 port 를 더 편하게 볼 수 있다. (&lt;code&gt;iptables -nL&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;내용을 확인할 때 &lt;code&gt;--line-numbers&lt;/code&gt; 를 추가하면 각 Ruleset 들의 순서도 같이 확인할 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;-v&lt;/code&gt; (&lt;code&gt;--verbose&lt;/code&gt;) 옵션을 사용하면 더 다양한 정보를 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;추가 사용법은 &lt;code&gt;-h&lt;/code&gt; (&lt;code&gt;--help&lt;/code&gt;) 를 확인하자.&lt;/p&gt;
-&lt;h2&gt;기본 동작&lt;/h2&gt;
-&lt;p&gt;다음은 &lt;em&gt;iptables&lt;/em&gt; 의 기본 동작 과정이다.&lt;/p&gt;
-&lt;p&gt;패킷에 대한 동작은 위에서 부터 차례로 각 규칙에 대해 검사하고, 그 규칙과 일치하는 패킷에 대하여 타겟에 지정한 &lt;em&gt;ACCEPT&lt;/em&gt;, &lt;em&gt;DROP&lt;/em&gt; 등을 수행한다.&lt;/p&gt;
-&lt;p&gt;규칙이 일치하고 작업이 수행되면, 그 패킷은 해당 규칙의 결과에 따리 처리하고 체인에서 추가 규칙을 무시한다.&lt;/p&gt;
-&lt;p&gt;패킷이 체인의 모든 규칙과 매치하지 않아 규칙의 바닥에 도달하면 정해진 기본정책(policy)이 수행된다.&lt;/p&gt;
-&lt;p&gt;기본 정책은 policy &lt;em&gt;ACCEPT&lt;/em&gt;, policy &lt;em&gt;DROP&lt;/em&gt; 으로 설정할 수 있다.&lt;/p&gt;
-&lt;p&gt;일반적으로 기본정책은 모든 패킷에 대해 &lt;em&gt;DROP&lt;/em&gt; 을 설정하고 특별히 지정된 포트와 IP주소등에 대해 &lt;em&gt;ACCEPT&lt;/em&gt; 를 수행하게 만든다.&lt;/p&gt;
-&lt;h1&gt;iptables 사용하기&lt;/h1&gt;
-&lt;p&gt;iptables 적용 예:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;iptables -P INPUT ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본 정책을 &lt;em&gt;ACCEPT&lt;/em&gt; 로 설정&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -P INPUT DROP&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본정책을 &lt;em&gt;DROP&lt;/em&gt; 으로 설정&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -F&lt;/code&gt; : &lt;em&gt;Chain&lt;/em&gt; 에 정의된 모든 규칙을 삭제&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -nL&lt;/code&gt; : 현재 ruleset 설정 확인(address 와 port 는 숫자로 출력)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 localhost interface 인 Packet 은 모두 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -A INPUT -m state — state ESTABLISHED,RELATED -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 state module 의 state 가 &lt;em&gt;ESTABLISHED&lt;/em&gt;, &lt;em&gt;RELATED&lt;/em&gt; 인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -A INPUT -p tcp -m tcp — dport 22 -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 Protocol 의 &lt;em&gt;TCP&lt;/em&gt; 이며 destination port 가 22번인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;service iptables save&lt;/code&gt; 명령을 실행하면 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에 &lt;em&gt;iptables&lt;/em&gt; 현재 설정이 저장된다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 규칙을 만들 때는 순서가 매우 중요하다. 예를 들어 만일 &lt;em&gt;chain&lt;/em&gt; 에서 local network 인 192.168.100.0/24 subnetwork 에서 들어오는 모든 packet 을 &lt;em&gt;DROP&lt;/em&gt; 하도록 지정한 후 (&lt;em&gt;DROP&lt;/em&gt; 하도록 지정된 subnetwork 에 포함되는) 192.168.100.13 에서 들어오는 packet 을 모두 허용하는 &lt;em&gt;chain&lt;/em&gt; (&lt;code&gt;-A&lt;/code&gt;)을 그 후에 추가하면 뒤에 추가된 추가 규칙이 무시된다. 먼저 192.168.100.13 을 허용하는 규칙을 설정한 후 subnet 을 &lt;em&gt;DROP&lt;/em&gt; 하는 규칙을 설정해야한다.&lt;/p&gt;
-&lt;p&gt;HTTP Web Server 를 용할 경우:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;HTTPS:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p tcp -m multiport --dports 80,443 -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;MySQL (port 3306):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;FTP(passive mode):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 21 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT
-iptables -A INPUT -p tcp --dport 1024:65535 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 1024:65535 -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;NTP 시간동기화:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p udp --dport 123 -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;서버의 취약점을 차단하기 위한 iptables 설정 예&lt;/h1&gt;
-&lt;p&gt;NULL 패킷 차단: &lt;code&gt;iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;NULL 패킷은 정찰 패킷으로 서버설정의 약한 곳을 찾기위한 방법으로 사용된다.&lt;/p&gt;
-&lt;h1&gt;기타 사용법&lt;/h1&gt;
-&lt;p&gt;기타 &lt;em&gt;iptables&lt;/em&gt; 사용법에 대해 알아보자.&lt;/p&gt;
-&lt;h2&gt;iptables 수정&lt;/h2&gt;
-&lt;p&gt;등록된 &lt;em&gt;iptables&lt;/em&gt; 를 수정하는 방법은 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에서 직접 vi로 수정하거나 &lt;code&gt;iptables&lt;/code&gt; 명령어를 사용한다.&lt;/p&gt;
-&lt;p&gt;실행 순번을 확인하기: &lt;code&gt;iptables -nL --line-number&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;순번 3의 행을 수정(replace, &lt;code&gt;-R&lt;/code&gt;): &lt;code&gt;iptables -R INPUT 3 -p tcp --dport 2222 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;인터페이스 지정&lt;/h2&gt;
-&lt;p&gt;Network interface 를 지정하여 &lt;em&gt;iptables&lt;/em&gt; 를 적용할 수도 있다.&lt;/p&gt;
-&lt;p&gt;루프백 인터페이스에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;랜카드 지정에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i eth0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;IP 주소 지정&lt;/h2&gt;
-&lt;p&gt;IP address 를 지정하여 iptables 를 적용할 수도 있다.&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip와 MAC주소에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -m mac — mac-source 00:50:80:FD:E6:32 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;포트 범위지정: &lt;code&gt;iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;h1&gt;자동화 스크립트&lt;/h1&gt;
-&lt;p&gt;자주 방화벽 설정을 초기화하고 재설정해야 한다면 자동화 스크립트를 짜놓는게 좋다. 아래는 그에 대한 예이다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="c1"&gt;# iptables 설정 자동화 스크립트&lt;/span&gt;
-&lt;span class="c1"&gt;# 입맛에 따라 수정해서 사용합시다.&lt;/span&gt;
-iptables -F
-&lt;span class="c1"&gt;# TCP 포트 22번을 SSH 접속을 위해 허용&lt;/span&gt;
-&lt;span class="c1"&gt;# 원격 접속을 위해 먼저 설정합니다&lt;/span&gt;
-iptables -A INPUT -p tcp -m tcp --dport &lt;span class="m"&gt;22&lt;/span&gt; -j ACCEPT
-&lt;span class="c1"&gt;# 기본 정책을 설정합니다&lt;/span&gt;
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
- iptables -P OUTPUT ACCEPT
-&lt;span class="c1"&gt;# localhost 접속 허용&lt;/span&gt;
-iptables -A INPUT -i lo -j ACCEPT
-&lt;span class="c1"&gt;# established and related 접속을 허용&lt;/span&gt;
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-&lt;span class="c1"&gt;# Apache 포트 80 허용&lt;/span&gt;
-iptables -A INPUT -p tcp --dport &lt;span class="m"&gt;80&lt;/span&gt; -j ACCEPT
-&lt;span class="c1"&gt;# 설정을 저장&lt;/span&gt;
-/sbin/service iptables save
-&lt;span class="c1"&gt;# 설정한 내용을 출력&lt;/span&gt;
-iptables -L -v
-위 내용을 입맛에 맞게 수정한 후에 저장&lt;span class="o"&gt;(&lt;/span&gt;myfirewall&lt;span class="o"&gt;)&lt;/span&gt;
-권한부여: chmod +x myfirewall
-실행: ./myfirewall
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h1&gt;References&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;http://webdir.tistory.com/170&lt;/li&gt;
-&lt;/ul&gt;</content><category term="iptables"></category></entry><entry><title>Linux 에서 파일 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-file-management.html</id><summary type="html">&lt;p&gt;Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="ssh"></category><category term="key-gen"></category></entry><entry><title>Linux 에서 파일 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-file-management.html</id><summary type="html">&lt;p&gt;Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
 &lt;p&gt;Linux 에서 파일 목록 확인, 파일 내용 확인, 사용 중인 파일 확인, 파일 정보 변경, 파일 비교, 패치 등을 위한 명령어들을 정리한 글이다.&lt;/p&gt;
 &lt;p&gt;리눅스에서는 모든 것이 파일로 관리된다. 일반적으로 알고 있는 파일 외에 console, socket, device 등도 모두 파일이다. 그래서 리눅스에서 모든 인터페이스는 File Descriptor 를 기반으로 하고 모든 입력과 출력은 File Descriptor 를 통해 이루어진다.&lt;/p&gt;
 &lt;h1&gt;파일 목록 조회&lt;/h1&gt;
@@ -1881,7 +2201,7 @@ sudo: no valid shudders sources found, quitting
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;위 명령으로 &lt;code&gt;/etc/sudoers&lt;/code&gt; 파일을 수정하면 root 가 비활성화된 Ubuntu에서도 해결가능하다.&lt;/p&gt;</content><category term="linux"></category><category term="file"></category></entry><entry><title>Linux 에서 사용자 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-user-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-user-management.html</id><summary type="html">&lt;p&gt;Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
+&lt;p&gt;위 명령으로 &lt;code&gt;/etc/sudoers&lt;/code&gt; 파일을 수정하면 root 가 비활성화된 Ubuntu에서도 해결가능하다.&lt;/p&gt;</content><category term="linux"></category><category term="permission"></category></entry><entry><title>Linux 에서 사용자 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-user-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-user-management.html</id><summary type="html">&lt;p&gt;Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
 &lt;p&gt;Linux 에서 사용자 추가, 사용자 정보 변경, 사용자 삭제, 그룹 추가, 그룹 삭제, 로그인한 사용자 정보 확인, 로그인 내역 확인 등을 위한 명령어들을 정리한 글이다.&lt;/p&gt;
 &lt;h1&gt;Login message&lt;/h1&gt;
 &lt;p&gt;각 명령어들에 대해 알아보기 전에 리눅스에 로그인 하면 여러 메시지들이 출력되는 시스템들이 있다. 시스템마다 내용이 다르게 출력되는데 이는 아래의 2가지 파일을 이용해서 만든 것이다. 참고용으로 알고 가자.&lt;/p&gt;
@@ -2015,7 +2335,195 @@ ENCRYPT_METHOD SHA512
 &lt;li&gt;&lt;code&gt;/etc/gshadow&lt;/code&gt; : Secure group account information&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/etc/login.defs&lt;/code&gt; : Shadow password suite configuration&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/etc/skel&lt;/code&gt; : Directory containing default files.&lt;/li&gt;
-&lt;/ul&gt;</content><category term="linux"></category><category term="user"></category></entry><entry><title>Linux help, man, info, TLDP</title><link href="https://imjang57.github.io/garret/linux-help-man-info-tldp.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-07T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-help-man-info-tldp.html</id><summary type="html">&lt;p&gt;Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux &lt;em&gt;help&lt;/em&gt;, &lt;em&gt;man pages&lt;/em&gt;, GNU &lt;em&gt;info&lt;/em&gt;, TLDP&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="linux"></category><category term="user"></category></entry><entry><title>iptables</title><link href="https://imjang57.github.io/garret/linux-command-iptables.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-iptables.html</id><summary type="html">&lt;p&gt;iptables 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iptables&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 리눅스에서 네트웍 방화벽으로 사용되는 도구이다. Source, Destination, Protocol, State 등으로 다양한 조건을 설정할 수 있다. 리눅스 호스트에서 제공되는 가장 기초적인 방화벽 도구이며, C언어로 작성된 packet filtering framework 인 &lt;a href="https://www.netfilter.org"&gt;netfilter&lt;/a&gt; 를 기반으로 동작한다. 사실은 iptables 가 netfilter 의 하위 프로젝트라고 볼 수도 있다. 보통 &lt;em&gt;netfilter/iptables&lt;/em&gt; 와 같이 함께 언급되기도 한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.netfilter.org"&gt;netfilter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.netfilter.org/projects/iptables/index.html"&gt;iptables&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://git.netfilter.org/"&gt;netfilter git repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://git.netfilter.org/iptables/"&gt;iptables git repository&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;대부분의 리눅스 배포판에서 &lt;em&gt;iptables&lt;/em&gt; 는 기본적으로 제공된다. &lt;code&gt;iptables&lt;/code&gt; 명령으로 방화벽 정책 관련 작업을 수행할 수 있고 &lt;em&gt;iptables-service&lt;/em&gt; 패키지를 설치하면 Daemon 형태로 관리가 가능하다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용되는 정책(Rule)을 저장하기 위한 파일의 위치는 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;p&gt;참고로, CentOS 7 부터는 &lt;em&gt;iptables&lt;/em&gt; 대신 &lt;a href="http://www.firewalld.org"&gt;firewalld&lt;/a&gt; 가 사용된다. 클라우드 환경에서의 조금 더 유연한 방화벽 관리를 위해 python 으로 만든 도구인데, 내부적으로는 &lt;em&gt;netfilter/iptables&lt;/em&gt; 를 사용한 front-end for the iptables 이다. 사용자 입장에서는 그저 명령어를 &lt;code&gt;iptables&lt;/code&gt; 대신에 &lt;code&gt;firewall-cmd&lt;/code&gt; 나 &lt;code&gt;firewall-config&lt;/code&gt; 를 사용하게 된 것이다. CentOS 7 에는 &lt;em&gt;iptables&lt;/em&gt; 자체는 있지만 &lt;em&gt;iptables-service&lt;/em&gt; 가 없어서 &lt;em&gt;firewalld&lt;/em&gt; 로 방화벽을 관리하도록 하는데, 사실 &lt;em&gt;filrewalld&lt;/em&gt; 를 끄고, &lt;em&gt;iptables-service&lt;/em&gt; 를 설치한 후 사용할 수도 있다(인터넷에 찾으면 많이 나온다). 하지만 이왕 바뀐거 나중에 다시 롤백되지 않을 가능성이 크니 익숙해지는게 좋을 테고 익숙해지면 &lt;em&gt;Redhat&lt;/em&gt; 이 &lt;em&gt;firewalld&lt;/em&gt; 를 선택한 이유도 알게 될 지도.. 어쨌든 이 글에선 &lt;em&gt;firewalld&lt;/em&gt; 에 대해선 다루지 않는다.&lt;/p&gt;
+&lt;p&gt;만약 iptables 가 설치되어 있지 않다면 아래와 같이 설치하자.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ yum install iptables iptables-service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;tables&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 4개의 &lt;em&gt;table&lt;/em&gt; 을 관리한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;filter&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;nat&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;mangle&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;raw&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;보통 사용하는 &lt;em&gt;table&lt;/em&gt; 은 &lt;em&gt;filter&lt;/em&gt; 이다.&lt;/p&gt;
+&lt;h2&gt;chain&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;filter table&lt;/em&gt; 에는 &lt;em&gt;INPUT&lt;/em&gt;, &lt;em&gt;OUTPUT&lt;/em&gt;, &lt;em&gt;FORWARD&lt;/em&gt; 3개의 &lt;em&gt;chain&lt;/em&gt; 이 있다. 각 &lt;em&gt;chain&lt;/em&gt; 들은 Network Traffic (IP Packet) 에 대하여 정해진 규칙들을 수행한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;INPUT&lt;/em&gt; : Host 를 향해 들어오는 Packet&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;OUTPUT&lt;/em&gt; : Host 에서 나가는 Packet&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;FORWARD&lt;/em&gt; : Host 가 Destination 이 아닌 Packet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;INPUT chain&lt;/em&gt; 에 해당하는 Packet 을 허용(&lt;em&gt;ACCEPT&lt;/em&gt;), 거부(&lt;em&gt;REJECT&lt;/em&gt;), 또는 드랍(&lt;em&gt;DROP&lt;/em&gt;) 할 지 결정할 수 있다.&lt;/p&gt;
+&lt;h2&gt;match&lt;/h2&gt;
+&lt;p&gt;어떤 Packet 에 규칙을 적용할지 판단하기 위한 조건이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--source&lt;/code&gt; (&lt;code&gt;-s&lt;/code&gt;) : Source IP address 또는 Network&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--destination&lt;/code&gt; (&lt;code&gt;-d&lt;/code&gt;) : Destination address 또는 Network&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--protocol&lt;/code&gt; (&lt;code&gt;-p&lt;/code&gt;) : Protocol&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--in-interface&lt;/code&gt; (&lt;code&gt;-i&lt;/code&gt;) : 입력 interface&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--out-interface&lt;/code&gt; (&lt;code&gt;-o&lt;/code&gt;) : 출력 interface&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--state&lt;/code&gt; : 연결 상태&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--string&lt;/code&gt; : Application Layer Data 의 Byte 순서&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--comment&lt;/code&gt; : Kernel memory 내의 규칙과 연계되는 최대 256 bytes 주석&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--syn&lt;/code&gt; (&lt;code&gt;-y&lt;/code&gt;) : SYN Packet 을 허용하지 않음&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--fragment&lt;/code&gt; (&lt;code&gt;-f&lt;/code&gt;) : 두 번째 이후의 조각에 대해서 규칙을 명시&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--table&lt;/code&gt; (&lt;code&gt;-t&lt;/code&gt;) : 처리될 table&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--jump&lt;/code&gt; (&lt;code&gt;-j&lt;/code&gt;) : 규칙에 맞는 Packet 을 어떻게 처리할 것인가를 명시&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--match&lt;/code&gt; (&lt;code&gt;-m&lt;/code&gt;) : 특정 module 과의 매치&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;target&lt;/h2&gt;
+&lt;p&gt;Packet 에 적용하려는 동작이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;ACCEPT&lt;/em&gt; : Packet 을 받아들인다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;DROP&lt;/em&gt; : Packet 을 버린다. Packet 을 송신한 쪽은 아무런 응답도 받지 못한다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;REJECT&lt;/em&gt; : Packet 을 버리고 이와 동시에 적절한 응답 패킷(connection refused)을 전송한다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;LOG&lt;/em&gt; : Packet 을 syslog에 기록한다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;RETURN&lt;/em&gt; : 호출 체인 내에서 Packet 처리를 계속한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;연결 추적(Connection Tracking)&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 연결 추적(connection tracking)이라는 방법을 사용하여 내부 Network 상 서비스 연결 상태에 따라서 그 연결을 감시하고 제한할 수 있게 해준다. 연결 추적 방식은 연결 상태를 표에 저장하기 때문에, 다음과 같은 연결 상태에 따라서 시스템 관리자가 연결을 허용하거나 거부할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;NEW&lt;/em&gt; : 새로운 Connection 을 요청하는 Packet, (예: &lt;em&gt;HTTP&lt;/em&gt; 요청)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;ESTABLISHED&lt;/em&gt; : 기존 Connection 의 일부인 Packet&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;RELATED&lt;/em&gt; : 기존 Connection 에 속하지만 새로운 Connection 을 요청하는 Packet, 예를 들면 접속 port 가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 port 라도 사용 가능하다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;INVALID&lt;/em&gt; : 연결 추적표에서 어디 Connection 에도 속하지 않은 Packet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;상태에 기반(stateful)한 &lt;em&gt;iptables&lt;/em&gt; 연결 추적 기능은 어느 Network Protocol 에서나 사용 가능하다. &lt;em&gt;UDP&lt;/em&gt; 와 같이 상태를 저장하지 않는 (stateless) Protocol 에서도 사용할 수 있다.&lt;/p&gt;
+&lt;h2&gt;명령어(commond)&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용 가능한 명령들의 목록:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt; (&lt;code&gt;--append&lt;/code&gt;) : 새로운 규칙을 추가한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-D&lt;/code&gt; (&lt;code&gt;--delete&lt;/code&gt;) : 규칙을 삭제한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-C&lt;/code&gt; (&lt;code&gt;--check&lt;/code&gt;) : 패킷을 테스트한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-R&lt;/code&gt; (&lt;code&gt;--replace&lt;/code&gt;) : 새로운 규칙으로 교체한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-I&lt;/code&gt; (&lt;code&gt;--insert&lt;/code&gt;) : 새로운 규칙을 삽입한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; (&lt;code&gt;--list&lt;/code&gt;) : 규칙을 출력한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-F&lt;/code&gt; (&lt;code&gt;--flush&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 으로부터 규칙을 모두 삭제한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-Z&lt;/code&gt; (&lt;code&gt;--zero&lt;/code&gt;) : 모든 &lt;em&gt;chain&lt;/em&gt; 의 패킷과 바이트 카운터 값을 0으로 만든다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-N&lt;/code&gt; (&lt;code&gt;--new&lt;/code&gt;) : 새로운 &lt;em&gt;chain&lt;/em&gt; 을 만든다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-X&lt;/code&gt; (&lt;code&gt;--delete-chain&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 을 삭제한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-P&lt;/code&gt; (&lt;code&gt;--policy&lt;/code&gt;) : 기본정책을 변경한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;추가로 &lt;code&gt;-L&lt;/code&gt; 옵션 이용시 &lt;code&gt;-n&lt;/code&gt; (&lt;code&gt;--numeric&lt;/code&gt;) 옵션을 추가하면 address 와 port 를 더 편하게 볼 수 있다. (&lt;code&gt;iptables -nL&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;내용을 확인할 때 &lt;code&gt;--line-numbers&lt;/code&gt; 를 추가하면 각 Ruleset 들의 순서도 같이 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;-v&lt;/code&gt; (&lt;code&gt;--verbose&lt;/code&gt;) 옵션을 사용하면 더 다양한 정보를 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;추가 사용법은 &lt;code&gt;-h&lt;/code&gt; (&lt;code&gt;--help&lt;/code&gt;) 를 확인하자.&lt;/p&gt;
+&lt;h2&gt;기본 동작&lt;/h2&gt;
+&lt;p&gt;다음은 &lt;em&gt;iptables&lt;/em&gt; 의 기본 동작 과정이다.&lt;/p&gt;
+&lt;p&gt;패킷에 대한 동작은 위에서 부터 차례로 각 규칙에 대해 검사하고, 그 규칙과 일치하는 패킷에 대하여 타겟에 지정한 &lt;em&gt;ACCEPT&lt;/em&gt;, &lt;em&gt;DROP&lt;/em&gt; 등을 수행한다.&lt;/p&gt;
+&lt;p&gt;규칙이 일치하고 작업이 수행되면, 그 패킷은 해당 규칙의 결과에 따리 처리하고 체인에서 추가 규칙을 무시한다.&lt;/p&gt;
+&lt;p&gt;패킷이 체인의 모든 규칙과 매치하지 않아 규칙의 바닥에 도달하면 정해진 기본정책(policy)이 수행된다.&lt;/p&gt;
+&lt;p&gt;기본 정책은 policy &lt;em&gt;ACCEPT&lt;/em&gt;, policy &lt;em&gt;DROP&lt;/em&gt; 으로 설정할 수 있다.&lt;/p&gt;
+&lt;p&gt;일반적으로 기본정책은 모든 패킷에 대해 &lt;em&gt;DROP&lt;/em&gt; 을 설정하고 특별히 지정된 포트와 IP주소등에 대해 &lt;em&gt;ACCEPT&lt;/em&gt; 를 수행하게 만든다.&lt;/p&gt;
+&lt;h1&gt;iptables 사용하기&lt;/h1&gt;
+&lt;p&gt;iptables 적용 예:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;iptables -P INPUT ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본 정책을 &lt;em&gt;ACCEPT&lt;/em&gt; 로 설정&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -P INPUT DROP&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본정책을 &lt;em&gt;DROP&lt;/em&gt; 으로 설정&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -F&lt;/code&gt; : &lt;em&gt;Chain&lt;/em&gt; 에 정의된 모든 규칙을 삭제&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -nL&lt;/code&gt; : 현재 ruleset 설정 확인(address 와 port 는 숫자로 출력)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 localhost interface 인 Packet 은 모두 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -A INPUT -m state — state ESTABLISHED,RELATED -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 state module 의 state 가 &lt;em&gt;ESTABLISHED&lt;/em&gt;, &lt;em&gt;RELATED&lt;/em&gt; 인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -A INPUT -p tcp -m tcp — dport 22 -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 Protocol 의 &lt;em&gt;TCP&lt;/em&gt; 이며 destination port 가 22번인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;service iptables save&lt;/code&gt; 명령을 실행하면 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에 &lt;em&gt;iptables&lt;/em&gt; 현재 설정이 저장된다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 규칙을 만들 때는 순서가 매우 중요하다. 예를 들어 만일 &lt;em&gt;chain&lt;/em&gt; 에서 local network 인 192.168.100.0/24 subnetwork 에서 들어오는 모든 packet 을 &lt;em&gt;DROP&lt;/em&gt; 하도록 지정한 후 (&lt;em&gt;DROP&lt;/em&gt; 하도록 지정된 subnetwork 에 포함되는) 192.168.100.13 에서 들어오는 packet 을 모두 허용하는 &lt;em&gt;chain&lt;/em&gt; (&lt;code&gt;-A&lt;/code&gt;)을 그 후에 추가하면 뒤에 추가된 추가 규칙이 무시된다. 먼저 192.168.100.13 을 허용하는 규칙을 설정한 후 subnet 을 &lt;em&gt;DROP&lt;/em&gt; 하는 규칙을 설정해야한다.&lt;/p&gt;
+&lt;p&gt;HTTP Web Server 를 용할 경우:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;HTTPS:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp -m multiport --dports 80,443 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;MySQL (port 3306):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;FTP(passive mode):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT
+iptables -A INPUT -p tcp --dport 1024:65535 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 1024:65535 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;NTP 시간동기화:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p udp --dport 123 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;서버의 취약점을 차단하기 위한 iptables 설정 예&lt;/h1&gt;
+&lt;p&gt;NULL 패킷 차단: &lt;code&gt;iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;NULL 패킷은 정찰 패킷으로 서버설정의 약한 곳을 찾기위한 방법으로 사용된다.&lt;/p&gt;
+&lt;h1&gt;기타 사용법&lt;/h1&gt;
+&lt;p&gt;기타 &lt;em&gt;iptables&lt;/em&gt; 사용법에 대해 알아보자.&lt;/p&gt;
+&lt;h2&gt;iptables 수정&lt;/h2&gt;
+&lt;p&gt;등록된 &lt;em&gt;iptables&lt;/em&gt; 를 수정하는 방법은 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에서 직접 vi로 수정하거나 &lt;code&gt;iptables&lt;/code&gt; 명령어를 사용한다.&lt;/p&gt;
+&lt;p&gt;실행 순번을 확인하기: &lt;code&gt;iptables -nL --line-number&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;순번 3의 행을 수정(replace, &lt;code&gt;-R&lt;/code&gt;): &lt;code&gt;iptables -R INPUT 3 -p tcp --dport 2222 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;인터페이스 지정&lt;/h2&gt;
+&lt;p&gt;Network interface 를 지정하여 &lt;em&gt;iptables&lt;/em&gt; 를 적용할 수도 있다.&lt;/p&gt;
+&lt;p&gt;루프백 인터페이스에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;랜카드 지정에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i eth0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;IP 주소 지정&lt;/h2&gt;
+&lt;p&gt;IP address 를 지정하여 iptables 를 적용할 수도 있다.&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip와 MAC주소에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -m mac — mac-source 00:50:80:FD:E6:32 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;포트 범위지정: &lt;code&gt;iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;자동화 스크립트&lt;/h1&gt;
+&lt;p&gt;자주 방화벽 설정을 초기화하고 재설정해야 한다면 자동화 스크립트를 짜놓는게 좋다. 아래는 그에 대한 예이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;# iptables 설정 자동화 스크립트&lt;/span&gt;
+&lt;span class="c1"&gt;# 입맛에 따라 수정해서 사용합시다.&lt;/span&gt;
+iptables -F
+&lt;span class="c1"&gt;# TCP 포트 22번을 SSH 접속을 위해 허용&lt;/span&gt;
+&lt;span class="c1"&gt;# 원격 접속을 위해 먼저 설정합니다&lt;/span&gt;
+iptables -A INPUT -p tcp -m tcp --dport &lt;span class="m"&gt;22&lt;/span&gt; -j ACCEPT
+&lt;span class="c1"&gt;# 기본 정책을 설정합니다&lt;/span&gt;
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+ iptables -P OUTPUT ACCEPT
+&lt;span class="c1"&gt;# localhost 접속 허용&lt;/span&gt;
+iptables -A INPUT -i lo -j ACCEPT
+&lt;span class="c1"&gt;# established and related 접속을 허용&lt;/span&gt;
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+&lt;span class="c1"&gt;# Apache 포트 80 허용&lt;/span&gt;
+iptables -A INPUT -p tcp --dport &lt;span class="m"&gt;80&lt;/span&gt; -j ACCEPT
+&lt;span class="c1"&gt;# 설정을 저장&lt;/span&gt;
+/sbin/service iptables save
+&lt;span class="c1"&gt;# 설정한 내용을 출력&lt;/span&gt;
+iptables -L -v
+위 내용을 입맛에 맞게 수정한 후에 저장&lt;span class="o"&gt;(&lt;/span&gt;myfirewall&lt;span class="o"&gt;)&lt;/span&gt;
+권한부여: chmod +x myfirewall
+실행: ./myfirewall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;http://webdir.tistory.com/170&lt;/li&gt;
+&lt;/ul&gt;</content><category term="iptables"></category></entry><entry><title>Linux help, man, info, TLDP</title><link href="https://imjang57.github.io/garret/linux-help-man-info-tldp.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-07T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-help-man-info-tldp.html</id><summary type="html">&lt;p&gt;Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux &lt;em&gt;help&lt;/em&gt;, &lt;em&gt;man pages&lt;/em&gt;, GNU &lt;em&gt;info&lt;/em&gt;, TLDP&lt;/h1&gt;
 &lt;p&gt;Linux 를 사용함에 있어서 가장 큰 도움이 되고 필수로 알아야 할 도움말이나 문서들에 대해서 간단한게 정리한 글이다.&lt;/p&gt;
 &lt;p&gt;Linux 를 사용하다보면 Console 등의 CLI (Command-Line Interface) 에서 여러 명령어들을 사용하게 된다. 그런데 매우 많은 명령어들이 있고 각 명령어마다 다양한 옵션과 Argument 를 사용할 수 있기 때문에 이들의 사용법을 모두 외우는 것은 거의 불가능하고 비효율적이다.&lt;/p&gt;
 &lt;p&gt;그래서 어떤 명령어에 대해 익히면 이후에는 &lt;code&gt;--help&lt;/code&gt; 옵션, &lt;em&gt;man pages&lt;/em&gt; utility, GNU &lt;em&gt;info&lt;/em&gt; utility 등을 참고하며 사용하게 된다.&lt;/p&gt;
@@ -2159,7 +2667,7 @@ slappasswd&lt;span class="o"&gt;(&lt;/span&gt;8&lt;span class="o"&gt;)&lt;/span&
 &lt;p&gt;IT는 매우 많은 분야가 있고 매우 많은 요소들이 결합되어 유기적으로 동작한다. 한 명이 모든 내용을 알기는 불가능하다. 그래서 웹을 통한 지식 공유가 매우 중요하다. 내 분야에서의 기초 지식과 핵심 원리에 집중하고 나머지는 위임하거나 협력해야 한다.&lt;/p&gt;
 &lt;p&gt;TLDP 외에도 &lt;a href="https://www.google.com/"&gt;google&lt;/a&gt; 검색을 습관화하고 &lt;a href="http://stackoverflow.com/"&gt;stack overflow&lt;/a&gt; 등을 적극 활용하면 좋다. 단, 잘못된 지식이나 오래된 지식은 거를 수도 있어야 하니 무조건적으로 맹신하는 것은 좋지 않다.&lt;/p&gt;</content><category term="linux"></category><category term="help"></category><category term="man"></category><category term="info"></category></entry><entry><title>HomeBrew Install And Uninstall</title><link href="https://imjang57.github.io/garret/homebrew-install-and-uninstall.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/homebrew-install-and-uninstall.html</id><summary type="html">&lt;p&gt;HomeBrew 를 설치하고 삭제하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;HomeBrew&lt;/h1&gt;
 &lt;p&gt;HomeBrew 는 OS X (이제는 MacOS) 에서 패키지 관리를 자동으로 해주는 도구이다. 이 글을 쓸 때는 최신 버전이 1.1.5 이다.&lt;/p&gt;
-&lt;p&gt;HomeBrew 를 설치하려면 _Command Line Tools (CLT) for Xcode_가 필요하다. 귀찮으니 그냥 Xcode 설치하자. Xcode 에 다 포함되어 있다.&lt;/p&gt;
+&lt;p&gt;HomeBrew 를 설치하려면 "&lt;em&gt;Command Line Tools (CLT) for Xcode&lt;/em&gt;"가 필요하다. 귀찮으니 그냥 Xcode 설치하자. Xcode 에 다 포함되어 있다.&lt;/p&gt;
 &lt;h2&gt;Install&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/Homebrew"&gt;Homebrew Github Project&lt;/a&gt;에 가면 &lt;a href="https://github.com/Homebrew/install"&gt;install repository&lt;/a&gt; 가 있다. 여기에 &lt;code&gt;install&lt;/code&gt; 과  &lt;code&gt;uninstall&lt;/code&gt; 이라는 스크립트를 제공해서 HomeBrew 를 설치하고 삭제할 수 있게 해준다.(Bash 는 아니고 Ruby 인 듯)&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;install&lt;/code&gt; 스크립트로 설치하려면 아래와 같이 실행하면 된다.&lt;/p&gt;
@@ -2167,7 +2675,7 @@ slappasswd&lt;span class="o"&gt;(&lt;/span&gt;8&lt;span class="o"&gt;)&lt;/span&
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;위 스크립트로 설치하면 &lt;code&gt;/usr/local&lt;/code&gt; 에 HomeBrew 가 설치된다. 그런데 이 때 HomeBrew 를 위한 local git repository (&lt;code&gt;.git&lt;/code&gt; 디렉터리) 도 &lt;code&gt;/usr/local&lt;/code&gt; 에 생기고 다른 라이선스 관련 파일 등도 여기에 생성된다..-_-.. 이건 좀.. 그래서 uninstall 스크립트로 삭제하면 깨끗하게 지워지니까 일단 넘어가자. 이게 정 마음에 안들면 &lt;a href="https://github.com/Homebrew/brew/blob/master/docs/Installation.md#installation"&gt;installation guide&lt;/a&gt; 를 참고해서 직접 &lt;code&gt;git clone&lt;/code&gt; 해서 설치하자.&lt;/p&gt;
+&lt;p&gt;위 스크립트로 설치하면 &lt;code&gt;/usr/local&lt;/code&gt; 에 HomeBrew 가 설치된다. 그런데 이 때 HomeBrew 를 위한 local git repository (&lt;code&gt;.git&lt;/code&gt; 디렉터리) 도 &lt;code&gt;/usr/local&lt;/code&gt; 에 생기고 다른 라이선스 관련 파일 등도 여기에 생성된다.. 이건 좀.. 그래서 uninstall 스크립트로 삭제하면 깨끗하게 지워지니까 일단 넘어가자. 이게 정 마음에 안들면 &lt;a href="https://github.com/Homebrew/brew/blob/master/docs/Installation.md#installation"&gt;installation guide&lt;/a&gt; 를 참고해서 직접 &lt;code&gt;git clone&lt;/code&gt; 해서 설치하자.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;install&lt;/code&gt; 스크립트로 실행하면 아래와 같이 설치되는 목록들을 보여준다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /usr/bin/ruby -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; This script will install:
@@ -2214,7 +2722,7 @@ Are you sure you want to uninstall Homebrew? &lt;span class="o"&gt;[&lt;/span&gt
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h1&gt;Usage&lt;/h1&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
 &lt;p&gt;사용법은 매우 쉬우니 대충 적고 넘어간다.&lt;/p&gt;
 &lt;p&gt;실행 명령어는 &lt;code&gt;brew&lt;/code&gt; 이다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ which brew
@@ -2239,11 +2747,60 @@ Are you sure you want to uninstall Homebrew? &lt;span class="o"&gt;[&lt;/span&gt
 &lt;li&gt;&lt;code&gt;brew upgrade [FORMULA...]&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;HomeBrew 자체를 업그레이드하려면 &lt;code&gt;brew update&lt;/code&gt; 명령을 실행하면 되는데 지금은 잘 되는지 모르겠다. 0.9 버전일 사용할 때 &lt;em&gt;El Capitan&lt;/em&gt; 되면서 &lt;em&gt;System Integrity Protection&lt;/em&gt; 이라는 기능이 생겨서 제대로 안됐었는데, 맥 복구 모드(recovery mode)로 부팅해서 기능을 끄고 해서 해결했었던가 기억이 잘 안난다. 나중에 업데이트 할 일 생기면 다시 시도해보자.&lt;/p&gt;
+&lt;h1&gt;Brew Cask&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt;는 &lt;code&gt;brew&lt;/code&gt;를 기반으로 확장한 프로그램이다. &lt;code&gt;brew&lt;/code&gt;처럼 패키지를 관리하는 것을 목표로 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;brew&lt;/code&gt;는 소스 코드를 직접 빌드하는 방법을 사용하지만 &lt;code&gt;brew-cask&lt;/code&gt;는 바이너리를 직접 받아서 설치하고 필요한 설정들을 자동으로 세팅한다. 이는 &lt;code&gt;brew-cask&lt;/code&gt;의 목적이 일반적으로 맥에서 애플리케이션을 설치할 때 사용하는 방법인 Drag-and-Drop 방법을 대체하기 위한 방법이기 때문이다. 때문에 &lt;code&gt;brew-cask&lt;/code&gt;는 소스 코드가 공개되지 않은 상용 프로그램들의 설치도 가능하다.&lt;/p&gt;
+&lt;h2&gt;Install&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt; 설치는 아래와 같이 &lt;code&gt;brew&lt;/code&gt;를 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew tap caskroom/cask
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt;로 맥의 터미널 앱인 iTerm2를 설치하려면 아래와 같이 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew cask install iterm2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;brew-cask&lt;/code&gt;로 크롬도 설치되고 왠만한 유명한 프로그램은 다 설치 가능하다.&lt;/p&gt;
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://brew.sh"&gt;HomeBrew Web&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/Homebrew/brew"&gt;HomeBrew Github&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="mac"></category><category term="os x"></category><category term="homebrew"></category></entry><entry><title>Shell, Bash, Zsh</title><link href="https://imjang57.github.io/garret/introduction-shell-bash-zsh.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/introduction-shell-bash-zsh.html</id><summary type="html">&lt;p&gt;내가 사용하는 Shell 에 대한 소개와 설치 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Shell&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="mac"></category><category term="homebrew"></category><category term="brew"></category><category term="brew cask"></category></entry><entry><title>특수 문자들의 영어 이름</title><link href="https://imjang57.github.io/garret/name-of-special-characters.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/name-of-special-characters.html</id><summary type="html">&lt;p&gt;특수 문자들의 영어 이름&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Special characters name&lt;/h1&gt;
+&lt;p&gt;개발자로 살면 다양한 특수문자들을 사용하게 되는데 구글링하거나 다른 사람과 대화할 때 이들의 이름이 기억안나 당황하는 경우가 많다. 그래서 이들의 영어 이름을 메모한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;#39; : single quotation mark, single quote
+&amp;quot; : double quotation mark, double quote
+* : asterisk, bullet
+$ : dollar
+- : dash, hyphen, minus sign
+_ : underscore
+% : percent sign
+# : pound sign, number of, hashtag
+&amp;amp; : ampersand
+: : colon
+; : semi-colon
+| : vertical bar, pipe
+\ : backslash
+/ : slash, divide
+&amp;lt; : less than sign
+&amp;gt; : greater than sign
+? : question mark
+! : exclamation mark
+() : parentheses, bracket
+( : open parenthesss
+) : close parenthesss
+[] : square bracket
+{} : curly bracket
++ : plus sign
+= : equal sign
+. : dot, period
+, : comma
+^ : caret, modifier letter, circumflex accent
+` : grave accent, back tick, back quote
+~ : tilde
+@ : at symbol
+&lt;/pre&gt;&lt;/div&gt;</content><category term="special characters"></category></entry><entry><title>Shell, Bash, Zsh</title><link href="https://imjang57.github.io/garret/shell-introduction-bash-zsh.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/shell-introduction-bash-zsh.html</id><summary type="html">&lt;p&gt;내가 사용하는 Shell 에 대한 소개와 설치 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Shell&lt;/h1&gt;
 &lt;p&gt;&lt;em&gt;Shell&lt;/em&gt; 은 &lt;em&gt;OS&lt;/em&gt; (&lt;em&gt;Operating System&lt;/em&gt;) 가 제공하는 여러 서비스들을 사용하기 위한 User interface 를 말한다. &lt;em&gt;CLI&lt;/em&gt; (&lt;em&gt;Command-line interface&lt;/em&gt;) 도 &lt;em&gt;Shell&lt;/em&gt; 이고 &lt;em&gt;GUI&lt;/em&gt; (&lt;em&gt;Graphical User Interface&lt;/em&gt;) 도 &lt;em&gt;Shell&lt;/em&gt; 이다.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Linux&lt;/em&gt; 와 &lt;em&gt;OS X&lt;/em&gt; 에서는 보통 &lt;em&gt;Bash&lt;/em&gt; 가 Default shell 로 제공된다. 이 외에 &lt;em&gt;csh&lt;/em&gt;, &lt;em&gt;ksh&lt;/em&gt;, &lt;em&gt;zsh&lt;/em&gt; 등 많은 &lt;em&gt;Shell&lt;/em&gt; 들이 있다.&lt;/p&gt;
 &lt;p&gt;요즘 가장 많이 사용되는 Linux 와 OS X  에서 Default shell 이고 수 많은 shell script 들이 &lt;em&gt;Bash&lt;/em&gt; 를 기반으로 작성되기 때문에 &lt;em&gt;Bash&lt;/em&gt; 는 필수이다. 여기에 나는 개인적으로 사용되는 환경에서는 &lt;em&gt;Zsh&lt;/em&gt; 을 추가로 설치해서 사용한다.&lt;/p&gt;
@@ -2302,40 +2859,7 @@ ssh=&amp;#39;ssh -o StrictHostKeyChecking=no -t&amp;#39;
 
 &lt;p&gt;변경 후 &lt;code&gt;~/.zshrc&lt;/code&gt; 파일을 다시 적용하면 theme 가 적용된다. 만약 &lt;code&gt;ZSH_THEME="random"&lt;/code&gt; 으로 하면 여러 테마들이 로그인할 때마다 랜덤으로 적용된다.&lt;/p&gt;
 &lt;p&gt;agnoster 테마는 Powerline font 를 필요로 한다. 이 폰트는 &lt;a href="https://github.com/powerline/fonts"&gt;Powerline github&lt;/a&gt; 에서 받을 수 있다. 이 저장소를 clone 한 후 &lt;code&gt;install.sh&lt;/code&gt; 파일을 실행하면 알아서 폰트를 설치해준다.&lt;/p&gt;
-&lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>특수 문자들의 영어 이름</title><link href="https://imjang57.github.io/garret/name-of-special-characters.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/name-of-special-characters.html</id><summary type="html">&lt;p&gt;특수 문자들의 영어 이름&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Special characters name&lt;/h1&gt;
-&lt;p&gt;개발자로 살면 다양한 특수문자들을 사용하게 되는데 구글링하거나 다른 사람과 대화할 때 이들의 이름이 기억안나 당황하는 경우가 많다. 그래서 이들의 영어 이름을 메모한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;#39; : single quotation mark, single quote
-&amp;quot; : double quotation mark, double quote
-* : asterisk, bullet
-$ : dollar
-- : dash, hyphen, minus sign
-_ : underscore
-% : percent sign
-# : pound sign, number of, hashtag
-&amp;amp; : ampersand
-: : colon
-; : semi-colon
-| : vertical bar, pipe
-\ : backslash
-/ : slash, divide
-&amp;lt; : less than sign
-&amp;gt; : greater than sign
-? : question mark
-! : exclamation mark
-() : parentheses, bracket
-( : open parenthesss
-) : close parenthesss
-[] : square bracket
-{} : curly bracket
-+ : plus sign
-= : equal sign
-. : dot, period
-, : comma
-^ : caret, modifier letter, circumflex accent
-` : grave accent, back tick, back quote
-~ : tilde
-@ : at symbol
-&lt;/pre&gt;&lt;/div&gt;</content><category term="special characters"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
+&lt;p&gt;OS X 의 경우 터미널 앱의 환경설정으로 가서 테마에서 서체를 새로 설치한 &lt;em&gt;Meslo LG M for Powerline&lt;/em&gt; 으로 바꿔주자.&lt;/p&gt;</content><category term="shell"></category><category term="bash"></category><category term="zsh"></category></entry><entry><title>System Integrity Protection (Rootless)</title><link href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/system-integrity-protection-rootless.html</id><summary type="html">&lt;p&gt;Mac 의 Rootless 기능을 enable 및 disable 하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;System Integrity Protection (Rootless)&lt;/h1&gt;
 &lt;p&gt;예전에 (2015년 인가..??) OS X 가 &lt;em&gt;El Capitan&lt;/em&gt; 으로 업데이트되면서 새롭게 생겨난 시스템 보안 관련 기능이다. &lt;em&gt;Rootless&lt;/em&gt; 라고도 하는 기능이다.&lt;/p&gt;
 &lt;p&gt;보통 Linux/Unix 시스템은 root 사용자가 모든 파일을 읽고 쓸 수 있는데, 이 기능은 &lt;em&gt;Kernel&lt;/em&gt; 자체가 System file 들에 대한 쓰기 작업을 아예 막아 버리는 기능이다. 따라서, 이전에는 sudo 등으로 시스템 파일들을 수정할 수 있었지만 이제는 불가능하다.&lt;/p&gt;
 &lt;p&gt;Rootless 에 의해 보호되는 파일 목록:&lt;/p&gt;
@@ -2634,60 +3158,7 @@ http://nodeqa.com/nodejs_ref/99
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://tmux.github.io"&gt;tmux web&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/tmux/tmux"&gt;tmux github&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="tmux"></category></entry><entry><title>Java version 을 체크하는 bash script</title><link href="https://imjang57.github.io/garret/bash-script-checking-java-version.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/bash-script-checking-java-version.html</id><summary type="html">&lt;p&gt;Java version 을 체크하기 위한 bash script&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Check Java version from bash script&lt;/h1&gt;
-&lt;p&gt;리눅스에서 자바 버전을 체크하기 위한 꼼수 스크립트를 간단하게 작성해서 저장하기 위한 글입니다.&lt;/p&gt;
-&lt;p&gt;java -version 명령의 결과:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ java -version
-java version &lt;span class="s2"&gt;&amp;quot;1.8.0_73&amp;quot;&lt;/span&gt;
-Java&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/span&gt; SE Runtime Environment &lt;span class="o"&gt;(&lt;/span&gt;build 1.8.0_73-b02&lt;span class="o"&gt;)&lt;/span&gt;
-Java HotSpot&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/span&gt; 64-Bit Server VM &lt;span class="o"&gt;(&lt;/span&gt;build 25.73-b02, mixed mode&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;환경변수 $JAVA_HOME을 찾아서 하는 bash script:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_HOME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="k"&gt;then&lt;/span&gt;
-  &lt;span class="nv"&gt;JAVA_CMD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_HOME&lt;/span&gt;&lt;span class="s2"&gt;/bin/java&amp;quot;&lt;/span&gt;
-  &lt;span class="nv"&gt;JAVA_VERSION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_CMD&lt;/span&gt; -version 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/version/ {print $2}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Run using java version &lt;/span&gt;&lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt;&lt;span class="s2"&gt; (JAVA_HOME is &lt;/span&gt;&lt;span class="nv"&gt;$JAVA_HOME&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
-  &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt; &amp;gt; 1.8 &lt;span class="o"&gt;]]&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-  &lt;span class="k"&gt;then&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is greater than 1.8.
-  &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is not supported.
-  &lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Java doesn&amp;#39;t exists.&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;자바 실행 파일 위치를 찾아서 하는 bash script:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;which java&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="k"&gt;then&lt;/span&gt;
-  &lt;span class="nv"&gt;JAVA_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;whereis java&lt;span class="k"&gt;)&lt;/span&gt;
-  &lt;span class="nv"&gt;JAVA_VERSION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;java -version 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/version/ {print $2}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Run using java version &lt;/span&gt;&lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt;&lt;span class="s2"&gt; (&lt;/span&gt;&lt;span class="nv"&gt;$JAVA_PATH&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;
-  &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$JAVA_VERSION&lt;/span&gt; &amp;gt; 1.8 &lt;span class="o"&gt;]]&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
-  &lt;span class="k"&gt;then&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is greater than 1.8.
-  &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; This java version is not supported.
-  &lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Java doesn&amp;#39;t exists.&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;두 방법이 사실 거의 똑같다. 그냥 whereis 명령을 이용하느냐, JAVA_HOME 이라는 환경변수를 이용하느냐만 다르다.&lt;/p&gt;
-&lt;p&gt;다른 방법으로는 sort 명령을 이용해서 가장 앞에 위치하는 녀석을 비교하는 방법도 있다.&lt;/p&gt;
-&lt;p&gt;처음에는 bc 명령을 사용하려 했는데 버전은 보통 여러 개의 comma(.)로 되어있어서 bc 로 사용은 불가능했다. 사실 comma(.) 단위로 나눠서 각각 비교하는 로직 구현하면 되는데 귀찮음이 커서..&lt;/p&gt;
-&lt;p&gt;이 방법은 사실 완벽한 방법은 아니다. awk 로 추출한 문자열이 x.y.z 형태라는 걸 알고 있기 때문에 가능한 방법이다. 만약 1.8 로 버전이 추출되면 제대로 동작 안할 것이다. 제대로 하려면 comma(.) 단위로 나눠서 제대로 비교하는 함수를 만들어야 겠지..&lt;/p&gt;</content><category term="bash"></category></entry><entry><title>자바에서 % 출력하기</title><link href="https://imjang57.github.io/garret/print-percent-sign-in-java.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/print-percent-sign-in-java.html</id><summary type="html">&lt;p&gt;자바에서 % 문자 출력하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Java String 에서 % 문자 출력하기&lt;/h1&gt;
+&lt;/ul&gt;</content><category term="tmux"></category></entry><entry><title>자바에서 % 출력하기</title><link href="https://imjang57.github.io/garret/print-percent-sign-in-java.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/print-percent-sign-in-java.html</id><summary type="html">&lt;p&gt;자바에서 % 문자 출력하기&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Java String 에서 % 문자 출력하기&lt;/h1&gt;
 &lt;p&gt;오늘 개발하다가 &lt;code&gt;%&lt;/code&gt; 문자가 들어가는 문자열을 처리할 일이 있었다. 처음에 아무 생각없이 아래처럼 작성했다.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;test&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;str2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;string is \&amp;quot;%%s%\&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;str1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
@@ -2723,71 +3194,38 @@ Java HotSpot&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/sp
 
 
 &lt;p&gt;&lt;code&gt;%&lt;/code&gt; 는 그냥 문자가 아니라 포맷을 지정하기 위한 포맷 지시자 (format specifier 또는 format string) 역할을 하는 특수한 문자이기 때문이다.&lt;/p&gt;
-&lt;p&gt;알고 있던 거였는데.. 역시 오래동안 안쓰면 머리에서 삭제되어 버린다. ㅠㅠ&lt;/p&gt;</content></entry><entry><title>SSH Host-key identification</title><link href="https://imjang57.github.io/garret/ssh-host-key-identification.html" rel="alternate"></link><published>2016-12-30T00:00:00+09:00</published><updated>2016-12-30T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-30:/garret/ssh-host-key-identification.html</id><summary type="html">&lt;p&gt;This is about SSH Host-key identification.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH host key&lt;/h1&gt;
-&lt;p&gt;가끔 SSH Client 로 Remote 에 있는 SSH Server 에 접속할 때 아래와 같은 에러를 볼 수 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!              @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now &lt;span class="o"&gt;(&lt;/span&gt;man-in-the-middle
-attack&lt;span class="o"&gt;)&lt;/span&gt;!
-It is also possible that a host key has just been changed.
-The fingerprint &lt;span class="k"&gt;for&lt;/span&gt; the ECDSA key sent by the remote host is
-bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
-Please contact your system administrator.
-Add correct host key in /home/imjang57/.ssh/known_hosts to get rid of
-this message.
-Offending ECDSA key in /home/imjang57/.ssh/known_hosts:8
-  remove with: ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R
-192.168.0.5
-ECDSA host key &lt;span class="k"&gt;for&lt;/span&gt; 192.168.0.5 has changed and you have
-requested strict checking.
-Host key verification failed.
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;em&gt;Host Key&lt;/em&gt; 가 달라서 발생하는 문제다. 자세히 말하면, 클라이언트 측에 등록된 SSH 서버의 호스트 키가 현재 접속 시도하면서 새롭게 받은 호스크 키와 달라서 발생한 문제이다.&lt;/p&gt;
-&lt;p&gt;SSH 서버에서 호스트 키를 새롭게 생성했거나, 클라이언트 측에서 SSH 서버의 호스트 키를 수동으로 입력했는데 잘못입력했거나, 서버를 재설치했거나, 기타 등등의 이유로 기존에 저장된 호스트 키와 연결시도하면서 새롭게 받은 호스트 키가 다를 수 있다.&lt;/p&gt;
-&lt;p&gt;이는 SSH 연결을 시도하는 서버가 정말 내가 연결하려는 서버가 맞는지를 체크할 수 있는 기능이다. HTTPS 를 사용할 때 신뢰할 수 있는 사이트인지 확인하는 것과 비슷한 이유로 제공되는 기능이다.&lt;/p&gt;
-&lt;h2&gt;해결 방법&lt;/h2&gt;
-&lt;p&gt;해결하는 방법은 여러개가 있다.&lt;/p&gt;
-&lt;h3&gt;known_host 삭제하여 해결&lt;/h3&gt;
-&lt;p&gt;보통 사용자의 홈 디렉터리에 .ssh 라는 디렉터리가 있고, 여기에 사용자를 위한 SSH 설정이나 사용자 인증을 위한 키 파일이 저장된다. 그리고 &lt;user_home&gt;/.ssh 디렉터리 밑에 known_hosts 라는 파일이 있는데 여기에 SSH 서버의 호스트 키들이 저장되어 있다. 여기서 에러가 나는 SSH 서버의 호스트 키를 삭제하면 다시 연결할 수 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-keygen -f &lt;span class="s2"&gt;&amp;quot;/home/imjang57/.ssh/known_hosts&amp;quot;&lt;/span&gt; -R 192.168.0.5
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;위 명령으로 저장된 서버의 호스트 키를 삭제한 후 SSH 서버에 다시 접속하면 아래와 같이 호스트 키를 등록하냐고 물어보는 메시지가 나타난다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;imjang57@myserver:~$ ssh administrator@192.168.0.5
-The authenticity of host &lt;span class="s1"&gt;&amp;#39;192.168.0.5&amp;#39;&lt;/span&gt; can&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t be established.
-ECDSA key fingerprint is
-bf:e3:d3:21:c4:3c:60:cd:d9:2b:bb:a4:d1:6e:1f:df.
-Are you sure you want to &lt;span class="k"&gt;continue&lt;/span&gt; connecting &lt;span class="o"&gt;(&lt;/span&gt;yes/no&lt;span class="o"&gt;)&lt;/span&gt;?
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;yes 를 입력하면 호스트 키를 &lt;user_home&gt;/.ssh/known_hosts 파일에 저장하고 SSH 접속하게 된다.&lt;/p&gt;
-&lt;p&gt;만약 명령어 치는게 귀찮으면 그냥 known_hosts 파일 삭제하면 된다.&lt;/p&gt;
-&lt;h3&gt;StrictHostKeyChecking 설정을 off 하여 해결&lt;/h3&gt;
-&lt;p&gt;리눅스에서 ssh 설정은 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 디렉터리에 있다. &lt;code&gt;ssh_config&lt;/code&gt; 파일은 클라이언트 설정 파일, &lt;code&gt;sshd_config&lt;/code&gt; 는 서버(데몬) 설정 파일이다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ssh_config&lt;/code&gt; 파일에서 아래 내용을 찾아서 호스트 키 검사를 하지 않도록 설정하면 된다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;StrictHostKeyChecking no
-&lt;span class="nv"&gt;UserKnownHostsFile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/null
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;호스트 키 새로 생성하는 방법&lt;/h2&gt;
-&lt;p&gt;서버를 운영하는 입장에서 서버를 추가할 때 기존 서버의 이미지를 사용해서 새로운 서버를 구성할 수 있다. 이 때 호스트 키를 새롭게 생성해야 한다.&lt;/p&gt;
-&lt;p&gt;호스트 키는 보통 &lt;code&gt;/etc/ssh&lt;/code&gt; 에 저장되어 있다. &lt;em&gt;RSA&lt;/em&gt;, &lt;em&gt;DSA&lt;/em&gt;, &lt;em&gt;ECDSA&lt;/em&gt; 세 가지 종류의 키 파일들이 보통 생성되어 있다.&lt;/p&gt;
-&lt;p&gt;새로 호스트 키를 생성하기 위해 아래 명령을 실행해서 세 가지 종류의 호스트 키 파일들을 생성하면 된다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t rsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t dsa
-sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; -t ecdsa -b 521
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;기존에 파일들이 있으면 overwrite 할 거냐고 묻는데 당연히 &lt;code&gt;y&lt;/code&gt; 를 입력하자.&lt;/p&gt;</content><category term="SSH"></category></entry><entry><title>Integer types header file (stdint.h)</title><link href="https://imjang57.github.io/garret/integer-types-header-file-stdint.html" rel="alternate"></link><published>2016-01-02T00:00:00+09:00</published><updated>2016-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-01-02:/garret/integer-types-header-file-stdint.html</id><summary type="html">&lt;p&gt;C 언어의 Integer data type 의 크기를 정의한 stdint.h 헤더파일&lt;/p&gt;</summary><content type="html">&lt;h1&gt;uintXX_t data types in stdint.h&lt;/h1&gt;
+&lt;p&gt;알고 있던 거였는데.. 역시 오래동안 안쓰면 머리에서 삭제되어 버린다. ㅠㅠ&lt;/p&gt;</content></entry><entry><title>Linux Directory Structure</title><link href="https://imjang57.github.io/garret/linux-directory-structure.html" rel="alternate"></link><published>2016-12-22T00:00:00+09:00</published><updated>2016-12-22T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-22:/garret/linux-directory-structure.html</id><summary type="html">&lt;p&gt;리눅스 디렉터리 구조&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux directory&lt;/h1&gt;
+&lt;p&gt;수많은 배포판을 가진 리눅스는 배포판마다 각각의 특징을 가지며 조금씩 다른 시스템 구조를 가지고 있다. 하지만 대부분의 대포판들은 리눅스 파일시스템 표준인 &lt;strong&gt;FSSTND(Filesystem Hierarchy Standard)&lt;/strong&gt; 스펙을 준수하고 있다. 우리가 익히 많이 들어 알고 있는 대부분의 배포판들은 이 표준을 지키며 개발되었다. FSSTND 파일시스템 표준은 디렉토리의 용도에 대한 기준을 준비해 두고서 그 용도에 맞도록 사용하자는 리눅스 파일시스템 구성의 기준이 되는 표준안이라고 할 수 있다.&lt;/p&gt;
+&lt;p&gt;FSSTND에 대한 자세한 설명은 다음 URL들을 참고하자.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wikipedia: https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard&lt;/li&gt;
+&lt;li&gt;official web site: https://wiki.linuxfoundation.org/lsb/fhs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;여러 디렉터리의 용도가 정의되어 있지만 자주 사용되는 디렉터리들에 대해 설명하면 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/&lt;/code&gt; : 최상위 디렉토리. 루트디렉토리를 의미하고 리눅스 모든 디렉토리의 시작점이다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt; : 기본적인 명령어가 저장된 디렉토리. 리눅스 사용에 있어 가장 기본적인 명령어인 &lt;code&gt;mv&lt;/code&gt;, &lt;code&gt;cp&lt;/code&gt;, &lt;code&gt;df&lt;/code&gt;, &lt;code&gt;rm&lt;/code&gt; 등이 이 디렉토리에 존재한다. 그리고 이 디렉토리 안에 있는 명령어들은 &lt;code&gt;root&lt;/code&gt; 뿐만 아니라 일반 사용자들도 사용할 수 있다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/boot&lt;/code&gt; : 리눅스 부트로더(boot loader)가 존재하는 디렉토리. 즉 GRUB과 같은 부트로더에 관한 파일들이 여기에 존재한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev&lt;/code&gt; : 시스템 디바이스(device) 파일을 저장하고 있는 디렉토리. 하드디스크 &lt;code&gt;/dev/sda&lt;/code&gt;, CDROM &lt;code&gt;/dev/cdrom&lt;/code&gt; 등과 같은 장치파일이 이곳에 존재한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc&lt;/code&gt; : 리눅스 시스템의 거의 모든 설정파일이 존재하는 디렉토리. &lt;code&gt;/etc/passwd&lt;/code&gt;, &lt;code&gt;/etc/group&lt;/code&gt; 등 거의 모든 시스템관련 설정파일이 이곳에 존재한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home&lt;/code&gt; : 사용자 홈 디렉토리. 안에 각 사용자들의 디렉토리들이 모여있다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib&lt;/code&gt; : 커널모듈파일과 라이브러리파일 등이 존재하는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media&lt;/code&gt; : USB, CDROM 등과 같이 탈부착이 가능한 장치들의 마운트포인트로 사용되는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/mnt&lt;/code&gt; : &lt;code&gt;/media&lt;/code&gt; 디렉토리와 비슷한 용도로 사용&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/proc&lt;/code&gt; : 가상파일시스템이라고 불리는 곳으로 현재 메모리에 존재하는 모든 작업들이 파일형태로 존재하는 디렉토리. 디스크상에 존재하는 것이 아니라 메모리상에 존재하기 때문에 가상파일시스템이라고 부른다. 이곳에 존재하는 파일 중에 커널의 옵션값을 변경할 수 있는 파라미터파일들이 있기 때문에 시스템 운용에 있어 매우 중요한 의미를 가진다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/root&lt;/code&gt; : 시스템 최고관리자의 홈 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/sbin&lt;/code&gt; : &lt;code&gt;/bin&lt;/code&gt;과는 달리 시스템 관리자들이 사용하는 리눅스 명령어들(&lt;code&gt;halt&lt;/code&gt;, &lt;code&gt;shutdown&lt;/code&gt; 등)이 모여있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/tmp&lt;/code&gt; : 시스템 모든 사용자들이 공동으로 사용하는 디렉토리. 일반 사용자 또는 각종 프로세서에서 사용되는 파일들이 생성되는 곳이다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr&lt;/code&gt; : 시스템이 아닌 일반 사용자들이 주로 사용하는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/bin&lt;/code&gt; : 일반 사용자들이 사용 가능한 명령어 파일들이 존재하는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/include&lt;/code&gt; : C 프로그래밍에 필요한 헤더파일이 모여 있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/lib&lt;/code&gt; : &lt;code&gt;/lib&lt;/code&gt;에 들어가지 않은 라이브러리들이 모여 있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/sbin&lt;/code&gt; : &lt;code&gt;/bin&lt;/code&gt;에 제외된 명령어와 네트워크 관련 명령어들이 들어있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/src&lt;/code&gt; : 프로그램 소스가 저장되는 곳&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/local&lt;/code&gt; : mysql, apache, php 등과 같은 어플리케이션들을 소스로 컴파일설치할 때 사용되는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/var&lt;/code&gt; : 시스템 사용중 임시로 생성되고 삭제되는 데이터를 저장하기 위한 디렉토리. 모든 시스템 로그파일은 &lt;code&gt;/var/log&lt;/code&gt;에 저장된다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lost+found&lt;/code&gt; : 최상위 디렉토리인 &lt;code&gt;/&lt;/code&gt; 디렉토리에만 존재하는 것이 아니라 파일 시스템마다 존재할 수 있는 디렉토리. 이 디렉토리는 &lt;code&gt;fsck&lt;/code&gt; 또는 &lt;code&gt;e2fsck&lt;/code&gt; 등과 같은 파일 시스템 체크 및 복구유틸리티 실행후에 주로 생성되는 것으로 복구되지 앟은 채로 블록(block)만 존재하는 파일이 존재하는 곳.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="linux"></category><category term="directory"></category></entry><entry><title>Integer types header file (stdint.h)</title><link href="https://imjang57.github.io/garret/integer-types-header-file-stdint.html" rel="alternate"></link><published>2016-01-02T00:00:00+09:00</published><updated>2016-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-01-02:/garret/integer-types-header-file-stdint.html</id><summary type="html">&lt;p&gt;C 언어의 Integer data type 의 크기를 정의한 stdint.h 헤더파일&lt;/p&gt;</summary><content type="html">&lt;h1&gt;uintXX_t data types in stdint.h&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;_t&lt;/code&gt; 는 구조체에 붙이는 것이라기 보다는 user-defined type 에 붙이는 것이다. &lt;code&gt;uint8_t&lt;/code&gt;, &lt;code&gt;uint32_t&lt;/code&gt; 등은 &lt;code&gt;stdint.h&lt;/code&gt; 헤더파일에 정의되어 있으며 C99 표준에서 도입되었다.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;stdint.h&lt;/code&gt; : This header defines a set of integral type aliases with specific width requirements, along with macros specifying their limits and macro functions to create values of these types.&lt;/p&gt;
 &lt;p&gt;C 언어 표준에는 &lt;code&gt;char&lt;/code&gt;, &lt;code&gt;short&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;, &lt;code&gt;long&lt;/code&gt;, &lt;code&gt;float&lt;/code&gt;, &lt;code&gt;double&lt;/code&gt; 등과 같은 Primitive data type 을 지원한다. 하지만 표준에서 이런 type 들이 몇 bytes 를 필요로 하는지 정확한 정의를 하지 않았다. 때문에 Machine (CPU) 의 종류에 따라 &lt;code&gt;int&lt;/code&gt; 나 &lt;code&gt;long&lt;/code&gt; 등의 크기가 달라지게 되었다. (대부분은 &lt;code&gt;char&lt;/code&gt; 1 byte, &lt;code&gt;short&lt;/code&gt; 2 bytes, &lt;code&gt;int&lt;/code&gt; 4 bytes 로 알고 가르치지만 대부분의 machine 에서 이렇게 사용할 뿐이지 다 똑같은 건 아니다. 표준은 &lt;code&gt;short&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;, &lt;code&gt;long&lt;/code&gt; 에 대해 &lt;code&gt;short&lt;/code&gt; 은 최소 &lt;code&gt;int&lt;/code&gt; 보다 같거나 작아야 한다고 정의되어 있으며, &lt;code&gt;long&lt;/code&gt; 은 &lt;code&gt;int&lt;/code&gt; 보다 같거나 커야 한다고 정의되어 있을 뿐이다.) 이는 C 언어로 작성된 프로그램의 호환성(Portability) 에 매우 큰 악영향을 미칠 수 있는 요소였다.&lt;/p&gt;

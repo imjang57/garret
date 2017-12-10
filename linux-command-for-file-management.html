@@ -1,53 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Linux 에서 파일 관리를 위한 명령어들</title>
-        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
-        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Linux 에서 파일 관리를 위한 명령어들 | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/linux-command-for-file-management.html">
+
+
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/linux.atom.xml">  
+  <meta name="description" content="Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
-                <nav><ul>
-                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
-                    <li class="active"><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Linux 에서 파일 관리를 위한 명령어들
+</h1>
+      <hr>
+  <article class="article">
     <header>
-      <h1 class="entry-title">
-        <a href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="bookmark"
-           title="Permalink to Linux 에서 파일 관리를 위한 명령어들">Linux 에서 파일 관리를 위한 명령어들</a></h1>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2017-01-01T00:00:00+09:00">
+          <i class="fa fa-clock-o"></i>
+          일 01 1월 2017
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="https://imjang57.github.io/garret/tag/linux.html">#linux</a>,               <a href="https://imjang57.github.io/garret/tag/file.html">#file</a>          </li>
+      </ul>
     </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-01T00:00:00+09:00">
-                Published: 일 01 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-05-08T00:00:00+09:00">
-                Updated: 월 08 5월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/linux.html">linux</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/linux.html">linux</a> <a href="https://imjang57.github.io/garret/tag/file.html">file</a> </p>
-</footer><!-- /.post-info -->      <h1>Linux 에서 사용자 관리를 위한 명령어들</h1>
+    <div class="content">
+      <h1>Linux 에서 사용자 관리를 위한 명령어들</h1>
 <p>Linux 에서 파일 목록 확인, 파일 내용 확인, 사용 중인 파일 확인, 파일 정보 변경, 파일 비교, 패치 등을 위한 명령어들을 정리한 글이다.</p>
 <p>리눅스에서는 모든 것이 파일로 관리된다. 일반적으로 알고 있는 파일 외에 console, socket, device 등도 모두 파일이다. 그래서 리눅스에서 모든 인터페이스는 File Descriptor 를 기반으로 하고 모든 입력과 출력은 File Descriptor 를 통해 이루어진다.</p>
 <h1>파일 목록 조회</h1>
@@ -193,47 +225,25 @@ $ patch -p1 &lt; ../xchat-1.2.0-serverlist.patch
 <p><code>-p</code> 옵션은 patch file 의 정보에 있는 path 에서 몇 단계를 제외할 지를 나타낸다. 예를 들어 위에서 처럼 <code>-p1</code> 옵션을 주면 patch 적용 path 는 xchat-1.2.0 이 제외된 <code>src/serverlist.h</code> 가 되고, 현재 위치(directory, path) 를 기준으로 <code>src/serverlist.h</code> 파일에 패치를 적용한다. 만약 그 상위디렉토리에서 패치를 적용하기 원한다면 그냥 다음과 같이 하면 될 것이다:</p>
 <div class="highlight"><pre><span></span>$ patch -p0 &lt; xchat-1.2.0-serverlist.patch
 </pre></div>
-    </div><!-- /.entry-content -->
-
+    </div>
   </article>
-</section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+    </div>
+  </div>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-90095241-1', 'auto');
-    ga('send', 'pageview');
-    </script>
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
 </body>
+
 </html>

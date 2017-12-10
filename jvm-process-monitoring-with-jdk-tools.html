@@ -1,53 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>JVM Process monitoring with JDK tools</title>
-        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
-        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  JVM Process monitoring with JDK tools | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html">
+
+
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/tools.atom.xml">  
+  <meta name="description" content="JDK Tools 을 사용하여 JVM Process 를 모니터링하는 방법에 대한 소개">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
-                <nav><ul>
-                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
-                    <li class="active"><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  JVM Process monitoring with JDK tools
+</h1>
+      <hr>
+  <article class="article">
     <header>
-      <h1 class="entry-title">
-        <a href="https://imjang57.github.io/garret/jvm-process-monitoring-with-jdk-tools.html" rel="bookmark"
-           title="Permalink to JVM Process monitoring with JDK tools">JVM Process monitoring with JDK tools</a></h1>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2017-01-18T00:00:00+09:00">
+          <i class="fa fa-clock-o"></i>
+          수 18 1월 2017
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="https://imjang57.github.io/garret/tag/java.html">#java</a>,               <a href="https://imjang57.github.io/garret/tag/jvm.html">#jvm</a>,               <a href="https://imjang57.github.io/garret/tag/monitoring.html">#monitoring</a>,               <a href="https://imjang57.github.io/garret/tag/jps.html">#jps</a>,               <a href="https://imjang57.github.io/garret/tag/stat.html">#stat</a>,               <a href="https://imjang57.github.io/garret/tag/stack.html">#stack</a>          </li>
+      </ul>
     </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-01-18T00:00:00+09:00">
-                Published: 수 18 1월 2017
-        </abbr>
-		<br />
-        <abbr class="modified" title="2017-01-18T00:00:00+09:00">
-                Updated: 수 18 1월 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/java.html">java</a> <a href="https://imjang57.github.io/garret/tag/jvm.html">jvm</a> <a href="https://imjang57.github.io/garret/tag/monitoring.html">monitoring</a> <a href="https://imjang57.github.io/garret/tag/jps.html">jps</a> <a href="https://imjang57.github.io/garret/tag/stat.html">stat</a> <a href="https://imjang57.github.io/garret/tag/stack.html">stack</a> </p>
-</footer><!-- /.post-info -->      <h1>JVM Process monitoring</h1>
+    <div class="content">
+      <h1>JVM Process monitoring</h1>
 <p>요즘 일 때문에 오랜만에 자바를 사용하고 있고, 스칼라에 관심이 생겨 공부해보고 있다. 그런데 둘다 <em>JVM</em> 기반 언어다 보니 JVM 에 대해 알아야 겠다는 생각이 들었다. (사실 일하다가 JVM 모니터링 할 일이 생긴 김에 간단하게 정리한다.) 어쨌든 둘 다 JVM 에서 동작하는 녀석들이라 JVM 모니터링에 대해 간단하게 남겨보고자 한다.</p>
 <p>자바든 스칼라든 실행되면 JVM 프로세스이다. 자바나 스칼라로 쓰여진 코드는 Java Bytecode 로 컴파일되고, JVM 은 이 Bytecode 를 실행한다. 그러므로 컴파일 된 이후에는 자바로 작성했든 스칼라로 작성했든 JVM 입장에서는 그냥 똑같은 Bytecode 이다. 그러니 같은 방법(JVM Process monitoring)으로 모니터링할 수 있다.</p>
 <h1>JVM Monitoring tools</h1>
@@ -215,47 +247,25 @@ $
 <li><a href="https://www.wolfe.id.au/2011/10/16/monitoring-the-openjdk-from-the-cli/">Monitoring the OpenJDK from the CLI</a></li>
 <li><a href="http://d2.naver.com/helloworld/6043">Garbage Collection 모니터링 방법</a></li>
 </ul>
-    </div><!-- /.entry-content -->
-
+    </div>
   </article>
-</section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+    </div>
+  </div>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-90095241-1', 'auto');
-    ga('send', 'pageview');
-    </script>
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
 </body>
+
 </html>

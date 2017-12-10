@@ -1,118 +1,105 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-        <meta charset="utf-8" />
-        <title>garret - rootless</title>
-        <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/main.css" />
-        <link href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="garret Atom Feed" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://imjang57.github.io/garret/">garret </a></h1>
-                <nav><ul>
-                    <li><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/issues.html">issues</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/linux.html">linux</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/mac.html">mac</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/misc.html">misc</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/programming.html">programming</a></li>
-                    <li><a href="https://imjang57.github.io/garret/category/tools.html">tools</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html">System Integrity Protection (Rootless)</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2016-12-31T00:00:00+09:00">
-                Published: 토 31 12월 2016
-        </abbr>
-		<br />
-        <abbr class="modified" title="2016-12-31T00:00:00+09:00">
-                Updated: 토 31 12월 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://imjang57.github.io/garret/author/imjang57.html">imjang57</a>
-        </address>
-<p>In <a href="https://imjang57.github.io/garret/category/mac.html">mac</a>.</p>
-<p>tags: <a href="https://imjang57.github.io/garret/tag/mac.html">mac</a> <a href="https://imjang57.github.io/garret/tag/os-x.html">os x</a> <a href="https://imjang57.github.io/garret/tag/rootless.html">rootless</a> </p>
-</footer><!-- /.post-info --><h1>System Integrity Protection (Rootless)</h1>
-<p>예전에 (2015년 인가..??) OS X 가 <em>El Capitan</em> 으로 업데이트되면서 새롭게 생겨난 시스템 보안 관련 기능이다. <em>Rootless</em> 라고도 하는 기능이다.</p>
-<p>보통 Linux/Unix 시스템은 root 사용자가 모든 파일을 읽고 쓸 수 있는데, 이 기능은 <em>Kernel</em> 자체가 System file 들에 대한 쓰기 작업을 아예 막아 버리는 기능이다. 따라서, 이전에는 sudo 등으로 시스템 파일들을 수정할 수 있었지만 이제는 불가능하다.</p>
-<p>Rootless 에 의해 보호되는 파일 목록:</p>
-<ul>
-<li><code>/System</code></li>
-<li><code>/bin</code></li>
-<li><code>/usr</code></li>
-<li><code>/sbin</code></li>
-</ul>
-<p><code>sudo touch /bin/rootlesstest</code> 를 실행하면 <em>Operation not permitted</em> 메시지를 볼 수 있다.</p>
-<p><em>Rootless</em> 에 의해 보호되는 파일 목록들은 <code>/System/Library/Sandbox/rootless.conf</code> 에 모두 저장되어 있다.</p>
-<p>예전에 HomeBrew 때문에 Rootless 를 disable 한 적이 있었는데 이번에 또 필요해져서 다시 찾아봤다. 그리고 이왕 찾아본 김에 기록으로 남긴다.</p>
-<h2>Disable Rootless</h2>
-<p>현재 <em>Rootless</em> 기능의 상태는 아래와 같이 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span>$ csrutil status
-System Integrity Protection status: enabled.
-</pre></div>
+  <title>  #rootless Articles | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/tag/rootless.html">
 
 
-<p><em>Rootless</em> 기능을 끄려면 <em>Recovery Mode</em> 로 부팅해야 한다.</p>
-<ol>
-<li>맥 restart</li>
-<li>부팅시작되자마자 <code>option</code> 키를 누른 후 <code>Recovery HD</code> 를 선택하여 부팅한다. 아니면 <code>Command</code> + <code>R</code> 을 길게 누르면 파티션 선택 화면을 생략하고 바로 <em>Recovery Mode</em> 로 부팅한다.</li>
-<li><em>Recovery Mode</em> 에서 상단 Menu bar 에서 유틸리티(Utilities)메뉴의 터미널(terminal)을 실행한다.</li>
-<li><code>csrutil disable [--without debug]</code> 실행한다.</li>
-<li>restart 해서 일반 모드로 부팅한 후 필요한 작업 수행한다.</li>
-<li>필요한 작업 끝난 후 다시 재부팅하여 복구 모드로 들어온 뒤 <code>csrutil enable</code> 을 실행한다.</li>
-</ol>
-<h1>References</h1>
-<ul>
-<li><a href="http://www.howtogeek.com/230424/how-to-disable-system-integrity-protection-on-a-mac-and-why-you-shouldnt/">How to Disable System Integrity Protection on a Mac (and Why You Shouldn’t)</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://imjang57.github.io/garret/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  
+    <meta name="description" content="A private blog site for engineering and thinkin.">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-90095241-1', 'auto');
     ga('send', 'pageview');
-    </script>
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  #rootless Articles
+</h1>
+      <hr>
+    <article class="row teaser">
+      <header class="col-sm-4 text-muted">
+        <ul>
+          <li title="2016-12-31T00:00:00+09:00">
+            <i class="fa fa-clock-o"></i>
+            토 31 12월 2016
+          </li>
+          <li>
+            <i class="fa fa-folder-open-o"></i>
+            <a href="https://imjang57.github.io/garret/category/mac.html">mac</a>
+          </li>
+        </ul>
+      </header>
+      <div class="col-sm-8">
+        <h4 class="title">
+          <a href="https://imjang57.github.io/garret/system-integrity-protection-rootless.html">System Integrity Protection (Rootless)</a>
+        </h4>
+        <div class="content">
+          Mac 의 Rootless 기능을 enable 및 disable 하기
+        </div>
+      </div>
+    </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
 </body>
+
 </html>

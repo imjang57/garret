@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - linux</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/linux.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-08T00:00:00+09:00</updated><entry><title>Bash script 로 각 디렉터리들의 실제 사용량 조회하기</title><link href="https://imjang57.github.io/garret/check-disk-usage-of-directories-with-bash-script.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/check-disk-usage-of-directories-with-bash-script.html</id><summary type="html">&lt;p&gt;Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 각 디렉터리 별 디스크 사용량 확인하기&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - linux</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/linux.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-08T00:00:00+09:00</updated><entry><title>Linux 에서 각 디렉터리들의 실제 사용량 조회하기</title><link href="https://imjang57.github.io/garret/linux-check-disk-usage-of-directories.html" rel="alternate"></link><published>2017-02-14T00:00:00+09:00</published><updated>2017-02-14T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-02-14:/garret/linux-check-disk-usage-of-directories.html</id><summary type="html">&lt;p&gt;Bash script 로 각 디렉터리들이 실제 사용하고 있는 디스크 크기를 알아보는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 각 디렉터리 별 디스크 사용량 확인하기&lt;/h1&gt;
 &lt;p&gt;리눅스에서 각 디렉터리마다 디스크를 얼마나 사용하고 있는지 확인하기 위한 bash script 이다.&lt;/p&gt;
 &lt;p&gt;스크립트:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# make newlines the only seperator (IFS : Internal Field Separator)&lt;/span&gt;
@@ -8,288 +8,504 @@
 
 
 &lt;p&gt;처음에 &lt;code&gt;IFS&lt;/code&gt; 를 지정해주지 않으면 디렉터리 이름에 공백이 들어간 경우 디렉터리 이름이 공백을 기준으로 split 되어 별도의 디렉터리처럼 동작하게 된다.&lt;/p&gt;
-&lt;p&gt;나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, &lt;code&gt;grep&lt;/code&gt; 으로 디렉터리만 뽑아내고, &lt;code&gt;awk&lt;/code&gt; 로 파일 이름만 뽑아내고, &lt;code&gt;for&lt;/code&gt; statement 를 사용해서 각 디렉터리마다 &lt;code&gt;du&lt;/code&gt; 명령을 사용한다.&lt;/p&gt;</content><category term="bash"></category><category term="linux"></category><category term="du"></category><category term="disk"></category></entry><entry><title>SSH with key</title><link href="https://imjang57.github.io/garret/ssh-with-key.html" rel="alternate"></link><published>2017-01-02T00:00:00+09:00</published><updated>2017-01-02T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-02:/garret/ssh-with-key.html</id><summary type="html">&lt;p&gt;Key 로 SSH 로그인 하기 위한 과정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;SSH with key file&lt;/h1&gt;
-&lt;p&gt;SSH 를 사용할 때 비밀번호를 일일이 입력하기 귀찮을 때가 있다. 특히 개발용 서버에 수시로 접속할 때.. 이 때 key 파일을 이용한 로그인을 하면 비밀번호를 입력하는 번거로움을 피할 수 있다.&lt;/p&gt;
-&lt;p&gt;SSH 에서 key 를 이용한 로그인을 위해 RSA asymmetric encryption (RSA 비대칭키 암호화) 방식을 이용할 수 있다. 이 방법은 아래와 같은 절차를 따라 동작한다. (물론 당연히 다른 암호화 방식의 Key 를 사용해도 된다.)&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Public Key (공개키) 와 Private Key (비공개키) 를 생성&lt;/li&gt;
-&lt;li&gt;Local Host (SSH Client) 에 Private Key 저장&lt;/li&gt;
-&lt;li&gt;Remote Host (SSH Server) 에 Public Key 등록&lt;/li&gt;
-&lt;li&gt;Local Host 가 Remote  Host 에 접속 요청을 하면서 Public Key 전달&lt;/li&gt;
-&lt;li&gt;Remote Host 는 Public Key 를 받아서 등록된 Public Key 인지 검사한 후 승인 또는 비승인&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;Key 생성&lt;/h2&gt;
-&lt;p&gt;먼저 Public Key 와 Private Key 를 생성한다. 리눅스에서는 아래와 같은 명령을 실행하면 된다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh-keygen -t rsa
-Generating public/private rsa key pair.
-Enter file in which to save the key &lt;span class="o"&gt;(&lt;/span&gt;/home/axl/.ssh/id_rsa&lt;span class="o"&gt;)&lt;/span&gt;: &amp;lt;&lt;span class="k"&gt;return&lt;/span&gt;&amp;gt;
-Enter passphrase &lt;span class="o"&gt;(&lt;/span&gt;empty &lt;span class="k"&gt;for&lt;/span&gt; no passphrase&lt;span class="o"&gt;)&lt;/span&gt;: &amp;lt;Type the passphrase&amp;gt;
-Enter same passphrase again: &amp;lt;Type the passphrase&amp;gt;
+&lt;p&gt;나머지들은 워낙 기본적인 것들이니 간단하게 언급만 하면, 현재 디렉터리의 파일 목록을 조회하고, &lt;code&gt;grep&lt;/code&gt; 으로 디렉터리만 뽑아내고, &lt;code&gt;awk&lt;/code&gt; 로 파일 이름만 뽑아내고, &lt;code&gt;for&lt;/code&gt; statement 를 사용해서 각 디렉터리마다 &lt;code&gt;du&lt;/code&gt; 명령을 사용한다.&lt;/p&gt;</content><category term="bash"></category><category term="linux"></category><category term="du"></category><category term="disk"></category></entry><entry><title>Linux Memory overcommit</title><link href="https://imjang57.github.io/garret/linux-memory-overcommit.html" rel="alternate"></link><published>2017-01-23T00:00:00+09:00</published><updated>2017-01-23T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-23:/garret/linux-memory-overcommit.html</id><summary type="html">&lt;p&gt;리눅스에서 새로운 프로세스가 실행될 때 메모리 할당하는 과정과 overcommit 설정에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux Memory and Over commit&lt;/h1&gt;
+&lt;p&gt;개발한 자바 프로그램을 리눅스에서 실행시키려고 하는데 특정 서버에서만 계속 아래와 같은 메시지를 출력하면서 실행이 되지 않았다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;There is insufficient memory for the Java Runtime Environment to continue.
+Native memory allocation (malloc) failed to allocate 4088 bytes for AllocateHeap
+An error report file with more information is saved as:
+/home/imjang57/hs_err_pid1234.log
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt; 을 실행하면 key file 이 저장될 위치와 passphrase 를 차례대로 묻는다. 저장될 위치는 기본값으로 &lt;code&gt;$HOME/.ssh&lt;/code&gt; 이다. 특별히 변경할 일이 없다면 그대로 엔터를 입력하여 기본값으로 사용하자. passphrase 는 비공개키를 생성하는데 사용될 문자열로 이 문자열을 암호화하여 키를 생성한다. 자동 로그인을 원한다면 생략해야 한다.&lt;/p&gt;
-&lt;p&gt;키가 정상적으로 생성되면 키가 생성된 곳에 아래와 같은 파일들을 볼 수 있다. 참고로 파일들은 SSH 를 사용할 때 보안에 매우 중요한 파일들이다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;drwx------  &lt;span class="m"&gt;2&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:54 .
-drwxr-xr-x &lt;span class="m"&gt;16&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;4096&lt;/span&gt; Mar  &lt;span class="m"&gt;1&lt;/span&gt; 06:02 ..
--rw-rw-r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;790&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 06:04 authorized_keys
--rw-------  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;1675&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:51 id_rsa
--rw-r--r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu  &lt;span class="m"&gt;395&lt;/span&gt; Feb &lt;span class="m"&gt;18&lt;/span&gt; 18:51 id_rsa.pub
--rw-r--r--  &lt;span class="m"&gt;1&lt;/span&gt; ubuntu ubuntu &lt;span class="m"&gt;2216&lt;/span&gt; Feb &lt;span class="m"&gt;19&lt;/span&gt; 18:34 known_hosts
+&lt;p&gt;잠시동안 삽질하다 보니 Linux 의 overcommit 설정때문이라는 것을 알았다.&lt;/p&gt;
+&lt;h2&gt;Linux Memory&lt;/h2&gt;
+&lt;p&gt;자세히 알아보기 전에 먼저 리눅스에서 프로세스가 실행될 때 어떻게 메모리가 할당되는지 얘기해보자.&lt;/p&gt;
+&lt;p&gt;리눅스 시스템은 가상 메모리(Virtual Memory)라는 오래된 개념으로 물리 메모리(Physical Memory)보다 많은 메모리를 사용할 수 있다. (물론 윈도우도 똑같다.) 프로세스는 각각 독립적인 주소 공간을 가지고 있고, 메모리는 Page 라는 최소 단위로 할당된다. 이들 독립적인 주소 공간들은 가상 메모리에 할당된다. 그리고 실제로 프로세스가 필요한 부분만 물리 메모리에 할당하는 Demand-Paging 이라는 방법으로 메모리를 사용한다.&lt;/p&gt;
+&lt;p&gt;물리 메모리를 넘어가는 메모리 공간을 저장하기 위해 Disk 의 특정 영역을 사용하게 되는데 이를 Swap 이라고 한다. 그리고 물리 메모리를 넘어가는 메모리 영역을 사용하기 위해 Disk 에 Page file 을 쓰고, 다시 메모리로 load 하는 작업들을 하게 된다. 이 작업들을 swap-in, swap-out 이라고 하고 Page 단위로 발생한다.&lt;/p&gt;
+&lt;p&gt;자세히 들어가면 Page Table, Page, Page-in/Page-out, Copy on Write, Page replacement algorithm 등등 알아야 할게 많으니 넘어가자. 나도 오래되서 정확하게 기억 안난다. ^^;; 궁금한 내용은 Operating System 공부를 하자.&lt;/p&gt;
+&lt;p&gt;참고로, 리눅스에서 Swap 을 사용하는 빈도를 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /proc/sys/vm/swappiness
+60
+$ sysctl vm.swappiness
+vm.swappiness &lt;span class="o"&gt;=&lt;/span&gt; 60
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;authorized_keys&lt;/code&gt; 파일은 없을수도 있다. &lt;code&gt;id_rsa&lt;/code&gt; 파일은 private key 이다. 매우 중요하므로 절대로 타인에게 노출되면 안된다. &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일은 public key 이다. 접속하려는 Remote Host 의 &lt;code&gt;authorized_keys&lt;/code&gt; 에 입력한다. &lt;code&gt;authorized_keys&lt;/code&gt; 파일은 Remote Host 의 &lt;code&gt;.ssh&lt;/code&gt; 디렉토리 아래에 위치하면서 &lt;code&gt;id_rsa.pub&lt;/code&gt; 키의 값을 저장한다.&lt;/p&gt;
-&lt;h2&gt;Remote Host 에 Public Key 등록&lt;/h2&gt;
-&lt;p&gt;이제 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일을 리모트 서버의 &lt;code&gt;$HOME/.ssh/authorized_keys&lt;/code&gt; 파일에 추가해줘야 한다. SSH Server의 &lt;code&gt;authorized_keys&lt;/code&gt; 의 내용이 SSH Client의 &lt;code&gt;id_rsa.pub&lt;/code&gt; 파일과 같아야 한다.&lt;/p&gt;
-&lt;p&gt;아래와 같이 SCP (Secure Copy) 를 이용하여 Public Key 를 Remote Host 에 복사한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;scp &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.ssh/id_rsa.pub root@server.net:id_rsa.pub
+&lt;p&gt;일반적으로 위의 내용처럼 60이 기본값으로 되어 있다. &lt;code&gt;vm.swappiness&lt;/code&gt; 는 swap 영역을 얼마나 사용할 지를 나타내는 값이다. 0으로 설정하면 swap 을 최대한 사용하지 않는다는 뜻이고 100이면 swap 을 최대한 사용한다는 뜻이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vm.swappiness&lt;/code&gt; 값 변경은 아래 명령을 실행하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sysctl vm.swappiness&lt;span class="o"&gt;=&lt;/span&gt;0
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &amp;gt; /proc/sys/vm/swappiness
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;그리고 Public Key 를 Remote Host 의 authorized_keys 에 추가한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat &lt;span class="nv"&gt;$HOME&lt;/span&gt;/id_rsa.pub &amp;gt;&amp;gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.ssh/authorized_keys
+&lt;p&gt;또는 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 에 &lt;code&gt;vm.swappiness=0&lt;/code&gt; 을 추가하면 된다.&lt;/p&gt;
+&lt;p&gt;현재 사용되고 있는 swap 현황을 알고 싶으면 다음과 같이 하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /proc/meminfo &lt;span class="p"&gt;|&lt;/span&gt; grep Swap
+SwapCached: &lt;span class="m"&gt;0&lt;/span&gt; kB
+SwapTotal: &lt;span class="m"&gt;0&lt;/span&gt; kB
+SwapFree: &lt;span class="m"&gt;0&lt;/span&gt; kB
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;SSH 접속&lt;/h2&gt;
-&lt;p&gt;이후에는 비밀번호 없이 바로 SSH 접속이 가능하다.&lt;/p&gt;
-&lt;p&gt;만약 Private Key 를 다른 곳에 저장했다면 아래와 같이 &lt;code&gt;-i&lt;/code&gt; 옵션을 사용하여 키를 지정할 수 있다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh root@server.net -i keyfile
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Remote Host 의 SSHD 설정&lt;/h2&gt;
-&lt;p&gt;Key 를 이용한 SSH 로그인을 사용하기 위해서는 Remote Host 의 SSHD 설정에서 RSA 키 인증을 사용하도록 설정해야 한다. 아래와 같은 내용이 있는지 SSHD 설정 파일 (&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;) 을 확인한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;RSAAuthentication yes
-#DSAAuthentication yes
-PubkeyAuthentication yes
-AuthorizedKeysFile .ssh/authorized_keys
-&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="ssh"></category><category term="key-gen"></category></entry><entry><title>SSH Brute force 막기</title><link href="https://imjang57.github.io/garret/defence-ssh-brute-force.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/defence-ssh-brute-force.html</id><summary type="html">&lt;p&gt;SSH Brute force 공격 시도를 막는 설정&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ssh brute force 막기&lt;/h1&gt;
-&lt;p&gt;AWS EC2 를 사용하고 있었는데 갑자기 인스턴스가 엄청나게 느려졌다. 확인해보니 SSH 연결 시도가 엄청나게 쌓이고 있었다. 인터넷에서 Source 주소를 입력해서 찾아보니 중국이라고 나오는데 그거는 뭐 알 수 없는 거고.. 어쨌든 Security Group 을 22번 포트에 대해 그냥 다 열어놨더니 이런 일이 발생했나보다. 그래도 진짜 공격 받아보긴 처음이네 ㅎㅎ..&lt;/p&gt;
-&lt;p&gt;어쨌뜬 그래서 이 글에 brute force 방식으로 SSH 비밀번호를 해킹하려는 시도를 차단하기 위한 설정을 남긴다. (물론 AWS 인스턴스는 Security Group 을 내 주소로만 SSH 허용하도록 바꿔서 문제없지만 나중에 필요하게 될지 모르니....)&lt;/p&gt;
-&lt;p&gt;brute force 공격이 들어오면 매번 로그인 시도때마다 SSH 서버의 Resource 가 소모되기 때문에 보안성이 좋은 비밀번호나 키를 사용하더라도 이를 방지해주는 것이 좋다.&lt;/p&gt;
-&lt;p&gt;ssh port 로 20초간 5회 이상 접속을 시도하면 10분간 접속을 차단하는 iptables rule 을 만들어 보자.&lt;/p&gt;
-&lt;p&gt;blacklist 와 ssh chain 생성:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -N blacklist
-# iptables -N ssh
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;INPUT chain 에서 state module 로 ssh port 에 접속이 시작되면 ssh chain 으로 보낸다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A INPUT -m state --state NEW -p tcp --dport ssh -j ssh
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;blacklist chain 에서는 recent module 로 "blacklist" 라는 목록에 접속 주소를 기록하고 접속을 거부한다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A blacklist -m recent --set --name blacklist
-# iptables -A blacklist -j REJECT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;ssh chain 은 다음과 같다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# iptables -A ssh -m recent --update --seconds 600 --hitcount 1 --name blacklist -j REJECT
-# iptables -A ssh -m recent --set --name ssh
-# iptables -A ssh -m recent --update --seconds 20 --hitcount 5 --name ssh -j blacklist
-# iptables -A ssh -j ACCEPT
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;이 ssh chain 은 다음과 같이 동작한다.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;접속 주소가 이미 blacklist 에 들어 있고 지난 10분간 1회 이상 접속이 있었으면 접속을 거부한다.&lt;/li&gt;
-&lt;li&gt;접속 주소를 "ssh" 목록이 기록한다.&lt;/li&gt;
-&lt;li&gt;접속 주소가 이미 "ssh" 목록에 있으면, 지난 20초간 5회 이상 접속이 있었으면 blacklist chain 으로 보낸다.&lt;/li&gt;
-&lt;li&gt;위의 3개가 다 통과하면 ssh 접속을 허락한다.&lt;/li&gt;
-&lt;/ol&gt;</content><category term="ssh"></category><category term="iptables"></category><category term="brute force"></category></entry><entry><title>iptables</title><link href="https://imjang57.github.io/garret/iptables.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/iptables.html</id><summary type="html">&lt;p&gt;iptables 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iptables&lt;/h1&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 리눅스에서 네트웍 방화벽으로 사용되는 도구이다. Source, Destination, Protocol, State 등으로 다양한 조건을 설정할 수 있다. 리눅스 호스트에서 제공되는 가장 기초적인 방화벽 도구이며, C언어로 작성된 packet filtering framework 인 &lt;a href="https://www.netfilter.org"&gt;netfilter&lt;/a&gt; 를 기반으로 동작한다. 사실은 iptables 가 netfilter 의 하위 프로젝트라고 볼 수도 있다. 보통 &lt;em&gt;netfilter/iptables&lt;/em&gt; 와 같이 함께 언급되기도 한다.&lt;/p&gt;
+&lt;h2&gt;Linux Memory Commit&lt;/h2&gt;
+&lt;p&gt;리눅스에서 프로세스가 실행될 때 Memory Commit 이라는 작업이 수행된다. &lt;code&gt;malloc()&lt;/code&gt; 등과 같은 시스템 콜(System call)을 사용하여 메모리 할당 요청을 할 때, 시스템 콜은 메모리 영역을 할당해서 주소를 리턴한다. 이때, 실제로 물리 메모리에 할당되는 것은 아니다. 단지 메모리 영역만 만들고 실제 사용될 때가 되어야 물리 메모리에 올라가게 된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fork()&lt;/code&gt; 등의 시스템 콜로 새로운 자식 프로세스를 생성할 때, 자식 프로세스는 부모 프로세스의 메모리 영역을 그대로 복사한다. 그래서 메모리를 많이 쓰는 프로세스에서 &lt;code&gt;fork()&lt;/code&gt; System call 을 사용하면 매우 많은 메모리가 필요하게 된다. 즉, &lt;code&gt;fork&lt;/code&gt; 한 후에 &lt;code&gt;exec&lt;/code&gt; 가 수행되기 전까지 실제로는 자식 프로세스에서 사용되지 않는 메모리들을 commit 하게 된다.(참고로, &lt;code&gt;fork&lt;/code&gt; 는 새로운 프로세스를 시작할 때 메모리 공간을 복사하지만 &lt;code&gt;exec&lt;/code&gt; 는 새로운 프로세스를 실행할 때 현재 메모리 공간을 덮어쓴다. 하지만 &lt;code&gt;exec&lt;/code&gt; 는 &lt;code&gt;exec&lt;/code&gt; 가 실행된 이후의 로직들은 실행되지 않고 사라지게 된다.)&lt;/p&gt;
+&lt;h2&gt;Linux overcommit&lt;/h2&gt;
+&lt;p&gt;리눅스에서는 가상 메모리로 인해 물리 메모리보다 많은 메모리를 사용할 수 있다. 그리고 overcommit 이라는 개념을 적용하여 이를 제어할 수 있게 한다. 리눅스는 새로운 프로세스가 실행될 때 overcommit 설정에 따라서 다음과 같은 행동들 중 하나를 선택한다.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="http://www.netfilter.org"&gt;netfilter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.netfilter.org/projects/iptables/index.html"&gt;iptables&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://git.netfilter.org/"&gt;netfilter git repository&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://git.netfilter.org/iptables/"&gt;iptables git repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;메모리가 부족하면 임의의 프로세스를 종료시켜서 메모리를 확보&lt;/li&gt;
+&lt;li&gt;메모리가 부족해도 일단 프로세스 실행&lt;/li&gt;
+&lt;li&gt;프로세스 실행을 중지하고 에러 발생&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;대부분의 리눅스 배포판에서 &lt;em&gt;iptables&lt;/em&gt; 는 기본적으로 제공된다. &lt;code&gt;iptables&lt;/code&gt; 명령으로 방화벽 정책 관련 작업을 수행할 수 있고 &lt;em&gt;iptables-service&lt;/em&gt; 패키지를 설치하면 Daemon 형태로 관리가 가능하다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용되는 정책(Rule)을 저장하기 위한 파일의 위치는 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 이다.&lt;/p&gt;
-&lt;p&gt;참고로, CentOS 7 부터는 &lt;em&gt;iptables&lt;/em&gt; 대신 &lt;a href="http://www.firewalld.org"&gt;firewalld&lt;/a&gt; 가 사용된다. 클라우드 환경에서의 조금 더 유연한 방화벽 관리를 위해 python 으로 만든 도구인데, 내부적으로는 &lt;em&gt;netfilter/iptables&lt;/em&gt; 를 사용한 front-end for the iptables 이다. 사용자 입장에서는 그저 명령어를 &lt;code&gt;iptables&lt;/code&gt; 대신에 &lt;code&gt;firewall-cmd&lt;/code&gt; 나 &lt;code&gt;firewall-config&lt;/code&gt; 를 사용하게 된 것이다. CentOS 7 에는 &lt;em&gt;iptables&lt;/em&gt; 자체는 있지만 &lt;em&gt;iptables-service&lt;/em&gt; 가 없어서 &lt;em&gt;firewalld&lt;/em&gt; 로 방화벽을 관리하도록 하는데, 사실 &lt;em&gt;filrewalld&lt;/em&gt; 를 끄고, &lt;em&gt;iptables-service&lt;/em&gt; 를 설치한 후 사용할 수도 있다(인터넷에 찾으면 많이 나온다). 하지만 이왕 바뀐거 나중에 다시 롤백되지 않을 가능성이 크니 익숙해지는게 좋을 테고 익숙해지면 &lt;em&gt;Redhat&lt;/em&gt; 이 &lt;em&gt;firewalld&lt;/em&gt; 를 선택한 이유도 알게 될 지도.. 어쨌든 이 글에선 &lt;em&gt;firewalld&lt;/em&gt; 에 대해선 다루지 않는다.&lt;/p&gt;
-&lt;p&gt;만약 iptables 가 설치되어 있지 않다면 아래와 같이 설치하자.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ yum install iptables iptables-service
+&lt;p&gt;리눅스가 임의로 프로세스를 종료시킬 때 사용되는 모듈을 &lt;strong&gt;OOM Killer(Out Of Memory Killer)&lt;/strong&gt; 라고 한다. OOM Killer 의 동작은 &lt;code&gt;vm.overcommit_memory&lt;/code&gt;, &lt;code&gt;vm.overcommit_ratio&lt;/code&gt; 설정에 의존적이다. &lt;code&gt;overcommit_memory&lt;/code&gt; 가 0이면 Heuristic method, 1 이면 overcommit 사용, 2는 overcommit_ratio 에 따라 제한하게 된다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0: 휴리스틱하게 overcommit 여부를 결정한다. 보통 기본설정이다. 메모리에 대한 요구가 발생했을 때 메모리 공간이 부족하면 실행 중인 프로세스를 강제로 종료시켜 메모리를 확보한다. Page Cache + Swap Memory + Slab Reclaimable 값을 기준으로 결정한다. kernel 의 소스에서 &lt;code&gt;mm/mmap.c&lt;/code&gt; 를 참고하자.&lt;/li&gt;
+&lt;li&gt;1: 항상 overcommit 을 허용한다. 메모리가 실제로 부족해도 충분한 메모리가 있는 것처럼 동작하게 된다.&lt;/li&gt;
+&lt;li&gt;2: overcommit 허용하지 않는다. 메모리가 부족할 경우 메모리 할당 요청한 프로세스를 실행하는게 아니라 에러를 발생시킨다. Swap size + (Ram size * &lt;code&gt;vm.overcommit_ratio&lt;/code&gt;/100) 의 공식에 따라 결정된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OOM Killer 에 의해 죽으면 아래와 같은 에러가 발생한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;May 8 11:18:50 mimul01 kernel: Out of memory: Kill process 3121
+(malloc_test) score 884 or sacrifice child
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;tables&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 4개의 &lt;em&gt;table&lt;/em&gt; 을 관리한다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;filter&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;nat&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;mangle&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;raw&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;보통 사용하는 &lt;em&gt;table&lt;/em&gt; 은 &lt;em&gt;filter&lt;/em&gt; 이다.&lt;/p&gt;
-&lt;h2&gt;chain&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;filter table&lt;/em&gt; 에는 &lt;em&gt;INPUT&lt;/em&gt;, &lt;em&gt;OUTPUT&lt;/em&gt;, &lt;em&gt;FORWARD&lt;/em&gt; 3개의 &lt;em&gt;chain&lt;/em&gt; 이 있다. 각 &lt;em&gt;chain&lt;/em&gt; 들은 Network Traffic (IP Packet) 에 대하여 정해진 규칙들을 수행한다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;INPUT&lt;/em&gt; : Host 를 향해 들어오는 Packet&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;OUTPUT&lt;/em&gt; : Host 에서 나가는 Packet&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;FORWARD&lt;/em&gt; : Host 가 Destination 이 아닌 Packet&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;INPUT chain&lt;/em&gt; 에 해당하는 Packet 을 허용(&lt;em&gt;ACCEPT&lt;/em&gt;), 거부(&lt;em&gt;REJECT&lt;/em&gt;), 또는 드랍(&lt;em&gt;DROP&lt;/em&gt;) 할 지 결정할 수 있다.&lt;/p&gt;
-&lt;h2&gt;match&lt;/h2&gt;
-&lt;p&gt;어떤 Packet 에 규칙을 적용할지 판단하기 위한 조건이다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--source&lt;/code&gt; (&lt;code&gt;-s&lt;/code&gt;) : Source IP address 또는 Network&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--destination&lt;/code&gt; (&lt;code&gt;-d&lt;/code&gt;) : Destination address 또는 Network&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--protocol&lt;/code&gt; (&lt;code&gt;-p&lt;/code&gt;) : Protocol&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--in-interface&lt;/code&gt; (&lt;code&gt;-i&lt;/code&gt;) : 입력 interface&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--out-interface&lt;/code&gt; (&lt;code&gt;-o&lt;/code&gt;) : 출력 interface&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--state&lt;/code&gt; : 연결 상태&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--string&lt;/code&gt; : Application Layer Data 의 Byte 순서&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--comment&lt;/code&gt; : Kernel memory 내의 규칙과 연계되는 최대 256 bytes 주석&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--syn&lt;/code&gt; (&lt;code&gt;-y&lt;/code&gt;) : SYN Packet 을 허용하지 않음&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--fragment&lt;/code&gt; (&lt;code&gt;-f&lt;/code&gt;) : 두 번째 이후의 조각에 대해서 규칙을 명시&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--table&lt;/code&gt; (&lt;code&gt;-t&lt;/code&gt;) : 처리될 table&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--jump&lt;/code&gt; (&lt;code&gt;-j&lt;/code&gt;) : 규칙에 맞는 Packet 을 어떻게 처리할 것인가를 명시&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--match&lt;/code&gt; (&lt;code&gt;-m&lt;/code&gt;) : 특정 module 과의 매치&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;target&lt;/h2&gt;
-&lt;p&gt;Packet 에 적용하려는 동작이다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;ACCEPT&lt;/em&gt; : Packet 을 받아들인다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;DROP&lt;/em&gt; : Packet 을 버린다. Packet 을 송신한 쪽은 아무런 응답도 받지 못한다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;REJECT&lt;/em&gt; : Packet 을 버리고 이와 동시에 적절한 응답 패킷(connection refused)을 전송한다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;LOG&lt;/em&gt; : Packet 을 syslog에 기록한다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;RETURN&lt;/em&gt; : 호출 체인 내에서 Packet 처리를 계속한다.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;연결 추적(Connection Tracking)&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 연결 추적(connection tracking)이라는 방법을 사용하여 내부 Network 상 서비스 연결 상태에 따라서 그 연결을 감시하고 제한할 수 있게 해준다. 연결 추적 방식은 연결 상태를 표에 저장하기 때문에, 다음과 같은 연결 상태에 따라서 시스템 관리자가 연결을 허용하거나 거부할 수 있다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;NEW&lt;/em&gt; : 새로운 Connection 을 요청하는 Packet, (예: &lt;em&gt;HTTP&lt;/em&gt; 요청)&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;ESTABLISHED&lt;/em&gt; : 기존 Connection 의 일부인 Packet&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;RELATED&lt;/em&gt; : 기존 Connection 에 속하지만 새로운 Connection 을 요청하는 Packet, 예를 들면 접속 port 가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 port 라도 사용 가능하다.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;INVALID&lt;/em&gt; : 연결 추적표에서 어디 Connection 에도 속하지 않은 Packet&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;상태에 기반(stateful)한 &lt;em&gt;iptables&lt;/em&gt; 연결 추적 기능은 어느 Network Protocol 에서나 사용 가능하다. &lt;em&gt;UDP&lt;/em&gt; 와 같이 상태를 저장하지 않는 (stateless) Protocol 에서도 사용할 수 있다.&lt;/p&gt;
-&lt;h2&gt;명령어(commond)&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용 가능한 명령들의 목록:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-A&lt;/code&gt; (&lt;code&gt;--append&lt;/code&gt;) : 새로운 규칙을 추가한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-D&lt;/code&gt; (&lt;code&gt;--delete&lt;/code&gt;) : 규칙을 삭제한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-C&lt;/code&gt; (&lt;code&gt;--check&lt;/code&gt;) : 패킷을 테스트한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-R&lt;/code&gt; (&lt;code&gt;--replace&lt;/code&gt;) : 새로운 규칙으로 교체한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-I&lt;/code&gt; (&lt;code&gt;--insert&lt;/code&gt;) : 새로운 규칙을 삽입한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; (&lt;code&gt;--list&lt;/code&gt;) : 규칙을 출력한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-F&lt;/code&gt; (&lt;code&gt;--flush&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 으로부터 규칙을 모두 삭제한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-Z&lt;/code&gt; (&lt;code&gt;--zero&lt;/code&gt;) : 모든 &lt;em&gt;chain&lt;/em&gt; 의 패킷과 바이트 카운터 값을 0으로 만든다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-N&lt;/code&gt; (&lt;code&gt;--new&lt;/code&gt;) : 새로운 &lt;em&gt;chain&lt;/em&gt; 을 만든다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-X&lt;/code&gt; (&lt;code&gt;--delete-chain&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 을 삭제한다.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-P&lt;/code&gt; (&lt;code&gt;--policy&lt;/code&gt;) : 기본정책을 변경한다.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;추가로 &lt;code&gt;-L&lt;/code&gt; 옵션 이용시 &lt;code&gt;-n&lt;/code&gt; (&lt;code&gt;--numeric&lt;/code&gt;) 옵션을 추가하면 address 와 port 를 더 편하게 볼 수 있다. (&lt;code&gt;iptables -nL&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;내용을 확인할 때 &lt;code&gt;--line-numbers&lt;/code&gt; 를 추가하면 각 Ruleset 들의 순서도 같이 확인할 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;-v&lt;/code&gt; (&lt;code&gt;--verbose&lt;/code&gt;) 옵션을 사용하면 더 다양한 정보를 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;추가 사용법은 &lt;code&gt;-h&lt;/code&gt; (&lt;code&gt;--help&lt;/code&gt;) 를 확인하자.&lt;/p&gt;
-&lt;h2&gt;기본 동작&lt;/h2&gt;
-&lt;p&gt;다음은 &lt;em&gt;iptables&lt;/em&gt; 의 기본 동작 과정이다.&lt;/p&gt;
-&lt;p&gt;패킷에 대한 동작은 위에서 부터 차례로 각 규칙에 대해 검사하고, 그 규칙과 일치하는 패킷에 대하여 타겟에 지정한 &lt;em&gt;ACCEPT&lt;/em&gt;, &lt;em&gt;DROP&lt;/em&gt; 등을 수행한다.&lt;/p&gt;
-&lt;p&gt;규칙이 일치하고 작업이 수행되면, 그 패킷은 해당 규칙의 결과에 따리 처리하고 체인에서 추가 규칙을 무시한다.&lt;/p&gt;
-&lt;p&gt;패킷이 체인의 모든 규칙과 매치하지 않아 규칙의 바닥에 도달하면 정해진 기본정책(policy)이 수행된다.&lt;/p&gt;
-&lt;p&gt;기본 정책은 policy &lt;em&gt;ACCEPT&lt;/em&gt;, policy &lt;em&gt;DROP&lt;/em&gt; 으로 설정할 수 있다.&lt;/p&gt;
-&lt;p&gt;일반적으로 기본정책은 모든 패킷에 대해 &lt;em&gt;DROP&lt;/em&gt; 을 설정하고 특별히 지정된 포트와 IP주소등에 대해 &lt;em&gt;ACCEPT&lt;/em&gt; 를 수행하게 만든다.&lt;/p&gt;
-&lt;h1&gt;iptables 사용하기&lt;/h1&gt;
-&lt;p&gt;iptables 적용 예:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;iptables -P INPUT ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본 정책을 &lt;em&gt;ACCEPT&lt;/em&gt; 로 설정&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -P INPUT DROP&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본정책을 &lt;em&gt;DROP&lt;/em&gt; 으로 설정&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -F&lt;/code&gt; : &lt;em&gt;Chain&lt;/em&gt; 에 정의된 모든 규칙을 삭제&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -nL&lt;/code&gt; : 현재 ruleset 설정 확인(address 와 port 는 숫자로 출력)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 localhost interface 인 Packet 은 모두 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -A INPUT -m state — state ESTABLISHED,RELATED -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 state module 의 state 가 &lt;em&gt;ESTABLISHED&lt;/em&gt;, &lt;em&gt;RELATED&lt;/em&gt; 인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iptables -A INPUT -p tcp -m tcp — dport 22 -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 Protocol 의 &lt;em&gt;TCP&lt;/em&gt; 이며 destination port 가 22번인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;service iptables save&lt;/code&gt; 명령을 실행하면 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에 &lt;em&gt;iptables&lt;/em&gt; 현재 설정이 저장된다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 규칙을 만들 때는 순서가 매우 중요하다. 예를 들어 만일 &lt;em&gt;chain&lt;/em&gt; 에서 local network 인 192.168.100.0/24 subnetwork 에서 들어오는 모든 packet 을 &lt;em&gt;DROP&lt;/em&gt; 하도록 지정한 후 (&lt;em&gt;DROP&lt;/em&gt; 하도록 지정된 subnetwork 에 포함되는) 192.168.100.13 에서 들어오는 packet 을 모두 허용하는 &lt;em&gt;chain&lt;/em&gt; (&lt;code&gt;-A&lt;/code&gt;)을 그 후에 추가하면 뒤에 추가된 추가 규칙이 무시된다. 먼저 192.168.100.13 을 허용하는 규칙을 설정한 후 subnet 을 &lt;em&gt;DROP&lt;/em&gt; 하는 규칙을 설정해야한다.&lt;/p&gt;
-&lt;p&gt;HTTP Web Server 를 용할 경우:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+&lt;p&gt;프로세스가 Commit 요청 가능한 크기는 &lt;code&gt;/proc/meminfo&lt;/code&gt; 의 내용으로 확인할 수 있다. CommitLimit 은 요청 가능한 크기의 최대값, Committed_AS 는 사용량을 나타낸다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /proc/meminfo &lt;span class="p"&gt;|&lt;/span&gt; grep Commit
+CommitLimit: &lt;span class="m"&gt;4030664&lt;/span&gt; kB
+Committed_AS: &lt;span class="m"&gt;67748&lt;/span&gt; kB
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;HTTPS:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p tcp -m multiport --dports 80,443 -j ACCEPT
+&lt;p&gt;Overcommit 설정은 제한된 메모리에서 보다 많은 프로세스를 띄우고 불필요한 메모리로 인한 공간 낭비를 줄일 수 있다는 장점이 있지만 OS 가 프로세스를 임의로 종료시켜 버릴 수 있다는 위험도 있다. 실제 운영에 사용되는 서버라면 매우 조심해야 할 상황이 발생할 수 있다.&lt;/p&gt;
+&lt;p&gt;현재 overcommit 설정 혹인은 다음과 같이 하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sysctl -a &lt;span class="p"&gt;|&lt;/span&gt; grep overcommit
+vm.overcommit_memory &lt;span class="o"&gt;=&lt;/span&gt; 0
+vm.overcommit_ratio &lt;span class="o"&gt;=&lt;/span&gt; 50
+vm.overcommit_kbytes &lt;span class="o"&gt;=&lt;/span&gt; 0
+vm.nr_overcommit_hugepages &lt;span class="o"&gt;=&lt;/span&gt; 0
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;MySQL (port 3306):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+&lt;p&gt;또는&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat /proc/sys/vm/overcommit_memory
+0
+cat /proc/sys/vm/overcommit_ratio
+50
+cat /proc/sys/vm/oom_kill_allocating_task
+0
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;FTP(passive mode):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 21 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT
-iptables -A INPUT -p tcp --dport 1024:65535 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 1024:65535 -j ACCEPT
+&lt;p&gt;overcommit 설정을 변경하려면 다음과 같이 하면 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sysctl vm.overcommit_memory&lt;span class="o"&gt;=&lt;/span&gt;1
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;NTP 시간동기화:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p udp --dport 123 -j ACCEPT
+&lt;p&gt;또는 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 에 아래 내용을 추가&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vm.overcommit_memory=1
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h1&gt;서버의 취약점을 차단하기 위한 iptables 설정 예&lt;/h1&gt;
-&lt;p&gt;NULL 패킷 차단: &lt;code&gt;iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;NULL 패킷은 정찰 패킷으로 서버설정의 약한 곳을 찾기위한 방법으로 사용된다.&lt;/p&gt;
-&lt;h1&gt;기타 사용법&lt;/h1&gt;
-&lt;p&gt;기타 &lt;em&gt;iptables&lt;/em&gt; 사용법에 대해 알아보자.&lt;/p&gt;
-&lt;h2&gt;iptables 수정&lt;/h2&gt;
-&lt;p&gt;등록된 &lt;em&gt;iptables&lt;/em&gt; 를 수정하는 방법은 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에서 직접 vi로 수정하거나 &lt;code&gt;iptables&lt;/code&gt; 명령어를 사용한다.&lt;/p&gt;
-&lt;p&gt;실행 순번을 확인하기: &lt;code&gt;iptables -nL --line-number&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;순번 3의 행을 수정(replace, &lt;code&gt;-R&lt;/code&gt;): &lt;code&gt;iptables -R INPUT 3 -p tcp --dport 2222 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;인터페이스 지정&lt;/h2&gt;
-&lt;p&gt;Network interface 를 지정하여 &lt;em&gt;iptables&lt;/em&gt; 를 적용할 수도 있다.&lt;/p&gt;
-&lt;p&gt;루프백 인터페이스에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;랜카드 지정에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i eth0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;h2&gt;IP 주소 지정&lt;/h2&gt;
-&lt;p&gt;IP address 를 지정하여 iptables 를 적용할 수도 있다.&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;신뢰할 만한 ip와 MAC주소에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -m mac — mac-source 00:50:80:FD:E6:32 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;포트 범위지정: &lt;code&gt;iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
-&lt;h1&gt;자동화 스크립트&lt;/h1&gt;
-&lt;p&gt;자주 방화벽 설정을 초기화하고 재설정해야 한다면 자동화 스크립트를 짜놓는게 좋다. 아래는 그에 대한 예이다.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="c1"&gt;# iptables 설정 자동화 스크립트&lt;/span&gt;
-&lt;span class="c1"&gt;# 입맛에 따라 수정해서 사용합시다.&lt;/span&gt;
-iptables -F
-&lt;span class="c1"&gt;# TCP 포트 22번을 SSH 접속을 위해 허용&lt;/span&gt;
-&lt;span class="c1"&gt;# 원격 접속을 위해 먼저 설정합니다&lt;/span&gt;
-iptables -A INPUT -p tcp -m tcp --dport &lt;span class="m"&gt;22&lt;/span&gt; -j ACCEPT
-&lt;span class="c1"&gt;# 기본 정책을 설정합니다&lt;/span&gt;
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
- iptables -P OUTPUT ACCEPT
-&lt;span class="c1"&gt;# localhost 접속 허용&lt;/span&gt;
-iptables -A INPUT -i lo -j ACCEPT
-&lt;span class="c1"&gt;# established and related 접속을 허용&lt;/span&gt;
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-&lt;span class="c1"&gt;# Apache 포트 80 허용&lt;/span&gt;
-iptables -A INPUT -p tcp --dport &lt;span class="m"&gt;80&lt;/span&gt; -j ACCEPT
-&lt;span class="c1"&gt;# 설정을 저장&lt;/span&gt;
-/sbin/service iptables save
-&lt;span class="c1"&gt;# 설정한 내용을 출력&lt;/span&gt;
-iptables -L -v
-위 내용을 입맛에 맞게 수정한 후에 저장&lt;span class="o"&gt;(&lt;/span&gt;myfirewall&lt;span class="o"&gt;)&lt;/span&gt;
-권한부여: chmod +x myfirewall
-실행: ./myfirewall
+&lt;h2&gt;Linux overcommit test&lt;/h2&gt;
+&lt;p&gt;참고로 overcommit 동작에 대해 테스트해보자.&lt;/p&gt;
+&lt;p&gt;다음 코드는 &lt;code&gt;malloc()&lt;/code&gt;만 하고 메모리에 쓰는 작업은 하지 않는 코드다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;while(1) {
+  block = (void *) malloc((double) GIGABYTE);
+  printf(&amp;quot;Allocated memory.\n&amp;quot;);
+  sleep(1);
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;그리고 다음 코드는 메모리에 쓰는 작업까지 한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;while(1) {
+  block = (void *) malloc((double) GIGABYTE);
+  memset(block, 1, GIGABYTE);
+  printf(&amp;quot;Allocated memory.\n&amp;quot;);
+  sleep(1);
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;적절하게 할당하는 메모리 값을 변경해가며 테스트해보자.&lt;/p&gt;
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;http://webdir.tistory.com/170&lt;/li&gt;
-&lt;/ul&gt;</content><category term="iptables"></category></entry><entry><title>Linux 에서 파일 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-file-management.html</id><summary type="html">&lt;p&gt;Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
+&lt;li&gt;Linux overcommit handling modes 에 대한 문서: https://www.kernel.org/doc/Documentation/vm/overcommit-accounting&lt;/li&gt;
+&lt;li&gt;vm.overcommit에 대한 짧은 이야기: https://brunch.co.kr/@alden/16&lt;/li&gt;
+&lt;/ul&gt;</content><category term="linux"></category><category term="memory"></category><category term="overcommit"></category></entry><entry><title>Linux Partition 관리 : fdisk</title><link href="https://imjang57.github.io/garret/linux-command-fdisk.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/linux-command-fdisk.html</id><summary type="html">&lt;p&gt;리눅스에서 fdisk 명령을 사용하여 파티션(Partition)을 관리하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;fdisk&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;fdisk&lt;/code&gt; 명령은 partition table 을 관리하는 명령이다. 즉, linux 의 disk partition 을 생성, 수정, 삭제할 수 있는 도구이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fdisk&lt;/code&gt; 실행파일의 위치는 &lt;code&gt;/sbin/fdisk&lt;/code&gt; 이다:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# which fdisk
+/sbin/fdisk
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;fdisk help:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# fdisk -h
+Usage:
+fdisk [options] &amp;lt;disk&amp;gt; change partition table
+fdisk [options] -l &amp;lt;disk&amp;gt; list partition table(s)
+fdisk -s &amp;lt;partition&amp;gt; give partition size(s) in blocks
+Options:
+-b &amp;lt;size&amp;gt; sector size (512, 1024, 2048 or 4096)
+-c switch off DOS-compatible mode
+-h print help
+-u &amp;lt;size&amp;gt; give sizes in sectors instead of cylinders
+-v print version
+-C &amp;lt;number&amp;gt; specify the number of cylinders
+-H &amp;lt;number&amp;gt; specify the number of heads
+-S &amp;lt;number&amp;gt; specify the number of sectors per track
+#
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Disk device name&lt;/h2&gt;
+&lt;p&gt;리눅스에서 디스크장치명은 IDE Disk 인지 SCSI Disk 인지에 따라서 장치명이 주어진다.&lt;/p&gt;
+&lt;p&gt;IDE Disk 인 경우:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda&lt;/code&gt; : 첫번째(a) IDE Disk (hd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hdb&lt;/code&gt; : 두번째(b) IDE Disk (hd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hdc&lt;/code&gt; : 세번째(c) IDE Disk (hd)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SCSI Disk 인 경우:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/dev/sda&lt;/code&gt; : 첫번째(a) SCSI Disk (sd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/sdb&lt;/code&gt; : 두번째(b) SCSI Disk (sd)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/sdc&lt;/code&gt; : 세번째(c) SCSI Disk (sd)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;그리고 디스크 내에서 파티션이 여러개 나누어진 경우 숫자가 붙어서 장치명이 주어진다:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda&lt;/code&gt; : 첫번째(a) IDE디스크 전체를 의미&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda1&lt;/code&gt; : 첫번째(a) IDE디스크 내의 첫번째 파티션&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/hda2&lt;/code&gt; : 첫번째(a) IDE디스크 내의 두번째 파티션&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;요약하면 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;hd 로 시작하면 IDE Disk, sd 로 시작하면 SCSI Disk&lt;/li&gt;
+&lt;li&gt;뒤에 알파벳이 붙으면 Disk 자체를 의미하고 Disk 는 a 부터 순서대로 Naming 이 이루어짐&lt;/li&gt;
+&lt;li&gt;뒤에 숫자가 붙으면 Disk 내의 partition 번호를 의미하고 Partition 은 1 부터 순서대로 Naming 이 이루어짐&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;fdisk&lt;/code&gt; 를 사용하여 현재 시스템의 디스크와 파티션을 확인하고 새로운 파티션을 추가해보자.&lt;/p&gt;
+&lt;h2&gt;디스크 및 파티션 확인하기&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;fisk -l&lt;/code&gt; 을 실행하면 현재 시스템의 모든 디스크 및 파티션 정보를 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# fdisk -l
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+#
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;위의 결과에서 Disk device name 이 &lt;code&gt;/dev/vda&lt;/code&gt; 로 되어 있는데 오픈스택 가상머신에서 테스트하여 virtual disk 로 디스크가 인식되어 있기 때문이다. 현재 하나의 디스크를 사용하고 있고, 디스크에 하나의 파티션이 사용되고 있음을 알 수 있다. 디스크 용량은 총 85.9 GB 인데, 현재 파티션이 생성된 것은 8225280 bytes 즉 약 8 GB 이다.&lt;/p&gt;
+&lt;h2&gt;새로운 파티션 추가하기&lt;/h2&gt;
+&lt;p&gt;특정 디스크에 대해 &lt;code&gt;fdisk&lt;/code&gt; 명령을 실행하여 파티션 설정을 하려면 &lt;code&gt;fdisk &amp;lt;device name&amp;gt;&lt;/code&gt; 을 실행한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# fdisk /dev/vda
+WARNING: DOS-compatible mode is deprecated. It’s strongly recommended to
+switch off the mode (command ‘c’) and change display units to
+sectors (command ‘u’).
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;m&lt;/code&gt; 을 입력하면 어떤 명령을 사용할 수 있는지 도움말을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): m
+Command action
+a toggle a bootable flag
+b edit bsd disklabel
+c toggle the dos compatibility flag
+d delete a partition
+l list known partition types
+m print this menu
+n add a new partition
+o create a new empty DOS partition table
+p print the partition table
+q quit without saving changes
+s create a new empty Sun disklabel
+t change a partition’s system id
+u change display/entry units
+v verify the partition table
+w write table to disk and exit
+x extra functionality (experts only)
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;p&lt;/code&gt; 를 입력하면 현재 디스크 파티션 상태를 확인할 수 있다. fdisk -l 을 실행한 결과가 같은 내용을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): p
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이제 &lt;code&gt;n&lt;/code&gt; 을 입력하여 새로운 파티션을 생성한다. primary partition 으로 생성하기 위해 &lt;code&gt;p&lt;/code&gt; 를 입력하고, 새로 생성되는 partition 은 2번째 partition 이므로 2 를 입력한다. 그리고 partition 의 크기를 지정하기 위해 First cylinder 와 Last cylinder 를 입력하는데 둘 모두 그냥 Enter 를 입력하여 default 로 설정한다. 그리고 마지막으로 파티션 생성 후 &lt;code&gt;p&lt;/code&gt; 를 입력하여 새로운 partition 정보를 확인한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): n
+Command action
+e extended
+p primary partition (1–4)
+p
+Partition number (1–4): 2
+First cylinder (1045–10443, default 1045):
+Using default value 1045
+Last cylinder, +cylinders or +size{K,M,G} (1045–10443, default 10443):
+Using default value 10443
+Command (m for help): p
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+/dev/vda2            1045       10443    75494789+  83  Linux
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;정상적으로 파티션 정보가 생성된 것을 확인한 후 &lt;code&gt;fdisk&lt;/code&gt; 를 나오기 위해 &lt;code&gt;w&lt;/code&gt; 를 입력한다. &lt;code&gt;fdisk&lt;/code&gt; 를 종료할 때 &lt;code&gt;w&lt;/code&gt; 와 &lt;code&gt;q&lt;/code&gt; 2가지 명령을 사용할 수 있는데 &lt;code&gt;w&lt;/code&gt; 는 변경된 내용을 실제 시스템에 적용한 후 종료하는 것이고 &lt;code&gt;q&lt;/code&gt; 는 작업한 내용을 적용하지 않고 종료하는 것이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+#
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Partition Type&lt;/h2&gt;
+&lt;p&gt;fdisk prompt 에서 &lt;code&gt;l&lt;/code&gt; 을 입력하면 Partition type 들의 목록과 Partition Type 의 ID 를 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;Swap partition 은 82, Linux partition 은 83, FAT 는 b 또는 c, FreeBSD partition 은 a5 를 ID 로 사용한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): l
+0  Empty           24  NEC DOS         81  Minix / old Lin bf  Solaris        
+1  FAT12           39  Plan 9          82  Linux swap / So c1  DRDOS/sec (FAT-
+2  XENIX root      3c  PartitionMagic  83  Linux           c4  DRDOS/sec (FAT-
+3  XENIX usr       40  Venix 80286     84  OS/2 hidden C:  c6  DRDOS/sec (FAT-
+4  FAT16 &amp;lt;32M      41  PPC PReP Boot   85  Linux extended  c7  Syrinx         
+5  Extended        42  SFS             86  NTFS volume set da  Non-FS data    
+6  FAT16           4d  QNX4.x          87  NTFS volume set db  CP/M / CTOS / .
+7  HPFS/NTFS       4e  QNX4.x 2nd part 88  Linux plaintext de  Dell Utility   
+8  AIX             4f  QNX4.x 3rd part 8e  Linux LVM       df  BootIt         
+9  AIX bootable    50  OnTrack DM      93  Amoeba          e1  DOS access     
+a  OS/2 Boot Manag 51  OnTrack DM6 Aux 94  Amoeba BBT      e3  DOS R/O        
+b  W95 FAT32       52  CP/M            9f  BSD/OS          e4  SpeedStor      
+c  W95 FAT32 (LBA) 53  OnTrack DM6 Aux a0  IBM Thinkpad hi eb  BeOS fs        
+e  W95 FAT16 (LBA) 54  OnTrackDM6      a5  FreeBSD         ee  GPT            
+f  W95 Ext&amp;#39;d (LBA) 55  EZ-Drive        a6  OpenBSD         ef  EFI (FAT-12/16/
+10  OPUS            56  Golden Bow      a7  NeXTSTEP        f0  Linux/PA-RISC b
+11  Hidden FAT12    5c  Priam Edisk     a8  Darwin UFS      f1  SpeedStor      
+12  Compaq diagnost 61  SpeedStor       a9  NetBSD          f4  SpeedStor      
+14  Hidden FAT16 &amp;lt;3 63  GNU HURD or Sys ab  Darwin boot     f2  DOS secondary  
+16  Hidden FAT16    64  Novell Netware  af  HFS / HFS+      fb  VMware VMFS    
+17  Hidden HPFS/NTF 65  Novell Netware  b7  BSDI fs         fc  VMware VMKCORE
+18  AST SmartSleep  70  DiskSecure Mult b8  BSDI swap       fd  Linux raid auto
+1b  Hidden W95 FAT3 75  PC/IX           bb  Boot Wizard hid fe  LANstep        
+1c  Hidden W95 FAT3 80  Old Minix       be  Solaris boot    ff  BBT            
+1e  Hidden W95 FAT1
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 파티션을 Swap 용으로 사용하고 싶다면 해당 파티션의 타입을 82 로 지정해준다. 만약 3번 파티션을 Swap 으로 사용하고 싶다면 아래와 같이 차례대로 입력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): t
+Partition number (1–4): 3
+Hex code (type L to list codes): 82
+Changed system type of partition 3 to 82 (Linux swap)
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Boot partition 지정하기&lt;/h2&gt;
+&lt;p&gt;Boot flag 를 설정하여 booting 가능한 파티션을 지정할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): a
+Partition number (1–4): 1
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;파티션 정보를 확인하면 아래와 같이 1번 파티션에 Boot 항목이 설정되어 있음을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): p
+Disk /dev/vda: 85.9 GB, 85899345920 bytes
+255 heads, 63 sectors/track, 10443 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005360e
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        1045     8387584   83  Linux
+/dev/vda2            1045       10443    75494789+  83  Linux
+Command (m for help):
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;파티션 삭제하기&lt;/h2&gt;
+&lt;p&gt;파티션을 삭제하려면 &lt;code&gt;d&lt;/code&gt; 를 입력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Command (m for help): d
+Partition number (1–4): 2
+Command (m for help): w
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+#
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="disk"></category><category term="partition"></category><category term="fdisk"></category></entry><entry><title>Linux에서 hostname 관리</title><link href="https://imjang57.github.io/garret/linux-hostname-management.html" rel="alternate"></link><published>2017-01-18T00:00:00+09:00</published><updated>2017-01-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-18:/garret/linux-hostname-management.html</id><summary type="html">&lt;p&gt;Linux에서 호스트명(hostname)을 확인 및 변경하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;리눅스(Linux) 호스트명(Hostname) 관리&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Target : CentOS, Ubuntu&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;호스트명 조회&lt;/h2&gt;
+&lt;p&gt;명령어를 실행해서 현재 호스트명 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ hostname
+younghotestserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Redhat 리눅스에서 호스트명이 저장된 파일 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/sysconfig/network &lt;span class="p"&gt;|&lt;/span&gt; grep HOSTNAME
+younghotestserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ubuntu 리눅스에서 호스트명이 저장된 파일 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/hostname
+younghotestserver
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;호스트명 변경&lt;/h2&gt;
+&lt;p&gt;리눅스 호스트명 변경 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo hostname newhostname
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;또는&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo &lt;span class="nb"&gt;echo&lt;/span&gt; newhostname &amp;gt; /proc/sys/kernel/hostname
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이 방법은 리눅스가 재부팅될 경우 다시 이전 설정으로 되돌아 간다. 재부팅 후에도 유지되게 하려면 다음과 같이 한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Redhat 리눅스 : &lt;code&gt;/etc/sysconfig/network&lt;/code&gt; 파일에서 HOSTNAME=호스트명 추가 또는 변경&lt;/li&gt;
+&lt;li&gt;Ubuntu 리눅스 : &lt;code&gt;/etc/hostname&lt;/code&gt; 파일에서 호스트명 변경. 참고로 이 파일은 파일 내용 전체가 호스트명이다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;호스트명을 변경하면 &lt;code&gt;/etc/hosts&lt;/code&gt; 파일도 같이 체크해주자. 이 파일은 IP 주소와 호스트명을 매핑하기 위한 정보가 포함되어 있다. 자기 자신을 가리키는 정보도 포함되어 있으므로 같이 수정해주는 것이 좋다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/hosts&lt;/code&gt; 파일의 내용 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;127.0.0.1    localhost    newhostname
+::1          localhost    newhostname
+&lt;/pre&gt;&lt;/div&gt;</content><category term="bash"></category><category term="linux"></category><category term="du"></category><category term="disk"></category></entry><entry><title>Linux lsof command</title><link href="https://imjang57.github.io/garret/linux-command-lsof.html" rel="alternate"></link><published>2017-01-12T00:00:00+09:00</published><updated>2017-01-12T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-12:/garret/linux-command-lsof.html</id><summary type="html">&lt;p&gt;lsof 명령어에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;lsof&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;lsof&lt;/code&gt; 는 "list open files"의 약자로 시스템에서 열린 파일 목록을 알려주고 사용하는 프로세스, 디바이스 정보, 파일의 종류등 상세한 정보를 출력해주는 명령어(Command)이다.&lt;/p&gt;
+&lt;p&gt;리눅스와 유닉스는 추상화된 파일 시스템(VFS - Virtual File System)을 사용하므로 일반 파일, 디렉터리, 네트워크 소켓, 라이브러리, 심볼릭 링크 등도 모두 파일로 처리되며 &lt;code&gt;lsof&lt;/code&gt; 에서 상세한 정보를 확인할 수 있다.&lt;/p&gt;
+&lt;h2&gt;모든 열린 파일 출력&lt;/h2&gt;
+&lt;p&gt;옵션 없이 &lt;code&gt;lsof&lt;/code&gt; 명령을 실행하면 모든 열린 파일 정보를 출력한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;컬럼별 의미는 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;COMMAND&lt;/code&gt; : 실행한 명령어&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PID&lt;/code&gt; : process id&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;USER&lt;/code&gt; : 실행한 사용자&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FD&lt;/code&gt; : File Descriptor, 파일의 종류. &lt;ol&gt;
+&lt;li&gt;&lt;code&gt;cwd&lt;/code&gt; : current working directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rtd&lt;/code&gt; : root directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mem&lt;/code&gt; : memory-mapped file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;txt&lt;/code&gt; : program text (code and data);&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TYPE&lt;/code&gt; : 파일 종류&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;DIR&lt;/code&gt; : 디렉터리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CHR&lt;/code&gt; :  character special file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;REG&lt;/code&gt; : regular file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unix&lt;/code&gt; : 유닉스 도메인 소켓 (MySQL 등이 사용하는 소켓으로 로컬 프로세스에서만 사용 가능하며 TCP/UDP 보다 속도가 매우 빠름)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DEVICE&lt;/code&gt; : 장치 번호&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SIZE/OFF&lt;/code&gt;: 파일의 크기나 오프셋&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NODE&lt;/code&gt;: 노드 번호&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NAME&lt;/code&gt;:  파일명&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;특정 사용자에 의해 열린 파일 출력&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;-u&lt;/code&gt; 옵션으로 사용자를 지정할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -u myuser
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;^&lt;/code&gt;를 추가하면 특정 사용자는 제외할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -u ^myuser
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;동시에 사용할 수도 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -u myuser -u ^root -u ^daemon
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;특정 프로세스가 오픈한 파일 확인&lt;/h2&gt;
+&lt;p&gt;프로세스(Process)의 PID로 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -p 1234
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 파일을 사용하는 프로세스 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof /var/log/httpd/access_log
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 디렉터리 내 열린 파일 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof +D /tmp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 포트를 사용하는 프로세스 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i TCP:22
+$ lsof -i TCP:22-80
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;특정 명령어가 사용하는 포트 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -c httpd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Service Name 대신 port 번호 확인&lt;/h2&gt;
+&lt;p&gt;IANA 에 등록한 well known 포트는 &lt;code&gt;/etc/services&lt;/code&gt; 파일에 지정되어 있으므로 서비스를 파악하기 용이하다. 하지만 자체 개발한 서비스가 &lt;code&gt;/etc/services&lt;/code&gt; 파일에 등록된 포트를 사용할 경우에는 서비스 이름보다 포트 번호로 표시하는 게 낫다. &lt;code&gt;-P&lt;/code&gt; 옵션을 사용하면 서비스 이름대신 포트 번호로 표시해 준다.&lt;/p&gt;
+&lt;p&gt;예로 java 로 서비스하고 있는 모든 listen 하는 포트를 표시하려면 아래 명령을 실행한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i TCP -P &lt;span class="p"&gt;|&lt;/span&gt; grep java &lt;span class="p"&gt;|&lt;/span&gt; grep LISTEN
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;IPv4 또는 IPv6 포트만 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i 4
+$ lsof -i 6
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;열려 있는 모든 네트워크 포트 확인 :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsof -i
+$ lsof -i TCP
+$ lsof -i UDP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;특정 사용자가 오픈한 모든 프로세스 중지&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;-t&lt;/code&gt; 옵션은 자세한 정보를 출력하지 않고 pid 정보만 출력한다. 다음 명령은 imjang57 사용자로 구동한 프로세스의 id 를 리턴한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;lsof -t -u imjang57
+13324
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;이를 응용하여 &lt;code&gt;kill&lt;/code&gt; 명령어에 pid 만 전달할 수 있으므로 아래와 같이 사용하면 imjang57 사용자의 모든 프로세스를 중지하게 된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;kill -KILL $(lsof -t -u imjang57
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="lsof"></category></entry><entry><title>Linux 에서 파일 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-file-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-file-management.html</id><summary type="html">&lt;p&gt;Linux 에서 파일 관리일 위한 명령어들(ls, lsof, chown, chmod, mv, cp, rm, rmdir, mkdir, fuser, ln, file, diff, patch, cat, tail, head, etc)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
 &lt;p&gt;Linux 에서 파일 목록 확인, 파일 내용 확인, 사용 중인 파일 확인, 파일 정보 변경, 파일 비교, 패치 등을 위한 명령어들을 정리한 글이다.&lt;/p&gt;
 &lt;p&gt;리눅스에서는 모든 것이 파일로 관리된다. 일반적으로 알고 있는 파일 외에 console, socket, device 등도 모두 파일이다. 그래서 리눅스에서 모든 인터페이스는 File Descriptor 를 기반으로 하고 모든 입력과 출력은 File Descriptor 를 통해 이루어진다.&lt;/p&gt;
 &lt;h1&gt;파일 목록 조회&lt;/h1&gt;
@@ -517,7 +733,7 @@ sudo: no valid shudders sources found, quitting
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;위 명령으로 &lt;code&gt;/etc/sudoers&lt;/code&gt; 파일을 수정하면 root 가 비활성화된 Ubuntu에서도 해결가능하다.&lt;/p&gt;</content><category term="linux"></category><category term="file"></category></entry><entry><title>Linux 에서 사용자 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-user-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-user-management.html</id><summary type="html">&lt;p&gt;Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
+&lt;p&gt;위 명령으로 &lt;code&gt;/etc/sudoers&lt;/code&gt; 파일을 수정하면 root 가 비활성화된 Ubuntu에서도 해결가능하다.&lt;/p&gt;</content><category term="linux"></category><category term="permission"></category></entry><entry><title>Linux 에서 사용자 관리를 위한 명령어들</title><link href="https://imjang57.github.io/garret/linux-command-for-user-management.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-05-08T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-for-user-management.html</id><summary type="html">&lt;p&gt;Linux 에서 사용자 관리를 위한 명령어들(useradd, userdel, usermod, groupadd, groupdel, passwd, who, w, whoami, last, lastlog)&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux 에서 사용자 관리를 위한 명령어들&lt;/h1&gt;
 &lt;p&gt;Linux 에서 사용자 추가, 사용자 정보 변경, 사용자 삭제, 그룹 추가, 그룹 삭제, 로그인한 사용자 정보 확인, 로그인 내역 확인 등을 위한 명령어들을 정리한 글이다.&lt;/p&gt;
 &lt;h1&gt;Login message&lt;/h1&gt;
 &lt;p&gt;각 명령어들에 대해 알아보기 전에 리눅스에 로그인 하면 여러 메시지들이 출력되는 시스템들이 있다. 시스템마다 내용이 다르게 출력되는데 이는 아래의 2가지 파일을 이용해서 만든 것이다. 참고용으로 알고 가자.&lt;/p&gt;
@@ -651,4 +867,223 @@ ENCRYPT_METHOD SHA512
 &lt;li&gt;&lt;code&gt;/etc/gshadow&lt;/code&gt; : Secure group account information&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/etc/login.defs&lt;/code&gt; : Shadow password suite configuration&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/etc/skel&lt;/code&gt; : Directory containing default files.&lt;/li&gt;
-&lt;/ul&gt;</content><category term="linux"></category><category term="user"></category></entry></feed>
+&lt;/ul&gt;</content><category term="linux"></category><category term="user"></category></entry><entry><title>iptables</title><link href="https://imjang57.github.io/garret/linux-command-iptables.html" rel="alternate"></link><published>2017-01-01T00:00:00+09:00</published><updated>2017-01-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-01-01:/garret/linux-command-iptables.html</id><summary type="html">&lt;p&gt;iptables 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iptables&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 리눅스에서 네트웍 방화벽으로 사용되는 도구이다. Source, Destination, Protocol, State 등으로 다양한 조건을 설정할 수 있다. 리눅스 호스트에서 제공되는 가장 기초적인 방화벽 도구이며, C언어로 작성된 packet filtering framework 인 &lt;a href="https://www.netfilter.org"&gt;netfilter&lt;/a&gt; 를 기반으로 동작한다. 사실은 iptables 가 netfilter 의 하위 프로젝트라고 볼 수도 있다. 보통 &lt;em&gt;netfilter/iptables&lt;/em&gt; 와 같이 함께 언급되기도 한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.netfilter.org"&gt;netfilter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.netfilter.org/projects/iptables/index.html"&gt;iptables&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://git.netfilter.org/"&gt;netfilter git repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://git.netfilter.org/iptables/"&gt;iptables git repository&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;대부분의 리눅스 배포판에서 &lt;em&gt;iptables&lt;/em&gt; 는 기본적으로 제공된다. &lt;code&gt;iptables&lt;/code&gt; 명령으로 방화벽 정책 관련 작업을 수행할 수 있고 &lt;em&gt;iptables-service&lt;/em&gt; 패키지를 설치하면 Daemon 형태로 관리가 가능하다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용되는 정책(Rule)을 저장하기 위한 파일의 위치는 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;p&gt;참고로, CentOS 7 부터는 &lt;em&gt;iptables&lt;/em&gt; 대신 &lt;a href="http://www.firewalld.org"&gt;firewalld&lt;/a&gt; 가 사용된다. 클라우드 환경에서의 조금 더 유연한 방화벽 관리를 위해 python 으로 만든 도구인데, 내부적으로는 &lt;em&gt;netfilter/iptables&lt;/em&gt; 를 사용한 front-end for the iptables 이다. 사용자 입장에서는 그저 명령어를 &lt;code&gt;iptables&lt;/code&gt; 대신에 &lt;code&gt;firewall-cmd&lt;/code&gt; 나 &lt;code&gt;firewall-config&lt;/code&gt; 를 사용하게 된 것이다. CentOS 7 에는 &lt;em&gt;iptables&lt;/em&gt; 자체는 있지만 &lt;em&gt;iptables-service&lt;/em&gt; 가 없어서 &lt;em&gt;firewalld&lt;/em&gt; 로 방화벽을 관리하도록 하는데, 사실 &lt;em&gt;filrewalld&lt;/em&gt; 를 끄고, &lt;em&gt;iptables-service&lt;/em&gt; 를 설치한 후 사용할 수도 있다(인터넷에 찾으면 많이 나온다). 하지만 이왕 바뀐거 나중에 다시 롤백되지 않을 가능성이 크니 익숙해지는게 좋을 테고 익숙해지면 &lt;em&gt;Redhat&lt;/em&gt; 이 &lt;em&gt;firewalld&lt;/em&gt; 를 선택한 이유도 알게 될 지도.. 어쨌든 이 글에선 &lt;em&gt;firewalld&lt;/em&gt; 에 대해선 다루지 않는다.&lt;/p&gt;
+&lt;p&gt;만약 iptables 가 설치되어 있지 않다면 아래와 같이 설치하자.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ yum install iptables iptables-service
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;tables&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 4개의 &lt;em&gt;table&lt;/em&gt; 을 관리한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;filter&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;nat&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;mangle&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;raw&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;보통 사용하는 &lt;em&gt;table&lt;/em&gt; 은 &lt;em&gt;filter&lt;/em&gt; 이다.&lt;/p&gt;
+&lt;h2&gt;chain&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;filter table&lt;/em&gt; 에는 &lt;em&gt;INPUT&lt;/em&gt;, &lt;em&gt;OUTPUT&lt;/em&gt;, &lt;em&gt;FORWARD&lt;/em&gt; 3개의 &lt;em&gt;chain&lt;/em&gt; 이 있다. 각 &lt;em&gt;chain&lt;/em&gt; 들은 Network Traffic (IP Packet) 에 대하여 정해진 규칙들을 수행한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;INPUT&lt;/em&gt; : Host 를 향해 들어오는 Packet&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;OUTPUT&lt;/em&gt; : Host 에서 나가는 Packet&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;FORWARD&lt;/em&gt; : Host 가 Destination 이 아닌 Packet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;INPUT chain&lt;/em&gt; 에 해당하는 Packet 을 허용(&lt;em&gt;ACCEPT&lt;/em&gt;), 거부(&lt;em&gt;REJECT&lt;/em&gt;), 또는 드랍(&lt;em&gt;DROP&lt;/em&gt;) 할 지 결정할 수 있다.&lt;/p&gt;
+&lt;h2&gt;match&lt;/h2&gt;
+&lt;p&gt;어떤 Packet 에 규칙을 적용할지 판단하기 위한 조건이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--source&lt;/code&gt; (&lt;code&gt;-s&lt;/code&gt;) : Source IP address 또는 Network&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--destination&lt;/code&gt; (&lt;code&gt;-d&lt;/code&gt;) : Destination address 또는 Network&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--protocol&lt;/code&gt; (&lt;code&gt;-p&lt;/code&gt;) : Protocol&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--in-interface&lt;/code&gt; (&lt;code&gt;-i&lt;/code&gt;) : 입력 interface&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--out-interface&lt;/code&gt; (&lt;code&gt;-o&lt;/code&gt;) : 출력 interface&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--state&lt;/code&gt; : 연결 상태&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--string&lt;/code&gt; : Application Layer Data 의 Byte 순서&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--comment&lt;/code&gt; : Kernel memory 내의 규칙과 연계되는 최대 256 bytes 주석&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--syn&lt;/code&gt; (&lt;code&gt;-y&lt;/code&gt;) : SYN Packet 을 허용하지 않음&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--fragment&lt;/code&gt; (&lt;code&gt;-f&lt;/code&gt;) : 두 번째 이후의 조각에 대해서 규칙을 명시&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--table&lt;/code&gt; (&lt;code&gt;-t&lt;/code&gt;) : 처리될 table&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--jump&lt;/code&gt; (&lt;code&gt;-j&lt;/code&gt;) : 규칙에 맞는 Packet 을 어떻게 처리할 것인가를 명시&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--match&lt;/code&gt; (&lt;code&gt;-m&lt;/code&gt;) : 특정 module 과의 매치&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;target&lt;/h2&gt;
+&lt;p&gt;Packet 에 적용하려는 동작이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;ACCEPT&lt;/em&gt; : Packet 을 받아들인다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;DROP&lt;/em&gt; : Packet 을 버린다. Packet 을 송신한 쪽은 아무런 응답도 받지 못한다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;REJECT&lt;/em&gt; : Packet 을 버리고 이와 동시에 적절한 응답 패킷(connection refused)을 전송한다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;LOG&lt;/em&gt; : Packet 을 syslog에 기록한다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;RETURN&lt;/em&gt; : 호출 체인 내에서 Packet 처리를 계속한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;연결 추적(Connection Tracking)&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 는 연결 추적(connection tracking)이라는 방법을 사용하여 내부 Network 상 서비스 연결 상태에 따라서 그 연결을 감시하고 제한할 수 있게 해준다. 연결 추적 방식은 연결 상태를 표에 저장하기 때문에, 다음과 같은 연결 상태에 따라서 시스템 관리자가 연결을 허용하거나 거부할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;NEW&lt;/em&gt; : 새로운 Connection 을 요청하는 Packet, (예: &lt;em&gt;HTTP&lt;/em&gt; 요청)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;ESTABLISHED&lt;/em&gt; : 기존 Connection 의 일부인 Packet&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;RELATED&lt;/em&gt; : 기존 Connection 에 속하지만 새로운 Connection 을 요청하는 Packet, 예를 들면 접속 port 가 20인 수동 FTP의 경우 전송 포트는 사용되지 않은 1024 이상의 어느 port 라도 사용 가능하다.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;INVALID&lt;/em&gt; : 연결 추적표에서 어디 Connection 에도 속하지 않은 Packet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;상태에 기반(stateful)한 &lt;em&gt;iptables&lt;/em&gt; 연결 추적 기능은 어느 Network Protocol 에서나 사용 가능하다. &lt;em&gt;UDP&lt;/em&gt; 와 같이 상태를 저장하지 않는 (stateless) Protocol 에서도 사용할 수 있다.&lt;/p&gt;
+&lt;h2&gt;명령어(commond)&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 에서 사용 가능한 명령들의 목록:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt; (&lt;code&gt;--append&lt;/code&gt;) : 새로운 규칙을 추가한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-D&lt;/code&gt; (&lt;code&gt;--delete&lt;/code&gt;) : 규칙을 삭제한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-C&lt;/code&gt; (&lt;code&gt;--check&lt;/code&gt;) : 패킷을 테스트한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-R&lt;/code&gt; (&lt;code&gt;--replace&lt;/code&gt;) : 새로운 규칙으로 교체한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-I&lt;/code&gt; (&lt;code&gt;--insert&lt;/code&gt;) : 새로운 규칙을 삽입한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L&lt;/code&gt; (&lt;code&gt;--list&lt;/code&gt;) : 규칙을 출력한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-F&lt;/code&gt; (&lt;code&gt;--flush&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 으로부터 규칙을 모두 삭제한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-Z&lt;/code&gt; (&lt;code&gt;--zero&lt;/code&gt;) : 모든 &lt;em&gt;chain&lt;/em&gt; 의 패킷과 바이트 카운터 값을 0으로 만든다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-N&lt;/code&gt; (&lt;code&gt;--new&lt;/code&gt;) : 새로운 &lt;em&gt;chain&lt;/em&gt; 을 만든다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-X&lt;/code&gt; (&lt;code&gt;--delete-chain&lt;/code&gt;) : &lt;em&gt;chain&lt;/em&gt; 을 삭제한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-P&lt;/code&gt; (&lt;code&gt;--policy&lt;/code&gt;) : 기본정책을 변경한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;추가로 &lt;code&gt;-L&lt;/code&gt; 옵션 이용시 &lt;code&gt;-n&lt;/code&gt; (&lt;code&gt;--numeric&lt;/code&gt;) 옵션을 추가하면 address 와 port 를 더 편하게 볼 수 있다. (&lt;code&gt;iptables -nL&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;내용을 확인할 때 &lt;code&gt;--line-numbers&lt;/code&gt; 를 추가하면 각 Ruleset 들의 순서도 같이 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;-v&lt;/code&gt; (&lt;code&gt;--verbose&lt;/code&gt;) 옵션을 사용하면 더 다양한 정보를 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;추가 사용법은 &lt;code&gt;-h&lt;/code&gt; (&lt;code&gt;--help&lt;/code&gt;) 를 확인하자.&lt;/p&gt;
+&lt;h2&gt;기본 동작&lt;/h2&gt;
+&lt;p&gt;다음은 &lt;em&gt;iptables&lt;/em&gt; 의 기본 동작 과정이다.&lt;/p&gt;
+&lt;p&gt;패킷에 대한 동작은 위에서 부터 차례로 각 규칙에 대해 검사하고, 그 규칙과 일치하는 패킷에 대하여 타겟에 지정한 &lt;em&gt;ACCEPT&lt;/em&gt;, &lt;em&gt;DROP&lt;/em&gt; 등을 수행한다.&lt;/p&gt;
+&lt;p&gt;규칙이 일치하고 작업이 수행되면, 그 패킷은 해당 규칙의 결과에 따리 처리하고 체인에서 추가 규칙을 무시한다.&lt;/p&gt;
+&lt;p&gt;패킷이 체인의 모든 규칙과 매치하지 않아 규칙의 바닥에 도달하면 정해진 기본정책(policy)이 수행된다.&lt;/p&gt;
+&lt;p&gt;기본 정책은 policy &lt;em&gt;ACCEPT&lt;/em&gt;, policy &lt;em&gt;DROP&lt;/em&gt; 으로 설정할 수 있다.&lt;/p&gt;
+&lt;p&gt;일반적으로 기본정책은 모든 패킷에 대해 &lt;em&gt;DROP&lt;/em&gt; 을 설정하고 특별히 지정된 포트와 IP주소등에 대해 &lt;em&gt;ACCEPT&lt;/em&gt; 를 수행하게 만든다.&lt;/p&gt;
+&lt;h1&gt;iptables 사용하기&lt;/h1&gt;
+&lt;p&gt;iptables 적용 예:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;iptables -P INPUT ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본 정책을 &lt;em&gt;ACCEPT&lt;/em&gt; 로 설정&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -P INPUT DROP&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 의 기본정책을 &lt;em&gt;DROP&lt;/em&gt; 으로 설정&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -F&lt;/code&gt; : &lt;em&gt;Chain&lt;/em&gt; 에 정의된 모든 규칙을 삭제&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -nL&lt;/code&gt; : 현재 ruleset 설정 확인(address 와 port 는 숫자로 출력)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 localhost interface 인 Packet 은 모두 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -A INPUT -m state — state ESTABLISHED,RELATED -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 state module 의 state 가 &lt;em&gt;ESTABLISHED&lt;/em&gt;, &lt;em&gt;RELATED&lt;/em&gt; 인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iptables -A INPUT -p tcp -m tcp — dport 22 -j ACCEPT&lt;/code&gt; : &lt;em&gt;INPUT Chain&lt;/em&gt; 에 Protocol 의 &lt;em&gt;TCP&lt;/em&gt; 이며 destination port 가 22번인 Packet 에 대해 &lt;em&gt;ACCEPT&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;service iptables save&lt;/code&gt; 명령을 실행하면 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에 &lt;em&gt;iptables&lt;/em&gt; 현재 설정이 저장된다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;iptables&lt;/em&gt; 규칙을 만들 때는 순서가 매우 중요하다. 예를 들어 만일 &lt;em&gt;chain&lt;/em&gt; 에서 local network 인 192.168.100.0/24 subnetwork 에서 들어오는 모든 packet 을 &lt;em&gt;DROP&lt;/em&gt; 하도록 지정한 후 (&lt;em&gt;DROP&lt;/em&gt; 하도록 지정된 subnetwork 에 포함되는) 192.168.100.13 에서 들어오는 packet 을 모두 허용하는 &lt;em&gt;chain&lt;/em&gt; (&lt;code&gt;-A&lt;/code&gt;)을 그 후에 추가하면 뒤에 추가된 추가 규칙이 무시된다. 먼저 192.168.100.13 을 허용하는 규칙을 설정한 후 subnet 을 &lt;em&gt;DROP&lt;/em&gt; 하는 규칙을 설정해야한다.&lt;/p&gt;
+&lt;p&gt;HTTP Web Server 를 용할 경우:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;HTTPS:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp -m multiport --dports 80,443 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;MySQL (port 3306):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;FTP(passive mode):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT
+iptables -A INPUT -p tcp --dport 1024:65535 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 1024:65535 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;NTP 시간동기화:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -p udp --dport 123 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;서버의 취약점을 차단하기 위한 iptables 설정 예&lt;/h1&gt;
+&lt;p&gt;NULL 패킷 차단: &lt;code&gt;iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;NULL 패킷은 정찰 패킷으로 서버설정의 약한 곳을 찾기위한 방법으로 사용된다.&lt;/p&gt;
+&lt;h1&gt;기타 사용법&lt;/h1&gt;
+&lt;p&gt;기타 &lt;em&gt;iptables&lt;/em&gt; 사용법에 대해 알아보자.&lt;/p&gt;
+&lt;h2&gt;iptables 수정&lt;/h2&gt;
+&lt;p&gt;등록된 &lt;em&gt;iptables&lt;/em&gt; 를 수정하는 방법은 &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; 에서 직접 vi로 수정하거나 &lt;code&gt;iptables&lt;/code&gt; 명령어를 사용한다.&lt;/p&gt;
+&lt;p&gt;실행 순번을 확인하기: &lt;code&gt;iptables -nL --line-number&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;순번 3의 행을 수정(replace, &lt;code&gt;-R&lt;/code&gt;): &lt;code&gt;iptables -R INPUT 3 -p tcp --dport 2222 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;인터페이스 지정&lt;/h2&gt;
+&lt;p&gt;Network interface 를 지정하여 &lt;em&gt;iptables&lt;/em&gt; 를 적용할 수도 있다.&lt;/p&gt;
+&lt;p&gt;루프백 인터페이스에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i lo -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;랜카드 지정에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -i eth0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;IP 주소 지정&lt;/h2&gt;
+&lt;p&gt;IP address 를 지정하여 iptables 를 적용할 수도 있다.&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip 대역에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;신뢰할 만한 ip와 MAC주소에 대해 모든 패킷을 허용: &lt;code&gt;iptables -A INPUT -s 192.168.0.3 -m mac — mac-source 00:50:80:FD:E6:32 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;포트 범위지정: &lt;code&gt;iptables -A INPUT -p tcp --dport 6881:6890 -j ACCEPT&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;자동화 스크립트&lt;/h1&gt;
+&lt;p&gt;자주 방화벽 설정을 초기화하고 재설정해야 한다면 자동화 스크립트를 짜놓는게 좋다. 아래는 그에 대한 예이다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;# iptables 설정 자동화 스크립트&lt;/span&gt;
+&lt;span class="c1"&gt;# 입맛에 따라 수정해서 사용합시다.&lt;/span&gt;
+iptables -F
+&lt;span class="c1"&gt;# TCP 포트 22번을 SSH 접속을 위해 허용&lt;/span&gt;
+&lt;span class="c1"&gt;# 원격 접속을 위해 먼저 설정합니다&lt;/span&gt;
+iptables -A INPUT -p tcp -m tcp --dport &lt;span class="m"&gt;22&lt;/span&gt; -j ACCEPT
+&lt;span class="c1"&gt;# 기본 정책을 설정합니다&lt;/span&gt;
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+ iptables -P OUTPUT ACCEPT
+&lt;span class="c1"&gt;# localhost 접속 허용&lt;/span&gt;
+iptables -A INPUT -i lo -j ACCEPT
+&lt;span class="c1"&gt;# established and related 접속을 허용&lt;/span&gt;
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+&lt;span class="c1"&gt;# Apache 포트 80 허용&lt;/span&gt;
+iptables -A INPUT -p tcp --dport &lt;span class="m"&gt;80&lt;/span&gt; -j ACCEPT
+&lt;span class="c1"&gt;# 설정을 저장&lt;/span&gt;
+/sbin/service iptables save
+&lt;span class="c1"&gt;# 설정한 내용을 출력&lt;/span&gt;
+iptables -L -v
+위 내용을 입맛에 맞게 수정한 후에 저장&lt;span class="o"&gt;(&lt;/span&gt;myfirewall&lt;span class="o"&gt;)&lt;/span&gt;
+권한부여: chmod +x myfirewall
+실행: ./myfirewall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;http://webdir.tistory.com/170&lt;/li&gt;
+&lt;/ul&gt;</content><category term="iptables"></category></entry><entry><title>Linux Directory Structure</title><link href="https://imjang57.github.io/garret/linux-directory-structure.html" rel="alternate"></link><published>2016-12-22T00:00:00+09:00</published><updated>2016-12-22T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-22:/garret/linux-directory-structure.html</id><summary type="html">&lt;p&gt;리눅스 디렉터리 구조&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Linux directory&lt;/h1&gt;
+&lt;p&gt;수많은 배포판을 가진 리눅스는 배포판마다 각각의 특징을 가지며 조금씩 다른 시스템 구조를 가지고 있다. 하지만 대부분의 대포판들은 리눅스 파일시스템 표준인 &lt;strong&gt;FSSTND(Filesystem Hierarchy Standard)&lt;/strong&gt; 스펙을 준수하고 있다. 우리가 익히 많이 들어 알고 있는 대부분의 배포판들은 이 표준을 지키며 개발되었다. FSSTND 파일시스템 표준은 디렉토리의 용도에 대한 기준을 준비해 두고서 그 용도에 맞도록 사용하자는 리눅스 파일시스템 구성의 기준이 되는 표준안이라고 할 수 있다.&lt;/p&gt;
+&lt;p&gt;FSSTND에 대한 자세한 설명은 다음 URL들을 참고하자.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wikipedia: https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard&lt;/li&gt;
+&lt;li&gt;official web site: https://wiki.linuxfoundation.org/lsb/fhs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;여러 디렉터리의 용도가 정의되어 있지만 자주 사용되는 디렉터리들에 대해 설명하면 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/&lt;/code&gt; : 최상위 디렉토리. 루트디렉토리를 의미하고 리눅스 모든 디렉토리의 시작점이다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt; : 기본적인 명령어가 저장된 디렉토리. 리눅스 사용에 있어 가장 기본적인 명령어인 &lt;code&gt;mv&lt;/code&gt;, &lt;code&gt;cp&lt;/code&gt;, &lt;code&gt;df&lt;/code&gt;, &lt;code&gt;rm&lt;/code&gt; 등이 이 디렉토리에 존재한다. 그리고 이 디렉토리 안에 있는 명령어들은 &lt;code&gt;root&lt;/code&gt; 뿐만 아니라 일반 사용자들도 사용할 수 있다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/boot&lt;/code&gt; : 리눅스 부트로더(boot loader)가 존재하는 디렉토리. 즉 GRUB과 같은 부트로더에 관한 파일들이 여기에 존재한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev&lt;/code&gt; : 시스템 디바이스(device) 파일을 저장하고 있는 디렉토리. 하드디스크 &lt;code&gt;/dev/sda&lt;/code&gt;, CDROM &lt;code&gt;/dev/cdrom&lt;/code&gt; 등과 같은 장치파일이 이곳에 존재한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc&lt;/code&gt; : 리눅스 시스템의 거의 모든 설정파일이 존재하는 디렉토리. &lt;code&gt;/etc/passwd&lt;/code&gt;, &lt;code&gt;/etc/group&lt;/code&gt; 등 거의 모든 시스템관련 설정파일이 이곳에 존재한다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home&lt;/code&gt; : 사용자 홈 디렉토리. 안에 각 사용자들의 디렉토리들이 모여있다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib&lt;/code&gt; : 커널모듈파일과 라이브러리파일 등이 존재하는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media&lt;/code&gt; : USB, CDROM 등과 같이 탈부착이 가능한 장치들의 마운트포인트로 사용되는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/mnt&lt;/code&gt; : &lt;code&gt;/media&lt;/code&gt; 디렉토리와 비슷한 용도로 사용&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/proc&lt;/code&gt; : 가상파일시스템이라고 불리는 곳으로 현재 메모리에 존재하는 모든 작업들이 파일형태로 존재하는 디렉토리. 디스크상에 존재하는 것이 아니라 메모리상에 존재하기 때문에 가상파일시스템이라고 부른다. 이곳에 존재하는 파일 중에 커널의 옵션값을 변경할 수 있는 파라미터파일들이 있기 때문에 시스템 운용에 있어 매우 중요한 의미를 가진다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/root&lt;/code&gt; : 시스템 최고관리자의 홈 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/sbin&lt;/code&gt; : &lt;code&gt;/bin&lt;/code&gt;과는 달리 시스템 관리자들이 사용하는 리눅스 명령어들(&lt;code&gt;halt&lt;/code&gt;, &lt;code&gt;shutdown&lt;/code&gt; 등)이 모여있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/tmp&lt;/code&gt; : 시스템 모든 사용자들이 공동으로 사용하는 디렉토리. 일반 사용자 또는 각종 프로세서에서 사용되는 파일들이 생성되는 곳이다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr&lt;/code&gt; : 시스템이 아닌 일반 사용자들이 주로 사용하는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/bin&lt;/code&gt; : 일반 사용자들이 사용 가능한 명령어 파일들이 존재하는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/include&lt;/code&gt; : C 프로그래밍에 필요한 헤더파일이 모여 있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/lib&lt;/code&gt; : &lt;code&gt;/lib&lt;/code&gt;에 들어가지 않은 라이브러리들이 모여 있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/sbin&lt;/code&gt; : &lt;code&gt;/bin&lt;/code&gt;에 제외된 명령어와 네트워크 관련 명령어들이 들어있는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/src&lt;/code&gt; : 프로그램 소스가 저장되는 곳&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/local&lt;/code&gt; : mysql, apache, php 등과 같은 어플리케이션들을 소스로 컴파일설치할 때 사용되는 디렉토리&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/var&lt;/code&gt; : 시스템 사용중 임시로 생성되고 삭제되는 데이터를 저장하기 위한 디렉토리. 모든 시스템 로그파일은 &lt;code&gt;/var/log&lt;/code&gt;에 저장된다.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lost+found&lt;/code&gt; : 최상위 디렉토리인 &lt;code&gt;/&lt;/code&gt; 디렉토리에만 존재하는 것이 아니라 파일 시스템마다 존재할 수 있는 디렉토리. 이 디렉토리는 &lt;code&gt;fsck&lt;/code&gt; 또는 &lt;code&gt;e2fsck&lt;/code&gt; 등과 같은 파일 시스템 체크 및 복구유틸리티 실행후에 주로 생성되는 것으로 복구되지 앟은 채로 블록(block)만 존재하는 파일이 존재하는 곳.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="linux"></category><category term="directory"></category></entry></feed>
