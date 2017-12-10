@@ -43,17 +43,27 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Github', 'https://github.com/imjang57'),
-         ('Github site repo', 'https://github.com/imjang57/garret'),
-         ('Site', '#'),)
+LINKS = (
+    ('Github', 'https://github.com/imjang57'),
+    ('Github site repo', 'https://github.com/imjang57/garret'),
+    ('Site', '#'),
+)
 
 # Social widget
-SOCIAL = (('Github', 'https://github.com/imjang57'),)
+SOCIAL = (
+    ('Github', 'https://github.com/imjang57'),
+)
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+################################################################################
+# Configurations for theme
+THEME = 'themes/pelican-alchemy/alchemy'
+DESCRIPTION = 'A private blog site for engineering and  thinkin.'
+HIDE_AUTHORS = True
 
 ################################################################################
 # Google Analytics

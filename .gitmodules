@@ -1,0 +1,3 @@
+[submodule "themes/pelican-alchemy"]
+	path = themes/pelican-alchemy
+	url = https://github.com/imjang57/pelican-alchemy
