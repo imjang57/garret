@@ -1,7 +1,7 @@
 Title: Linux 에서 사용자 권한 관리
 Date: 2017-01-01
 Modified: 2017-05-08
-Tags: linux, file
+Tags: linux, permission
 Slug: linux-command-for-permission
 Authors: imjang57
 Summary: Linux 에서 사용자 권한 관리에 대한 글

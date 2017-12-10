@@ -2,7 +2,7 @@ Title: iptables
 Date: 2017-01-01
 Modified: 2017-01-01
 Tags: iptables
-Slug: iptables
+Slug: linux-command-iptables
 Authors: imjang57
 Summary: iptables 사용법
 

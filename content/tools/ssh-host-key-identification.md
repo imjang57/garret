@@ -1,10 +1,10 @@
 Title: SSH Host-key identification
-Date: 2016-12-30
-Modified: 2016-12-30
+Date: 2017-01-10
+Modified: 2017-01-11
 Slug: ssh-host-key-identification
 Authors: imjang57
 Summary: This is about SSH Host-key identification.
-Tags: SSH
+Tags: ssh
 
 # SSH host key
 

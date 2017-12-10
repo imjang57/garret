@@ -1,6 +1,6 @@
 Title: SSH Brute force 막기
-Date: 2017-01-01
-Modified: 2017-01-01
+Date: 2017-01-12
+Modified: 2017-01-12
 Tags: ssh, iptables, brute force
 Slug: defence-ssh-brute-force
 Authors: imjang57

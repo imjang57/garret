@@ -2,7 +2,7 @@ Title: Shell, Bash, Zsh
 Date: 2016-12-31
 Modified: 2016-12-31
 Tags: shell, bash, zsh
-Slug: introduction-shell-bash-zsh
+Slug: shell-introduction-bash-zsh
 Authors: imjang57
 Summary: 내가 사용하는 Shell 에 대한 소개와 설치 과정
 
