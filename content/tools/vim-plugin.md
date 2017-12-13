@@ -25,7 +25,7 @@ Vim plugin 을 관리하기 위한 여러 plugin 들이 있는데 나는 [Vundle
 
 자세한 내용은 [Vundle](https://github.com/VundleVim/Vundle.vim) 에 가면 설치 방법부터 잘 나와있으니 참고하자.
 
-설치는 매우 쉽다. git clone 하여 `~/.vim/bundle/Vundle.vim` 에 설치하겨 `~/.vimrc` 파일에 Vundle 을 위한 설정과 설치하여 사용할 Plugin 목록을 입력해주기만 하면 된다.
+설치는 매우 쉽다. git clone 하여 `~/.vim/bundle/Vundle.vim` 에 설치하고 `~/.vimrc` 파일에 Vundle 을 위한 설정과 설치하여 사용할 Plugin 목록을 입력해주기만 하면 된다.
 
 ```
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
