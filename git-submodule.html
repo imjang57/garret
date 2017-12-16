@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>  Git Submodule | garret
+</title>
+  <link rel="canonical" href="https://imjang57.github.io/garret/git-submodule.html">
+
+
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://imjang57.github.io/garret/theme/css/theme.css">
+
+  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/all.atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
+        href="https://imjang57.github.io/garret/feeds/tools.atom.xml">  
+  <meta name="description" content="Git Submodule 사용법">
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o);
+      a.async = 1;
+      a.src = g;
+      m = s.getElementsByTagName(o)[0];
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-90095241-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="title"><a href="https://imjang57.github.io/garret/">garret</a></h1>
+      <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://github.com/imjang57" target="_blank">Github</a></li>
+          <li class="list-inline-item"><a href="https://github.com/imjang57/garret" target="_blank">Github site repo</a></li>
+          <li class="list-inline-item"><a href="#" target="_blank">Site</a></li>
+              <li class="list-inline-item text-muted">|</li>
+            <li class="list-inline-item"><a href="https://imjang57.github.io/garret/pages/about.html">About</a></li>
+      </ul>
+  </div>
+</div>    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>  Git Submodule
+</h1>
+      <hr>
+  <article class="article">
+    <header>
+      <ul class="list-inline">
+        <li class="list-inline-item text-muted" title="2017-12-16T00:00:00+09:00">
+          <i class="fa fa-clock-o"></i>
+          토 16 12월 2017
+        </li>
+        <li class="list-inline-item">
+          <i class="fa fa-folder-open-o"></i>
+          <a href="https://imjang57.github.io/garret/category/tools.html">tools</a>
+        </li>
+          <li class="list-inline-item">
+            <i class="fa fa-files-o"></i>
+              <a href="https://imjang57.github.io/garret/tag/git.html">#git</a>          </li>
+      </ul>
+    </header>
+    <div class="content">
+      <h1>Git submodule</h1>
+<p>Git 서브모듈(Git submodule)은  Git 저장소(Git Repository)에 다른 Git 저장소를 포함시키기 위한 도구이다. 이렇게 다른 저장소를 저장소 내부에 추가하여도 각 저장소는 독립적으로 관리된다. 보통 서브모듈을 포함하는 저장소를 슈퍼프로젝트(Super-project)라고 한다.</p>
+<h2>Add submodule</h2>
+<p>서브모듈을 추가하려면 저장소에서 다음과 같이 실행하면 된다. 예를 들어 서브모듈로 추가하려는 저장소의 이름을 <code>yourtheme</code> 라고 하자.</p>
+<div class="highlight"><pre><span></span>$ git submodule add https://github.com/imjang57/yourtheme theme/yourtheme
+</pre></div>
+
+
+<p><code>theme/yourtheme</code>에 서브모듈 저장소가 생성된다. 슈퍼프로젝트에서 <code>git status</code> 명령을 실행하면 <code>.gitmodules</code> 파일과 <code>theme/yourtheme</code> 파일이 새로 생성된 것을 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span>$ git status
+<span class="c1"># On branch master</span>
+<span class="c1"># Changes to be committed:</span>
+<span class="c1">#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span>
+<span class="c1">#</span>
+<span class="c1">#      new file:   .gitmodules</span>
+<span class="c1">#      new file:   theme/yourtheme</span>
+<span class="c1">#</span>
+</pre></div>
+
+
+<p><code>.gitmodules</code> 파일의 내용은 다음과 같다.</p>
+<div class="highlight"><pre><span></span><span class="k">[submodule &quot;theme/yourtheme&quot;]</span>
+    <span class="na">path</span> <span class="o">=</span> <span class="s">theme/yourtheme</span>
+<span class="s">    url = https://github.com/imjang57/yourtheme</span>
+</pre></div>
+
+
+<p>그리고 <code>theme/yourtheme</code> 파일을 확인하면 다음과 같이 출력된다.</p>
+<div class="highlight"><pre><span></span>$ git diff --cached theme/yourtheme
+diff --git a/theme/yourtheme b/theme/yourtheme
+new file mode 160000
+index 0000000..08d709f
+--- /dev/null
++++ b/theme/yourtheme
+@@ -0,0 +1 @@
++Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433
+</pre></div>
+
+
+<p><code>git diff</code> 명령의 결과가 파일의 내용이 아니라 <code>Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433</code> 와 같이 출력되는 것을 확인할 수 있다. 이것은 Git이 <code>theme/yourtheme</code>를 서브모듈로 인식해서 서브모듈의 어느 커밋(commit)을 참조하고 있는지만 관리하기 때문이다. 또한, file mode 가 <code>160000</code>으로 나오는 것을 확이할 수 있는데, 이는 일반적인 파일이나 디렉터리가 아니라는 의미이다.</p>
+<p>즉, 실제 작업 디렉터리(Working directory)에는 <code>theme/yourtheme</code>라는 이름의 디렉터리가 있고, 그 안에 또 하나의 Git 저장소가 있다. 하지만 슈퍼프로젝트의 관점에서는 <code>theme/yourtheme</code>는 서브모듈이기 때문에 참조하는 값만 관리하는 것이다.</p>
+<p>서브모듈을 추가하면 서브모듈 내에서 해당 프로젝트의 내용을 수정하고 커밋(commit)이나 푸시(push) 할 수도 있다. 즉, 서브모듈도 일반적인 다른 저장소와 똑같이 사용할 수 있다. 그리고 이렇게 서브모둘을 수정하면 수정된 서브모듈의 커밋 해시(commit hash)가 새롭게 슈퍼프로젝트에 저장된다. 따라서 슈퍼프로젝트도 커밋해주어야 이 변경된 참조가 저장된다.</p>
+<h2>서브모듈을 가진 저장소를 클론(clone)하기</h2>
+<p>서브모듈을 사용하는 프로젝트를 Clone하면 해당 서브모듈 디렉토리는 빈 디렉터리다. 이떄는 먼저 <code>git submodule init</code> 명령으로 서브모듈을 초기화하고, <code>git submodule update</code> 명령으로 서브모듈 저장소를 가져와야 한다. 이 때 슈퍼프로젝트에 저장된 커밋 해시값을 참고하여 각 서브모듈들을 체크아웃(checkout)한다.</p>
+<div class="highlight"><pre><span></span>$ git submodule init
+Submodule <span class="s1">&#39;theme/yourtheme&#39;</span> <span class="o">(</span>https://github.com/imjang57/yourtheme.git<span class="o">)</span> registered <span class="k">for</span> path <span class="s1">&#39;theme/yourtheme&#39;</span>
+$ git submodule update
+Cloning into <span class="s1">&#39;/home/imjang57/mysite/themes/yourtheme&#39;</span>...
+Submodule path <span class="s1">&#39;themes/yourtheme&#39;</span>: checked out <span class="s1">&#39;08d709f78b8c5b0fbeb7821e37fa53e69afcf433&#39;</span>
+</pre></div>
+
+
+<h2>Submodule Update</h2>
+<p>서브모듈을 최신 버전으로 업데이트하려면 서브모듈 디렉터리에서 <code>git fetch</code> 명령을 실행하고 <code>git merge</code> 명령으로 머지한다.</p>
+<p>이후 메인 프로젝트(슈퍼프로젝트)에서 <code>git diff --submodule</code> 명령을 실행하면 업데이트된 서브모듈과 각 서브모듈에 추가된 커밋을 볼 수 있다. 이 상태에서 메인 프로젝트에서 <code>git commit</code> 명령으로 커밋하면 변경된 서브모듈 내용(커밋 해시)이 메인 프로젝트에 적용된다.</p>
+<p>간단하게 이 작업을 하려면 <code>git submodule update --remote</code> 명령을 실행한다. 이 명령을 실행하면 Git이 스스로 서브모듈을 Fetch하고 업데이트한다. 이 명령을 기본적으로 <code>master</code> 브랜치를 체크아웃하고 업데이트를 수행한다. 브랜치를 바꾸려면 <code>.gitmodules</code> 파일을 다음과 같이 수정한다.</p>
+<div class="highlight"><pre><span></span><span class="k">[submodule &quot;theme/yourtheme&quot;]</span>
+    <span class="na">path</span> <span class="o">=</span> <span class="s">theme/yourtheme</span>
+<span class="s">    url = https://github.com/imjang57/yourtheme</span>
+<span class="s">    branch = stable</span>
+</pre></div>
+
+
+<h1>References</h1>
+<ul>
+<li>https://git-scm.com/book/en/v2/Git-Tools-Submodules</li>
+<li>https://git-scm.com/book/ko/v2/Git-도구-서브모듈</li>
+</ul>
+    </div>
+  </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+<div class="row">
+  <ul class="col-sm-6 list-inline">
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="https://imjang57.github.io/garret/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="https://imjang57.github.io/garret/tags.html">Tags</a></li>
+  </ul>
+  <p class="col-sm-6 text-sm-right text-muted">
+    Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
+    / <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+  </p>
+</div>    </div>
+  </footer>
+</body>
+
+</html>

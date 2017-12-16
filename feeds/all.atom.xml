@@ -1,5 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/all.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-11-01T00:00:00+09:00</updated><entry><title>PKI, SSL/TLS, 인증서(Certificate), HTTPS</title><link href="https://imjang57.github.io/garret/ssl-pubic-key-infrastructure.html" rel="alternate"></link><published>2017-11-01T00:00:00+09:00</published><updated>2017-11-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-11-01:/garret/ssl-pubic-key-infrastructure.html</id><summary type="html">&lt;p&gt;PKI, SSL/TLS, 인증서, HTTPS 등 인터넷 상의 보안과 인증이 어떤 원리로 동작하는지에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;암호화 (Encryption) : SSL and TLS&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/all.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-18T00:00:00+09:00</updated><entry><title>iTerm2</title><link href="https://imjang57.github.io/garret/iterm2.html" rel="alternate"></link><published>2017-12-18T00:00:00+09:00</published><updated>2017-12-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-18:/garret/iterm2.html</id><summary type="html">&lt;p&gt;iTerm2 설치 및 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iTerm2&lt;/h1&gt;
+&lt;p&gt;iTerm2 는 맥에서 가장 많이 사용되는 터미널(Terminal) 프로그램이다.&lt;/p&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;iTerm2 에서 제공하는 공식 바이너리로 쉽게 설치할 수도 있지만 나는 왠만하면 모든 패키지들을 &lt;code&gt;brew&lt;/code&gt;로 관리하기를 원해서 &lt;code&gt;brew-cask&lt;/code&gt;로 설치했다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew cask install iterm2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;내가 사용하는 환경을 위한 설정들을 해보자.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Colors&lt;/code&gt; =&amp;gt; &lt;code&gt;Tango Dark&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Text&lt;/code&gt; =&amp;gt; &lt;code&gt;Font&lt;/code&gt; =&amp;gt; &lt;code&gt;Change Font&lt;/code&gt; =&amp;gt; 13pt, Meslo LG M Regular for Powerline&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Window&lt;/code&gt; =&amp;gt; &lt;code&gt;Window Appearance&lt;/code&gt; =&amp;gt; &lt;code&gt;Transparency&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Window&lt;/code&gt; =&amp;gt; &lt;code&gt;Settings for New Windows&lt;/code&gt; =&amp;gt; &lt;code&gt;Columns&lt;/code&gt; : 200, &lt;code&gt;Rows&lt;/code&gt; : 50&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Terminal&lt;/code&gt; =&amp;gt; &lt;code&gt;Scrollback Buffer&lt;/code&gt; =&amp;gt; check &lt;code&gt;Unlimited scrollback&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Key Mappings&lt;/h2&gt;
+&lt;p&gt;자주 사용하는 단축키들은 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;새 창 : &lt;code&gt;Command + n&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;새 탭 : &lt;code&gt;Command + t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 닫기 : &lt;code&gt;Command + w&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;전체 창 전환 : &lt;code&gt;Command + enter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 순환 이동 : &lt;code&gt;Command + tab&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 이동 : &lt;code&gt;Command + 번호&lt;/code&gt;, &lt;code&gt;Command + 방향키&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 세로 분할 : &lt;code&gt;Command + d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 가로 분할 : &lt;code&gt;Command + Shift + d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 분할 시 포커스 찾기 : &lt;code&gt;Command + /&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 분할 포커스 이동 : &lt;code&gt;Command + [&lt;/code&gt; , &lt;code&gt;Command + ]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 투명하게 설정 : &lt;code&gt;Command + i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 투명하게 on/off : &lt;code&gt;Command + u&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;검색 : &lt;code&gt;Command + f&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;검색 결과 탐색 : &lt;code&gt;Command + g&lt;/code&gt;, &lt;code&gt;Command + Shift + g&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;전체 검색 : &lt;code&gt;Command + Option + e&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;클립보드 : &lt;code&gt;Command + Shift + h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;자동완성 : &lt;code&gt;Command + ;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;작업시간 보여주기 : &lt;code&gt;Command + Shift + e&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preferences : &lt;code&gt;Command + ,&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Profiles Preferences : &lt;code&gt;Command + i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;iTerm2 종료 : &lt;code&gt;Command + q&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;https://www.iterm2.com&lt;/li&gt;
+&lt;/ul&gt;</content><category term="mac"></category><category term="iterm2"></category><category term="terminal"></category></entry><entry><title>Git Submodule</title><link href="https://imjang57.github.io/garret/git-submodule.html" rel="alternate"></link><published>2017-12-16T00:00:00+09:00</published><updated>2017-12-16T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-16:/garret/git-submodule.html</id><summary type="html">&lt;p&gt;Git Submodule 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git submodule&lt;/h1&gt;
+&lt;p&gt;Git 서브모듈(Git submodule)은  Git 저장소(Git Repository)에 다른 Git 저장소를 포함시키기 위한 도구이다. 이렇게 다른 저장소를 저장소 내부에 추가하여도 각 저장소는 독립적으로 관리된다. 보통 서브모듈을 포함하는 저장소를 슈퍼프로젝트(Super-project)라고 한다.&lt;/p&gt;
+&lt;h2&gt;Add submodule&lt;/h2&gt;
+&lt;p&gt;서브모듈을 추가하려면 저장소에서 다음과 같이 실행하면 된다. 예를 들어 서브모듈로 추가하려는 저장소의 이름을 &lt;code&gt;yourtheme&lt;/code&gt; 라고 하자.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git submodule add https://github.com/imjang57/yourtheme theme/yourtheme
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;theme/yourtheme&lt;/code&gt;에 서브모듈 저장소가 생성된다. 슈퍼프로젝트에서 &lt;code&gt;git status&lt;/code&gt; 명령을 실행하면 &lt;code&gt;.gitmodules&lt;/code&gt; 파일과 &lt;code&gt;theme/yourtheme&lt;/code&gt; 파일이 새로 생성된 것을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git status
+&lt;span class="c1"&gt;# On branch master&lt;/span&gt;
+&lt;span class="c1"&gt;# Changes to be committed:&lt;/span&gt;
+&lt;span class="c1"&gt;#   (use &amp;quot;git reset HEAD &amp;lt;file&amp;gt;...&amp;quot; to unstage)&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#      new file:   .gitmodules&lt;/span&gt;
+&lt;span class="c1"&gt;#      new file:   theme/yourtheme&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;.gitmodules&lt;/code&gt; 파일의 내용은 다음과 같다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[submodule &amp;quot;theme/yourtheme&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;theme/yourtheme&lt;/span&gt;
+&lt;span class="s"&gt;    url = https://github.com/imjang57/yourtheme&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 &lt;code&gt;theme/yourtheme&lt;/code&gt; 파일을 확인하면 다음과 같이 출력된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git diff --cached theme/yourtheme
+diff --git a/theme/yourtheme b/theme/yourtheme
+new file mode 160000
+index 0000000..08d709f
+--- /dev/null
++++ b/theme/yourtheme
+@@ -0,0 +1 @@
++Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;git diff&lt;/code&gt; 명령의 결과가 파일의 내용이 아니라 &lt;code&gt;Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433&lt;/code&gt; 와 같이 출력되는 것을 확인할 수 있다. 이것은 Git이 &lt;code&gt;theme/yourtheme&lt;/code&gt;를 서브모듈로 인식해서 서브모듈의 어느 커밋(commit)을 참조하고 있는지만 관리하기 때문이다. 또한, file mode 가 &lt;code&gt;160000&lt;/code&gt;으로 나오는 것을 확이할 수 있는데, 이는 일반적인 파일이나 디렉터리가 아니라는 의미이다.&lt;/p&gt;
+&lt;p&gt;즉, 실제 작업 디렉터리(Working directory)에는 &lt;code&gt;theme/yourtheme&lt;/code&gt;라는 이름의 디렉터리가 있고, 그 안에 또 하나의 Git 저장소가 있다. 하지만 슈퍼프로젝트의 관점에서는 &lt;code&gt;theme/yourtheme&lt;/code&gt;는 서브모듈이기 때문에 참조하는 값만 관리하는 것이다.&lt;/p&gt;
+&lt;p&gt;서브모듈을 추가하면 서브모듈 내에서 해당 프로젝트의 내용을 수정하고 커밋(commit)이나 푸시(push) 할 수도 있다. 즉, 서브모듈도 일반적인 다른 저장소와 똑같이 사용할 수 있다. 그리고 이렇게 서브모둘을 수정하면 수정된 서브모듈의 커밋 해시(commit hash)가 새롭게 슈퍼프로젝트에 저장된다. 따라서 슈퍼프로젝트도 커밋해주어야 이 변경된 참조가 저장된다.&lt;/p&gt;
+&lt;h2&gt;서브모듈을 가진 저장소를 클론(clone)하기&lt;/h2&gt;
+&lt;p&gt;서브모듈을 사용하는 프로젝트를 Clone하면 해당 서브모듈 디렉토리는 빈 디렉터리다. 이떄는 먼저 &lt;code&gt;git submodule init&lt;/code&gt; 명령으로 서브모듈을 초기화하고, &lt;code&gt;git submodule update&lt;/code&gt; 명령으로 서브모듈 저장소를 가져와야 한다. 이 때 슈퍼프로젝트에 저장된 커밋 해시값을 참고하여 각 서브모듈들을 체크아웃(checkout)한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git submodule init
+Submodule &lt;span class="s1"&gt;&amp;#39;theme/yourtheme&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;https://github.com/imjang57/yourtheme.git&lt;span class="o"&gt;)&lt;/span&gt; registered &lt;span class="k"&gt;for&lt;/span&gt; path &lt;span class="s1"&gt;&amp;#39;theme/yourtheme&amp;#39;&lt;/span&gt;
+$ git submodule update
+Cloning into &lt;span class="s1"&gt;&amp;#39;/home/imjang57/mysite/themes/yourtheme&amp;#39;&lt;/span&gt;...
+Submodule path &lt;span class="s1"&gt;&amp;#39;themes/yourtheme&amp;#39;&lt;/span&gt;: checked out &lt;span class="s1"&gt;&amp;#39;08d709f78b8c5b0fbeb7821e37fa53e69afcf433&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Submodule Update&lt;/h2&gt;
+&lt;p&gt;서브모듈을 최신 버전으로 업데이트하려면 서브모듈 디렉터리에서 &lt;code&gt;git fetch&lt;/code&gt; 명령을 실행하고 &lt;code&gt;git merge&lt;/code&gt; 명령으로 머지한다.&lt;/p&gt;
+&lt;p&gt;이후 메인 프로젝트(슈퍼프로젝트)에서 &lt;code&gt;git diff --submodule&lt;/code&gt; 명령을 실행하면 업데이트된 서브모듈과 각 서브모듈에 추가된 커밋을 볼 수 있다. 이 상태에서 메인 프로젝트에서 &lt;code&gt;git commit&lt;/code&gt; 명령으로 커밋하면 변경된 서브모듈 내용(커밋 해시)이 메인 프로젝트에 적용된다.&lt;/p&gt;
+&lt;p&gt;간단하게 이 작업을 하려면 &lt;code&gt;git submodule update --remote&lt;/code&gt; 명령을 실행한다. 이 명령을 실행하면 Git이 스스로 서브모듈을 Fetch하고 업데이트한다. 이 명령을 기본적으로 &lt;code&gt;master&lt;/code&gt; 브랜치를 체크아웃하고 업데이트를 수행한다. 브랜치를 바꾸려면 &lt;code&gt;.gitmodules&lt;/code&gt; 파일을 다음과 같이 수정한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[submodule &amp;quot;theme/yourtheme&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;theme/yourtheme&lt;/span&gt;
+&lt;span class="s"&gt;    url = https://github.com/imjang57/yourtheme&lt;/span&gt;
+&lt;span class="s"&gt;    branch = stable&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;https://git-scm.com/book/en/v2/Git-Tools-Submodules&lt;/li&gt;
+&lt;li&gt;https://git-scm.com/book/ko/v2/Git-도구-서브모듈&lt;/li&gt;
+&lt;/ul&gt;</content><category term="git"></category></entry><entry><title>PKI, SSL/TLS, 인증서(Certificate), HTTPS</title><link href="https://imjang57.github.io/garret/ssl-pubic-key-infrastructure.html" rel="alternate"></link><published>2017-11-01T00:00:00+09:00</published><updated>2017-11-01T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-11-01:/garret/ssl-pubic-key-infrastructure.html</id><summary type="html">&lt;p&gt;PKI, SSL/TLS, 인증서, HTTPS 등 인터넷 상의 보안과 인증이 어떤 원리로 동작하는지에 대한 설명&lt;/p&gt;</summary><content type="html">&lt;h1&gt;암호화 (Encryption) : SSL and TLS&lt;/h1&gt;
 &lt;p&gt;TCP/IP 로 패킷(Packet)들이 전송될 때 인터넷 상의 수많은 라우터와 노드들을 지나가게 된다. 그리고 이들 중 어떤 노드에서는 패킷 감청(Package Sniffing)을 하기도 하는데, 암호화가 되어있지 않은 패킷들은 이러한 감청에 속수무책으로 당할 수 밖에 없다. 감청을 통해 정보를 훔치는 것 외에 가로챈 패킷을 변조할 수도 있다. 그래서 이를 막기 위해 네트웍(Network) 상에서 흐르는 패킷들을 암호화하는 기술들이 등장했고 TCP/IP Layer 와 Application Layer 사이에서 데이터를 암호화하는 SSL(Secure Sockets Layer)가 등장했다.&lt;/p&gt;
 &lt;p&gt;SSL은 현재에는 TLS(Transport Layer Security)로 이름이 바뀌었지만 많은 사람들이 아직도 SSL이라는 이름을 많이 사용하고 있다. 그래서 보통 SSL/TLS 등과 같이 표기를 많이 한다. 즉, SSL과 TLS는 같은 녀석이다.&lt;/p&gt;
 &lt;h2&gt;인코딩과 디코딩 (Encoding and Decoding)&lt;/h2&gt;

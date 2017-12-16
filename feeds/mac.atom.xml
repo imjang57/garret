@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2016-12-31T00:00:00+09:00</updated><entry><title>HomeBrew Install And Uninstall</title><link href="https://imjang57.github.io/garret/homebrew-install-and-uninstall.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/homebrew-install-and-uninstall.html</id><summary type="html">&lt;p&gt;HomeBrew 를 설치하고 삭제하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;HomeBrew&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-18T00:00:00+09:00</updated><entry><title>iTerm2</title><link href="https://imjang57.github.io/garret/iterm2.html" rel="alternate"></link><published>2017-12-18T00:00:00+09:00</published><updated>2017-12-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-18:/garret/iterm2.html</id><summary type="html">&lt;p&gt;iTerm2 설치 및 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iTerm2&lt;/h1&gt;
+&lt;p&gt;iTerm2 는 맥에서 가장 많이 사용되는 터미널(Terminal) 프로그램이다.&lt;/p&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;iTerm2 에서 제공하는 공식 바이너리로 쉽게 설치할 수도 있지만 나는 왠만하면 모든 패키지들을 &lt;code&gt;brew&lt;/code&gt;로 관리하기를 원해서 &lt;code&gt;brew-cask&lt;/code&gt;로 설치했다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew cask install iterm2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;내가 사용하는 환경을 위한 설정들을 해보자.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Colors&lt;/code&gt; =&amp;gt; &lt;code&gt;Tango Dark&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Text&lt;/code&gt; =&amp;gt; &lt;code&gt;Font&lt;/code&gt; =&amp;gt; &lt;code&gt;Change Font&lt;/code&gt; =&amp;gt; 13pt, Meslo LG M Regular for Powerline&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Window&lt;/code&gt; =&amp;gt; &lt;code&gt;Window Appearance&lt;/code&gt; =&amp;gt; &lt;code&gt;Transparency&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Window&lt;/code&gt; =&amp;gt; &lt;code&gt;Settings for New Windows&lt;/code&gt; =&amp;gt; &lt;code&gt;Columns&lt;/code&gt; : 200, &lt;code&gt;Rows&lt;/code&gt; : 50&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Preferences(cmd + ,)&lt;/code&gt; =&amp;gt; &lt;code&gt;Profiles&lt;/code&gt; =&amp;gt; &lt;code&gt;Terminal&lt;/code&gt; =&amp;gt; &lt;code&gt;Scrollback Buffer&lt;/code&gt; =&amp;gt; check &lt;code&gt;Unlimited scrollback&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Key Mappings&lt;/h2&gt;
+&lt;p&gt;자주 사용하는 단축키들은 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;새 창 : &lt;code&gt;Command + n&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;새 탭 : &lt;code&gt;Command + t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 닫기 : &lt;code&gt;Command + w&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;전체 창 전환 : &lt;code&gt;Command + enter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 순환 이동 : &lt;code&gt;Command + tab&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 이동 : &lt;code&gt;Command + 번호&lt;/code&gt;, &lt;code&gt;Command + 방향키&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 세로 분할 : &lt;code&gt;Command + d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 가로 분할 : &lt;code&gt;Command + Shift + d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 분할 시 포커스 찾기 : &lt;code&gt;Command + /&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 분할 포커스 이동 : &lt;code&gt;Command + [&lt;/code&gt; , &lt;code&gt;Command + ]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 투명하게 설정 : &lt;code&gt;Command + i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;탭 투명하게 on/off : &lt;code&gt;Command + u&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;검색 : &lt;code&gt;Command + f&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;검색 결과 탐색 : &lt;code&gt;Command + g&lt;/code&gt;, &lt;code&gt;Command + Shift + g&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;전체 검색 : &lt;code&gt;Command + Option + e&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;클립보드 : &lt;code&gt;Command + Shift + h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;자동완성 : &lt;code&gt;Command + ;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;작업시간 보여주기 : &lt;code&gt;Command + Shift + e&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preferences : &lt;code&gt;Command + ,&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Profiles Preferences : &lt;code&gt;Command + i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;iTerm2 종료 : &lt;code&gt;Command + q&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;https://www.iterm2.com&lt;/li&gt;
+&lt;/ul&gt;</content><category term="mac"></category><category term="iterm2"></category><category term="terminal"></category></entry><entry><title>HomeBrew Install And Uninstall</title><link href="https://imjang57.github.io/garret/homebrew-install-and-uninstall.html" rel="alternate"></link><published>2016-12-31T00:00:00+09:00</published><updated>2016-12-31T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2016-12-31:/garret/homebrew-install-and-uninstall.html</id><summary type="html">&lt;p&gt;HomeBrew 를 설치하고 삭제하는 방법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;HomeBrew&lt;/h1&gt;
 &lt;p&gt;HomeBrew 는 OS X (이제는 MacOS) 에서 패키지 관리를 자동으로 해주는 도구이다. 이 글을 쓸 때는 최신 버전이 1.1.5 이다.&lt;/p&gt;
 &lt;p&gt;HomeBrew 를 설치하려면 "&lt;em&gt;Command Line Tools (CLT) for Xcode&lt;/em&gt;"가 필요하다. 귀찮으니 그냥 Xcode 설치하자. Xcode 에 다 포함되어 있다.&lt;/p&gt;
 &lt;h2&gt;Install&lt;/h2&gt;

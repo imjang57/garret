@@ -1,5 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-05-07T00:00:00+09:00</updated><entry><title>Vim Plugin</title><link href="https://imjang57.github.io/garret/vim-plugin.html" rel="alternate"></link><published>2017-05-05T00:00:00+09:00</published><updated>2017-05-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-05:/garret/vim-plugin.html</id><summary type="html">&lt;p&gt;Vim Plugin&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Vim Plugin&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - tools</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/tools.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-16T00:00:00+09:00</updated><entry><title>Git Submodule</title><link href="https://imjang57.github.io/garret/git-submodule.html" rel="alternate"></link><published>2017-12-16T00:00:00+09:00</published><updated>2017-12-16T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-16:/garret/git-submodule.html</id><summary type="html">&lt;p&gt;Git Submodule 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Git submodule&lt;/h1&gt;
+&lt;p&gt;Git 서브모듈(Git submodule)은  Git 저장소(Git Repository)에 다른 Git 저장소를 포함시키기 위한 도구이다. 이렇게 다른 저장소를 저장소 내부에 추가하여도 각 저장소는 독립적으로 관리된다. 보통 서브모듈을 포함하는 저장소를 슈퍼프로젝트(Super-project)라고 한다.&lt;/p&gt;
+&lt;h2&gt;Add submodule&lt;/h2&gt;
+&lt;p&gt;서브모듈을 추가하려면 저장소에서 다음과 같이 실행하면 된다. 예를 들어 서브모듈로 추가하려는 저장소의 이름을 &lt;code&gt;yourtheme&lt;/code&gt; 라고 하자.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git submodule add https://github.com/imjang57/yourtheme theme/yourtheme
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;theme/yourtheme&lt;/code&gt;에 서브모듈 저장소가 생성된다. 슈퍼프로젝트에서 &lt;code&gt;git status&lt;/code&gt; 명령을 실행하면 &lt;code&gt;.gitmodules&lt;/code&gt; 파일과 &lt;code&gt;theme/yourtheme&lt;/code&gt; 파일이 새로 생성된 것을 확인할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git status
+&lt;span class="c1"&gt;# On branch master&lt;/span&gt;
+&lt;span class="c1"&gt;# Changes to be committed:&lt;/span&gt;
+&lt;span class="c1"&gt;#   (use &amp;quot;git reset HEAD &amp;lt;file&amp;gt;...&amp;quot; to unstage)&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#      new file:   .gitmodules&lt;/span&gt;
+&lt;span class="c1"&gt;#      new file:   theme/yourtheme&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;.gitmodules&lt;/code&gt; 파일의 내용은 다음과 같다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[submodule &amp;quot;theme/yourtheme&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;theme/yourtheme&lt;/span&gt;
+&lt;span class="s"&gt;    url = https://github.com/imjang57/yourtheme&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;그리고 &lt;code&gt;theme/yourtheme&lt;/code&gt; 파일을 확인하면 다음과 같이 출력된다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git diff --cached theme/yourtheme
+diff --git a/theme/yourtheme b/theme/yourtheme
+new file mode 160000
+index 0000000..08d709f
+--- /dev/null
++++ b/theme/yourtheme
+@@ -0,0 +1 @@
++Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;git diff&lt;/code&gt; 명령의 결과가 파일의 내용이 아니라 &lt;code&gt;Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433&lt;/code&gt; 와 같이 출력되는 것을 확인할 수 있다. 이것은 Git이 &lt;code&gt;theme/yourtheme&lt;/code&gt;를 서브모듈로 인식해서 서브모듈의 어느 커밋(commit)을 참조하고 있는지만 관리하기 때문이다. 또한, file mode 가 &lt;code&gt;160000&lt;/code&gt;으로 나오는 것을 확이할 수 있는데, 이는 일반적인 파일이나 디렉터리가 아니라는 의미이다.&lt;/p&gt;
+&lt;p&gt;즉, 실제 작업 디렉터리(Working directory)에는 &lt;code&gt;theme/yourtheme&lt;/code&gt;라는 이름의 디렉터리가 있고, 그 안에 또 하나의 Git 저장소가 있다. 하지만 슈퍼프로젝트의 관점에서는 &lt;code&gt;theme/yourtheme&lt;/code&gt;는 서브모듈이기 때문에 참조하는 값만 관리하는 것이다.&lt;/p&gt;
+&lt;p&gt;서브모듈을 추가하면 서브모듈 내에서 해당 프로젝트의 내용을 수정하고 커밋(commit)이나 푸시(push) 할 수도 있다. 즉, 서브모듈도 일반적인 다른 저장소와 똑같이 사용할 수 있다. 그리고 이렇게 서브모둘을 수정하면 수정된 서브모듈의 커밋 해시(commit hash)가 새롭게 슈퍼프로젝트에 저장된다. 따라서 슈퍼프로젝트도 커밋해주어야 이 변경된 참조가 저장된다.&lt;/p&gt;
+&lt;h2&gt;서브모듈을 가진 저장소를 클론(clone)하기&lt;/h2&gt;
+&lt;p&gt;서브모듈을 사용하는 프로젝트를 Clone하면 해당 서브모듈 디렉토리는 빈 디렉터리다. 이떄는 먼저 &lt;code&gt;git submodule init&lt;/code&gt; 명령으로 서브모듈을 초기화하고, &lt;code&gt;git submodule update&lt;/code&gt; 명령으로 서브모듈 저장소를 가져와야 한다. 이 때 슈퍼프로젝트에 저장된 커밋 해시값을 참고하여 각 서브모듈들을 체크아웃(checkout)한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git submodule init
+Submodule &lt;span class="s1"&gt;&amp;#39;theme/yourtheme&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;https://github.com/imjang57/yourtheme.git&lt;span class="o"&gt;)&lt;/span&gt; registered &lt;span class="k"&gt;for&lt;/span&gt; path &lt;span class="s1"&gt;&amp;#39;theme/yourtheme&amp;#39;&lt;/span&gt;
+$ git submodule update
+Cloning into &lt;span class="s1"&gt;&amp;#39;/home/imjang57/mysite/themes/yourtheme&amp;#39;&lt;/span&gt;...
+Submodule path &lt;span class="s1"&gt;&amp;#39;themes/yourtheme&amp;#39;&lt;/span&gt;: checked out &lt;span class="s1"&gt;&amp;#39;08d709f78b8c5b0fbeb7821e37fa53e69afcf433&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Submodule Update&lt;/h2&gt;
+&lt;p&gt;서브모듈을 최신 버전으로 업데이트하려면 서브모듈 디렉터리에서 &lt;code&gt;git fetch&lt;/code&gt; 명령을 실행하고 &lt;code&gt;git merge&lt;/code&gt; 명령으로 머지한다.&lt;/p&gt;
+&lt;p&gt;이후 메인 프로젝트(슈퍼프로젝트)에서 &lt;code&gt;git diff --submodule&lt;/code&gt; 명령을 실행하면 업데이트된 서브모듈과 각 서브모듈에 추가된 커밋을 볼 수 있다. 이 상태에서 메인 프로젝트에서 &lt;code&gt;git commit&lt;/code&gt; 명령으로 커밋하면 변경된 서브모듈 내용(커밋 해시)이 메인 프로젝트에 적용된다.&lt;/p&gt;
+&lt;p&gt;간단하게 이 작업을 하려면 &lt;code&gt;git submodule update --remote&lt;/code&gt; 명령을 실행한다. 이 명령을 실행하면 Git이 스스로 서브모듈을 Fetch하고 업데이트한다. 이 명령을 기본적으로 &lt;code&gt;master&lt;/code&gt; 브랜치를 체크아웃하고 업데이트를 수행한다. 브랜치를 바꾸려면 &lt;code&gt;.gitmodules&lt;/code&gt; 파일을 다음과 같이 수정한다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[submodule &amp;quot;theme/yourtheme&amp;quot;]&lt;/span&gt;
+    &lt;span class="na"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;theme/yourtheme&lt;/span&gt;
+&lt;span class="s"&gt;    url = https://github.com/imjang57/yourtheme&lt;/span&gt;
+&lt;span class="s"&gt;    branch = stable&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;https://git-scm.com/book/en/v2/Git-Tools-Submodules&lt;/li&gt;
+&lt;li&gt;https://git-scm.com/book/ko/v2/Git-도구-서브모듈&lt;/li&gt;
+&lt;/ul&gt;</content><category term="git"></category></entry><entry><title>Vim Plugin</title><link href="https://imjang57.github.io/garret/vim-plugin.html" rel="alternate"></link><published>2017-05-05T00:00:00+09:00</published><updated>2017-05-05T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-05-05:/garret/vim-plugin.html</id><summary type="html">&lt;p&gt;Vim Plugin&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Vim Plugin&lt;/h1&gt;
 &lt;p&gt;Vim 은 &lt;em&gt;Vim script&lt;/em&gt; 라는 자체 스크립트 언어를 제공하여 Plugin 을 만들 수 있게 한다. 이 스크립트들은 &lt;code&gt;plugin-name.vim&lt;/code&gt; 과 같이 vim 이라는 확장자(extension) 을 갖는다. &lt;em&gt;Vim script&lt;/em&gt; 는 &lt;a href="http://www.vim.org/scripts/index.php"&gt;Vim script page&lt;/a&gt; 에 많이 업로드되어 있다.&lt;/p&gt;
 &lt;p&gt;환경 설정을 위해 사용되는 &lt;code&gt;.vimrc&lt;/code&gt; 파일도 사실은 &lt;em&gt;Vim script&lt;/em&gt; 이다.&lt;/p&gt;
 &lt;p&gt;Vim plugin 은 2가지 종류가 있다.&lt;/p&gt;
