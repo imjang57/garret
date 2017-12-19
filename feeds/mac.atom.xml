@@ -1,5 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-18T00:00:00+09:00</updated><entry><title>iTerm2</title><link href="https://imjang57.github.io/garret/iterm2.html" rel="alternate"></link><published>2017-12-18T00:00:00+09:00</published><updated>2017-12-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-18:/garret/iterm2.html</id><summary type="html">&lt;p&gt;iTerm2 설치 및 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iTerm2&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-19T00:00:00+09:00</updated><entry><title>MacOS initial settings</title><link href="https://imjang57.github.io/garret/macos-initial-settings.html" rel="alternate"></link><published>2017-12-19T00:00:00+09:00</published><updated>2017-12-19T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-19:/garret/macos-initial-settings.html</id><summary type="html">&lt;p&gt;MacOS에서 가장 처음에 하는 환경설정 내용을 요약&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Mac Development Environment&lt;/h1&gt;
+&lt;p&gt;Keyboard notation examples :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Control + b, c&lt;/code&gt;는 &lt;code&gt;Control&lt;/code&gt; 키를 누른 상태에서 &lt;code&gt;b&lt;/code&gt;를 누르고, &lt;code&gt;Control&lt;/code&gt; 키와 &lt;code&gt;b&lt;/code&gt;에서 손을 뗀 후 &lt;code&gt;c&lt;/code&gt;를 눌러라는 의미&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + b, Control + c&lt;/code&gt;는 &lt;code&gt;Control&lt;/code&gt; 키를 누른 상태에서 &lt;code&gt;b&lt;/code&gt;를 누르고, &lt;code&gt;b&lt;/code&gt;에서 손을 뗀 후 &lt;code&gt;c&lt;/code&gt;를 눌러라는 의미&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;System Preferences&lt;/h2&gt;
+&lt;p&gt;언어 우선순위를 영어, 한국어 순서로 변경 :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Language &amp;amp; Region&lt;/code&gt; &amp;gt; &lt;code&gt;Preferred languages&lt;/code&gt; : English &amp;gt; 한국어 (드래그로 순서 조정)&lt;/li&gt;
+&lt;li&gt;locale 설정 때문에 오류가 발생하는 걸 방지&lt;/li&gt;
+&lt;li&gt;영어 에러가 구글검색이 잘됨&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;보안 설정 :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Security &amp;amp; Privacy&lt;/code&gt; &amp;gt; &lt;code&gt;General&lt;/code&gt; &amp;gt; &lt;code&gt;Require password&lt;/code&gt; : select &lt;code&gt;immediately&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Security &amp;amp; Privacy&lt;/code&gt; &amp;gt; &lt;code&gt;General&lt;/code&gt; &amp;gt; &lt;code&gt;Show a message when the screen is locked&lt;/code&gt; : input phone number, name, etc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Keyboard :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Keyboard&lt;/code&gt; &amp;gt; &lt;code&gt;Text&lt;/code&gt; : disable all automatic and smart options&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Trackpad :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Trackpad&lt;/code&gt; &amp;gt; &lt;code&gt;Point &amp;amp; Click&lt;/code&gt; &amp;gt; &lt;code&gt;Tab to click&lt;/code&gt; : Enable&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Accessibility&lt;/code&gt; &amp;gt; &lt;code&gt;Mouse &amp;amp; Trackpad&lt;/code&gt; &amp;gt; &lt;code&gt;Trackpad options...&lt;/code&gt; : check &lt;code&gt;Enable dragging&lt;/code&gt; &amp;gt; select &lt;code&gt;three finger drag&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Dark menu bar :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;General&lt;/code&gt; &amp;gt; &lt;code&gt;Use dark menu bar and Dock&lt;/code&gt; : Enable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Scroll bar :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;General&lt;/code&gt; &amp;gt; &lt;code&gt;Show scroll bars&lt;/code&gt; : select &lt;code&gt;Always&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Screen Saver:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Desktop &amp;amp; Screen Saver&lt;/code&gt; &amp;gt; &lt;code&gt;Screen Saver&lt;/code&gt; &amp;gt; Start after : &lt;code&gt;10 Minutes&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Finder Preferences&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;General&lt;/code&gt; &amp;gt; &lt;code&gt;New Finder windows show&lt;/code&gt; : your home directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Advanced&lt;/code&gt; &amp;gt; &lt;code&gt;Show all filename extensions&lt;/code&gt; : Enable&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Sidebar&lt;/code&gt; &amp;gt; &lt;code&gt;Favorites&lt;/code&gt; &amp;gt; check your home directory and others you want to add sidebar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Install Magnet&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;web site : http://magnet.crowdcafe.com&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My Key settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + h&lt;/code&gt; : Left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + j&lt;/code&gt; : Up&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + k&lt;/code&gt; : Down&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + l&lt;/code&gt; : Right&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + u&lt;/code&gt; : Top Left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + i&lt;/code&gt; : Top Right&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + m&lt;/code&gt; : Bottom Left&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + ,&lt;/code&gt; : Bottom Right&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + y&lt;/code&gt; : Left Two Third&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + o&lt;/code&gt; : Right Two Third&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + c&lt;/code&gt; : Cender&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + Enter&lt;/code&gt; : Maximize&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Control + Option + Delete&lt;/code&gt; : Restore&lt;/li&gt;
+&lt;li&gt;Disable others&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Install Xcode Command Line Tools&lt;/h2&gt;
+&lt;p&gt;Xcode를 설치해야 gcc 등의 개발 도구를 사용할 수 있다. Xcode 전체를 설치할 필요가 없다면 Xcode Command Line Tools만 따로 설치할 수도 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; xcode-select --install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;참고로 Mac 에서는 gcc가 아니라 llvm을 사용한다. &lt;code&gt;gcc&lt;/code&gt; 명령을 실행하면 실제로는 llvm의 C언어 front-end인 &lt;code&gt;clang&lt;/code&gt; 명령이 실행된다.&lt;/p&gt;
+&lt;h2&gt;Install Homebrew&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;web site : https://brew.sh&lt;/li&gt;
+&lt;li&gt;GitHub : https://github.com/Homebrew/brew/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Homebrew는 Mac에서 패키지 설치와 관리를 쉽게 해주는 도구이다. 다양한 개발 도구들을 쉽게 구성할 수 있다.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 
+&amp;gt; brew help
+&amp;gt; brew cask
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Install packages&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install git vim python3 node@8 wget maven
+$ brew cask install iterm2 sublime-text google-chrome evernote java slack intellij-idea-ce docker
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;맥북 터치바 모델일 경우&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;System Preferences&lt;/code&gt; - &lt;code&gt;Keyboard&lt;/code&gt; &amp;gt; &lt;code&gt;Shortcuts&lt;/code&gt; &amp;gt; &lt;code&gt;Function Keys&lt;/code&gt; &amp;gt; iTerm.app 및 &lt;code&gt;Sublime Text&lt;/code&gt; 등 추가&lt;/li&gt;
+&lt;/ul&gt;</content><category term="mac"></category><category term="macos"></category></entry><entry><title>iTerm2</title><link href="https://imjang57.github.io/garret/iterm2.html" rel="alternate"></link><published>2017-12-18T00:00:00+09:00</published><updated>2017-12-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-18:/garret/iterm2.html</id><summary type="html">&lt;p&gt;iTerm2 설치 및 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iTerm2&lt;/h1&gt;
 &lt;p&gt;iTerm2 는 맥에서 가장 많이 사용되는 터미널(Terminal) 프로그램이다.&lt;/p&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;
 &lt;p&gt;iTerm2 에서 제공하는 공식 바이너리로 쉽게 설치할 수도 있지만 나는 왠만하면 모든 패키지들을 &lt;code&gt;brew&lt;/code&gt;로 관리하기를 원해서 &lt;code&gt;brew-cask&lt;/code&gt;로 설치했다.&lt;/p&gt;
