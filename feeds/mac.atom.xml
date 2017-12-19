@@ -92,7 +92,7 @@ $ brew cask install iterm2 sublime-text google-chrome evernote java slack intell
 
 &lt;h2&gt;맥북 터치바 모델일 경우&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;System Preferences&lt;/code&gt; - &lt;code&gt;Keyboard&lt;/code&gt; &amp;gt; &lt;code&gt;Shortcuts&lt;/code&gt; &amp;gt; &lt;code&gt;Function Keys&lt;/code&gt; &amp;gt; iTerm.app 및 &lt;code&gt;Sublime Text&lt;/code&gt; 등 추가&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;System Preferences&lt;/code&gt; - &lt;code&gt;Keyboard&lt;/code&gt; &amp;gt; &lt;code&gt;Shortcuts&lt;/code&gt; &amp;gt; &lt;code&gt;Function Keys&lt;/code&gt; &amp;gt; &lt;code&gt;iTerm.app&lt;/code&gt; 및 &lt;code&gt;Sublime Text.app&lt;/code&gt; 등 추가&lt;/li&gt;
 &lt;/ul&gt;</content><category term="mac"></category><category term="macos"></category></entry><entry><title>iTerm2</title><link href="https://imjang57.github.io/garret/iterm2.html" rel="alternate"></link><published>2017-12-18T00:00:00+09:00</published><updated>2017-12-18T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-18:/garret/iterm2.html</id><summary type="html">&lt;p&gt;iTerm2 설치 및 사용법&lt;/p&gt;</summary><content type="html">&lt;h1&gt;iTerm2&lt;/h1&gt;
 &lt;p&gt;iTerm2 는 맥에서 가장 많이 사용되는 터미널(Terminal) 프로그램이다.&lt;/p&gt;
 &lt;h2&gt;Installation&lt;/h2&gt;
