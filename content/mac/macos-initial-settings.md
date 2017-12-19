@@ -106,4 +106,4 @@ $ brew cask install iterm2 sublime-text google-chrome evernote java slack intell
 
 ## 맥북 터치바 모델일 경우
 
-- `System Preferences` - `Keyboard` > `Shortcuts` > `Function Keys` > iTerm.app 및 `Sublime Text` 등 추가
+- `System Preferences` - `Keyboard` > `Shortcuts` > `Function Keys` > `iTerm.app` 및 `Sublime Text.app` 등 추가
