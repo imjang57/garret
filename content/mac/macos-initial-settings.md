@@ -1,4 +1,4 @@
-Title: MacOS initial settings
+Title: MacOS 초기 설정
 Date: 2017-12-19
 Modified: 2017-12-19
 Tags: mac, macos
@@ -100,8 +100,8 @@ Homebrew는 Mac에서 패키지 설치와 관리를 쉽게 해주는 도구이�
 ## Install packages
 
 ```bash
-$ brew install git vim python3 node@8 wget maven
-$ brew cask install iterm2 sublime-text google-chrome evernote java slack intellij-idea-ce docker
+$ brew install git vim python3 node wget maven httpie wget
+$ brew cask install iterm2 sublime-text google-chrome evernote java slack intellij-idea-ce docker postman
 ```
 
 ## 맥북 터치바 모델일 경우
