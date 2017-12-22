@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-19T00:00:00+09:00</updated><entry><title>MacOS initial settings</title><link href="https://imjang57.github.io/garret/macos-initial-settings.html" rel="alternate"></link><published>2017-12-19T00:00:00+09:00</published><updated>2017-12-19T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-19:/garret/macos-initial-settings.html</id><summary type="html">&lt;p&gt;MacOS에서 가장 처음에 하는 환경설정 내용을 요약&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Mac Development Environment&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>garret - mac</title><link href="https://imjang57.github.io/garret/" rel="alternate"></link><link href="https://imjang57.github.io/garret/feeds/mac.atom.xml" rel="self"></link><id>https://imjang57.github.io/garret/</id><updated>2017-12-19T00:00:00+09:00</updated><entry><title>MacOS 초기 설정</title><link href="https://imjang57.github.io/garret/macos-initial-settings.html" rel="alternate"></link><published>2017-12-19T00:00:00+09:00</published><updated>2017-12-19T00:00:00+09:00</updated><author><name>imjang57</name></author><id>tag:imjang57.github.io,2017-12-19:/garret/macos-initial-settings.html</id><summary type="html">&lt;p&gt;MacOS에서 가장 처음에 하는 환경설정 내용을 요약&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Mac Development Environment&lt;/h1&gt;
 &lt;p&gt;Keyboard notation examples :&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Control + b, c&lt;/code&gt;는 &lt;code&gt;Control&lt;/code&gt; 키를 누른 상태에서 &lt;code&gt;b&lt;/code&gt;를 누르고, &lt;code&gt;Control&lt;/code&gt; 키와 &lt;code&gt;b&lt;/code&gt;에서 손을 뗀 후 &lt;code&gt;c&lt;/code&gt;를 눌러라는 의미&lt;/li&gt;
@@ -85,8 +85,8 @@
 
 
 &lt;h2&gt;Install packages&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install git vim python3 node@8 wget maven
-$ brew cask install iterm2 sublime-text google-chrome evernote java slack intellij-idea-ce docker
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install git vim python3 node wget maven httpie wget
+$ brew cask install iterm2 sublime-text google-chrome evernote java slack intellij-idea-ce docker postman
 &lt;/pre&gt;&lt;/div&gt;
 
 
