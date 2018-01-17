@@ -22,11 +22,16 @@ $ brew cask install iterm2
 
 내가 사용하는 환경을 위한 설정들을 해보자.
 
-- `Preferences(cmd + ,)` => `Profiles` => `Colors` => `Tango Dark`
+- `Preferences(cmd + ,)` => `Profiles` => `Colors` => `spacegray`
 - `Preferences(cmd + ,)` => `Profiles` => `Text` => `Font` => `Change Font` => 13pt, Meslo LG M Regular for Powerline
 - `Preferences(cmd + ,)` => `Profiles` => `Window` => `Window Appearance` => `Transparency`
 - `Preferences(cmd + ,)` => `Profiles` => `Window` => `Settings for New Windows` => `Columns` : 200, `Rows` : 50
 - `Preferences(cmd + ,)` => `Profiles` => `Terminal` => `Scrollback Buffer` => check `Unlimited scrollback`
+
+참고:
+
+- spacegray theme : https://github.com/ajh17/Spacegray.vim
+- powerline font : https://github.com/powerline/fonts
 
 ## Key Mappings
 

@@ -26,14 +26,23 @@ Keyboard notation examples :
 - `Security & Privacy` > `General` > `Require password` : select `immediately`
 - `Security & Privacy` > `General` > `Show a message when the screen is locked` : input phone number, name, etc
 
+Bluetooth :
+
+- `Bluetooth` : check `Show Bluetooth in menu bar`
+
 Keyboard :
 
 - `Keyboard` > `Text` : disable all automatic and smart options
+- `Keyboard` > `Keyboard` : check `Use F1, F2, etc. keys as standard function keys`
 
 Trackpad :
 
 - `Trackpad` > `Point & Click` > `Tab to click` : Enable
 - `Accessibility` > `Mouse & Trackpad` > `Trackpad options...` : check `Enable dragging` > select `three finger drag`
+
+Display :
+
+- `Display` > `Display` : check `Show mirroring options in the menu bar when available`
 
 Dark menu bar :
 
@@ -43,9 +52,21 @@ Scroll bar :
 
 - `General` > `Show scroll bars` : select `Always`
 
-Screen Saver:
+Screen Saver :
 
 - `Desktop & Screen Saver` > `Screen Saver` > Start after : `10 Minutes`
+
+Evergy Saver :
+
+- `Evergy Saver` : check `Prevent computer from sleeping automatically when the display is off`
+
+Sound :
+
+- `Sound` > `Sound Effects` : check `Show volume in menu bar`
+
+Dock :
+
+- `Dock` > scroll `Size` to resize dock
 
 ## Finder Preferences
 
@@ -86,8 +107,8 @@ Xcode를 설치해야 gcc 등의 개발 도구를 사용할 수 있다. Xcode �
 
 ## Install Homebrew
 
-- web site : https://brew.sh
-- GitHub : https://github.com/Homebrew/brew/
+- web site : [https://brew.sh](https://brew.sh)
+- GitHub : [https://github.com/Homebrew/brew/](https://github.com/Homebrew/brew/)
 
 Homebrew는 Mac에서 패키지 설치와 관리를 쉽게 해주는 도구이다. 다양한 개발 도구들을 쉽게 구성할 수 있다.
 
@@ -100,8 +121,10 @@ Homebrew는 Mac에서 패키지 설치와 관리를 쉽게 해주는 도구이�
 ## Install packages
 
 ```bash
-$ brew install git vim python3 node wget maven httpie wget
-$ brew cask install iterm2 sublime-text google-chrome evernote java slack intellij-idea-ce docker postman
+$ brew install git neovim python3 zsh fzf node wget httpie 
+$ brew cask install iterm2 sublime-text google-chrome java slack docker postman iina
+$ brew install maven
+$ brew cask install intellij-idea-ce
 ```
 
 ## 맥북 터치바 모델일 경우
