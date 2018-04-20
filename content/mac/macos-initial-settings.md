@@ -122,7 +122,8 @@ Homebrew는 Mac에서 패키지 설치와 관리를 쉽게 해주는 도구이�
 
 ```bash
 $ brew install git neovim python3 zsh fzf node wget httpie 
-$ brew cask install iterm2 sublime-text google-chrome java slack docker postman iina
+$ brew cask install iterm2 google-chrome java slack docker postman iina
+$ brew cask install sublime-text visual-studio-code
 $ brew install maven
 $ brew cask install intellij-idea-ce
 ```
